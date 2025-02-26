@@ -1,4 +1,4 @@
-import {heroui} from '@heroui/theme';
+import { heroui } from '@heroui/theme';
 import type { Config } from "tailwindcss";
 
 export default {
@@ -13,6 +13,13 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+      },
+      container: {
+        center: true,
+        padding: "1rem",
+      },
+      fontFamily: {
+        sans: ["var(--font-IRANYekan)",],
       },
     },
   },
