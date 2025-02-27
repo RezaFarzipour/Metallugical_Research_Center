@@ -1,12 +1,13 @@
 import { heroui } from '@heroui/theme';
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@heroui/theme/dist/components/(button|ripple|spinner).js"
+    "./node_modules/@heroui/theme/dist/components/(button|input-otp|ripple|spinner|form).js"
   ],
   theme: {
     extend: {
@@ -19,7 +20,8 @@ export default {
         padding: "1rem",
       },
       fontFamily: {
-        sans: ["var(--font-IRANYekan)",],
+
+        sans: ["var(--font-IRANYekan)", ...fontFamily.sans],
       },
     },
   },
