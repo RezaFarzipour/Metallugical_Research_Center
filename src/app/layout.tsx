@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
-import clsx from "clsx";
 import { fontIRANYekan } from "@/config/fonts";
 import { siteConfig } from "@/config/site";
+import { twMerge } from "tailwind-merge";
 
 export const metadata: Metadata = {
   title: {
@@ -16,7 +16,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,7 +24,8 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body
-        className={clsx(
+        suppressHydrationWarning
+        className={twMerge(
           "min-h-screen bg-background font-sans antialiased",
           fontIRANYekan.variable
         )}
