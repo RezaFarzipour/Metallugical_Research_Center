@@ -1,19 +1,20 @@
-import React from 'react'
-import Header from './Header'
-import Footer from './Footer'
+"use client";
+import React from "react";
+import Footer from "./Components/Footer";
+import NavBar from "./Components/navBar/page";
 
 type Props = {
-    children:React.ReactNode
-}
+  children: React.ReactNode;
+};
 
-const Layout = ({children}:Props) => {
+const Layout = ({ children }: Props) => {
   return (
     <div>
-        <Header/>
-        {children}
-        <Footer/>
-        </div>
-  )
-}
+      <NavBar />
+      {children}
+      <Footer />
+    </div>
+  );
+};
 
-export default Layout
+export default Layout;

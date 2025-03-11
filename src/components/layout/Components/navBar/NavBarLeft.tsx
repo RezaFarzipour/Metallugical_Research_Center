@@ -1,7 +1,7 @@
 import { NavbarContent, NavbarItem, Badge } from "@heroui/react";
 import { TbBasket } from "react-icons/tb";
 import { toPersianDigits } from "@/utils/numberFormatter";
-import NavLink from "../NavLink";
+import NavLink from "./NavLink";
 
 export const NavBarLeft = () => (
   <NavbarContent justify="end">
@@ -19,7 +19,7 @@ export const NavBarLeft = () => (
       </NavLink>
     </NavbarItem>
     <NavbarItem className="hidden lg:flex">
-      <NavLink path="/profile" style={false}>
+      <NavLink path="/admin" style={false}>
         پروفایل
       </NavLink>
     </NavbarItem>

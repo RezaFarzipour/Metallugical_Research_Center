@@ -1,7 +1,7 @@
 import Logo from "@/components/element/Logo";
 import { siteConfig } from "@/config/site";
 import { NavbarContent, NavbarBrand, NavbarMenuToggle } from "@heroui/react";
-import NavLink from "../NavLink";
+import NavLink from "./NavLink";
 
 interface NavbarLeftProps {
   isMenuOpen: boolean;

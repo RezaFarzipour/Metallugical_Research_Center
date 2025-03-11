@@ -1,5 +1,6 @@
 export type SiteConfig = typeof siteConfig;
-
+import { FaTelegram, FaInstagram } from "react-icons/fa";
+import { IoLogoWhatsapp } from "react-icons/io";
 export const siteConfig = {
   name: "متالوژی ریسرچ سنتر",
   description: "آزمایشگاه متالوژی ریسرچ سنتر",
@@ -11,7 +12,7 @@ export const siteConfig = {
     },
     {
       id: 2,
-      label: "خدمات",
+      label: "خدمات ها",
       path: "/services",
     },
     {
@@ -26,44 +27,12 @@ export const siteConfig = {
     },
 
   ],
-  navMenuItems: [
-    {
-      label: "Profile",
-      path: "/profile",
-    },
-    {
-      label: "Dashboard",
-      path: "/dashboard",
-    },
-    {
-      label: "Projects",
-      path: "/projects",
-    },
-    {
-      label: "Team",
-      path: "/team",
-    },
-    {
-      label: "Calendar",
-      path: "/calendar",
-    },
-    {
-      label: "Settings",
-      path: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      path: "/help-feedback",
-    },
-    {
-      label: "Logout",
-      path: "/logout",
-    },
-  ],
+
   links: {
-    telegram: "https://heroui.com",
-    whatsapp: "https://discord.gg/9b6yyZKmH4",
+    telegram: FaTelegram,
+    whatsapp: IoLogoWhatsapp,
     eita: "https://patreon.com/jrgarciadev",
     bale: "https://patreon.com/jrgarciadev",
+    instagram: FaInstagram
   },
 };

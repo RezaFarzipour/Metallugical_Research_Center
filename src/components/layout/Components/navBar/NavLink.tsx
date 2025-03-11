@@ -20,11 +20,11 @@ const NavLink = ({ path, children, style = true }: NavLinkProps) => {
 
   const activeStyles =
     style && isActive
-      ? "border-b-2 border-b-secondary-600 text-secondary-900 border-t-2 border-t-secondary-600 rounded-sm"
+      ? "border-b-2 border-b-secondary-600 text-secondary-900 border-t-2 border-t-secondary-600 rounded-[4px]"
       : "";
 
   const hoverStyles = style
-    ? "hover:border-t-2 hover:border-t-secondary-600 hover:rounded-sm"
+    ? "hover:border-t-2 hover:border-t-secondary-600 hover:rounded-[4px]"
     : "";
 
   return (

@@ -3,7 +3,6 @@ import "@/styles/globals.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { fontIRANYekan } from "@/config/fonts";
 import { siteConfig } from "@/config/site";
-import Layout from "@/components/layout/Layout";
 import { twMerge } from "tailwind-merge";
 
 export const metadata: Metadata = {
@@ -31,12 +30,7 @@ export default function RootLayout({
           fontIRANYekan.variable
         )}
       >
-        <ReactQueryProvider>
-          <Layout>
-          {children}
-          </Layout>
-
-        </ReactQueryProvider>
+        <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
   );

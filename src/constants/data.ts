@@ -3,7 +3,7 @@ import { CiWallet } from "react-icons/ci";
 import { IoMdExit } from "react-icons/io";
 
 type Data = {
-    id:number,
+  id: number,
   title: string;
   icon: React.ElementType;
   hover: string;
@@ -11,23 +11,24 @@ type Data = {
 
 export const sidebarlinks: Data[] = [
   {
-    id:0,
+    id: 0,
     title: "داشبورد",
     icon: TiHomeOutline,
     hover: "text-primary-500",
   },
 
   {
-    id:1,
+    id: 1,
     title: "سفارش های من",
     icon: CiWallet,
     hover: "text-primary-500",
   },
 
   {
-    id:2,
+    id: 2,
     title: "خروج",
     icon: IoMdExit,
     hover: "text-danger-500",
   },
+
 ];
