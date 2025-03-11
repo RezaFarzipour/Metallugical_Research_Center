@@ -4,6 +4,7 @@ import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import clsx from "clsx";
 import { fontIRANYekan } from "@/config/fonts";
 import { siteConfig } from "@/config/site";
+import Layout from "@/components/layout/Layout";
 
 export const metadata: Metadata = {
   title: {
@@ -30,7 +31,12 @@ export default function RootLayout({
           fontIRANYekan.variable
         )}
       >
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ReactQueryProvider>
+          <Layout>
+          {children}
+          </Layout>
+
+        </ReactQueryProvider>
       </body>
     </html>
   );
