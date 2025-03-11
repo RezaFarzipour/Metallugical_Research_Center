@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@heroui/button": "^2.2.13",
+    "@heroui/divider": "^2.2.10",
     "@heroui/input": "^2.4.16",
     "@heroui/input-otp": "^2.1.12",
     "@heroui/navbar": "^2.2.14",
