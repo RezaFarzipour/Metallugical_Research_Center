@@ -5,55 +5,59 @@ export const siteConfig = {
   description: "آزمایشگاه متالوژی ریسرچ سنتر",
   navItems: [
     {
+      id: 1,
       label: "خانه",
-      href: "/",
+      path: "/",
     },
     {
+      id: 2,
       label: "خدمات",
-      href: "/services",
+      path: "/services",
     },
     {
+      id: 3,
       label: "درباره ما",
-      href: "/Aboutus",
+      path: "/aboutus",
     },
     {
+      id: 4,
       label: "ارتباط با ما ",
-      href: "/contactus",
+      path: "/contactus",
     },
 
   ],
   navMenuItems: [
     {
       label: "Profile",
-      href: "/profile",
+      path: "/profile",
     },
     {
       label: "Dashboard",
-      href: "/dashboard",
+      path: "/dashboard",
     },
     {
       label: "Projects",
-      href: "/projects",
+      path: "/projects",
     },
     {
       label: "Team",
-      href: "/team",
+      path: "/team",
     },
     {
       label: "Calendar",
-      href: "/calendar",
+      path: "/calendar",
     },
     {
       label: "Settings",
-      href: "/settings",
+      path: "/settings",
     },
     {
       label: "Help & Feedback",
-      href: "/help-feedback",
+      path: "/help-feedback",
     },
     {
       label: "Logout",
-      href: "/logout",
+      path: "/logout",
     },
   ],
   links: {
