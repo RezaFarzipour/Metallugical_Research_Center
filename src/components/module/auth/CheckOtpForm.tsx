@@ -1,9 +1,9 @@
 import React from "react";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { CiEdit } from "react-icons/ci";
-import Loading from "../element/Loading";
-import OtpInput from "../element/OtpInput";
-import Button from "../element/Button";
+import OtpInput from "@/components/element/OtpInput";
+import Loading from "@/components/element/Loading";
+import Button from "@/components/element/Button";
 
 interface CheckOtpFormProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

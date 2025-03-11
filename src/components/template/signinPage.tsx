@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import SendOtpForm from "../module/SendOtpForm";
-import CheckOtpForm from "../module/CheckOtpForm";
 import { PhoneFormData } from "@/schemas/phoneSchema";
+import SendOtpForm from "../module/auth/SendOtpForm";
+import CheckOtpForm from "../module/auth/CheckOtpForm";
 
 const RESEND_TIME = 90;
 
