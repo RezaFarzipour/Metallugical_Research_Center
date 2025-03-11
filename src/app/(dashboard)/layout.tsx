@@ -1,4 +1,4 @@
-import ClipedDrawer from "@/components/layout/Components/clipedDrawer/page";
+import ClipedDrawer from "@/components/layout/containers/clipedDrawer";
 import React from "react";
 
 type DashboardProps = {

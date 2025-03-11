@@ -1,8 +1,8 @@
 import SigninPage from "@/components/template/signinPage";
 import React from "react";
 
-const page = () => {
+const Authpage = () => {
   return <SigninPage />;
 };
 
-export default page;
+export default Authpage;

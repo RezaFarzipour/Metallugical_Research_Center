@@ -5,7 +5,7 @@ export const metadata = {
   },
 };
 
-function Contact() {
+function ContactPage() {
   return <div>Contact</div>;
 }
-export default Contact;
+export default ContactPage;
