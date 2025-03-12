@@ -1,19 +1,20 @@
 {
-    "compilerOptions": {
-      "paths": {
-        "@/*": ["./src/*"],
-        "@/utils/*": ["./src/utils/*"],
-        "@/components/*": ["./src/components/*"],
-        "@/constants/*": ["./src/constants/*"],
-        "@/module/*": ["./src/module/*"],
-        "@/template/*": ["./src/template/*"],
-        "@/layout/*": ["./src/layout/*"],
-        "@/pages/*": ["./src/app/*"],
-        "@/services/*": ["./src/services/*"],
-        "@/hooks/*": ["./src/hooks/*"],
-        "@/public/*": ["./public/*"],
-        "@/styles/*": ["./src/styles/*"],
-        "@/providers/*": ["./src/providers/*"]
-      }
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/utils/*": ["./src/utils/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/constants/*": ["./src/constants/*"],
+      "@/module/*": ["./src/module/*"],
+      "@/template/*": ["./src/template/*"],
+      "@/element/*": ["./src/element/*"],
+      "@/layout/*": ["./src/layout/*"],
+      "@/pages/*": ["./src/app/*"],
+      "@/services/*": ["./src/services/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/public/*": ["./public/*"],
+      "@/styles/*": ["./src/styles/*"],
+      "@/providers/*": ["./src/providers/*"]
     }
   }
+}

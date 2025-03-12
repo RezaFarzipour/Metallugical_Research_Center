@@ -1,8 +1,9 @@
 "use client";
 
-import AppBar from "@/components/module/clipedDrawer/AppBar";
-import SidebarHeader from "@/components/module/clipedDrawer/SidebarHeader";
-import SidebarLinks from "@/components/module/clipedDrawer/SidebarLinks";
+
+import AppBar from "@/components/element/clipedDrawer/AppBar";
+import SidebarHeader from "@/components/element/clipedDrawer/SidebarHeader";
+import SidebarLinks from "@/components/element/clipedDrawer/SidebarLinks";
 import React, { useState } from "react";
 
 interface ClipedDrawerProps {
