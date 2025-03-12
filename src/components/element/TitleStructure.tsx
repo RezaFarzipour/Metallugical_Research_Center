@@ -8,8 +8,6 @@ type Props = {
 };
 
 const TitleStructure = ({ children, size }: Props) => {
-  console.log(size);
-
   return (
     <motion.div variants={fadeInSlide("left", "tween", 0.2, 1)}>
       <div className="flex">
