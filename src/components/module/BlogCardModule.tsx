@@ -1,4 +1,4 @@
-import CardModule from "@/components/element/CardModule";
+import CardElement from "@/components/element/CardElement";
 import { LatestArticles } from "@/constants/data";
 import { latestArticleType } from "@/types";
 import React from "react";
@@ -18,7 +18,7 @@ const BlogCardModule = () => {
       <div className="flex flex-col gap-36 lg:gap-5 lg:flex-row  justify-center w-full items-center p-4 ">
         {LatestArticles.map((article: latestArticleType) => (
           <>
-            <CardModule key={article.id} {...article} />
+            <CardElement key={article.id} {...article} />
           </>
         ))}
       </div>

@@ -7,7 +7,7 @@ import { CgProfile } from "react-icons/cg";
 import { MdArrowOutward } from "react-icons/md";
 import { latestArticleType } from "@/types";
 
-const CardModule = ({
+const CardElement = ({
   image,
   publishedDate,
   author,
@@ -59,4 +59,4 @@ const CardModule = ({
   );
 };
 
-export default CardModule;
+export default CardElement;
