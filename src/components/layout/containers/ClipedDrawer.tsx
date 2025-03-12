@@ -11,7 +11,7 @@ interface ClipedDrawerProps {
 }
 
 const ClipedDrawer = ({ children }: ClipedDrawerProps) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [activeItemId, setActiveItemId] = useState<number>();
 
   return (
