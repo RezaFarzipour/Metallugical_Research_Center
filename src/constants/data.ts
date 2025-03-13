@@ -1,7 +1,10 @@
 import { TiHomeOutline } from "react-icons/ti";
 import { CiWallet } from "react-icons/ci";
 import { IoMdExit } from "react-icons/io";
-import { latestArticleType, sidebarData } from "@/types";
+import { contactInfoType, latestArticleType, sidebarData } from "@/types";
+import { IoLocationOutline } from "react-icons/io5";
+import { MdOutlinePhone } from "react-icons/md";
+import { CiMail } from "react-icons/ci";
 
 export const sidebarlinks: sidebarData[] = [
   {
@@ -47,8 +50,31 @@ export const LatestArticles: latestArticleType[] = [
   },
 ];
 
+<<<<<<< HEAD
 export const steps = [
   { id: 1, label: "احراز هویت" },
   { id: 2, label: "تکمیل اطلاعات" },
   { id: 3, label: "ثبت سفارش" },
 ];
+=======
+export const contactusinformation: contactInfoType[] = [
+  {
+    id: 1,
+    title: "آدرس",
+    desc: "زنجان.دانشگاه اعتمادیه",
+    icon: IoLocationOutline,
+  },
+  {
+    id: 2,
+    title: "شماره تماس",
+    desc: "123-456-789 ",
+    icon: MdOutlinePhone,
+  },
+  {
+    id: 1,
+    title: "آدرس ایمیل",
+    desc: "dr.salimi@gmail.com ",
+    icon: CiMail,
+  },
+];
+>>>>>>> e247a7c8bb776cd8e5779c248a2c87ded055f61a
