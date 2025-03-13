@@ -6,7 +6,6 @@ import { siteConfig } from "@/config/site";
 import { twMerge } from "tailwind-merge";
 import "leaflet/dist/leaflet.css";
 
-
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,

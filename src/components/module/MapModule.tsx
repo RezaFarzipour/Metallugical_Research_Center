@@ -3,7 +3,7 @@
 import { MapContainer, TileLayer, Popup, Marker } from "react-leaflet";
 
 export default function MapModule() {
-  const position = [36.671746962189104, 48.505597275314045]; 
+  const position = [36.671746962189104, 48.505597275314045];
 
   return (
     <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-md">

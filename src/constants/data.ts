@@ -50,13 +50,12 @@ export const LatestArticles: latestArticleType[] = [
   },
 ];
 
-<<<<<<< HEAD
 export const steps = [
   { id: 1, label: "احراز هویت" },
   { id: 2, label: "تکمیل اطلاعات" },
   { id: 3, label: "ثبت سفارش" },
 ];
-=======
+
 export const contactusinformation: contactInfoType[] = [
   {
     id: 1,
@@ -77,4 +76,3 @@ export const contactusinformation: contactInfoType[] = [
     icon: CiMail,
   },
 ];
->>>>>>> e247a7c8bb776cd8e5779c248a2c87ded055f61a
