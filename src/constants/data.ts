@@ -28,7 +28,7 @@ export const sidebarlinks: sidebarData[] = [
 
 export const LatestArticles: latestArticleType[] = [
   {
-    id:1,
+    id: 1,
     image: "/images/blog1-img1.png",
     publishedDate: new Date(),
     author: "محمد حیدری",
@@ -37,7 +37,7 @@ export const LatestArticles: latestArticleType[] = [
       "حوزه تجزیه و تحلیل شیمیایی در سال های اخیر شاهد نوآوری های قابل توجهی بوده است که به دلیل پیشرفت در فناوری و روش شناسی انجام شده است",
   },
   {
-    id:2,
+    id: 2,
     image: "/images/blog1-img2.png",
     publishedDate: new Date(),
     author: "مریم زمانی",
@@ -47,3 +47,8 @@ export const LatestArticles: latestArticleType[] = [
   },
 ];
 
+export const steps = [
+  { id: 1, label: "احراز هویت" },
+  { id: 2, label: "تکمیل اطلاعات" },
+  { id: 3, label: "ثبت سفارش" },
+];

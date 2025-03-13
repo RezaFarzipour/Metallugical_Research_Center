@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import Footer from "./containers/Footer";
-import NavBar from "./containers/NavBar";
+import NavBar from "./NavBar";
+import Footer from "./Footer";
 
 type Props = {
   children: React.ReactNode;

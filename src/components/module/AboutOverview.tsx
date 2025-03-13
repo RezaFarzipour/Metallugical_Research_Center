@@ -1,35 +1,18 @@
 "use client";
 import React from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import useIntersectionObserver from "../../hooks/useIntersectionObserver";
-import { images } from "@/config/data";
 import AboutImage from "../element/aboutOverview/AboutImage";
 import AboutText from "../element/aboutOverview/AboutText";
 import SectionWrapper from "../../hoc/SectionWrapper";
-import { fadeIn } from "../../utils/motion";
+import BgAnimateShape from "../element/BgAnimateShape";
 
 const AboutOverview: React.FC = () => {
-  const { ref: firstImageRef, isVisible } = useIntersectionObserver(0.5);
-
   return (
     <div className="flex h-auto md:h-[800px] sm:h-[500px]">
       <div className="relative w-1/2 h-full">
         {/* Background Shape */}
-        <motion.div
-          ref={firstImageRef}
-          variants={fadeIn(0, 6, 0.5)}
-          initial="hidden"
-          animate={isVisible ? "show" : "hidden"}
-        >
-          <Image
-            src="/images/about-shape.png"
-            alt="About shape"
-            width={300}
-            height={200}
-            className="animate-bounce [animation-duration:12s] absolute top-0 right-[-90px] w-[300px] md:w-[300px] lg:w-[300px] brightness-[80%]"
-          />
-        </motion.div>
+        <div className="relative top-0 right-[-5rem]">
+          <BgAnimateShape animation="animate-bounce " />
+        </div>
 
         {/* Images */}
         <div>
@@ -46,3 +29,29 @@ const AboutOverview: React.FC = () => {
 };
 
 export default SectionWrapper(AboutOverview, "about-overwiew");
+const images = [
+  {
+    src: "/images/about1-image1.png",
+    alt: "About image 1",
+    width: 260,
+    height: 300,
+    className:
+      "object-cover absolute top-0 right-4 sm:right-8 md:right-16 lg:right-28 ",
+  },
+  {
+    src: "/images/about1-image2.png",
+    alt: "About image 2",
+    width: 360,
+    height: 360,
+    className:
+      "object-cover absolute top-[4rem] sm:top-[5rem] md:top-[6rem] right-[8rem] sm:right-[10rem] md:right-[12rem] lg:right-[20rem]",
+  },
+  {
+    src: "/images/about1-image3.png",
+    alt: "About image 3",
+    width: 340,
+    height: 340,
+    className:
+      "object-cover absolute top-[18rem] sm:top-[20rem] md:top-[22rem] lg:top-[28rem] right-4 sm:right-8 md:right-16 lg:right-28",
+  },
+];

@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/Layout";
+import Layout from "@/components/containers/layout/Layout";
 
 export default function MainLayout({
   children,

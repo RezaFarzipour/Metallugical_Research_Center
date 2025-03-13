@@ -1,7 +1,6 @@
 import { Input } from "@heroui/react";
 import React from "react";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
-import { PhoneFormData } from "@/schemas/phoneSchema";
 
 const inputStyles = {
   inputWrapper: [
@@ -15,7 +14,7 @@ const inputStyles = {
     "after:bg-secondary-500",
     "after:transition",
     "after:!duration-500",
-    // "hover:after:scale-150",
+
     // dark theme
     "dark:border-secondary-100",
   ],
@@ -26,40 +25,51 @@ const inputStyles = {
     "text-default-600",
     "placeholder:text-default-600",
   ],
+
   error: ["border-red-500", "focus:border-red-500", "focus:ring-red-500/20"],
   wrapper: "relative",
   errorMessage: ["mt-1", "text-sm", "text-red-500"],
 };
 
-interface PhoneInputProps {
-  register: UseFormRegister<PhoneFormData>;
-  errors: FieldErrors<PhoneFormData>;
+interface PhoneInputProps<T extends object> {
+  register: UseFormRegister<T>;
+  errors: FieldErrors<T>;
+  label: string;
+  type: string;
+  dir: "ltr" | "rtl";
+  name: keyof T;
 }
 
-const PhoneInput: React.FC<PhoneInputProps> = ({ register, errors }) => {
+const RHFInput = <T extends object>({
+  register,
+  errors,
+  label,
+  type,
+  dir,
+  name,
+}: PhoneInputProps<T>) => {
   return (
     <div className={inputStyles.wrapper}>
       <Input
-        {...register("phone")}
-        type="tel"
-        label="شماره موبایل"
-        dir="ltr"
+        {...register(name)}
+        type={type}
+        label={label}
+        dir={dir}
         variant="underlined"
         classNames={{
           inputWrapper: [
             ...inputStyles.inputWrapper,
-            errors.phone && inputStyles.error,
+            errors[name] && inputStyles.error,
           ].filter(Boolean),
         }}
         autoFocus
       />
-      {errors.phone && (
+      {errors[name] && (
         <p className={inputStyles.errorMessage.join(" ")}>
-          {errors.phone.message}
+          {errors[name]?.message?.toString()}
         </p>
       )}
     </div>
   );
 };
-
-export default PhoneInput;
+export default RHFInput;
