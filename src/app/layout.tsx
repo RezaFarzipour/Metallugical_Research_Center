@@ -4,6 +4,8 @@ import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { fontIRANYekan } from "@/config/fonts";
 import { siteConfig } from "@/config/site";
 import { twMerge } from "tailwind-merge";
+import "leaflet/dist/leaflet.css";
+
 
 export const metadata: Metadata = {
   title: {
