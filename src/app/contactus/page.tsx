@@ -1,3 +1,5 @@
+import ContactusPage from "@/components/template/contactusPage";
+
 export const metadata = {
   //   title: "Contact",
   title: {
@@ -6,6 +8,6 @@ export const metadata = {
 };
 
 function ContactPage() {
-  return <div>Contact</div>;
+  return <ContactusPage />;
 }
 export default ContactPage;

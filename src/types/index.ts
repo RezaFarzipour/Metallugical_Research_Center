@@ -9,7 +9,7 @@ export type sidebarData = {
   id: number,
   title: string;
   icon: React.ElementType;
-  hover: string;
+  hover?: string;
 };
 
 export type latestArticleType  = {
@@ -21,3 +21,10 @@ export type latestArticleType  = {
   description:string
 }
 
+
+export type contactInfoType = {
+  id: number;
+  title: string;
+  desc: string;
+  icon: React.ElementType;
+};
