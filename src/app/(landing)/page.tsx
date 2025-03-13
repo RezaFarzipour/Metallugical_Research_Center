@@ -1,8 +1,12 @@
-
+import LandingPage from "@/components/template/landingPage";
 import React from "react";
 
-const LandingPage = () => {
-  return <></>;
+const Landing = () => {
+  return (
+    <div>
+      <LandingPage />
+    </div>
+  );
 };
 
-export default LandingPage;
+export default Landing;

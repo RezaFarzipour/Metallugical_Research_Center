@@ -2,9 +2,10 @@
 
 import React, { useEffect } from "react";
 import { Navbar } from "@heroui/react";
-import { NavBarRight } from "@/components/module/navBar/NavBarRight";
-import { NavBarLeft } from "@/components/module/navBar/NavBarLeft";
-import MobileMenu from "@/components/module/navBar/MobileMenu";
+import { NavBarRight } from "@/components/element/navBar/NavBarRight";
+import { NavBarLeft } from "@/components/element/navBar/NavBarLeft";
+import MobileMenu from "@/components/element/navBar/MobileMenu";
+
 
 const navbarStyles = {
   base: "z-10 shadow-md bg-inherit mb-10 transition-all duration-200 border-b border-b-secondary-300",

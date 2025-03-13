@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PhoneFormData } from "@/schemas/phoneSchema";
-import SendOtpForm from "../module/auth/SendOtpForm";
-import CheckOtpForm from "../module/auth/CheckOtpForm";
+import SendOtpForm from "../module/SendOtpForm";
+import CheckOtpForm from "../module/CheckOtpForm";
 
 const RESEND_TIME = 90;
 
