@@ -7,17 +7,21 @@ export const metadata = {
   description: "Auth",
 };
 
-export default function RootLayout({ children }) {
+interface AuthLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <div className="flex items-center justify-center h-screen bg-secondary-50">
-      <div className="flex w-full h-full relative">
+      <div className="flex w-full h-full relative overflow-hidden">
         <BgAnimateShape animation="animate-blink " />
-        <div className="absolute top-[16rem] right-[16rem]">
+        <div className="absolute top-[16rem] right-[16rem] ">
           <BgAnimateShape animation="animate-blink " />
         </div>
         {/* باکس سمت راست */}
         <div className="p-4 w-1/3 bg-transparent absolute top-28 right-48 z-10">
-          <div className="bg-white/30 backdrop-sepia-0 rounded-lg shadow-lg p-8">
+          <div className="bg-white/30 backdrop-sepia-0 rounded-lg shadow-lg p-4">
             <h2 className="text-4xl font-bold py-8 text-center text-gray-800">
               آزمایشگاه
             </h2>

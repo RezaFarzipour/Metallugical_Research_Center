@@ -1,6 +1,6 @@
 import Layout from "@/components/containers/layout/Layout";
 
-export default function MainLayout({
+export default function LandingLayout({
   children,
 }: {
   children: React.ReactNode;
