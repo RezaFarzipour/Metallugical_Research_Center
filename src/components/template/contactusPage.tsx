@@ -4,7 +4,7 @@ import { FaRegClock } from "react-icons/fa6";
 
 import MapModule from "../module/mapModule";
 import ContactusInformation from "../module/contactusInformation";
-;
+; 
 //import { Divider } from "@heroui/react";
 
 const ContactusPage = () => {
