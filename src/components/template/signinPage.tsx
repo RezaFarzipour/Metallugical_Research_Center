@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { PhoneFormData } from "@/schemas/phoneSchema";
 import SendOtpForm from "../module/SendOtpForm";
 import CheckOtpForm from "../module/CheckOtpForm";
+import PersonalRegister from "../module/PersonalRegister";
 
 const RESEND_TIME = 90;
 
@@ -20,6 +21,11 @@ const SigninPage: React.FC = () => {
   };
 
   const checkOtpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStep(3);
+  };
+
+  const onSubmitPresonalRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push("/");
   };
@@ -40,7 +46,6 @@ const SigninPage: React.FC = () => {
     switch (step) {
       case 1:
         return <SendOtpForm onSubmit={sendOtpHandler} />;
-
       case 2:
         return (
           <CheckOtpForm
@@ -53,6 +58,8 @@ const SigninPage: React.FC = () => {
             phoneNumber={phoneNumber}
           />
         );
+      case 3:
+        return <PersonalRegister onSubmit={onSubmitPresonalRegister} />;
       default:
         return null;
     }

@@ -50,6 +50,12 @@ export const LatestArticles: latestArticleType[] = [
   },
 ];
 
+export const steps = [
+  { id: 1, label: "احراز هویت" },
+  { id: 2, label: "تکمیل اطلاعات" },
+  { id: 3, label: "ثبت سفارش" },
+];
+
 export const contactusinformation: contactInfoType[] = [
   {
     id: 1,

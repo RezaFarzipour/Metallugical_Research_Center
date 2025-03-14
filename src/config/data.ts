@@ -13,7 +13,7 @@ export const images = [
         width: 360,
         height: 360,
         className:
-            "object-cover absolute top-[4rem] sm:top-[5rem] md:top-[6rem] right-[8rem] sm:right-[10rem] md:right-[12rem] lg:right-[20rem] ",
+            "object-cover absolute top-[4rem] sm:top-[5rem] md:top-[6rem] right-[8rem] sm:right-[10rem] md:right-[12rem] lg:right-[20rem]",
     },
     {
         src: "/images/about1-image3.png",

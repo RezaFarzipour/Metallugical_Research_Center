@@ -1,10 +1,11 @@
 import React from "react";
-import ContactusHeader from "../module/contactusHeader";
-import { FaRegClock } from "react-icons/fa6";
 
-import MapModule from "../module/mapModule";
+
+
+import MapModule from "../module/MapModule";
 import ContactusInformation from "../module/contactusInformation";
-; 
+import ContactusHeader from "../module/contactusHeader";
+
 //import { Divider } from "@heroui/react";
 
 const ContactusPage = () => {
@@ -16,13 +17,12 @@ const ContactusPage = () => {
       {/* main content */}
 
       <div className="w-full  my-20 flex flex-col lg:flex-row justify-around gap-5 items-center">
-        <ContactusInformation/>
+        <ContactusInformation />
       </div>
-
 
       {/* map section */}
       <div>
-        <MapModule/>
+        <MapModule />
       </div>
     </div>
   );
