@@ -1,9 +1,11 @@
 import React from "react";
-import ContactusHeader from "../module/ContactusHeader";
-import { FaRegClock } from "react-icons/fa6";
+
+
 
 import MapModule from "../module/MapModule";
-import ContactusInformation from "../module/ContactusInformation";
+import ContactusInformation from "../module/contactusInformation";
+import ContactusHeader from "../module/contactusHeader";
+
 //import { Divider } from "@heroui/react";
 
 const ContactusPage = () => {
