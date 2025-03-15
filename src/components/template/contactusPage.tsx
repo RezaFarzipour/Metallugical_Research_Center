@@ -4,15 +4,14 @@ import React from "react";
 
 import MapModule from "../module/MapModule";
 import ContactusInformation from "../module/contactusInformation";
-import ContactusHeader from "../module/contactusHeader";
+
 
 //import { Divider } from "@heroui/react";
 
 const ContactusPage = () => {
   return (
     <div className=" w-full flex flex-col ">
-      {/* banner section */}
-      <ContactusHeader />
+
 
       {/* main content */}
 

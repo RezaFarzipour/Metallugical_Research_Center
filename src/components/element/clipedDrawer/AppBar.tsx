@@ -10,7 +10,7 @@ interface AppBarProps {
 
 const AppBar = ({ isSidebarOpen, setIsSidebarOpen }: AppBarProps) => {
   return (
-    <nav className="w-full bg-default-50 flex justify-between py-6 px-4 items-center shadow-md">
+    <nav className="w-full bg-[#ffffff] flex justify-between py-6 px-4 items-center shadow-md">
       <button
         className="md:hidden text-2xl"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}

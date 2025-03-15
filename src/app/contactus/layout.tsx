@@ -1,4 +1,5 @@
 import Layout from "@/components/containers/layout/Layout";
+import ContactusHeader from "@/components/module/contactusHeader";
 
 export default function MainLayout({
   children,
@@ -7,7 +8,11 @@ export default function MainLayout({
 }) {
   return (
     <>
-      <Layout>{children}</Layout>
+      <Layout>
+        {/* banner section */}
+        <ContactusHeader />
+        {children}
+      </Layout>
     </>
   );
 }

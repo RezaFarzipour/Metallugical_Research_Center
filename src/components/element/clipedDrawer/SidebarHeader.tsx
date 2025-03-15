@@ -8,7 +8,7 @@ interface SidebarHeaderProps {
 
 const SidebarHeader = ({ setIsSidebarOpen }: SidebarHeaderProps) => {
   return (
-    <div className="flex justify-between items-center text-center w-full pb-9">
+    <div className="flex bg-[#ffffff] justify-between items-center text-center w-full pb-9">
       <h3>
         <Logo />
       </h3>

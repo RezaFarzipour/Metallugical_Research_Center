@@ -15,11 +15,12 @@ const ClipedDrawer = ({ children }: ClipedDrawerProps) => {
   const [activeItemId, setActiveItemId] = useState<number>();
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen  ">
       {/* Sidebar - Hidden on mobile */}
       <aside
         className={`
-          fixed md:relative bg-default-50  
+          
+          fixed md:relative bg-[#ffffff] 
           flex flex-col items-center h-full py-8 px-4 w-[280px] 
           z-50 transition-all duration-300
           ${isSidebarOpen ? "right-0" : "-right-[300px]"} 

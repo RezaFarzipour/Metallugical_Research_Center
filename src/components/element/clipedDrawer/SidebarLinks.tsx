@@ -8,7 +8,7 @@ interface SidebarLinksProps {
 
 const SidebarLinks = ({ activeItemId, setActiveItemId }: SidebarLinksProps) => {
   return (
-    <div className="w-full">
+    <div className="w-full bg-[#ffffff]">
       {sidebarlinks.map((link, index) => (
         <div className="border-r-9" key={link.id}>
           <button
