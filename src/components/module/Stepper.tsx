@@ -5,7 +5,7 @@ import React from "react";
 
 const Stepper = ({ currentStep }) => {
   return (
-    <div dir="ltr" className=" flex justify-center items-center py-9">
+    <div dir="ltr" className=" flex justify-center items-center py-6">
       <div className="w-full max-w-md">
         <div className="flex justify-between items-center">
           {steps.map((step, index) => (
