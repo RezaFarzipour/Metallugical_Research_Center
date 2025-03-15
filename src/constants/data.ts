@@ -5,6 +5,7 @@ import { contactInfoType, latestArticleType, sidebarData } from "@/types";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePhone } from "react-icons/md";
 import { CiMail } from "react-icons/ci";
+import { OrderTypes } from "@/components/module/TableModule";
 
 export const sidebarlinks: sidebarData[] = [
   {
@@ -74,5 +75,33 @@ export const contactusinformation: contactInfoType[] = [
     title: "آدرس ایمیل",
     desc: "dr.salimi@gmail.com ",
     icon: CiMail,
+  },
+];
+
+
+
+
+
+export const TableInfo :OrderTypes[] = [
+  {
+    description: "خرید لپ‌تاپ",
+    amount: "45,000,000 تومان",
+    date: "1402/12/20",
+    status: "پرداخت شد",
+    statusColor: "text-green-500",
+  },
+  {
+    description: "گوشی موبایل",
+    amount: "25,000,000 تومان",
+    date: "1402/12/18",
+    status: "در انتظار",
+    statusColor: "text-yellow-500",
+  },
+  {
+    description: "هدفون بی‌سیم",
+    amount: "3,500,000 تومان",
+    date: "1402/12/15",
+    status: "لغو شد",
+    statusColor: "text-red-500",
   },
 ];
