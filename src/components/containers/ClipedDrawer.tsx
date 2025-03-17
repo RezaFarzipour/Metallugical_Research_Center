@@ -18,7 +18,7 @@ const ClipedDrawer = ({ children }: ClipedDrawerProps) => {
       {/* Sidebar - Hidden on mobile */}
       <aside
         className={`
-          
+
           fixed md:relative bg-[#ffffff] 
           flex flex-col items-center h-full py-8 px-4 w-[280px] 
           z-50 transition-all duration-300
@@ -43,7 +43,7 @@ const ClipedDrawer = ({ children }: ClipedDrawerProps) => {
       {/* Mobile Overlay */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 md:hidden"
+          className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-40"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}

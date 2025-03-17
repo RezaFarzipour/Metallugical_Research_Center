@@ -1,19 +1,33 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 type Props = {
   color: string;
-  shadowColor1: string;
-  shadowColor2: string;
+  shadow: string;
+  icon: React.ReactNode;
+  label: string;
+  count: number;
 };
 
-const Minicard = ({ color, shadowColor1, shadowColor2 }: Props) => {
+const Minicard = ({ color, shadow, icon, label, count }: Props) => {
   return (
-    <div className="w-[300px] h-[90px] bg-[#fff] rounded-[10px] overflow-hidden">
-      {/* اضافه کردن box-shadow به دیو چایلد */}
+    <div className="w-[300px] h-[90px] md:flex md:flex-grow bg-[#fff] rounded-[10px] overflow-hidden relative min-h-[90px]">
       <div
-        className="w-[105px] h-[90px] bg-red-300 rounded-[10px] -skew-x-[15deg] origin-bottom-left 
-        shadow-[rgba(254,114,103,0.2)_-13px_0px,_rgba(254,114,103,0.1)_-23px_0px]"
+        className={twMerge(
+          "w-[95px] md:w-[105px] h-[90px] rounded-[10px] -skew-x-[15deg] origin-bottom-left",
+          color,
+          shadow
+        )}
       ></div>
+      <p className="absolute top-10 right-8 text-md md:text-xl font-bold text-default-100">
+        {icon}
+      </p>
+      <p className="absolute top-6  right-48 text-sm font-bold text-default-600 text-right">
+        {label}
+      </p>
+      <p className="absolute bottom-6 right-48 text-sm font-bold text-default-600">
+        {count}
+      </p>
     </div>
   );
 };

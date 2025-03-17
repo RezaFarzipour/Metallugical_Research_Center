@@ -1,9 +1,7 @@
 import HomePage from "@/components/template/userDashboard/homePage";
 import React from "react";
 
-type Props = {};
-
-const UserDashboard = (props: Props) => {
+const UserDashboard = () => {
   return (
     <div>
       <HomePage />
