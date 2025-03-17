@@ -10,15 +10,16 @@ export type sidebarData = {
   title: string;
   icon: React.ElementType;
   hover?: string;
+  to: string
 };
 
-export type latestArticleType  = {
-  id:number,
-  image:string,
-  publishedDate:Date,
-  author:string,
-  articleTitle:string,
-  description:string
+export type latestArticleType = {
+  id: number,
+  image: string,
+  publishedDate: Date,
+  author: string,
+  articleTitle: string,
+  description: string
 }
 
 

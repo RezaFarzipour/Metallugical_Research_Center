@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@heroui/react";
 import React from "react";
 import { UseFormRegister, FieldErrors } from "react-hook-form";

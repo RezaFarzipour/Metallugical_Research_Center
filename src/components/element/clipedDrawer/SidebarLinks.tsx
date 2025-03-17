@@ -1,4 +1,5 @@
 import { sidebarlinks } from "@/constants/data";
+import Link from "next/link";
 import React from "react";
 
 interface SidebarLinksProps {
@@ -23,11 +24,12 @@ const SidebarLinks = ({ activeItemId, setActiveItemId }: SidebarLinksProps) => {
             <span className="text-xl">
               <link.icon />
             </span>
-            <p
+            <Link
+              href={link.to}
               className={`text-xl text-default-500 transition-all duration-300 hover:${link.hover}`}
             >
               {link.title}
-            </p>
+            </Link>
           </button>
         </div>
       ))}

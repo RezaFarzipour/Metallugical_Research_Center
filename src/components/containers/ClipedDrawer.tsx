@@ -1,6 +1,5 @@
 "use client";
 
-
 import AppBar from "@/components/element/clipedDrawer/AppBar";
 import SidebarHeader from "@/components/element/clipedDrawer/SidebarHeader";
 import SidebarLinks from "@/components/element/clipedDrawer/SidebarLinks";

@@ -1,8 +1,10 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { phoneSchema, PhoneFormData } from "@/schemas/phoneSchema";
 import Button from "@/components/element/Button";
-import RHFInput from "../element/RHFInput";
+import RHFInput from "@/components/element/RHFInput";
 interface SendOtpFormProps {
   onSubmit: (data: PhoneFormData) => void;
 }

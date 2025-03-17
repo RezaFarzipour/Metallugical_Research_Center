@@ -3,13 +3,12 @@ import React from "react";
 
 type Props = {};
 
-const UserDashboard = (props: Props) => {
+const HomePage = (props: Props) => {
   return (
     <div>
-      hello UserDashboard
       <TableModule />
     </div>
   );
 };
 
-export default UserDashboard;
+export default HomePage;

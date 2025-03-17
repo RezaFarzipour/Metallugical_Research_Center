@@ -1,8 +1,10 @@
+"use client";
+
 import { SlCalender } from "react-icons/sl";
 import { InfoItem } from "./InfoItem";
 import { CgProfile } from "react-icons/cg";
 import { Button } from "@heroui/button";
-import HoverIcon from "../ArrowIconEndContent";
+import HoverIcon from "../animations/ArrowIconEndContent";
 import React from "react";
 
 interface CardContentProps {

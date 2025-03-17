@@ -3,7 +3,7 @@ import React from "react";
 import AboutImage from "../element/aboutOverview/AboutImage";
 import AboutText from "../element/aboutOverview/AboutText";
 import SectionWrapper from "../../hoc/SectionWrapper";
-import BgAnimateShape from "../element/BgAnimateShape";
+import BgAnimateShape from "../element/animations/BgAnimateShape";
 
 const AboutOverview: React.FC = () => {
   return (

@@ -1,11 +1,11 @@
 import { TiHomeOutline } from "react-icons/ti";
-import { CiWallet } from "react-icons/ci";
 import { IoMdExit } from "react-icons/io";
 import { contactInfoType, latestArticleType, sidebarData } from "@/types";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePhone } from "react-icons/md";
 import { CiMail } from "react-icons/ci";
 import { OrderTypes } from "@/components/module/TableModule";
+import { TbReportSearch, TbWallet } from "react-icons/tb";
 
 export const sidebarlinks: sidebarData[] = [
   {
@@ -13,20 +13,29 @@ export const sidebarlinks: sidebarData[] = [
     title: "داشبورد",
     icon: TiHomeOutline,
     hover: "text-primary-500",
+    to: "/userdashboard/home"
   },
 
   {
     id: 1,
     title: "سفارش های من",
-    icon: CiWallet,
+    icon: TbWallet,
     hover: "text-primary-500",
+    to: "/userdashboard/myorders"
   },
-
   {
     id: 2,
+    title: "گزارش ها ",
+    icon: TbReportSearch,
+    hover: "text-primary-500",
+    to: "/userdashboard/reports"
+  },
+  {
+    id: 3,
     title: "خروج",
     icon: IoMdExit,
     hover: "text-danger-500",
+    to: "/"
   },
 ];
 
@@ -82,7 +91,7 @@ export const contactusinformation: contactInfoType[] = [
 
 
 
-export const TableInfo :OrderTypes[] = [
+export const TableInfo: OrderTypes[] = [
   {
     description: "خرید لپ‌تاپ",
     amount: "45,000,000 تومان",

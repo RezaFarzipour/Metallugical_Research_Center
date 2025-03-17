@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import MapModule from "../module/MapModule";
 import ContactusInformation from "../module/ContactusInformation";

@@ -1,4 +1,4 @@
-import BgAnimateShape from "@/components/element/BgAnimateShape";
+import BgAnimateShape from "@/components/element/animations/BgAnimateShape";
 import Stepper from "@/components/module/Stepper";
 import Image from "next/image";
 

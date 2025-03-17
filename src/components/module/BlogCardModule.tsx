@@ -1,3 +1,5 @@
+"use client";
+
 import { LatestArticles } from "@/constants/data";
 import { latestArticleType } from "@/types";
 import React, { useState } from "react";

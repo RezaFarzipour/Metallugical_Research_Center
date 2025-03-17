@@ -22,7 +22,7 @@ const AboutImage: React.FC<ImageProps> = ({
 }) => {
   const { ref: imageRef, isVisible } = useIntersectionObserver(0.5);
   const controls = useAnimation();
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   useEffect(() => {
     if (isVisible) {
