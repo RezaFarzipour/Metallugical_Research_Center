@@ -1,18 +1,26 @@
-import { SVGProps } from "react";
+import React, { SVGProps } from "react";
+import { IconType } from "react-icons";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
-
-export type sidebarData = {
-  id: number,
+export interface DashboardMinicardProps {
+  color: string;
+  shadow: string;
+  label: string;
+  count: number;
+  icon: IconType;
+}
+export interface SidebarLink {
+  id: number;
   title: string;
-  icon: React.ElementType;
+  to: string;
   hover?: string;
-  to: string
-};
+  icon: IconType;
+}
 
+//reza:
 export type latestArticleType = {
   id: number,
   image: string,
@@ -29,3 +37,4 @@ export type contactInfoType = {
   desc: string;
   icon: React.ElementType;
 };
+

@@ -7,6 +7,7 @@ export default {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/constants/**/*.{js,ts,jsx,tsx}",  // اضافه کردن فولدر constants
     "./node_modules/@heroui/theme/dist/components/(button|input|input-otp|navbar|ripple|spinner|form).js"
   ],
   darkMode: 'class',

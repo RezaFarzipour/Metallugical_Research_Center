@@ -1,13 +1,18 @@
-import { sidebarlinks } from "@/constants/data";
 import Link from "next/link";
 import React from "react";
+import { SidebarLink } from "@/types/index";
 
 interface SidebarLinksProps {
   activeItemId: number | undefined;
   setActiveItemId: (id: number) => void;
+  sidebarlinks: SidebarLink[];
 }
 
-const SidebarLinks = ({ activeItemId, setActiveItemId }: SidebarLinksProps) => {
+const SidebarLinks = ({
+  activeItemId,
+  setActiveItemId,
+  sidebarlinks,
+}: SidebarLinksProps) => {
   return (
     <div className="w-full bg-[#ffffff]">
       {sidebarlinks.map((link, index) => (
@@ -17,7 +22,7 @@ const SidebarLinks = ({ activeItemId, setActiveItemId }: SidebarLinksProps) => {
             className={`
               flex justify-start w-full gap-3 py-4 px-2 rounded-md 
               cursor-pointer transition-all duration-300 
-              hover:${link.hover}
+              ${link.hover ? `hover:${link.hover}` : ""}
               ${index === activeItemId ? "bg-default-200 font-bold" : ""}
             `}
           >
@@ -26,7 +31,9 @@ const SidebarLinks = ({ activeItemId, setActiveItemId }: SidebarLinksProps) => {
             </span>
             <Link
               href={link.to}
-              className={`text-xl text-default-500 transition-all duration-300 hover:${link.hover}`}
+              className={`text-xl text-default-500 transition-all duration-300 ${
+                link.hover ? `hover:${link.hover}` : ""
+              }`}
             >
               {link.title}
             </Link>

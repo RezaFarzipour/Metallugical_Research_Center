@@ -1,19 +1,27 @@
+'use client'
 import { TiHomeOutline } from "react-icons/ti";
 import { IoMdExit } from "react-icons/io";
-import { contactInfoType, latestArticleType, sidebarData } from "@/types";
+import { contactInfoType, DashboardMinicardProps, latestArticleType, SidebarLink, UserDashboardMinicardProps } from "@/types";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePhone } from "react-icons/md";
 import { CiMail } from "react-icons/ci";
 import { OrderTypes } from "@/components/module/TableModule";
 import { TbReportSearch, TbWallet } from "react-icons/tb";
+import { PiDeviceTabletSpeakerLight } from "react-icons/pi";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import { CiClock1 } from "react-icons/ci";
+import { LuUsers } from "react-icons/lu";
+import { PiDeviceTablet } from "react-icons/pi";
+import { RiBloggerLine } from "react-icons/ri";
 
-export const sidebarlinks: sidebarData[] = [
+// ... existing code ...
+export const userSidebarlinks: SidebarLink[] = [
   {
     id: 0,
     title: "داشبورد",
     icon: TiHomeOutline,
     hover: "text-primary-500",
-    to: "/userdashboard/home"
+    to: "/user/home"
   },
 
   {
@@ -21,14 +29,14 @@ export const sidebarlinks: sidebarData[] = [
     title: "سفارش های من",
     icon: TbWallet,
     hover: "text-primary-500",
-    to: "/userdashboard/myorders"
+    to: "/user/myorders"
   },
   {
     id: 2,
     title: "گزارش ها ",
     icon: TbReportSearch,
     hover: "text-primary-500",
-    to: "/userdashboard/reports"
+    to: "/user/reports"
   },
   {
     id: 3,
@@ -38,7 +46,53 @@ export const sidebarlinks: sidebarData[] = [
     to: "/"
   },
 ];
+export const adminSidebarlinks: SidebarLink[] = [
+  {
+    id: 0,
+    title: "داشبورد",
+    icon: TiHomeOutline,
+    hover: "text-primary-500",
+    to: "/admin/home"
+  },
 
+  {
+    id: 1,
+    title: "کاربر ها",
+    icon: LuUsers,
+    hover: "text-primary-500",
+    to: "/admin/users"
+  },
+  {
+    id: 2,
+    title: "محصولات",
+    icon: PiDeviceTablet,
+    hover: "text-primary-500",
+    to: "/admin/products"
+  },
+  {
+    id: 3,
+    title: "بلاگ ها",
+    icon: RiBloggerLine,
+    hover: "text-primary-500",
+    to: "/admin/blogs"
+  },
+  {
+    id: 4,
+    title: "گزارشات",
+    icon: TbReportSearch,
+    hover: "text-primary-500",
+    to: "/admin/reports"
+  },
+  {
+    id: 5,
+    title: "خروج",
+    icon: IoMdExit,
+    hover: "text-danger-500",
+    to: "/"
+  },
+];
+
+// ... existing code ...
 export const LatestArticles: latestArticleType[] = [
   {
     id: 1,
@@ -112,5 +166,96 @@ export const TableInfo: OrderTypes[] = [
     date: "1402/12/15",
     status: "لغو شد",
     statusColor: "text-red-500",
+  },
+];
+
+export const images = [
+  {
+    src: "/images/about1-image1.png",
+    alt: "About image 1",
+    width: 260,
+    height: 300,
+    className:
+      "object-cover absolute top-0 right-4 sm:right-8 md:right-16 lg:right-28 ",
+  },
+  {
+    src: "/images/about1-image2.png",
+    alt: "About image 2",
+    width: 360,
+    height: 360,
+    className:
+      "object-cover absolute top-[4rem] sm:top-[5rem] md:top-[6rem] right-[8rem] sm:right-[10rem] md:right-[12rem] lg:right-[20rem]",
+  },
+  {
+    src: "/images/about1-image3.png",
+    alt: "About image 3",
+    width: 340,
+    height: 340,
+    className:
+      "object-cover absolute top-[18rem] sm:top-[20rem] md:top-[22rem] lg:top-[28rem] right-4 sm:right-8 md:right-16 lg:right-28",
+  },
+];
+
+export const userCards: DashboardMinicardProps[] = [
+  {
+    color: "bg-primary-900",
+    shadow:
+      "shadow-[rgba(24,45,60,0.2)_-13px_0px,_rgba(24,45,60,0.1)_-23px_0px]",
+    icon: CiClock1,
+    label: "تاریخ پیوستن",
+    count: 10,
+  },
+  {
+    color: "bg-secondary-500",
+    shadow:
+      "shadow-[rgba(55,124,251,0.2)_-13px_0px,_rgba(55,124,251,0.1)_-23px_0px]",
+    icon: PiDeviceTabletSpeakerLight,
+    label: "سفارش ها",
+    count: 10,
+  },
+
+  {
+    color: "bg-green-500",
+    shadow:
+      "shadow-[rgba(34,197,94,0.2)_-13px_0px,_rgba(34,197,94,0.1)_-23px_0px]",
+    icon: IoDocumentTextOutline,
+    label: "همه سفارش ها",
+    count: 10,
+  },
+];
+
+export const adminCards: DashboardMinicardProps[] = [
+  {
+    color: "bg-primary-900",
+    shadow:
+      "shadow-[rgba(24,45,60,0.2)_-13px_0px,_rgba(24,45,60,0.1)_-23px_0px]",
+    icon: LuUsers,
+    label: "کاربران",
+    count: 10,
+  },
+  {
+    color: "bg-secondary-500",
+    shadow:
+      "shadow-[rgba(55,124,251,0.2)_-13px_0px,_rgba(55,124,251,0.1)_-23px_0px]",
+    icon: PiDeviceTabletSpeakerLight,
+    label: "سفارش ها",
+    count: 10,
+  },
+  {
+    color: "bg-purple-500",
+    shadow:
+      "shadow-[rgba(168,85,247,0.2)_-13px_0px,_rgba(168,85,247,0.1)_-23px_0px]",
+    icon: PiDeviceTablet,
+    label: "محصولات",
+    count: 10,
+  },
+
+  {
+    color: "bg-green-500",
+    shadow:
+      "shadow-[rgba(34,197,94,0.2)_-13px_0px,_rgba(34,197,94,0.1)_-23px_0px]",
+    icon: RiBloggerLine,
+    label: "بلاگ ها",
+    count: 10,
   },
 ];

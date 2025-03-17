@@ -1,4 +1,4 @@
-import ReportsPage from "@/components/template/userDashboard/reportsPage";
+import ReportsPage from "@/components/template/userPanel/reportsPage";
 import React from "react";
 
 type Props = {};

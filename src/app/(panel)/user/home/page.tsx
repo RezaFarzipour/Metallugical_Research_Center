@@ -1,4 +1,4 @@
-import HomePage from "@/components/template/userDashboard/homePage";
+import HomePage from "@/components/template/userPanel/homePage";
 import React from "react";
 
 const UserDashboard = () => {

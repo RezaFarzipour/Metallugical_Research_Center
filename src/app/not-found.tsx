@@ -1,5 +1,6 @@
 "use client";
 import useMoveBack from "@/hooks/userMoveBack";
+import { toPersianDigits } from "@/utils/numberFormatter";
 import { HiArrowRight } from "react-icons/hi";
 
 function NotFound() {
@@ -10,7 +11,9 @@ function NotFound() {
       <div className="container xl:max-w-screen-xl mx-auto px-4">
         <div className="flex flex-col items-center justify-center text-center">
           <div className="w-full max-w-md">
-            <h1 className="text-9xl font-bold text-secondary-700 mb-4">404</h1>
+            <h1 className="text-9xl font-bold text-secondary-700 mb-4">
+              {toPersianDigits(404)}
+            </h1>
             <h2 className="text-2xl font-bold text-primary-800 mb-8">
               صفحه ای که دنبالش بودید، پیدا نشد
             </h2>

@@ -1,4 +1,5 @@
 import ClipedDrawer from "@/components/containers/ClipedDrawer";
+import { userSidebarlinks } from "@/constants/data";
 import React from "react";
 
 type DashboardProps = {
@@ -6,7 +7,7 @@ type DashboardProps = {
 };
 
 const Dashboardlayout = ({ children }: DashboardProps) => {
-  return <ClipedDrawer>{children}</ClipedDrawer>;
+  return <ClipedDrawer sideBarData={userSidebarlinks}>{children}</ClipedDrawer>;
 };
 
 export default Dashboardlayout;

@@ -1,15 +1,21 @@
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import TableModule from "@/components/module/TableModule";
-import MiniCardModule from "@/components/module/userDashboard/MiniCardModule";
+import MiniCardModule from "@/components/module/panel/shared/MiniCardModule";
+import { userCards } from "@/constants/data";
+import { DashboardMinicardProps } from "@/types";
 import React from "react";
 import { CgArrowLeft } from "react-icons/cg";
 
-const HomePage: React.FC = () => {
+interface HomePageProps {
+  cards: DashboardMinicardProps[];
+}
+
+const HomePage: React.FC<HomePageProps> = () => {
   return (
     <div className="grid grid-cols-1 gap-6">
       <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
         <TitleStructureDashboards mainTitle="سوابق من" />
-        <MiniCardModule />
+        <MiniCardModule cards={userCards} />
       </div>
 
       <div className="bg-white rounded-sm shadow-md p-4 md:p-6">

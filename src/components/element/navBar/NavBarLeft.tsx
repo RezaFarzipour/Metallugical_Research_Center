@@ -19,7 +19,7 @@ export const NavBarLeft = () => (
       </NavLink>
     </NavbarItem>
     <NavbarItem className="hidden lg:flex">
-      <NavLink path="/userdashboard/home" style={false}>
+      <NavLink path="/admin" style={false}>
         پروفایل
       </NavLink>
     </NavbarItem>

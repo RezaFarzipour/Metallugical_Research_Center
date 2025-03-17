@@ -3,13 +3,15 @@
 import AppBar from "@/components/element/clipedDrawer/AppBar";
 import SidebarHeader from "@/components/element/clipedDrawer/SidebarHeader";
 import SidebarLinks from "@/components/element/clipedDrawer/SidebarLinks";
+import { SidebarLink } from "@/types";
 import React, { useState } from "react";
 
 interface ClipedDrawerProps {
   children: React.ReactNode;
+  sideBarData: SidebarLink[];
 }
 
-const ClipedDrawer = ({ children }: ClipedDrawerProps) => {
+const ClipedDrawer = ({ children, sideBarData }: ClipedDrawerProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [activeItemId, setActiveItemId] = useState<number>();
 
@@ -30,6 +32,7 @@ const ClipedDrawer = ({ children }: ClipedDrawerProps) => {
 
         <div className="flex flex-col justify-between h-full w-full">
           <SidebarLinks
+            sidebarlinks={sideBarData}
             activeItemId={activeItemId}
             setActiveItemId={setActiveItemId}
           />
