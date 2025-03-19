@@ -6,29 +6,33 @@ import { CgProfile } from "react-icons/cg";
 import { Button } from "@heroui/button";
 import HoverIcon from "../animations/ArrowIconEndContent";
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 interface CardContentProps {
-  publishedDate: string; // Adjust type as necessary
+  date: string;
   author: string;
   articleTitle: string;
   description: string;
+  widthConter: string;
+  heightConter: string;
 }
 
 export const CardContent: React.FC<CardContentProps> = ({
-  publishedDate,
+  date,
   author,
   articleTitle,
   description,
+  widthConter,
+  heightConter,
 }) => {
   const [isHovered, setIsHovered] = React.useState(false);
 
   return (
-    <div className="flex flex-col gap-4 p-4 absolute left-1/2 -translate-x-1/2 bottom-[-120px] bg-[#ffffff] w-[95%] xs:h-[230px] sm:h-[250px] rounded-xl shadow-lg transition-transform duration-300 ease-out group-hover:translate-y-[-10px] ">
+    <div
+      className={`flex flex-col gap-4 p-4 absolute left-1/2 -translate-x-1/2 bottom-[-120px] w-[${widthConter}] bg-[#ffffff] xs:h-[230px] sm:h-[${heightConter}] rounded-xl shadow-lg transition-transform duration-300 ease-out group-hover:translate-y-[-10px]`}
+    >
       <div className="flex justify-start gap-5">
-        <InfoItem
-          icon={<SlCalender />}
-          text={JSON.parse(JSON.stringify(publishedDate))}
-        />
+        <InfoItem icon={<SlCalender />} text={date} />
         <InfoItem icon={<CgProfile />} text={author} />
       </div>
       <h4 className="font-extrabold text-nowrap text-2xl">{articleTitle}</h4>
