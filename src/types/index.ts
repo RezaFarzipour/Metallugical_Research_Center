@@ -21,14 +21,6 @@ export interface SidebarLink {
 }
 
 //reza:
-export type latestArticleType = {
-  id: number,
-  image: string,
-  publishedDate: Date,
-  author: string,
-  articleTitle: string,
-  description: string
-}
 
 
 export type contactInfoType = {

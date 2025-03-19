@@ -5,7 +5,7 @@ import { contactInfoType, DashboardMinicardProps, latestArticleType, SidebarLink
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePhone } from "react-icons/md";
 import { CiMail } from "react-icons/ci";
-import { OrderTypes } from "@/components/module/TableModule";
+import { OrderTypes } from "@/components/module/panel/shared/PanelContainer";
 import { TbReportSearch, TbWallet } from "react-icons/tb";
 import { PiDeviceTabletSpeakerLight } from "react-icons/pi";
 import { IoDocumentTextOutline } from "react-icons/io5";
@@ -97,7 +97,7 @@ export const LatestArticles: latestArticleType[] = [
   {
     id: 1,
     image: "/images/blog1-img1.png",
-    publishedDate: new Date(),
+    date: "1402/12/20",
     author: "محمد حیدری",
     articleTitle: "پیشرو در تجزیه و تحلیل شیمیایی",
     description:
@@ -106,7 +106,7 @@ export const LatestArticles: latestArticleType[] = [
   {
     id: 2,
     image: "/images/blog1-img2.png",
-    publishedDate: new Date(),
+    date: "1402/12/20",
     author: "مریم زمانی",
     articleTitle: "مقررات صنعت گرایش های نوظهور",
     description:
@@ -259,3 +259,4 @@ export const adminCards: DashboardMinicardProps[] = [
     count: 10,
   },
 ];
+

@@ -1,3 +1,4 @@
+import BlogsPage from "@/components/template/adminPanel/blogsPage";
 import React from "react";
 
 type Props = {};
@@ -5,6 +6,7 @@ type Props = {};
 const page = (props: Props) => {
   return (
     <div>
+      <BlogsPage />
     </div>
   );
 };
