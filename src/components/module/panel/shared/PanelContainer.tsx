@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { initializeTableStore, useTableStore } from "@/store/useTableSlice";
+import { useTableStore } from "@/store/useTableSlice";
 import TopContent from "@/components/element/panelContent/topContent/TopContent";
 import BottomContent from "@/components/element/panelContent/BottomContent";
 import CardElement from "@/components/element/cardElement/CardElement";
@@ -67,6 +67,8 @@ export default function PanelContainer({
     filterValue,
     visibleColumns,
     statusFilter,
+    view,
+    setView,
     rolesFilter,
     productStatusFilter,
     rowsPerPage,
@@ -74,9 +76,11 @@ export default function PanelContainer({
     page,
     setPage,
   } = useTableStore();
-  const [view, setView] = useState<boolean>(false);
+
   React.useEffect(() => {
-    initializeTableStore(INITIAL_VISIBLE_COLUMNS);
+    useTableStore.setState({
+      visibleColumns: new Set(INITIAL_VISIBLE_COLUMNS),
+    });
   }, [INITIAL_VISIBLE_COLUMNS]);
 
   // محاسبه ستون‌های هدر
@@ -149,7 +153,6 @@ export default function PanelContainer({
           roles={roles}
           product={product}
           viewContent={viewContent}
-          setView={setView}
         />
       )}
       {!view ? (

@@ -11,19 +11,21 @@ interface TableState {
     visibleColumns: Set<string>;
     statusFilter: string | Set<string>;
     rolesFilter: string | Set<string>;
-    productStatusFilter: string | Set<string>; // Corrected the property name
+    productStatusFilter: string | Set<string>;
     rowsPerPage: number;
     sortDescriptor: SortDescriptor;
     page: number;
+    view: boolean;
     setFilterValue: (value: string) => void;
     setSelectedKeys: (keys: Set<string>) => void;
     setVisibleColumns: (columns: Set<string>) => void;
     setStatusFilter: (filter: string | Set<string>) => void;
     setRolesFilter: (filter: string | Set<string>) => void;
-    setProductStatusFilter: (filter: string | Set<string>) => void; // Added the missing method
+    setProductStatusFilter: (filter: string | Set<string>) => void;
     setRowsPerPage: (rows: number) => void;
     setSortDescriptor: (descriptor: SortDescriptor) => void;
     setPage: (page: number) => void;
+    setView: (view: boolean) => void;
 }
 
 export const useTableStore = create<TableState>((set) => ({
@@ -36,6 +38,7 @@ export const useTableStore = create<TableState>((set) => ({
     rowsPerPage: 5,
     sortDescriptor: { column: 'id', direction: 'ascending' },
     page: 1,
+    view: false,
     setFilterValue: (value: string) => set({ filterValue: value }),
     setSelectedKeys: (keys: Set<string>) => set({ selectedKeys: keys }),
     setVisibleColumns: (columns: Set<string>) => set({ visibleColumns: columns }),
@@ -45,8 +48,5 @@ export const useTableStore = create<TableState>((set) => ({
     setRowsPerPage: (rows: number) => set({ rowsPerPage: rows }),
     setSortDescriptor: (descriptor: SortDescriptor) => set({ sortDescriptor: descriptor }),
     setPage: (page: number) => set({ page }),
+    setView: (view: boolean) => set({ view }),
 }));
-
-export const initializeTableStore = (initialVisibleColumns: string[]) => {
-    useTableStore.setState({ visibleColumns: new Set(initialVisibleColumns) });
-};

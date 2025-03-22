@@ -16,7 +16,6 @@ interface TopContentProps {
   btn?: React.ReactNode;
   product?: boolean;
   viewContent?: boolean;
-  setView?: (view: boolean) => void;
 }
 
 export default function TopContent({
@@ -27,7 +26,6 @@ export default function TopContent({
   dropDownBtn,
   product,
   viewContent,
-  setView,
 }: TopContentProps) {
   const {
     filterValue,
@@ -35,6 +33,7 @@ export default function TopContent({
     statusFilter,
     rolesFilter,
     productStatusFilter,
+    view,
     setVisibleColumns,
     setStatusFilter,
     setRolesFilter,
@@ -42,6 +41,7 @@ export default function TopContent({
     setPage,
     setFilterValue,
     setRowsPerPage,
+    setView,
   } = useTableStore();
 
   const handleSearchChange = useCallback(
@@ -68,7 +68,7 @@ export default function TopContent({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center gap-3">
-        {viewContent && setView && <ViewToggle setView={setView} />}
+        {viewContent && setView && <ViewToggle view={view} setView={setView} />}
         <SearcBar
           filterValue={filterValue}
           onClear={handleClearSearch}

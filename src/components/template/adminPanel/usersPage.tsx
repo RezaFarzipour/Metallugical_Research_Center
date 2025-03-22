@@ -17,7 +17,7 @@ interface UsersPageProps {
 }
 const UsersPage: React.FC<UsersPageProps> = () => {
   return (
-    <div className="grid grid-cols-1">
+    <div className="grid grid-cols-1" >
       <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
         <TitleStructureDashboards mainTitle="کاربران" />
         <PanelContainer
