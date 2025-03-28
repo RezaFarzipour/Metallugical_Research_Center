@@ -5,7 +5,7 @@ import { Breadcrumbs, BreadcrumbItem } from "@heroui/react";
 type BreadcrumbsProps = {
   item1?: string;
   item2?: string;
-  panelHref: string;
+  panelHref?: string;
 };
 
 const BreadcrumbsElement = ({ item1, item2, panelHref }: BreadcrumbsProps) => {

@@ -6,7 +6,6 @@ import { NavBarRight } from "@/components/element/navBar/NavBarRight";
 import { NavBarLeft } from "@/components/element/navBar/NavBarLeft";
 import MobileMenu from "@/components/element/navBar/MobileMenu";
 
-
 const navbarStyles = {
   base: "z-10 shadow-md bg-inherit mb-10 transition-all duration-200 border-b border-b-secondary-300",
   loading: (isLoading: boolean) =>
@@ -29,7 +28,9 @@ const NavBar = () => {
       shouldHideOnScroll
       onMenuOpenChange={setIsMenuOpen}
       maxWidth="full"
-      className={`${navbarStyles.base} ${navbarStyles.loading(isLoading)}`}
+      className={`${navbarStyles.base} ${navbarStyles.loading(
+        isLoading
+      )} bg-white/50`}
     >
       <NavBarRight isMenuOpen={isMenuOpen} />
       <NavBarLeft />

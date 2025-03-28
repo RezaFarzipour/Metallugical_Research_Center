@@ -15,8 +15,7 @@ const NavLink = ({ path, children, style = true }: NavLinkProps) => {
   const pathname = usePathname();
   const isActive = pathname === path;
 
-  const baseStyles =
-    "block py-2 transition-all ease leading-none text-secondary-900/80";
+  const baseStyles = "block py-2  leading-none text-secondary-900/80";
 
   const activeStyles =
     style && isActive
@@ -24,7 +23,7 @@ const NavLink = ({ path, children, style = true }: NavLinkProps) => {
       : "";
 
   const hoverStyles = style
-    ? "hover:border-t-2 hover:border-t-secondary-600 hover:rounded-[4px]"
+    ? "hover:border-t-2 border-t-secondary-600 hover:rounded-[4px]"
     : "";
 
   return (
