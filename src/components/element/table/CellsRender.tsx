@@ -1,16 +1,22 @@
+"use client";
 import React from "react";
 import { Chip, Tooltip } from "@heroui/react";
 import { statusColorMap } from "@/constants/tableData";
 import Image from "next/image";
 
 interface User {
-  id: string;
+  id: number;
   name: string;
   email: string;
   role: string;
   status: string;
-  image: string;
+  amount: string;
+  date: string;
   title: string;
+  description: string;
+  image: string;
+  author: string;
+  articleTitle: string;
 }
 
 interface CellRendererProps {
@@ -51,9 +57,9 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
       return (
         <div className="flex items-center gap-2">
           {image && (
-            <Image src={user.image} alt={user.name} width={32} height={32} />
+            <Image src={user.image} alt={user.author} width={32} height={32} />
           )}
-          <span>{user.title}</span>
+          <span>{user.author}</span>
         </div>
       );
     case "role":
@@ -66,7 +72,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
       return (
         <Chip
           className="capitalize"
-          color={statusColorMap[user.status]}
+          color={statusColorMap[user.status as keyof typeof statusColorMap]}
           size="sm"
           variant="flat"
         >

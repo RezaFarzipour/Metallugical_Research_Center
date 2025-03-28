@@ -1,5 +1,5 @@
 import Layout from "@/components/containers/layout/Layout";
-import ContactusHeader from "@/components/module/ContactusHeader";
+import HeaderImage from "@/components/module/HeaderImage";
 
 export default function ContactUsLayout({
   children,
@@ -10,7 +10,7 @@ export default function ContactUsLayout({
     <>
       <Layout>
         {/* banner section */}
-        <ContactusHeader />
+        <HeaderImage headrName="ارتباط با ما" breadcrumbItem2="ارتباط با ما" />
         {children}
       </Layout>
     </>
