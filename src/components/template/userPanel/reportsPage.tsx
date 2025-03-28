@@ -1,32 +1,38 @@
 "use client";
 
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import PanelContainer from "@/components/module/panel/shared/PanelContainer";
 import {
   columns,
   usersOrders,
   usersOrdersINITIAL_VISIBLE_COLUMNS,
 } from "@/constants/tableData";
-import { DashboardMinicardProps } from "@/types";
-import React from "react";
+import React, { useMemo } from "react";
+import FilteredContainer from "@/components/containers/FilteredContainer";
+import CustomeTable from "@/components/element/table/CustomeTable";
+import { useTableStore } from "@/store/useTableSlice";
+import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 
-interface HomePageProps {
-  cards: DashboardMinicardProps[];
-}
+const HomePage: React.FC = () => {
+  const { visibleColumns } = useTableStore();
+  const { sortedItems } = useFilteredContainer(usersOrders);
 
-const HomePage: React.FC<HomePageProps> = () => {
+  // محاسبه ستون‌های هدر
+  const headerColumns = useMemo(() => {
+    return visibleColumns.size === columns.length
+      ? columns
+      : columns.filter((column) => visibleColumns.has(column.uid));
+  }, [visibleColumns]);
   return (
     <div className="grid grid-cols-1 gap-6">
       <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
         <TitleStructureDashboards mainTitle="گزارش ها " />
-        <PanelContainer
+
+        <FilteredContainer
           users={usersOrders}
-          columns={columns}
           INITIAL_VISIBLE_COLUMNS={usersOrdersINITIAL_VISIBLE_COLUMNS}
-          firstActionContent="پرداخت"
-          secondActionContent="لغو"
           quantity="گزارش ها "
           viewContent={false}
+          viewContentSmSize={false}
           topContents={true}
           bottomContents={true}
           btn={false}
@@ -34,7 +40,15 @@ const HomePage: React.FC<HomePageProps> = () => {
           roles={false}
           product={false}
           image={false}
-        />
+        >
+          <CustomeTable
+            headerColumns={headerColumns}
+            sortedItems={sortedItems}
+            firstActionContent="پرداخت"
+            secondActionContent="لغو"
+            image={true}
+          />
+        </FilteredContainer>
       </div>
     </div>
   );

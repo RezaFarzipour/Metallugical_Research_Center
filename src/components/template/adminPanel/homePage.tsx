@@ -1,9 +1,8 @@
 "use client";
 
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import MiniCardModule from "@/components/module/panel/shared/MiniCardModule";
-import { DashboardMinicardProps } from "@/types";
-import React from "react";
+import MiniCardModule from "@/components/module/MiniCardModule";
+import React, { useMemo } from "react";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { CgArrowLeft } from "react-icons/cg";
 import {
@@ -12,14 +11,24 @@ import {
   usersOrdersINITIAL_VISIBLE_COLUMNS,
 } from "@/constants/tableData";
 import { adminCards } from "@/constants/data";
-import PanelContainer from "@/components/module/panel/shared/PanelContainer";
+import { useTableStore } from "@/store/useTableSlice";
+import { useFilteredContainer } from "@/hooks/useFilteredContainer";
+import FilteredContainer from "@/components/containers/FilteredContainer";
+import CustomeTable from "@/components/element/table/CustomeTable";
 
-interface HomePageProps {
-  cards: DashboardMinicardProps[];
-}
-const HomePage: React.FC<HomePageProps> = () => {
+const HomePage: React.FC = () => {
+  const { visibleColumns } = useTableStore();
+  const { sortedItems } = useFilteredContainer(usersOrders);
+
+  // محاسبه ستون‌های هدر
+  const headerColumns = useMemo(() => {
+    return visibleColumns.size === columns.length
+      ? columns
+      : columns.filter((column) => visibleColumns.has(column.uid));
+  }, [visibleColumns]);
+
   return (
-    <div className="grid grid-cols-1 gap-6" >
+    <div className="grid grid-cols-1 gap-6">
       <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
         <TitleStructureDashboards mainTitle="داشبورد" />
         <MiniCardModule cards={adminCards} />
@@ -32,15 +41,11 @@ const HomePage: React.FC<HomePageProps> = () => {
           href="/admin/reports"
           icon={<CgArrowLeft />}
         />
-        <PanelContainer
+        <FilteredContainer
           users={usersOrders}
-          columns={columns}
           INITIAL_VISIBLE_COLUMNS={usersOrdersINITIAL_VISIBLE_COLUMNS}
-          firstActionContent="تایید"
-          firstActionIcon={AiOutlineCheck}
-          secondActionContent="لغو"
-          secondActionIcon={AiOutlineClose}
           viewContent={false}
+          viewContentSmSize={false}
           topContents={false}
           bottomContents={false}
           btn={false}
@@ -48,7 +53,17 @@ const HomePage: React.FC<HomePageProps> = () => {
           roles={false}
           product={false}
           image={false}
-        />
+        >
+          <CustomeTable
+            headerColumns={headerColumns}
+            sortedItems={sortedItems}
+            firstActionContent="تایید"
+            firstActionIcon={AiOutlineCheck}
+            secondActionContent="لغو"
+            secondActionIcon={AiOutlineClose}
+            image={true}
+          />
+        </FilteredContainer>
       </div>
     </div>
   );

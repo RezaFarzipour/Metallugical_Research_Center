@@ -1,24 +1,29 @@
 "use client";
-
+import React, { useMemo } from "react";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import MiniCardModule from "@/components/module/panel/shared/MiniCardModule";
-import PanelContainer from "@/components/module/panel/shared/PanelContainer";
+import MiniCardModule from "@/components/module/MiniCardModule";
 import { userCards } from "@/constants/data";
 import {
   columns,
   usersOrders,
   usersOrdersINITIAL_VISIBLE_COLUMNS,
 } from "@/constants/tableData";
-import { DashboardMinicardProps } from "@/types";
-import React from "react";
-import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { CgArrowLeft } from "react-icons/cg";
+import { useFilteredContainer } from "@/hooks/useFilteredContainer";
+import { useTableStore } from "@/store/useTableSlice";
+import FilteredContainer from "@/components/containers/FilteredContainer";
+import CustomeTable from "@/components/element/table/CustomeTable";
 
-interface HomePageProps {
-  cards: DashboardMinicardProps[];
-}
+const HomePage: React.FC = () => {
+  const { visibleColumns } = useTableStore();
+  const { sortedItems } = useFilteredContainer(usersOrders);
 
-const HomePage: React.FC<HomePageProps> = () => {
+  // محاسبه ستون‌های هدر
+  const headerColumns = useMemo(() => {
+    return visibleColumns.size === columns.length
+      ? columns
+      : columns.filter((column) => visibleColumns.has(column.uid));
+  }, [visibleColumns]);
   return (
     <div className="grid grid-cols-1 gap-6">
       <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
@@ -33,13 +38,13 @@ const HomePage: React.FC<HomePageProps> = () => {
           href="/user/reports"
           icon={<CgArrowLeft />}
         />
-        <PanelContainer
+
+        <FilteredContainer
           users={usersOrders}
-          columns={columns}
           INITIAL_VISIBLE_COLUMNS={usersOrdersINITIAL_VISIBLE_COLUMNS}
-          firstActionContent="پرداخت"
-          secondActionContent="لغو"
+          quantity="سفارش ها "
           viewContent={false}
+          viewContentSmSize={false}
           topContents={false}
           bottomContents={false}
           btn={false}
@@ -47,7 +52,15 @@ const HomePage: React.FC<HomePageProps> = () => {
           roles={false}
           product={false}
           image={false}
-        />
+        >
+          <CustomeTable
+            headerColumns={headerColumns}
+            sortedItems={sortedItems}
+            firstActionContent="پرداخت"
+            secondActionContent="لغو"
+            image={true}
+          />
+        </FilteredContainer>
       </div>
     </div>
   );

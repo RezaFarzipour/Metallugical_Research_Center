@@ -1,35 +1,40 @@
 "use client";
 
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import PanelContainer from "@/components/module/panel/shared/PanelContainer";
 import {
   columns,
   users,
   usersINITIAL_VISIBLE_COLUMNS,
 } from "@/constants/tableData";
-import { DashboardMinicardProps } from "@/types";
-import React from "react";
+import React, { useMemo } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
+import { useTableStore } from "@/store/useTableSlice";
+import { useFilteredContainer } from "@/hooks/useFilteredContainer";
+import FilteredContainer from "@/components/containers/FilteredContainer";
+import CustomeTable from "@/components/element/table/CustomeTable";
 
-interface UsersPageProps {
-  cards: DashboardMinicardProps[];
-}
-const UsersPage: React.FC<UsersPageProps> = () => {
+const UsersPage: React.FC = () => {
+  const { visibleColumns } = useTableStore();
+  const { sortedItems } = useFilteredContainer(users);
+
+  // محاسبه ستون‌های هدر
+  const headerColumns = useMemo(() => {
+    return visibleColumns.size === columns.length
+      ? columns
+      : columns.filter((column) => visibleColumns.has(column.uid));
+  }, [visibleColumns]);
   return (
-    <div className="grid grid-cols-1" >
+    <div className="grid grid-cols-1">
       <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
         <TitleStructureDashboards mainTitle="کاربران" />
-        <PanelContainer
+
+        <FilteredContainer
           users={users}
-          columns={columns}
           INITIAL_VISIBLE_COLUMNS={usersINITIAL_VISIBLE_COLUMNS}
           quantity="کاربران"
-          firstActionContent="جزئیات"
-          firstActionIcon={TbEyeDiscount}
-          secondActionContent="حذف"
-          secondActionIcon={MdDeleteOutline}
           viewContent={false}
+          viewContentSmSize={false}
           topContents={true}
           bottomContents={true}
           btn={true}
@@ -37,7 +42,17 @@ const UsersPage: React.FC<UsersPageProps> = () => {
           roles={true}
           product={false}
           image={false}
-        />
+        >
+          <CustomeTable
+            headerColumns={headerColumns}
+            sortedItems={sortedItems}
+            firstActionContent="جزئیات"
+            firstActionIcon={TbEyeDiscount}
+            secondActionContent="حذف"
+            secondActionIcon={MdDeleteOutline}
+            image={true}
+          />
+        </FilteredContainer>
       </div>
     </div>
   );
