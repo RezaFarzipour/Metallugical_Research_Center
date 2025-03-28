@@ -15,6 +15,7 @@ interface CardContentProps {
   description: string;
   widthConter: string;
   heightConter: string;
+  view: boolean;
 }
 
 export const CardContent: React.FC<CardContentProps> = ({
@@ -24,13 +25,18 @@ export const CardContent: React.FC<CardContentProps> = ({
   description,
   widthConter,
   heightConter,
+  view,
 }) => {
   const [isHovered, setIsHovered] = React.useState(false);
 
+  const cardStyles = {
+    cardBox: `flex flex-col gap-4 p-4 absolute left-1/2 -translate-x-1/2 bottom-[-160px] w-[${widthConter}] bg-[#ffffff] xs:h-[230px] sm:h-[${heightConter}] rounded-xl shadow-lg transition-transform duration-300 ease-out group-hover:translate-y-[-10px]`,
+
+    cardList: `flex  gap-4 p-4 w-full bg-[#ffffff]  rounded-xl shadow-lg transition-transform duration-300 ease-out `,
+  };
+
   return (
-    <div
-      className={`flex flex-col gap-4 p-4 absolute left-1/2 -translate-x-1/2 bottom-[-120px] w-[${widthConter}] bg-[#ffffff] xs:h-[230px] sm:h-[${heightConter}] rounded-xl shadow-lg transition-transform duration-300 ease-out group-hover:translate-y-[-10px]`}
-    >
+    <div className={twMerge(view ? cardStyles.cardBox : cardStyles.cardList)}>
       <div className="flex justify-start gap-5">
         <InfoItem icon={<SlCalender />} text={date} />
         <InfoItem icon={<CgProfile />} text={author} />

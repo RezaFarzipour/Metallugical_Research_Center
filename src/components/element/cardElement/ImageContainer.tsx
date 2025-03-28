@@ -7,14 +7,18 @@ interface ImageContainerProps {
   image: string;
   isHovered: boolean;
   setIsHovered: (hovered: boolean) => void;
+  view: boolean;
 }
 
 export const ImageContainer: React.FC<ImageContainerProps> = ({
   image,
   isHovered,
   setIsHovered,
+  view,
 }) => (
-  <div className="relative w-full h-full overflow-hidden rounded-xl ">
+  <div
+    className={`relative w-full h-full overflow-hidden ${view && "rounded-xl"}`}
+  >
     <Image
       width={500}
       height={500}
