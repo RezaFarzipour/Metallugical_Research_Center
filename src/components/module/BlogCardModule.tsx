@@ -4,7 +4,7 @@ import { LatestArticles } from "@/constants/data";
 import React from "react";
 import TitleStructure from "../element/TitleStructure";
 import SectionWrapper from "@/hoc/SectionWrapper";
-import CardElement from "../element/cardElement/CardElement";
+import CardModule from "./CardModule";
 
 const BlogCardModule = () => {
   return (
@@ -17,10 +17,10 @@ const BlogCardModule = () => {
         نگاهی به آخرین مقالات ما بندازید.
       </h2>
       <div className="flex flex-col gap-36 lg:gap-5 lg:flex-row justify-center w-full items-center p-4 ">
-        <CardElement
+        <CardModule
           data={LatestArticles}
           widthConter="95%"
-          heightImg="400px"
+          heightImg="300px"
           heightConter="350px"
         />
       </div>

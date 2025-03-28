@@ -5,7 +5,7 @@ import { contactInfoType, DashboardMinicardProps, latestArticleType, SidebarLink
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePhone } from "react-icons/md";
 import { CiMail } from "react-icons/ci";
-import { OrderTypes } from "@/components/module/panel/shared/PanelContainer";
+import { OrderTypes } from "@/components/containers/FilteredContainer";
 import { TbReportSearch, TbWallet } from "react-icons/tb";
 import { PiDeviceTabletSpeakerLight } from "react-icons/pi";
 import { IoDocumentTextOutline } from "react-icons/io5";

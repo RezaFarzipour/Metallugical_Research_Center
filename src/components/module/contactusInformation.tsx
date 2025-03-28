@@ -8,7 +8,7 @@ const ContactusInformation = () => {
       {/*right */}
       <div className="w-full lg:w-1/2 ">ghjgjmgh</div>
       {/* left */}
-      <div className="w-full flex flex-col items-start gap-5 ml-20 lg:w-1/2  ">
+      <div className="w-full flex flex-col items-center gap-5 ml-20 lg:w-1/2  ">
         <h1 className="text-6xl font-extrabold ">دکتر محمد سلیمی</h1>
         <p className="font-bold text-2xl">زمان فعالیت آزمایشگاه</p>
         <div className="flex items-center gap-5">

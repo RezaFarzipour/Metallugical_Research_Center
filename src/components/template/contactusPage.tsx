@@ -8,10 +8,10 @@ import ContactusInformation from "../module/ContactusInformation";
 
 const ContactusPage = () => {
   return (
-    <div className=" w-full flex flex-col ">
+    <div className=" w-full flex flex-col mt-80">
       {/* main content */}
 
-      <div className="w-full  my-20 flex flex-col lg:flex-row justify-around gap-5 items-center">
+      <div className="w-full   my-20 flex flex-col lg:flex-row justify-around gap-5 items-center">
         <ContactusInformation />
       </div>
 

@@ -10,10 +10,28 @@ import {
   TableCell,
 } from "@heroui/react";
 import { CellRenderer } from "./CellsRender";
-
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+  amount: string;
+  date: string;
+  title: string;
+  description: string;
+  image: string;
+  author: string;
+  articleTitle: string;
+}
+interface Column {
+  name: string;
+  uid: string;
+  sortable: boolean;
+}
 interface CustomeTableProps {
-  headerColumns: any[];
-  sortedItems: any[];
+  headerColumns: Column[];
+  sortedItems: User[];
   firstActionContent: string;
   firstActionIcon?: React.FC;
   secondActionContent: string;
