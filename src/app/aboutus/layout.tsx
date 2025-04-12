@@ -1,4 +1,5 @@
 import Layout from "@/components/containers/layout/Layout";
+import HeaderImage from "@/components/module/HeaderImage";
 
 export default function AboutUsLayout({
   children,
@@ -7,7 +8,14 @@ export default function AboutUsLayout({
 }) {
   return (
     <>
-      <Layout>{children}</Layout>
+      <Layout>
+        <HeaderImage
+          headrName="درباره ی ما"
+          breadcrumbItem2="ارتباط با ما"
+          panelHref="/contactus"
+        />
+        {children}
+      </Layout>
     </>
   );
 }

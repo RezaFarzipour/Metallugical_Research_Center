@@ -1,3 +1,5 @@
+import AboutusPage from "@/components/template/AboutusPage";
+
 export const metadata = {
   //   title: "About",
   title: {
@@ -6,6 +8,6 @@ export const metadata = {
 };
 
 function AboutPage() {
-  return <div>About</div>;
+  return <AboutusPage />;
 }
 export default AboutPage;
