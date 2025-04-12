@@ -13,7 +13,7 @@ const Empty = (props: Props) => {
           </h1>
           <button className="flex items-center gap-x-2 text-secondary-500">
             <HiArrowRight className="w-6 h-6 text-primary-900" />
-            <span> رفتن به صفحه خدمات ها</span>
+            <span> رفتن به صفحه خدمات</span>
           </button>
         </div>
       </div>

@@ -16,13 +16,13 @@ const Services: React.FC = () => {
   return (
     <div className="container flex flex-col items-center justify-center gap-5 max-w-screen-lg pt-72">
       <h3 className="flex text-xl">
-        <TitleStructure size="1rem">خدمات های ما </TitleStructure>
+        <TitleStructure size="1rem">خدمات  ما </TitleStructure>
       </h3>
 
       <div className="flex flex-col gap-36 lg:gap-5 lg:flex-row justify-center w-full items-center p-4">
         <FilteredContainer
           users={products}
-          quantity="خدمات های ما "
+          quantity="خدمات  ما "
           viewContent
           viewContentSmSize
           topContents

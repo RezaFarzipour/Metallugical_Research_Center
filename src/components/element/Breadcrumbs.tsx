@@ -19,8 +19,8 @@ const BreadcrumbsElement = ({ item1, item2, panelHref }: BreadcrumbsProps) => {
       }}
       separator="/"
     >
-      <BreadcrumbItem href="/">{item1}</BreadcrumbItem>
-      <BreadcrumbItem href={panelHref}>{item2}</BreadcrumbItem>
+      <BreadcrumbItem className="pointer" href="/">{item1}</BreadcrumbItem>
+      <BreadcrumbItem  className="pointer" href={panelHref}>{item2}</BreadcrumbItem>
     </Breadcrumbs>
   );
 };
