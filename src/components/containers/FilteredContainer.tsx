@@ -28,6 +28,7 @@ interface PanelContainerProps {
   topContents?: boolean;
   bottomContents?: boolean;
   btn?: boolean;
+  btnhref?: string;
   dropDownBtn?: boolean;
   roles: boolean;
   product: boolean;
@@ -43,6 +44,7 @@ export default function FilteredContainer({
   topContents,
   bottomContents,
   btn,
+  btnhref,
   dropDownBtn,
   roles,
   product,
@@ -67,6 +69,7 @@ export default function FilteredContainer({
           usersLength={users.length}
           quantity={quantity}
           btn={btn}
+          btnhref={btnhref}
           dropDownBtn={dropDownBtn}
           roles={roles}
           product={product}

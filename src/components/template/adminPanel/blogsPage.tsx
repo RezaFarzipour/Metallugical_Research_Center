@@ -39,6 +39,7 @@ export const BlogsPage: React.FC = () => {
           topContents={true}
           bottomContents={true}
           btn={true}
+          btnhref="/admin/blogs/createblog"
           dropDownBtn={true}
           roles={true}
           product={false}
