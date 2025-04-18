@@ -10,7 +10,7 @@ export default function ContactUsLayout({
     <>
       <Layout>
         {/* banner section */}
-        <HeaderImage headrName="ارتباط با ما" breadcrumbItem2="ارتباط با ما" />
+        <HeaderImage headrName="ارتباط با ما" breadcrumbItem2=" درباره ی ما" panelHref="/aboutus"/>
         {children}
       </Layout>
     </>

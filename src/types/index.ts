@@ -30,3 +30,22 @@ export type contactInfoType = {
   icon: React.ElementType;
 };
 
+
+
+export interface FAQItem {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+
+export interface FormInputConfig {
+  id: number;
+  label: string;
+  name: string;
+  type: string;
+  maxLength?: number;
+  placeholder?: string;
+  boleean?: boolean;
+  options?:{label:string,value:boolean}[]
+}

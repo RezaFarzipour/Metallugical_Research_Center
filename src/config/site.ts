@@ -12,7 +12,7 @@ export const siteConfig = {
     },
     {
       id: 2,
-      label: "خدمات ها",
+      label: "خدمات",
       path: "/services",
     },
     {
@@ -25,7 +25,6 @@ export const siteConfig = {
       label: "ارتباط با ما ",
       path: "/contactus",
     },
-
   ],
 
   links: {
@@ -33,6 +32,6 @@ export const siteConfig = {
     whatsapp: IoLogoWhatsapp,
     eita: "https://patreon.com/jrgarciadev",
     bale: "https://patreon.com/jrgarciadev",
-    instagram: FaInstagram
+    instagram: FaInstagram,
   },
 };

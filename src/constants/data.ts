@@ -1,7 +1,7 @@
 'use client'
 import { TiHomeOutline } from "react-icons/ti";
 import { IoMdExit } from "react-icons/io";
-import { contactInfoType, DashboardMinicardProps, latestArticleType, SidebarLink, UserDashboardMinicardProps } from "@/types";
+import { contactInfoType, DashboardMinicardProps, FAQItem, FormInputConfig, latestArticleType, SidebarLink, UserDashboardMinicardProps } from "@/types";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePhone } from "react-icons/md";
 import { CiMail } from "react-icons/ci";
@@ -13,6 +13,7 @@ import { CiClock1 } from "react-icons/ci";
 import { LuUsers } from "react-icons/lu";
 import { PiDeviceTablet } from "react-icons/pi";
 import { RiBloggerLine } from "react-icons/ri";
+import { kMaxLength } from "buffer";
 
 // ... existing code ...
 export const userSidebarlinks: SidebarLink[] = [
@@ -260,3 +261,98 @@ export const adminCards: DashboardMinicardProps[] = [
   },
 ];
 
+
+
+
+
+export const faqData: FAQItem[] = [
+  {
+    id: 1,
+    question: "چگونه می‌توانم حساب کاربری ایجاد کنم؟",
+    answer: "برای ایجاد حساب کاربری، به صفحه ثبت‌نام بروید و اطلاعات خود را وارد کنید.",
+  },
+  {
+    id: 2,
+    question: "چگونه می‌توانم رمز عبورم را تغییر دهم؟",
+    answer: "برای تغییر رمز عبور، وارد تنظیمات حساب کاربری شوید و گزینه تغییر رمز عبور را انتخاب کنید.",
+  },
+  {
+    id: 3,
+    question: "آیا امکان بازگردانی سفارش وجود دارد؟",
+    answer: "بله، در صورت داشتن شرایط بازگشت کالا، می‌توانید درخواست خود را از طریق پشتیبانی ثبت کنید.",
+  },
+  {
+    id: 4,
+    question: "چگونه می‌توانم با پشتیبانی تماس بگیرم؟",
+    answer: "می‌توانید از طریق ایمیل، تلفن یا چت آنلاین با پشتیبانی در ارتباط باشید.",
+  },
+  {
+    id: 5,
+    question: "مدت زمان ارسال سفارش چقدر است؟",
+    answer: "مدت زمان ارسال سفارش بین ۳ تا ۷ روز کاری متغیر است، بسته به موقعیت جغرافیایی شما.",
+  },
+];
+
+
+
+export const adduserInputData:FormInputConfig[] =[
+  {
+    id:1,
+    label:"نام کاربری",
+    name:"username",
+    type:"text",
+    maxLength:100,
+    placeholder:"نام کاربری  را وارد کنید",
+  },
+  {
+    id:2,
+    label:"نام ",
+    name:"first_name",
+    type:"text",
+    maxLength:100,
+    placeholder:"نام   را وارد کنید",
+  },
+  {
+    id:3,
+    label:"نام خانوادگی",
+    name:"last_name",
+    type:"text",
+    maxLength:100,
+    placeholder:"نام خانوادگی  را وارد کنید",
+  },
+  {
+    id:4,
+    label:"ایمیل ",
+    name:"email",
+    type:"text",
+    maxLength:200,
+    placeholder:" ایمیل  را وارد کنید",
+  },
+  {
+    id:5,
+    label:" شماره همراه",
+    name:"phone_number",
+    type:"text",
+    maxLength:12,
+    placeholder:" شماره  را وارد کنید",
+  },
+  {
+    id:6,
+    label:" نقش کاربر",
+    name:"role",
+    type:"text",
+    placeholder:"نقش کاربر  را وارد کنید",
+  },
+  {
+    id: 7,
+    label: "وضعیت ثبت‌نام",
+    name: "is_signup",
+    type: "radio",
+    boleean: true,
+    options: [
+      { label: "ثبت نام کرده است", value: true },
+      { label: "ثبت نام نکرده است", value: false },
+    ],
+  },
+
+]
