@@ -11,7 +11,7 @@ export const NavBarRight = ({ isMenuOpen }: NavbarLeftProps) => (
   <NavbarContent justify="start">
     <NavbarMenuToggle
       aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-      className="sm:hidden text-secondary-900"
+      className="sm:hidden text-secondary-900 "
     />
     <NavbarBrand>
       <Logo />
