@@ -19,3 +19,28 @@ body {
   user-select: none;
   background-color: rgb(var(--background-app-rgb));
 }
+
+/* HeroSection.css */
+.perspective-custom {
+  perspective: 200px;
+  perspective-origin: 59% 85%;
+}
+
+.slider {
+  background-image: url("../../public/images/preview.png");
+  background-size: 100%;
+  transform: scaleX(0.85) scaleY(1) scaleZ(1) rotateX(3.5deg) rotateY(354deg)
+    rotate(10deg) translateX(0) translateY(0) translateZ(0) skewX(0deg)
+    skewY(0deg);
+  animation: moveBackground 35s linear infinite;
+  -webkit-animation: moveBackground 35s linear infinite;
+}
+
+@keyframes moveBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 -1000px;
+  }
+}
