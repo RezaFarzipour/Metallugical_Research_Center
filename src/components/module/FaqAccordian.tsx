@@ -3,7 +3,6 @@ import { Accordion, AccordionItem } from "@heroui/react";
 import Image from "next/image";
 import { faqData } from "@/constants/data";
 const FaqAccordian = () => {
-
   return (
     <div className="w-full flex  flex-col-reverse md:flex-row justify-center items-center my-20 gap-10 px-10">
       {/* accordian */}
@@ -26,7 +25,7 @@ const FaqAccordian = () => {
         <Image
           width={350}
           height={350}
-          src="/images/5167172.jpg"
+          src="/images/faqs.png"
           alt="faq"
           className="rounded-lg"
         />
