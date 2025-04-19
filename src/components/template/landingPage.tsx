@@ -3,16 +3,14 @@ import React from "react";
 import AboutOverview from "../module/AboutOverview";
 import BlogCardModule from "../module/BlogCardModule";
 import FaqAccordian from "../module/FaqAccordian";
-import { useQuery } from "@tanstack/react-query";
-import { usercustomer } from "@/services/auth";
 import LandingHeader from "../module/LandingHeader";
 import { showToast } from "@/store/useToastSlice";
 
 const LandingPage = () => {
-  const { data } = useQuery({
-    queryKey: ["user"],
-    queryFn: usercustomer,
-  });
+
+
+
+  
 
   return (
     <main className="w-full overflow-x-hidden bg-[#fcfcfc]">
