@@ -5,6 +5,7 @@ import { fontIRANYekan } from "@/constants/fonts";
 import { siteConfig } from "@/config/site";
 import { twMerge } from "tailwind-merge";
 import "leaflet/dist/leaflet.css";
+import { Toast } from "@/components/element/Toast";
 
 export const metadata: Metadata = {
   title: {
@@ -32,6 +33,7 @@ export default function RootLayout({
         )}
       >
         <ReactQueryProvider>{children}</ReactQueryProvider>
+        <Toast />
       </body>
     </html>
   );

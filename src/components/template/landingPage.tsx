@@ -6,6 +6,7 @@ import FaqAccordian from "../module/FaqAccordian";
 import { useQuery } from "@tanstack/react-query";
 import { usercustomer } from "@/services/auth";
 import LandingHeader from "../module/LandingHeader";
+import { useToastStore } from "@/store/useToastSlice";
 
 
 const LandingPage = () => {
@@ -15,8 +16,8 @@ const {data} = useQuery({
   queryFn:usercustomer
 })
 
-console.log('data',data);
 
+ const showToast = useToastStore((s) => s.showToast);
   return (
     <main className="w-full overflow-x-hidden bg-[#fcfcfc]">
       {/* Hero Header */}
@@ -38,6 +39,7 @@ console.log('data',data);
       <section className="w-full max-w-7xl mx-auto px-4 md:px-8 py-16">
         <BlogCardModule />
       </section>
+      <button onClick={()=>showToast("موفق","success")}>click</button>
     </main>
   );
 };
