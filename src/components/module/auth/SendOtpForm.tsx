@@ -7,18 +7,12 @@ import Button from "@/components/element/Button";
 import RHFInput from "@/components/element/RHFInput";
 import BtnLoader from "@/components/element/BtnLoader";
 
-
 interface SendOtpFormProps {
   onSubmit: (data: PhoneFormData) => void;
   loading: boolean;
-
 }
 
-const SendOtpForm: React.FC<SendOtpFormProps> = ({
-  onSubmit,
-  loading,
-
-}) => {
+const SendOtpForm: React.FC<SendOtpFormProps> = ({ onSubmit, loading }) => {
   const {
     register,
     handleSubmit,
@@ -42,11 +36,14 @@ const SendOtpForm: React.FC<SendOtpFormProps> = ({
         name="phone"
       />
 
-      <Button type="submit" variant="secondary" fullWidth className="text-center">
-        {loading ? <BtnLoader/> : "ارسال کد تایید"}
+      <Button
+        type="submit"
+        variant="secondary"
+        fullWidth
+        className="text-center"
+      >
+        {loading ? <BtnLoader /> : "ارسال کد تایید"}
       </Button>
-
-     
     </form>
   );
 };
