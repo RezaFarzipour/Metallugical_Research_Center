@@ -5,24 +5,55 @@ import { PhoneFormData } from "@/schemas/phoneSchema";
 import CheckOtpForm from "../module/auth/CheckOtpForm";
 import PersonalRegister from "../module/auth/PersonalRegister";
 import SendOtpForm from "../module/auth/SendOtpForm";
+import { checkOtp, sendOtp } from "@/services/auth";
+
 
 const RESEND_TIME = 90;
+
 
 const SigninPage: React.FC = () => {
   const [step, setStep] = useState<number>(1);
   const [otp, setOtp] = useState<string>("");
   const [time, setTime] = useState<number>(RESEND_TIME);
   const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
+  
+
   const sendOtpHandler = async (data: PhoneFormData) => {
+    //setLoading(true);
     setPhoneNumber(data.phone);
-    setStep(2);
+
+    const { response, error } = await sendOtp(data.phone);
+
+    if (response) {
+     
+      // setLoading(false);
+     
+      setStep(2);
+    }
+    if (error) {
+     
+      
+      //setLoading(false);
+    
+    }
   };
 
   const checkOtpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStep(3);
+    setLoading(true);
+    const { response, error } = await checkOtp(phoneNumber, otp);
+
+    if (response) {
+      console.log("response",response);
+      
+     
+    } else {
+      console.log('error', error);
+      
+    }
   };
 
   const onSubmitPresonalRegister = (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,10 +73,12 @@ const SigninPage: React.FC = () => {
     };
   }, [time]);
 
+
+
   const renderSteps = () => {
     switch (step) {
       case 1:
-        return <SendOtpForm onSubmit={sendOtpHandler} />;
+        return <SendOtpForm loading={loading} onSubmit={sendOtpHandler} />;
       case 2:
         return (
           <CheckOtpForm
@@ -68,7 +101,11 @@ const SigninPage: React.FC = () => {
   return (
     <>
       <div className="flex justify-center">
-        <div className="w-full sm:max-w-sm">{renderSteps()}</div>
+        <div className="w-full sm:max-w-sm">
+          {renderSteps()}
+
+          
+        </div>
       </div>
     </>
   );
