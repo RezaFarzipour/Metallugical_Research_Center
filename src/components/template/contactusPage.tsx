@@ -2,7 +2,7 @@
 
 import React from "react";
 import MapModule from "../module/MapModule";
-import ContactusInformation from "../module/contactusInformation"; 
+import ContactusInformation from "../module/ContactusInformation";
 
 //import { Divider } from "@heroui/react";
 

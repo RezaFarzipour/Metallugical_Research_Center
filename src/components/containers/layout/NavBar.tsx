@@ -7,7 +7,7 @@ import { NavBarLeft } from "@/components/element/navBar/NavBarLeft";
 import MobileMenu from "@/components/element/navBar/MobileMenu";
 
 const navbarStyles = {
-  base: "z-10 shadow-md bg-inherit mb-10 transition-all duration-200 border-b border-b-secondary-300",
+  base: "z-10 shadow-md bg-inherit mb-0 transition-all duration-200 border-b border-b-secondary-300",
   loading: (isLoading: boolean) =>
     isLoading ? "blur-sm opacity-70" : "opacity-100 blur-0",
 };
@@ -28,7 +28,7 @@ const NavBar = () => {
       shouldHideOnScroll
       onMenuOpenChange={setIsMenuOpen}
       maxWidth="full"
-      className={`${navbarStyles.base} ${navbarStyles.loading(
+      className={` ${navbarStyles.base} ${navbarStyles.loading(
         isLoading
       )} bg-white/50`}
     >

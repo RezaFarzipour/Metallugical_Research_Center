@@ -8,6 +8,7 @@ import { FilterSection } from "./FilterSection";
 import ViewToggle from "./ViewToggle";
 import { IoIosSearch } from "react-icons/io";
 import { Input } from "@heroui/react";
+import Link from "next/link";
 
 interface TopContentProps {
   usersLength: number;
@@ -15,6 +16,7 @@ interface TopContentProps {
   roles?: boolean;
   dropDownBtn?: boolean;
   btn?: React.ReactNode;
+  btnhref?: string;
   product?: boolean;
   viewContent?: boolean;
   viewContentSmSize?: boolean;
@@ -25,6 +27,7 @@ export default function TopContent({
   quantity,
   roles,
   btn,
+  btnhref,
   dropDownBtn,
   product,
   viewContent,
@@ -101,12 +104,14 @@ export default function TopContent({
             setVisibleColumns={setVisibleColumns}
           />
           {btn && (
-            <Button
-              className="bg-secondary-500 text-white"
-              endContent={<FaPlus />}
-            >
-              افزودن
-            </Button>
+            <Link href={btnhref}>
+              <Button
+                className="bg-secondary-500 text-white"
+                endContent={<FaPlus />}
+              >
+                افزودن
+              </Button>
+            </Link>
           )}
         </div>
       </div>
