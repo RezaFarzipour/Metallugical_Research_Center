@@ -7,9 +7,7 @@ import PersonalRegister from "../module/auth/PersonalRegister";
 import SendOtpForm from "../module/auth/SendOtpForm";
 import { checkOtp, sendOtp } from "@/services/auth";
 
-
 const RESEND_TIME = 90;
-
 
 const SigninPage: React.FC = () => {
   const [step, setStep] = useState<number>(1);
@@ -19,8 +17,6 @@ const SigninPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  
-
   const sendOtpHandler = async (data: PhoneFormData) => {
     //setLoading(true);
     setPhoneNumber(data.phone);
@@ -28,16 +24,12 @@ const SigninPage: React.FC = () => {
     const { response, error } = await sendOtp(data.phone);
 
     if (response) {
-     
       // setLoading(false);
-     
+
       setStep(2);
     }
     if (error) {
-     
-      
       //setLoading(false);
-    
     }
   };
 
@@ -45,14 +37,12 @@ const SigninPage: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     const { response, error } = await checkOtp(phoneNumber, otp);
+    setStep(3);
 
     if (response) {
-      console.log("response",response);
-      
-     
+      console.log("response", response);
     } else {
-      console.log('error', error);
-      
+      console.log("error", error);
     }
   };
 
@@ -72,8 +62,6 @@ const SigninPage: React.FC = () => {
       if (timer) clearInterval(timer);
     };
   }, [time]);
-
-
 
   const renderSteps = () => {
     switch (step) {
@@ -101,11 +89,7 @@ const SigninPage: React.FC = () => {
   return (
     <>
       <div className="flex justify-center">
-        <div className="w-full sm:max-w-sm">
-          {renderSteps()}
-
-          
-        </div>
+        <div className="w-full sm:max-w-sm">{renderSteps()}</div>
       </div>
     </>
   );
