@@ -37,7 +37,7 @@ const UsersPage: React.FC = () => {
           viewContentSmSize={false}
           topContents={true}
           bottomContents={true}
-          btn={true}
+          btn={false}
           dropDownBtn={true}
           roles={true}
           product={false}

@@ -44,15 +44,6 @@ const PersonalRegister: React.FC<SendPersonalFormProps> = ({ onSubmit }) => {
           </Button>
         )}
       </div>
-
-      <ul className=" mt-6 list-disc pl-5 z-30 pt-6  text-red-500 ">
-        <li className=" list-none absolute bottom-[4.5rem] -right-4 font-bold">
-          توجه !
-        </li>
-        <li>نام و نام خانوادگی باید فقط شامل حروف فارسی باشد</li>
-        <li>نام و نام خانوادگی باید حداقل ۸ کاراکتر باشد</li>
-        <li>نام و نام خانوادگی نمی‌تواند بیشتر از ۵۰ کاراکتر باشد</li>
-      </ul>
     </form>
   );
 };

@@ -40,6 +40,7 @@ export const ProductsPage: React.FC = () => {
           topContents={true}
           bottomContents={true}
           btn={true}
+          btnhref="/admin/products/createproducts"
           dropDownBtn={true}
           roles={false}
           product={true}
