@@ -6,18 +6,14 @@ import FaqAccordian from "../module/FaqAccordian";
 import { useQuery } from "@tanstack/react-query";
 import { usercustomer } from "@/services/auth";
 import LandingHeader from "../module/LandingHeader";
-import { useToastStore } from "@/store/useToastSlice";
-
+import { showToast } from "@/store/useToastSlice";
 
 const LandingPage = () => {
+  const { data } = useQuery({
+    queryKey: ["user"],
+    queryFn: usercustomer,
+  });
 
-const {data} = useQuery({
-  queryKey:["user"],
-  queryFn:usercustomer
-})
-
-
- const showToast = useToastStore((s) => s.showToast);
   return (
     <main className="w-full overflow-x-hidden bg-[#fcfcfc]">
       {/* Hero Header */}
@@ -39,7 +35,9 @@ const {data} = useQuery({
       <section className="w-full max-w-7xl mx-auto px-4 md:px-8 py-16">
         <BlogCardModule />
       </section>
-      <button onClick={()=>showToast("موفق","success")}>click</button>
+      <button onClick={() => showToast("عملیات موفقیت‌آمیز بود", "success")}>
+        click
+      </button>
     </main>
   );
 };

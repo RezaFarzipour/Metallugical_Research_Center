@@ -1,6 +1,5 @@
 import { create } from "zustand";
 
-
 type ToastType = 'success' | 'error' | 'info' | 'warning';
 
 interface ToastState {
@@ -11,17 +10,18 @@ interface ToastState {
   hideToast: () => void;
 }
 
-
 export const useToastStore = create<ToastState>((set) => ({
-    open: false,
-    message: '',
-    type: 'success',
-    showToast: (message, type) =>
-      set({ open: true, message, type }),
-    hideToast: () => set({ open: false }),
-  }));
+  open: false,
+  message: '',
+  type: 'success',
+  showToast: (message, type = 'success') =>
+    set({ open: true, message, type }),
+  hideToast: () => set({ open: false }),
+}));
 
+// 👉 اینجا خروجی مستقیم برای استفاده راحت:
+export const showToast = (message: string, type: ToastType = 'success') =>
+  useToastStore.getState().showToast(message, type);
 
-
-//   const showToast = useToastStore((s) => s.showToast);
-// showToast("عملیات با موفقیت انجام شد", "success");
+export const hideToast = () =>
+  useToastStore.getState().hideToast();
