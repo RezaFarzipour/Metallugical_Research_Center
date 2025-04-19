@@ -4,9 +4,9 @@ type ToastType = 'success' | 'error' | 'info' | 'warning';
 
 interface ToastState {
   open: boolean;
-  message: string;
+  message: string|undefined;
   type: ToastType;
-  showToast: (message: string, type?: ToastType) => void;
+  showToast: (message: string|undefined, type?: ToastType) => void;
   hideToast: () => void;
 }
 
@@ -20,7 +20,7 @@ export const useToastStore = create<ToastState>((set) => ({
 }));
 
 // 👉 اینجا خروجی مستقیم برای استفاده راحت:
-export const showToast = (message: string, type: ToastType = 'success') =>
+export const showToast = (message: string|undefined, type: ToastType = 'success') =>
   useToastStore.getState().showToast(message, type);
 
 export const hideToast = () =>
