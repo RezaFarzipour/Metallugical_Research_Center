@@ -1,37 +1,41 @@
 "use client";
 
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import {
-  columns,
-  users,
-  usersINITIAL_VISIBLE_COLUMNS,
-} from "@/constants/tableData";
-import React, { useMemo } from "react";
+import { Usercolumns } from "@/constants/tableData";
+import React, { Suspense } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
 import { useTableStore } from "@/store/useTableSlice";
-import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/element/table/CustomeTable";
+import useUserData from "./useUserData";
+import { useFilteredContainer } from "@/hooks/useFilteredContainer";
+import BtnLoader from "@/components/element/BtnLoader";
+import CustomeTable from "@/components/module/CustomeTable";
 
 const UsersPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
-  const { sortedItems } = useFilteredContainer(users);
+  const includeskey = ["email", "phone_number", "role"];
+  const {
+    formDataSignedUp,
+    isPending,
+    visibleKeys,
+    headerColumns,
+    firstActionClickHandler,
+    secondActionClickHandler,
+  } = useUserData(visibleColumns, includeskey);
 
-  // محاسبه ستون‌های هدر
-  const headerColumns = useMemo(() => {
-    return visibleColumns.size === columns.length
-      ? columns
-      : columns.filter((column) => visibleColumns.has(column.uid));
-  }, [visibleColumns]);
+  const { sortedItems } = useFilteredContainer(formDataSignedUp);
+
+  if (isPending) return <div>loading...</div>;
   return (
     <div className="grid grid-cols-1">
       <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
         <TitleStructureDashboards mainTitle="کاربران" />
 
         <FilteredContainer
-          users={users}
-          INITIAL_VISIBLE_COLUMNS={usersINITIAL_VISIBLE_COLUMNS}
+          users={formDataSignedUp}
+          INITIAL_VISIBLE_COLUMNS={visibleKeys}
+          columns={Usercolumns}
           quantity="کاربران"
           viewContent={false}
           viewContentSmSize={false}
@@ -43,15 +47,19 @@ const UsersPage: React.FC = () => {
           product={false}
           image={false}
         >
-          <CustomeTable
-            headerColumns={headerColumns}
-            sortedItems={sortedItems}
-            firstActionContent="جزئیات"
-            firstActionIcon={TbEyeDiscount}
-            secondActionContent="حذف"
-            secondActionIcon={MdDeleteOutline}
-            image={true}
-          />
+          <Suspense fallback={<BtnLoader />}>
+            <CustomeTable
+              headerColumns={headerColumns}
+              sortedItems={sortedItems}
+              firstActionContent="جزئیات"
+              firstActionIcon={TbEyeDiscount}
+              secondActionContent="حذف"
+              secondActionIcon={MdDeleteOutline}
+              firstActionClickHandler={firstActionClickHandler}
+              secondActionClickHandler={secondActionClickHandler}
+              image={true}
+            />
+          </Suspense>
         </FilteredContainer>
       </div>
     </div>

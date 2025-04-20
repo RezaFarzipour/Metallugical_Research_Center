@@ -9,7 +9,7 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/react";
-import { CellRenderer } from "./CellsRender";
+import { CellRenderer } from "../element/CellsRender";
 interface User {
   id: number;
   name: string;
@@ -27,15 +27,17 @@ interface User {
 interface Column {
   name: string;
   uid: string;
-  sortable: boolean;
+  sortable?: boolean;
 }
 interface CustomeTableProps {
   headerColumns: Column[];
-  sortedItems: User[];
+  sortedItems: T[];
   firstActionContent: string;
   firstActionIcon?: React.FC;
   secondActionContent: string;
   secondActionIcon?: React.FC;
+  firstActionClickHandler: () => void;
+  secondActionClickHandler: () => void;
   image?: boolean;
 }
 
@@ -46,6 +48,8 @@ export default function CustomeTable({
   firstActionIcon,
   secondActionContent,
   secondActionIcon,
+  firstActionClickHandler,
+  secondActionClickHandler,
   image,
 }: CustomeTableProps) {
   return (
@@ -66,18 +70,20 @@ export default function CustomeTable({
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent="کاربری یافت نشد" items={sortedItems}>
+      <TableBody  items={sortedItems}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
               <TableCell>
                 <CellRenderer
                   user={item}
-                  columnKey={columnKey}
+                  columnKey={columnKey as keyof User | "actions"}
                   firstActionContent={firstActionContent}
                   firstActionIcon={firstActionIcon}
                   secondActionContent={secondActionContent}
                   secondActionIcon={secondActionIcon}
+                  firstActionClickHandler={firstActionClickHandler}
+                  secondActionClickHandler={secondActionClickHandler}
                   image={image}
                 />
               </TableCell>

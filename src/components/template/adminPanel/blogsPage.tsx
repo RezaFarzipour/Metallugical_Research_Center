@@ -1,12 +1,13 @@
 "use client";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/element/table/CustomeTable";
+import CustomeTable from "@/components/module/CustomeTable";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import {
   blogColumns,
   blogs,
   blogsINITIAL_VISIBLE_COLUMNS,
   columns,
+  Usercolumns,
 } from "@/constants/tableData";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import { useTableStore } from "@/store/useTableSlice";
@@ -33,6 +34,7 @@ export const BlogsPage: React.FC = () => {
         <FilteredContainer
           users={blogs}
           INITIAL_VISIBLE_COLUMNS={blogsINITIAL_VISIBLE_COLUMNS}
+          columns={Usercolumns}
           quantity="بلاگ ها"
           viewContent={true}
           viewContentSmSize={false}

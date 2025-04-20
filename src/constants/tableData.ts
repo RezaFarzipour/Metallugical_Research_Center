@@ -194,103 +194,8 @@ export const productsINITIAL_VISIBLE_COLUMNS = [
     "amount",
     "actions",
 ];
-export const users = [
-    {
-        id: 1,
-        name: "Tony Reichert",
-        amount: "1000",
-        role: "ادمین",
-        date: "1403/01/22",
-        email: "tony.reichert@example.com",
-    },
-    {
-        id: 2,
-        name: "Zoey Lang",
-        amount: "1000",
-        role: "کاربر",
-        date: "1403/01/22",
-        email: "zoey.lang@example.com",
-    },
-    {
-        id: 3,
-        name: "Jane Fisher",
-        amount: "1000",
-        role: "کاربر",
-        date: "1403/01/22",
-        email: "jane.fisher@example.com",
-    },
-    {
-        id: 4,
-        name: "William Howard",
-        amount: "1000",
-        role: "کاربر",
-        date: "1403/01/22",
-        email: "william.howard@example.com",
-    },
-    {
-        id: 5,
-        name: "علی محمدی",
-        amount: "1000",
-        role: "کاربر",
-        date: "1403/01/22",
-        email: "kristen.cooper@example.com",
-    },
-    {
-        id: 6,
-        name: "Michael Smith",
-        amount: "1200",
-        role: "کاربر",
-        date: "1403/01/22",
-        email: "michael.smith@example.com",
-    },
-    {
-        id: 7,
-        name: "Emily Johnson",
-        amount: "1500",
-        role: "کاربر",
-        date: "1403/01/22",
-        email: "emily.johnson@example.com",
-    },
-    {
-        id: 8,
-        name: "David Brown",
-        amount: "800",
-        role: "کاربر",
-        date: "1403/01/22",
-        email: "david.brown@example.com",
-    },
-    {
-        id: 9,
-        name: "Sophia Davis",
-        amount: "900",
-        role: "کاربر",
-        date: "1403/01/22",
-        email: "sophia.davis@example.com",
-    },
-    {
-        id: 10,
-        name: "James Wilson",
-        amount: "1100",
-        role: "کاربر",
-        date: "1403/01/22",
-        email: "james.wilson@example.com",
-    },
-    {
-        id: 11,
-        name: "Isabella Martinez",
-        amount: "1300",
-        role: "کاربر",
-        date: "1403/01/22",
-        email: "isabella.martinez@example.com",
-    },
-];
-export const usersINITIAL_VISIBLE_COLUMNS = [
-    "id",
-    "name",
-    "role",
-    "date",
-    "actions",
-];
+
+
 export const blogs = [
     {
         id: 1,
@@ -390,10 +295,18 @@ export const blogsINITIAL_VISIBLE_COLUMNS = [
     "date",
     "actions",
 ];
+export const Usercolumns = [
+    { name: "#", uid: "id", sortable: true },
+    { name: "نام و نام خانوادگی", uid: "name", sortable: true },
+    { name: "نقش", uid: "role", sortable: true },
+    { name: "ایمیل", uid: "email" },
+    { name: "شماره همراه", uid: "phone_number" },
+    { name: "عملیات", uid: "actions" },
+];
 
 export const columns = [
     { name: "#", uid: "id", sortable: true },
-    { name: "نام", uid: "name", sortable: true },
+    { name: "نام", uid: "full-name", sortable: true },
     { name: "نقش", uid: "role", sortable: true },
     { name: "ایمیل", uid: "email" },
     { name: "وضعیت", uid: "status", sortable: true },

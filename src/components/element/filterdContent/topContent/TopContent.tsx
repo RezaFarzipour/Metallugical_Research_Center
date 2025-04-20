@@ -9,8 +9,14 @@ import ViewToggle from "./ViewToggle";
 import { IoIosSearch } from "react-icons/io";
 import { Input } from "@heroui/react";
 import Link from "next/link";
+import { toPersianNumbers } from "@/utils/toPersianNumbers";
 
 interface TopContentProps {
+  columns: {
+    name: string;
+    uid: string;
+    sortable?: boolean;
+  }[];
   usersLength: number;
   quantity: string;
   roles?: boolean;
@@ -23,6 +29,7 @@ interface TopContentProps {
 }
 
 export default function TopContent({
+  columns,
   usersLength,
   quantity,
   roles,
@@ -91,6 +98,7 @@ export default function TopContent({
 
         <div className="flex gap-3">
           <FilterSection
+            columns={columns}
             roles={roles}
             product={product}
             dropDownBtn={dropDownBtn}
@@ -117,7 +125,7 @@ export default function TopContent({
       </div>
       <div className="flex justify-between items-center">
         <span className="text-default-400 text-small">
-          تعداد {quantity}: {usersLength}
+          تعداد {quantity}: {toPersianNumbers(usersLength)}
         </span>
         <RowsPerPageSelector onRowsPerPageChange={handleRowsPerPageChange} />
       </div>

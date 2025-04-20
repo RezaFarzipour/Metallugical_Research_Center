@@ -7,6 +7,7 @@ import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { CgArrowLeft } from "react-icons/cg";
 import {
   columns,
+  Usercolumns,
   usersOrders,
   usersOrdersINITIAL_VISIBLE_COLUMNS,
 } from "@/constants/tableData";
@@ -14,7 +15,7 @@ import { adminCards } from "@/constants/data";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/element/table/CustomeTable";
+import CustomeTable from "@/components/module/CustomeTable";
 
 const HomePage: React.FC = () => {
   const { visibleColumns } = useTableStore();
@@ -44,6 +45,7 @@ const HomePage: React.FC = () => {
         <FilteredContainer
           users={usersOrders}
           INITIAL_VISIBLE_COLUMNS={usersOrdersINITIAL_VISIBLE_COLUMNS}
+          columns={Usercolumns}
           viewContent={false}
           viewContentSmSize={false}
           topContents={false}
