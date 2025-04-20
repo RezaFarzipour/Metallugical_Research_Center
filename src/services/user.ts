@@ -17,14 +17,15 @@ export const sendUserProfile = async ({
   const response = await http.patch(`user/customer/${phone_number}/`, data);
   return response.data;
 };
+
 export const getAllUserAdmin = async () => {
 
-  const response = await http.get(`user/admin/`, { withCredentials: true });
+  const response = await http.get(`user/admin/`,);
   return response.data;
 };
 
 
-export const getUserByPhoneNumber = async ({
+export const getUserByPhoneNumberAdmin = async ({
   phone_number,
 }: {
   phone_number: string;

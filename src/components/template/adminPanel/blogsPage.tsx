@@ -7,6 +7,7 @@ import {
   blogs,
   blogsINITIAL_VISIBLE_COLUMNS,
   columns,
+  Usercolumns,
 } from "@/constants/tableData";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import { useTableStore } from "@/store/useTableSlice";
@@ -33,6 +34,7 @@ export const BlogsPage: React.FC = () => {
         <FilteredContainer
           users={blogs}
           INITIAL_VISIBLE_COLUMNS={blogsINITIAL_VISIBLE_COLUMNS}
+          columns={Usercolumns}
           quantity="بلاگ ها"
           viewContent={true}
           viewContentSmSize={false}

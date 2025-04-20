@@ -7,6 +7,7 @@ import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { CgArrowLeft } from "react-icons/cg";
 import {
   columns,
+  Usercolumns,
   usersOrders,
   usersOrdersINITIAL_VISIBLE_COLUMNS,
 } from "@/constants/tableData";
@@ -44,6 +45,7 @@ const HomePage: React.FC = () => {
         <FilteredContainer
           users={usersOrders}
           INITIAL_VISIBLE_COLUMNS={usersOrdersINITIAL_VISIBLE_COLUMNS}
+          columns={Usercolumns}
           viewContent={false}
           viewContentSmSize={false}
           topContents={false}

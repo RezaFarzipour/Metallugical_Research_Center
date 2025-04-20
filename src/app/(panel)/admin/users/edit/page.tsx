@@ -1,4 +1,4 @@
-import UserEditPage from "@/components/template/adminPanel/userEditPage";
+import UserEditPage from "@/components/template/userEditPage";
 import React from "react";
 
 const page = () => {

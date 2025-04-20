@@ -3,6 +3,7 @@
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import {
   columns,
+  Usercolumns,
   usersOrders,
   usersOrdersINITIAL_VISIBLE_COLUMNS,
 } from "@/constants/tableData";
@@ -33,6 +34,7 @@ const Reportspage: React.FC = () => {
           users={usersOrders}
           columns={columns}
           INITIAL_VISIBLE_COLUMNS={usersOrdersINITIAL_VISIBLE_COLUMNS}
+          columns={Usercolumns}
           quantity="گزارش ها"
           viewContent={false}
           viewContentSmSize={false}
