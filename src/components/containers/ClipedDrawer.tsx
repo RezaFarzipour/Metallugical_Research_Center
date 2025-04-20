@@ -1,10 +1,11 @@
 "use client";
-
+import { CiEdit } from "react-icons/ci";
 import AppBar from "@/components/element/clipedDrawer/AppBar";
 import SidebarHeader from "@/components/element/clipedDrawer/SidebarHeader";
 import SidebarLinks from "@/components/element/clipedDrawer/SidebarLinks";
 import { SidebarLink } from "@/types";
 import React, { useState } from "react";
+import { CgProfile } from "react-icons/cg";
 
 interface ClipedDrawerProps {
   children: React.ReactNode;
@@ -16,7 +17,7 @@ const ClipedDrawer = ({ children, sideBarData }: ClipedDrawerProps) => {
   const [activeItemId, setActiveItemId] = useState<number>();
 
   return (
-    <div className="flex h-screen  ">
+    <div className="flex h-screen  overflow-hidden">
       {/* Sidebar - Hidden on mobile */}
       <aside
         className={`
@@ -37,8 +38,13 @@ const ClipedDrawer = ({ children, sideBarData }: ClipedDrawerProps) => {
             setActiveItemId={setActiveItemId}
           />
 
-          <div>
-            <p>نام کاربر</p>
+          <div className="flex items-center gap-4 justify-around">
+      
+             
+              <p className="text-default-600 text-sm font-bold">نام و نام خانوادگی</p>
+            <div className="p-2 rounded-full border-1 border-[#ddd] cursor-pointer">
+            <CiEdit size={"17px"}/>
+            </div>
           </div>
         </div>
       </aside>
@@ -52,12 +58,12 @@ const ClipedDrawer = ({ children, sideBarData }: ClipedDrawerProps) => {
       )}
 
       {/* Main Content */}
-      <main className="flex flex-col w-full">
+      <main className="flex flex-col w-full overflow-y-auto">
         <AppBar
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         />
-        <div className="p-4 flex-grow bg-gray-100">{children}</div>
+        <div className="p-4  bg-gray-100">{children}</div>
       </main>
     </div>
   );
