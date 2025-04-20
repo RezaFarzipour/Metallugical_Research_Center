@@ -29,10 +29,27 @@ const PersonalRegister: React.FC<SendPersonalFormProps> = ({ onSubmit }) => {
       <RHFInput<PersonalRegisterFormData>
         register={register}
         errors={errors}
-        label="نام و تام خانوادگی"
+        label="نام "
         type="text"
         dir="rtl"
-        name="name"
+        name="first_name"
+      />
+      <RHFInput<PersonalRegisterFormData>
+        register={register}
+        errors={errors}
+        label="  تام خانوادگی"
+        type="text"
+        dir="rtl"
+        name="last_name"
+      />
+
+      <RHFInput<PersonalRegisterFormData>
+        register={register}
+        errors={errors}
+        label="ایمبل "
+        type="email"
+        dir="rtl"
+        name="email"
       />
 
       <div className="pt-14">

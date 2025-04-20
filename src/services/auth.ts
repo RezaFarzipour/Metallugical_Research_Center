@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import http from "./httpService";
 
 export interface SendOtpResponse {
@@ -7,52 +7,54 @@ export interface SendOtpResponse {
 
 export const sendOtp = async (
   phone: string
-): Promise<{ response?: AxiosResponse<SendOtpResponse>; error?: unknown }> => {
-  try {
-    const response = await http.get(`authentication/otp/send-code/${phone}/`);
+): Promise<{
+  response?: AxiosResponse<SendOtpResponse>;
+  error?: AxiosError;
+}> => {
+  const response = await http.get(`authentication/otp/send-code/${phone}/`);
 
-    return { response };
-  } catch (error) {
-    return { error };
-  }
+  return { response };
+};
+
+//chec otp type
+export type CheckOtpResponse = {
+  is_signup: boolean;
 };
 
 export const checkOtp = async (
   phone: string,
   otp: string
-): Promise<{ response?: AxiosResponse; error?: unknown }> => {
+): Promise<{
+  response?: AxiosResponse<CheckOtpResponse>;
+  error?: AxiosError;
+}> => {
   try {
     const response = await http.post(
       `authentication/otp/verify-code/${phone}/`,
 
       {
         code: otp,
-      },
-    
+      }
     );
     return { response };
   } catch (error) {
-    console.log("verify error", error?.response?.data || error);
     return { error };
   }
 };
 
+interface UserProfileResponse {
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  is_signup: boolean;
+  phone_number: string;
+  role: "customer" | "admin";
+}
 
-
-
-export const usercustomer = async (
- 
-)  => {
-  try {
-    const response = await http.get(
-      'user/customer/',
-
-     
-     
-    );
-    return { response };
-  } catch (error) {
-    console.log("verify error", error?.response?.data || error);
-    return { error };
-  }
+export const getUserProfile = async (): Promise<{
+  response?: AxiosResponse<UserProfileResponse[]>;
+}> => {
+  const response = await http.get("user/customer/");
+  return { response };
 };

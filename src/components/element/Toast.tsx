@@ -1,13 +1,17 @@
 "use client";
 import { useEffect } from "react";
 import { useToastStore } from "@/store/useToastSlice";
+import { FaCheck } from "react-icons/fa6";
+import { MdOutlineErrorOutline } from "react-icons/md";
+import { IoWarningOutline } from "react-icons/io5";
+import { IoInformationSharp } from "react-icons/io5";
 
-// const iconMap = {
-//   success: <CheckCircleIcon className="h-6 w-6 text-green-500" />,
-//   error: <XCircleIcon className="h-6 w-6 text-red-500" />,
-//   warning: <ExclamationTriangleIcon className="h-6 w-6 text-yellow-500" />,
-//   info: <InformationCircleIcon className="h-6 w-6 text-blue-500" />,
-// };
+const iconMap = {
+  success: <FaCheck className="h-6 w-6 text-green-500" />,
+  error: <MdOutlineErrorOutline className="h-6 w-6 text-red-500" />,
+  warning: <IoWarningOutline className="h-6 w-6 text-yellow-500" />,
+  info: <IoInformationSharp className="h-6 w-6 text-blue-500" />,
+};
 
 export const Toast = () => {
   const { open, message, type, hideToast } = useToastStore();
@@ -28,7 +32,7 @@ export const Toast = () => {
       <div
         className={`flex items-center gap-3 rounded-lg border px-4 py-3 shadow-md bg-white w-[300px]`}
       >
-        {/* {iconMap[type]} */}
+        {iconMap[type]}
         <span className="text-sm text-gray-800">{message}</span>
       </div>
     </div>
