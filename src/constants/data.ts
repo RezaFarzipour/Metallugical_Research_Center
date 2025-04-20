@@ -13,7 +13,10 @@ import { CiClock1 } from "react-icons/ci";
 import { LuUsers } from "react-icons/lu";
 import { PiDeviceTablet } from "react-icons/pi";
 import { RiBloggerLine } from "react-icons/ri";
-import { kMaxLength } from "buffer";
+import { CiHome } from "react-icons/ci";
+import { FiShoppingCart } from "react-icons/fi";
+import { HiOutlineDocumentReport } from "react-icons/hi";
+import { IconType } from "react-icons";
 
 // ... existing code ...
 export const userSidebarlinks: SidebarLink[] = [
@@ -339,3 +342,34 @@ export const adduserInputData: FormInputConfig[] = [
 
 
 ]
+
+
+export interface dropDownItemType {
+  id:number,
+  label:string,
+  path:string,
+  icon: IconType;
+}
+
+export const dropDownItems = (userRole: string):dropDownItemType[] => {
+  return [
+    {
+      id: 1,
+      label: "حساب کاربری",
+      path: userRole === "customer" ? "/user/home" : "/admin/home",
+      icon: CiHome,
+    },
+    {
+      id: 2,
+      label: "سفارش های من",
+      path: "/user/myorders",
+      icon: FiShoppingCart,
+    },
+    {
+      id: 3,
+      label: "گزارش گیری",
+      path: "/user/reports",
+      icon: HiOutlineDocumentReport,
+    },
+  ];
+};

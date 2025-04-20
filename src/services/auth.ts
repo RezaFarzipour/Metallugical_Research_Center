@@ -1,5 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import http from "./httpService";
+import { UserProfileResponse } from "@/types";
 
 export interface SendOtpResponse {
   message: string;
@@ -42,15 +43,7 @@ export const checkOtp = async (
   }
 };
 
-interface UserProfileResponse {
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  is_signup: boolean;
-  phone_number: string;
-  role: "customer" | "admin";
-}
+
 
 export const getUserProfile = async (): Promise<{
   response?: AxiosResponse<UserProfileResponse[]>;

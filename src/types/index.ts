@@ -49,3 +49,17 @@ export interface FormInputConfig {
   boleean?: boolean;
   options?:{label:string,value:boolean}[]
 }
+
+
+export interface UserProfileResponse {
+
+    username: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    is_signup: boolean;
+    phone_number: string;
+    role: "customer" | "admin";
+
+ 
+}
