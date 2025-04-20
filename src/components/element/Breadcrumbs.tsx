@@ -13,14 +13,17 @@ const BreadcrumbsElement = ({ item1, item2, panelHref }: BreadcrumbsProps) => {
     <Breadcrumbs
       size="lg"
       variant="light"
-      color="primary"
       itemClasses={{
         separator: "px-2",
       }}
       separator="/"
     >
-      <BreadcrumbItem className="pointer" href="/">{item1}</BreadcrumbItem>
-      <BreadcrumbItem  className="pointer" href={panelHref}>{item2}</BreadcrumbItem>
+      <BreadcrumbItem className="pointer" href={panelHref}>
+        {item1}
+      </BreadcrumbItem>
+      <BreadcrumbItem className="pointer" href="/">
+        {item2}
+      </BreadcrumbItem>
     </Breadcrumbs>
   );
 };

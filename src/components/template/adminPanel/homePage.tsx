@@ -14,7 +14,7 @@ import { adminCards } from "@/constants/data";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/element/table/CustomeTable";
+import CustomeTable from "@/components/module/CustomeTable";
 
 const HomePage: React.FC = () => {
   const { visibleColumns } = useTableStore();

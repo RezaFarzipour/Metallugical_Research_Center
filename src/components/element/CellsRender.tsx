@@ -26,6 +26,8 @@ interface CellRendererProps {
   firstActionIcon?: React.FC;
   secondActionContent: string;
   secondActionIcon?: React.FC;
+  firstActionClickHandler: () => void;
+  secondActionClickHandler: () => void;
   image?: boolean;
 }
 
@@ -36,6 +38,8 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
   firstActionIcon: FirstIcon,
   secondActionContent,
   secondActionIcon: SecondIcon,
+  firstActionClickHandler,
+  secondActionClickHandler,
   image,
 }) => {
   const cellValue = user[columnKey as keyof User];
@@ -46,11 +50,15 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
             {image && (
-              <Image src={user.image} alt={user.name} width={32} height={32} />
+              <Image
+                src={user.image || `/images/user.png`}
+                alt={user.name}
+                width={32}
+                height={32}
+              />
             )}
             <span>{user.name}</span>
           </div>
-          <span className="text-sm text-gray-500">{user.email}</span>
         </div>
       );
     case "title":
@@ -83,12 +91,19 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
       return (
         <div className="flex justify-center gap-2">
           <Tooltip content={firstActionContent}>
-            <span className="text-lg text-gray-400 cursor-pointer hover:opacity-50">
+            <span
+              className="text-lg text-gray-400 cursor-pointer hover:opacity-50"
+              onClick={firstActionClickHandler}
+            >
               {FirstIcon ? <FirstIcon /> : firstActionContent}
             </span>
           </Tooltip>
+
           <Tooltip content={secondActionContent}>
-            <span className="text-lg text-red-500 cursor-pointer hover:opacity-50">
+            <span
+              className="text-lg text-red-500 cursor-pointer hover:opacity-50"
+              onClick={secondActionClickHandler}
+            >
               {SecondIcon ? <SecondIcon /> : secondActionContent}
             </span>
           </Tooltip>

@@ -1,6 +1,6 @@
 "use client";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/element/table/CustomeTable";
+import CustomeTable from "@/components/module/CustomeTable";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import {
   columns,

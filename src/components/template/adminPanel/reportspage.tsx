@@ -12,7 +12,7 @@ import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/element/table/CustomeTable";
+import CustomeTable from "@/components/module/CustomeTable";
 
 const Reportspage: React.FC = () => {
   const { visibleColumns } = useTableStore();
