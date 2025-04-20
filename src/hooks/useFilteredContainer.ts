@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { useTableStore } from "@/store/useTableSlice";
 
 interface User {
+    full_name: string,
     id: number;
     name: string;
     email: string;
@@ -48,6 +49,7 @@ export function useFilteredContainer(users: User[]) {
             filteredUsers = filteredUsers.filter((user) => {
                 const name = user.name?.toLowerCase() || "";
                 const title = user.title?.toLowerCase() || "";
+
                 return (
                     name.includes(lowerCaseFilter) || title.includes(lowerCaseFilter)
                 );
