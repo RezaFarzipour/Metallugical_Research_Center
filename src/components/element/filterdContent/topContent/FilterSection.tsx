@@ -1,5 +1,4 @@
 import {
-  columns,
   productProgresOptions,
   rolesOptions,
   statusOptions,
@@ -8,6 +7,11 @@ import React from "react";
 import { DropdownElement } from "../../DropdownElement";
 
 interface FilterSectionProps {
+  columns: {
+    name: string;
+    uid: string;
+    sortable?: boolean;
+  }[];
   roles?: boolean;
   product?: boolean;
   dropDownBtn?: boolean;
@@ -22,6 +26,7 @@ interface FilterSectionProps {
 }
 
 export const FilterSection: React.FC<FilterSectionProps> = ({
+  columns,
   roles,
   product,
   dropDownBtn,

@@ -6,23 +6,33 @@ import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import BottomContent from "../element/filterdContent/BottomContent";
 import TopContent from "../element/filterdContent/topContent/TopContent";
 
-interface User {
+// interface User {
+//   id: number;
+//   name: string;
+//   email: string;
+//   role: string;
+//   status: string;
+//   amount: string;
+//   date: string;
+//   title: string;
+//   description: string;
+//   image: string;
+//   author: string;
+//   articleTitle: string;
+// }
+export interface TableData {
   id: number;
-  name: string;
-  email: string;
-  role: string;
-  status: string;
-  amount: string;
-  date: string;
-  title: string;
-  description: string;
-  image: string;
-  author: string;
-  articleTitle: string;
+  [key: string]: any; // ویژگی‌های مختلف برای جداول مختلف
 }
 
-interface PanelContainerProps {
-  users: User[];
+// interface ProductTableData extends TableData {
+//   productName: string;
+//   price: number;
+//   quantity: number;
+//   // ویژگی‌های خاص جدول محصولات
+// }
+interface PanelContainerProps<T extends TableData> {
+  users: T[]; // می‌توانید اینجا نوع داده‌ها را به‌صورت عمومی بگذارید
   INITIAL_VISIBLE_COLUMNS?: string[];
   quantity: string;
   topContents?: boolean;
@@ -40,6 +50,7 @@ interface PanelContainerProps {
 export default function FilteredContainer({
   users,
   INITIAL_VISIBLE_COLUMNS,
+  columns,
   quantity,
   topContents,
   bottomContents,
@@ -59,14 +70,15 @@ export default function FilteredContainer({
       visibleColumns: new Set(INITIAL_VISIBLE_COLUMNS),
     });
   }, [INITIAL_VISIBLE_COLUMNS]);
+  const userData = users || [];
 
-  const { pages } = useFilteredContainer(users);
-
+  const { pages } = useFilteredContainer(userData);
   return (
     <div>
       {topContents && (
         <TopContent
-          usersLength={users.length}
+          columns={columns}
+          usersLength={userData.length}
           quantity={quantity}
           btn={btn}
           btnhref={btnhref}
