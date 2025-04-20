@@ -6,17 +6,32 @@ import {
   columns,
   productsINITIAL_VISIBLE_COLUMNS,
   products,
+  Usercolumns,
 } from "@/constants/tableData";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import { useTableStore } from "@/store/useTableSlice";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
 import CardModule from "@/components/module/CardModule";
+import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getAllProductAdmin } from "@/services/service";
 
 export const ProductsPage: React.FC = () => {
   const { view, visibleColumns } = useTableStore();
   const { sortedItems } = useFilteredContainer(products);
+
+  const [formData, setFormData] = useState<any>({});
+  const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
+
+  const { data, isPending } = useQuery({
+    queryKey: ["getAll-products"],
+    queryFn: getAllProductAdmin,
+  });
+  console.log(data);
+
+  const router = useRouter();
 
   // محاسبه ستون‌های هدر
   const headerColumns = useMemo(() => {
@@ -25,6 +40,11 @@ export const ProductsPage: React.FC = () => {
       : columns.filter((column) => visibleColumns.has(column.uid));
   }, [visibleColumns]);
 
+  const firstActionClickHandler = () => {
+    router.push("/admin/products/edit");
+  };
+  const secondActionClickHandler = () => {};
+
   return (
     <div className="grid grid-cols-1">
       <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
@@ -32,6 +52,7 @@ export const ProductsPage: React.FC = () => {
         <FilteredContainer
           users={products}
           INITIAL_VISIBLE_COLUMNS={productsINITIAL_VISIBLE_COLUMNS}
+          columns={Usercolumns}
           quantity="محصولات"
           firstActionContent="جزئیات"
           secondActionContent="حذف"
@@ -54,6 +75,8 @@ export const ProductsPage: React.FC = () => {
               firstActionIcon={TbEyeDiscount}
               secondActionContent="حذف"
               secondActionIcon={MdDeleteOutline}
+              firstActionClickHandler={firstActionClickHandler}
+              secondActionClickHandler={secondActionClickHandler}
               image={true}
             />
           ) : (
