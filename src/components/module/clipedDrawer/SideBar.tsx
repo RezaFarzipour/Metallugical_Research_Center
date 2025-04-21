@@ -6,12 +6,14 @@ import { HiOutlineArrowLeftStartOnRectangle } from "react-icons/hi2";
 import { CiEdit } from "react-icons/ci";
 import { FC } from "react";
 import Logo from "@/components/element/Logo";
+import { NavLinkItem } from "@/types";
 
 type SideBarProps = {
-  onClose: () => void;
+  onClose?: () => void;
+  navLinkData: NavLinkItem[];
 };
 
-const SideBar: FC<SideBarProps> = ({ onClose }) => {
+const SideBar: FC<SideBarProps> = ({ onClose, navLinkData }) => {
   const logoutHandler = async () => {
     // نمونه‌ای از پیاده‌سازی logout
     console.log("Logging out...");
@@ -34,7 +36,7 @@ const SideBar: FC<SideBarProps> = ({ onClose }) => {
 
       {/* Drawer Content */}
       <div className="overflow-y-auto flex-auto">
-        <SideBarNavs onClose={onClose} />
+        <SideBarNavs onClose={onClose} navLinkData={navLinkData} />
 
         <div
           onClick={logoutHandler}

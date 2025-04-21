@@ -43,13 +43,7 @@ export const userSidebarlinks: SidebarLink[] = [
     hover: "text-primary-500",
     to: "/user/reports"
   },
-  {
-    id: 3,
-    title: "خروج",
-    icon: IoMdExit,
-    hover: "text-danger-500",
-    to: "/"
-  },
+
 ];
 export const adminSidebarlinks: SidebarLink[] = [
   {

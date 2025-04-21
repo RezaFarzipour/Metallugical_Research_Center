@@ -1,5 +1,6 @@
 import Header from "@/components/module/clipedDrawer/Header";
 import SideBar from "@/components/module/clipedDrawer/SideBar";
+import { userSidebarlinks } from "@/constants/data";
 import React from "react";
 
 type DashboardProps = {
@@ -11,7 +12,7 @@ const Dashboardlayout = ({ children }: DashboardProps) => {
     <div className="bg-secondary-0">
       <div className="grid grid-cols-12 h-screen">
         <aside className="col-span-12 lg:col-span-3 xl:col-span-2 hidden lg:block">
-          <SideBar />
+          <SideBar navLinkData={userSidebarlinks} />
         </aside>
         <div className="col-span-12 lg:col-span-9 xl:col-span-10 h-screen flex flex-col">
           <Header />

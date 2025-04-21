@@ -1,18 +1,22 @@
-import { adminSidebarlinks } from "@/constants/data";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { NavLinkItem } from "@/types";
 
 interface SideBarNavsProps {
-  onClose: () => void;
+  onClose?: () => void;
+  navLinkData: NavLinkItem[];
 }
 
-export default function SideBarNavs({ onClose }: SideBarNavsProps) {
+export default function SideBarNavs({
+  onClose,
+  navLinkData,
+}: SideBarNavsProps) {
   const pathname = usePathname();
 
   return (
     <ul className="space-y-2">
-      {adminSidebarlinks.map((nav) => {
+      {navLinkData.map((nav) => {
         const isActive = pathname === nav.to;
 
         return (
