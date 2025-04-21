@@ -1,9 +1,10 @@
 "use client";
 import { Card } from "@heroui/react";
 import React, { useState } from "react";
-import { ImageContainer } from "../element/cardElement/ImageContainer";
-import { CardContent } from "../element/cardElement/CardContent";
+
 import { twMerge } from "tailwind-merge";
+import { ImageContainer } from "./ImageContainer";
+import { CardContent } from "./CardContent";
 
 export type latestArticleType = {
   id: number;

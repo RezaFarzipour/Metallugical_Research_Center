@@ -16,7 +16,7 @@ export default function CarGallery() {
   const changeImage = (direction: number) => {
     const currentIndex = images.indexOf(currentImage);
     console.log(currentIndex);
-    
+
     let newIndex = currentIndex + direction;
 
     if (newIndex < 0) newIndex = images.length - 1;

@@ -2,10 +2,11 @@
 
 import React, { useEffect } from "react";
 import { Navbar } from "@heroui/react";
+import { UserProfileResponse } from "@/types";
 import { NavBarRight } from "@/components/element/navBar/NavBarRight";
 import { NavBarLeft } from "@/components/element/navBar/NavBarLeft";
 import MobileMenu from "@/components/element/navBar/MobileMenu";
-import { UserProfileResponse } from "@/types";
+
 
 const navbarStyles = {
   base: "z-10 shadow-md bg-inherit mb-0 transition-all duration-200 border-b border-b-secondary-300",
@@ -13,7 +14,7 @@ const navbarStyles = {
     isLoading ? "blur-sm opacity-70" : "opacity-100 blur-0",
 };
 
-const NavBar = ({user}:{user:UserProfileResponse[] | null}) => {
+const NavBar = ({ user }: { user: UserProfileResponse[] | null }) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
@@ -34,7 +35,7 @@ const NavBar = ({user}:{user:UserProfileResponse[] | null}) => {
       )} bg-white/50`}
     >
       <NavBarRight isMenuOpen={isMenuOpen} />
-      <NavBarLeft user={user}/>
+      <NavBarLeft user={user} />
       <MobileMenu />
     </Navbar>
   );

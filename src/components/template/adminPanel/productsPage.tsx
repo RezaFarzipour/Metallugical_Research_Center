@@ -13,10 +13,10 @@ import { useTableStore } from "@/store/useTableSlice";
 import React, { useMemo, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
-import CardModule from "@/components/module/CardModule";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProductAdmin } from "@/services/service";
+import CardModule from "@/components/module/cardModule/CardModule";
 
 export const ProductsPage: React.FC = () => {
   const { view, visibleColumns } = useTableStore();

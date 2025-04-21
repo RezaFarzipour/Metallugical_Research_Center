@@ -1,5 +1,4 @@
 import { dropDownItemType } from "@/constants/data";
-import { UserProfileResponse } from "@/types";
 import {
   Dropdown,
   DropdownTrigger,

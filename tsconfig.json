@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/module/MapModule.tsx"
+    "src/components/module/contactUs/MapModule.tsx"
   ],
   "exclude": ["node_modules"]
 }

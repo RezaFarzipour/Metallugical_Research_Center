@@ -14,7 +14,7 @@ import { useTableStore } from "@/store/useTableSlice";
 import React, { useMemo } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
-import CardModule from "@/components/module/CardModule";
+import CardModule from "@/components/module/cardModule/CardModule";
 
 export const BlogsPage: React.FC = () => {
   const { view, visibleColumns } = useTableStore();

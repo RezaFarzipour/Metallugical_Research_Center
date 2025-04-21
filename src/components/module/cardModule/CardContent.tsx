@@ -4,9 +4,9 @@ import { SlCalender } from "react-icons/sl";
 import { InfoItem } from "./InfoItem";
 import { CgProfile } from "react-icons/cg";
 import { Button } from "@heroui/button";
-import HoverIcon from "../animations/ArrowIconEndContent";
 import React from "react";
 import { twMerge } from "tailwind-merge";
+import HoverIcon from "@/components/element/animations/ArrowIconEndContent";
 
 interface CardContentProps {
   date: string;

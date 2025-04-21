@@ -1,10 +1,10 @@
+import { DropdownElement } from "@/components/element/DropdownElement";
 import {
   productProgresOptions,
   rolesOptions,
   statusOptions,
 } from "@/constants/tableData";
 import React from "react";
-import { DropdownElement } from "../../DropdownElement";
 
 interface FilterSectionProps {
   columns: {

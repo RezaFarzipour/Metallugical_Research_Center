@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import AboutImage from "../element/aboutOverview/AboutImage";
-import AboutText from "../element/aboutOverview/AboutText";
-import SectionWrapper from "../../hoc/SectionWrapper";
-import BgAnimateShape from "../element/animations/BgAnimateShape";
 import { images } from "@/constants/data";
+import BgAnimateShape from "@/components/element/animations/BgAnimateShape";
+import AboutImage from "./AboutImage";
+import AboutText from "./AboutText";
+import SectionWrapper from "@/hoc/SectionWrapper";
 
 const AboutOverview: React.FC = () => {
   return (
