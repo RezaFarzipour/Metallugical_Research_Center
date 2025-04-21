@@ -10,8 +10,12 @@ export default function ContactUsLayout({
     <>
       <Layout>
         {/* banner section */}
-        <HeaderImage headrName="ارتباط با ما" breadcrumbItem2=" درباره ی ما" panelHref="/aboutus"/>
-        {children}
+        <HeaderImage
+          headrName="ارتباط با ما"
+          breadcrumbItem2=" درباره ی ما"
+          panelHref="/aboutus"
+        />
+        <div className="xl:max-w-screen-xl ">{children}</div>
       </Layout>
     </>
   );

@@ -17,6 +17,7 @@ import { CiHome } from "react-icons/ci";
 import { FiShoppingCart } from "react-icons/fi";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { IconType } from "react-icons";
+import { GrAppsRounded } from "react-icons/gr";
 
 // ... existing code ...
 export const userSidebarlinks: SidebarLink[] = [
@@ -54,46 +55,35 @@ export const adminSidebarlinks: SidebarLink[] = [
   {
     id: 0,
     title: "داشبورد",
-    icon: TiHomeOutline,
-    hover: "text-primary-500",
+    icon: GrAppsRounded,
     to: "/admin/home"
   },
 
   {
     id: 1,
-    title: "کاربر ها",
+    title: "کاربران",
     icon: LuUsers,
-    hover: "text-primary-500",
     to: "/admin/users"
   },
   {
     id: 2,
     title: "محصولات",
     icon: PiDeviceTablet,
-    hover: "text-primary-500",
     to: "/admin/products"
   },
   {
     id: 3,
     title: "بلاگ ها",
     icon: RiBloggerLine,
-    hover: "text-primary-500",
     to: "/admin/blogs"
   },
   {
     id: 4,
     title: "گزارشات",
     icon: TbReportSearch,
-    hover: "text-primary-500",
     to: "/admin/reports"
   },
-  {
-    id: 5,
-    title: "خروج",
-    icon: IoMdExit,
-    hover: "text-danger-500",
-    to: "/"
-  },
+
 ];
 
 // ... existing code ...
@@ -345,13 +335,13 @@ export const adduserInputData: FormInputConfig[] = [
 
 
 export interface dropDownItemType {
-  id:number,
-  label:string,
-  path:string,
+  id: number,
+  label: string,
+  path: string,
   icon: IconType;
 }
 
-export const dropDownItems = (userRole: string):dropDownItemType[] => {
+export const dropDownItems = (userRole: string): dropDownItemType[] => {
   return [
     {
       id: 1,

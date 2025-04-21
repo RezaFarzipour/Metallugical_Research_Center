@@ -26,7 +26,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
               آزمایشگاه
             </h2>
 
-            {children}
+            <div className="xl:max-w-screen-xl ">{children}</div>
           </div>
         </div>
 

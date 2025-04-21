@@ -29,7 +29,7 @@ export const BlogsPage: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1">
-      <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
+      <div className=" p-4 md:p-6">
         <TitleStructureDashboards mainTitle="محصولات" />
         <FilteredContainer
           users={blogs}
