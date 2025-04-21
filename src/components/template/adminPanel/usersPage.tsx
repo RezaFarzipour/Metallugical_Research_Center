@@ -2,7 +2,7 @@
 
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { Usercolumns } from "@/constants/tableData";
-import React, { Suspense } from "react";
+import React from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
 import { useTableStore } from "@/store/useTableSlice";
@@ -26,7 +26,6 @@ const UsersPage: React.FC = () => {
 
   const { sortedItems } = useFilteredContainer(formDataSignedUp);
 
-  if (isPending) return <div>loading...</div>;
   return (
     <div className="grid grid-cols-1">
       <div className=" p-4 md:p-6">
@@ -47,7 +46,11 @@ const UsersPage: React.FC = () => {
           product={false}
           image={false}
         >
-          <Suspense fallback={<BtnLoader />}>
+          {isPending ? (
+            <div>
+              <BtnLoader color="#377cfb" />
+            </div>
+          ) : (
             <CustomeTable
               headerColumns={headerColumns}
               sortedItems={sortedItems}
@@ -59,7 +62,7 @@ const UsersPage: React.FC = () => {
               secondActionClickHandler={secondActionClickHandler}
               image={true}
             />
-          </Suspense>
+          )}
         </FilteredContainer>
       </div>
     </div>

@@ -3,8 +3,9 @@
 import React from "react";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
-import TopContent from "../element/filterdContent/topContent/TopContent";
-import BottomContent from "../element/filterdContent/BottomContent";
+import TopContent from "../module/filterdContent/topContent/TopContent";
+import BottomContent from "../module/filterdContent/BottomContent";
+
 
 
 // interface User {

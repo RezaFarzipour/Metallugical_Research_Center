@@ -30,7 +30,7 @@ const CreateProductPage = (props: Props) => {
   };
 
   return (
-    <div className="text-default-700 p-8 flex flex-col md:flex-row gap-10 bg-white">
+    <div className="text-default-700 p-8 flex flex-col md:flex-row gap-10 ">
       <div className="mb-6">
         <BreadcrumbsElement
           item1="محصولات"
@@ -41,7 +41,7 @@ const CreateProductPage = (props: Props) => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="p-6 rounded-xl w-full md:w-[50%] space-y-5 shadow-md mt-10"
+        className="p-6 rounded-xl w-full md:w-[50%] space-y-5 bg-white shadow-md mt-10"
       >
         <RHFInput<CreateProductFormData>
           register={register}
