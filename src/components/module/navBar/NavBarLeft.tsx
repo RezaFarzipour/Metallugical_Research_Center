@@ -5,11 +5,15 @@ import { DropDown } from "./NavDropDown";
 import { dropDownItems } from "@/constants/data";
 import Link from "next/link";
 
-export const NavBarLeft = ({ user }: { user: UserProfileResponse[] | null }) => {
+export const NavBarLeft = ({
+  user,
+}: {
+  user: UserProfileResponse[] | null;
+}) => {
   return (
     <NavbarContent justify="end">
       {user ? (
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem className=" flex">
           <DropDown user={user} dropDownItems={dropDownItems} />
         </NavbarItem>
       ) : (

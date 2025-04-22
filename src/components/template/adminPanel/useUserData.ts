@@ -78,7 +78,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
 
 
   return {
-    formDataSignedUp,isPending, visibleKeys, headerColumns, firstActionClickHandler,
+    formDataSignedUp, isPending, visibleKeys, headerColumns, firstActionClickHandler,
     secondActionClickHandler,
   };
 };

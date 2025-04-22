@@ -1,6 +1,5 @@
 import React from "react";
 import { Drawer, DrawerContent, Button, useDisclosure } from "@heroui/react";
-import { IoIosClose } from "react-icons/io";
 import { FiMenu } from "react-icons/fi";
 
 interface DrawerElementProps {

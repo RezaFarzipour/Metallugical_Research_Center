@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Navbar } from "@heroui/react";
 import { UserProfileResponse } from "@/types";
 import { NavBarRight } from "@/components/module/navBar/NavBarRight";
 import { NavBarLeft } from "@/components/module/navBar/NavBarLeft";
 import MobileMenu from "@/components/module/navBar/MobileMenu";
+import { useGetUser } from "@/hooks/useAuth";
 
 const navbarStyles = {
   base: "z-10 shadow-md bg-inherit mb-0 transition-all duration-200 border-b border-b-secondary-300",
@@ -13,16 +14,12 @@ const navbarStyles = {
     isLoading ? "blur-sm opacity-70" : "opacity-100 blur-0",
 };
 
-const NavBar = ({ user }: { user: UserProfileResponse[] | null }) => {
-  const [isLoading, setIsLoading] = React.useState(false);
+const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const { data, isPending } = useGetUser();
 
-  useEffect(() => {
-    setIsLoading(true);
-    new Promise((resolve) => setTimeout(resolve, 1000)).then(() =>
-      setIsLoading(false)
-    );
-  }, []);
+  // اگر response وجود داشت، دیتا رو بگیر؛ وگرنه null باشه
+  const user: UserProfileResponse[] | null = data?.response?.data ?? null;
 
   return (
     <Navbar
@@ -30,7 +27,7 @@ const NavBar = ({ user }: { user: UserProfileResponse[] | null }) => {
       onMenuOpenChange={setIsMenuOpen}
       maxWidth="full"
       className={` ${navbarStyles.base} ${navbarStyles.loading(
-        isLoading
+        isPending
       )} bg-white/50`}
     >
       <NavBarRight isMenuOpen={isMenuOpen} />
