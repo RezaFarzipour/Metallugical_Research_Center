@@ -18,13 +18,15 @@ export const NavBarLeft = ({
         </NavbarItem>
       ) : (
         <NavbarItem>
-          <Button
-            href="/auth"
-            className="text-white  bg-secondary-600 py-2 text-sm  rounded-md hover:bg-secondary-700 transition duration-300"
-            endContent={<IoEnterOutline fontWeight={"bold"} size={"20px"} />}
-          >
-            <Link href={"/auth"}>ورود</Link>
-          </Button>
+          <Link href="/auth">
+            <Button
+              href="/auth"
+              className="text-white  bg-secondary-600 py-2 text-sm  rounded-md hover:bg-secondary-700 transition duration-300"
+              endContent={<IoEnterOutline fontWeight={"bold"} size={"20px"} />}
+            >
+              ورود
+            </Button>
+          </Link>
         </NavbarItem>
       )}
     </NavbarContent>
