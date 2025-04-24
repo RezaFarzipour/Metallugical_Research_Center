@@ -3,10 +3,10 @@
 import { JSX } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "@/components/element/Button";
-import RHFInput from "@/components/element/RHFInput";
 import { PersonalRegisterFormData } from "@/schemas/personalRegisterSchema";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { Radio, RadioGroup } from "@heroui/react";
+import PersonalDetailsForm from "../../module/controller/PersonalDetailsForm";
 
 export default function UserEditPage(): JSX.Element {
   const {
@@ -40,30 +40,8 @@ export default function UserEditPage(): JSX.Element {
         onSubmit={handleSubmit(onSubmit)}
         className="p-6 rounded-xl w-[50%] space-y-5 bg-white shadow-md mt-10"
       >
-        <RHFInput<PersonalRegisterFormData>
-          register={register}
-          errors={errors}
-          label="نام"
-          type="text"
-          dir="rtl"
-          name="first_name"
-        />
-        <RHFInput<PersonalRegisterFormData>
-          register={register}
-          errors={errors}
-          label="نام خانوادگی"
-          type="text"
-          dir="rtl"
-          name="last_name"
-        />
-        <RHFInput<PersonalRegisterFormData>
-          register={register}
-          errors={errors}
-          label="ایمیل"
-          type="email"
-          dir="rtl"
-          name="email"
-        />
+        <PersonalDetailsForm register={register} errors={errors} />
+
         <RadioGroup label="انتخاب نقش کاربر">
           <div className="flex gap-x-4 items-center">
             <Radio value="buenos-aires">ادمین</Radio>
