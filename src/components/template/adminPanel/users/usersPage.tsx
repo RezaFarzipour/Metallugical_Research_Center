@@ -7,10 +7,10 @@ import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
 import { useTableStore } from "@/store/useTableSlice";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import useUserData from "./useUserData";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import BtnLoader from "@/components/element/BtnLoader";
 import CustomeTable from "@/components/module/CustomeTable";
+import useUserData from "./useUserData";
 
 const UsersPage: React.FC = () => {
   const { visibleColumns } = useTableStore();

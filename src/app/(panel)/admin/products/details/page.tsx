@@ -1,10 +1,7 @@
-import ProductDetails from '@/components/template/ProductDetails'
-import React from 'react'
+import React from "react";
 
 const Details = () => {
-  return (
-    <ProductDetails/>
-  )
-}
+  return <>details</>;
+};
 
-export default Details
+export default Details;

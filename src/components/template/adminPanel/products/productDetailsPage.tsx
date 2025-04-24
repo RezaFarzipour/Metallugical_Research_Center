@@ -1,8 +1,8 @@
+import CarGallery from "@/components/module/ImageGallery";
 import { sp } from "@/utils/numberFormatter";
 import { Button } from "@heroui/button";
 import Image from "next/image";
 import React from "react";
-import CarGallery from "../module/ImageGallery";
 
 const ProductDetails = () => {
   return (
@@ -39,7 +39,7 @@ const ProductDetails = () => {
 
       {/* left section */}
       <div className="w-full mb-10 md:mb-0">
-       <CarGallery/>
+        <CarGallery />
       </div>
     </div>
   );

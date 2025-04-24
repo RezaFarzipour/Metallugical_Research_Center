@@ -2,11 +2,11 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
-import BreadcrumbsElement from "../element/Breadcrumbs";
-import RHFInput from "../element/RHFInput";
+import BreadcrumbsElement from "../../../element/Breadcrumbs";
+import RHFInput from "../../../element/RHFInput";
 import { PersonalRegisterFormData } from "@/schemas/personalRegisterSchema";
-import Button from "../element/Button";
-import FileInput from "../element/FileInput";
+import Button from "../../../element/Button";
+import FileInput from "../../../element/FileInput";
 import { CreateProductFormData } from "@/schemas/createProductSchema";
 
 type Props = {};

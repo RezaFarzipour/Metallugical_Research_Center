@@ -6,7 +6,7 @@ import Button from "@/components/element/Button";
 import { PersonalRegisterFormData } from "@/schemas/personalRegisterSchema";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { Radio, RadioGroup } from "@heroui/react";
-import PersonalDetailsForm from "../../module/controller/PersonalDetailsForm";
+import PersonalDetailsForm from "@/components/module/controller/PersonalDetailsForm";
 
 export default function UserEditPage(): JSX.Element {
   const {

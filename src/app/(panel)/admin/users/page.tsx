@@ -1,4 +1,4 @@
-import UsersPage from "@/components/template/adminPanel/usersPage";
+import UsersPage from "@/components/template/adminPanel/users/usersPage";
 import React from "react";
 
 type Props = {};
