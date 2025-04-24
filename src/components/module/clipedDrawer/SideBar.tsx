@@ -10,7 +10,7 @@ import { NavLinkItem } from "@/types";
 
 type SideBarProps = {
   onClose?: () => void;
-  navLinkData: NavLinkItem[];
+  navLinkData?: NavLinkItem[];
 };
 
 const SideBar: FC<SideBarProps> = ({ onClose, navLinkData }) => {

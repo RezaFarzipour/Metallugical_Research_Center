@@ -4,12 +4,21 @@ import { Button } from "@heroui/button";
 import { Avatar } from "@heroui/react";
 import SideBar from "./SideBar";
 import DrawerElement from "@/components/element/DrawerElement";
+import { useGetUser } from "@/hooks/useAuth";
+import { UserProfileResponse } from "@/types";
 
 function Header({}) {
-  const isLoading = false;
+  const { data, isPending } = useGetUser();
+
+  // اگر response وجود داشت، دیتا رو بگیر؛ وگرنه null باشه
+  const user: UserProfileResponse[] | null = data?.response?.data ?? null;
+
+  // چک کردن وجود user قبل از دسترسی به آن
+  const fullName = user ? `${user[0].first_name} ${user[0].last_name}` : "";
+
   return (
     <header
-      className={`bg-secondary-0 ${isLoading ? "bg-opacity-30 blur-md" : ""}`}
+      className={`bg-secondary-0 ${isPending ? "bg-opacity-30 blur-md" : ""}`}
     >
       <div className="flex items-center justify-between py-5 px-4 lg:px-8">
         <div className="flex items-center">
@@ -18,7 +27,7 @@ function Header({}) {
               {(onClose) => <SideBar onClose={onClose} />}
             </DrawerElement>
             <span className="text-sm lg:text-lg font-bold text-secondary-700">
-              سلام؛
+              سلام؛ {fullName}
             </span>
           </div>
         </div>
