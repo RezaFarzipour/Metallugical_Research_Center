@@ -6,8 +6,6 @@ import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import TopContent from "../module/filterdContent/topContent/TopContent";
 import BottomContent from "../module/filterdContent/BottomContent";
 
-
-
 // interface User {
 //   id: number;
 //   name: string;
@@ -34,33 +32,33 @@ export interface TableData {
 //   // ویژگی‌های خاص جدول محصولات
 // }
 interface PanelContainerProps<T extends TableData> {
-  users: T[]; // می‌توانید اینجا نوع داده‌ها را به‌صورت عمومی بگذارید
+  datas: T[]; // می‌توانید اینجا نوع داده‌ها را به‌صورت عمومی بگذارید
   INITIAL_VISIBLE_COLUMNS?: string[];
   quantity: string;
   topContents?: boolean;
   bottomContents?: boolean;
-  btn?: boolean;
-  btnhref?: string;
-  dropDownBtn?: boolean;
-  roles: boolean;
-  product: boolean;
+  addBtn?: boolean;
+  addBtnhref?: string;
+  columnsDropDownBtn?: boolean;
+  rolesDropDown: boolean;
+  stausDropDown: boolean;
   viewContent?: boolean;
   children: React.ReactNode;
   viewContentSmSize?: boolean;
 }
 
 export default function FilteredContainer({
-  users,
+  datas,
   INITIAL_VISIBLE_COLUMNS,
   columns,
   quantity,
   topContents,
   bottomContents,
-  btn,
-  btnhref,
-  dropDownBtn,
-  roles,
-  product,
+  addBtn,
+  addBtnhref,
+  columnsDropDownBtn,
+  rolesDropDown,
+  stausDropDown,
   viewContent,
   children,
   viewContentSmSize,
@@ -72,7 +70,7 @@ export default function FilteredContainer({
       visibleColumns: new Set(INITIAL_VISIBLE_COLUMNS),
     });
   }, [INITIAL_VISIBLE_COLUMNS]);
-  const userData = users || [];
+  const userData = datas || [];
 
   const { pages } = useFilteredContainer(userData);
   return (
@@ -82,11 +80,11 @@ export default function FilteredContainer({
           columns={columns}
           usersLength={userData.length}
           quantity={quantity}
-          btn={btn}
-          btnhref={btnhref}
-          dropDownBtn={dropDownBtn}
-          roles={roles}
-          product={product}
+          addBtn={addBtn}
+          addBtnhref={addBtnhref}
+          columnsDropDownBtn={columnsDropDownBtn}
+          rolesDropDown={rolesDropDown}
+          stausDropDown={stausDropDown}
           viewContent={viewContent}
           viewContentSmSize={viewContentSmSize}
         />

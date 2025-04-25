@@ -20,19 +20,19 @@ interface User {
 }
 
 interface CellRendererProps {
-  user: User;
+  data: User;
   columnKey: keyof User | "actions";
   firstActionContent: string;
   firstActionIcon?: React.FC;
   secondActionContent: string;
   secondActionIcon?: React.FC;
-  firstActionClickHandler: () => void;
-  secondActionClickHandler: () => void;
+  firstActionClickHandler: (id: number | string) => void;
+  secondActionClickHandler: (id: number | string) => void;
   image?: boolean;
 }
 
 export const CellRenderer: React.FC<CellRendererProps> = ({
-  user,
+  data,
   columnKey,
   firstActionContent,
   firstActionIcon: FirstIcon,
@@ -42,7 +42,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
   secondActionClickHandler,
   image,
 }) => {
-  const cellValue = user[columnKey as keyof User];
+  const cellValue = data[columnKey as keyof User];
 
   switch (columnKey) {
     case "name":
@@ -51,13 +51,13 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
           <div className="flex items-center gap-2">
             {image && (
               <Image
-                src={user.image || `/images/user.png`}
-                alt={user.name}
-                width={32}
-                height={32}
+                src={data.image || `/images/user.png`}
+                alt={data.name}
+                width={50}
+                height={50}
               />
             )}
-            <span>{user.name}</span>
+            <span>{data.name}</span>
           </div>
         </div>
       );
@@ -65,9 +65,9 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
       return (
         <div className="flex items-center gap-2">
           {image && (
-            <Image src={user.image} alt={user.author} width={32} height={32} />
+            <Image src={data.image} alt={data.author} width={32} height={32} />
           )}
-          <span>{user.author}</span>
+          <span>{data.author}</span>
         </div>
       );
     case "role":
@@ -80,7 +80,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
       return (
         <Chip
           className="capitalize"
-          color={statusColorMap[user.status as keyof typeof statusColorMap]}
+          color={statusColorMap[data.status as keyof typeof statusColorMap]}
           size="sm"
           variant="flat"
         >
@@ -93,7 +93,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
           <Tooltip content={firstActionContent}>
             <span
               className="text-lg text-gray-400 cursor-pointer hover:opacity-50"
-              onClick={firstActionClickHandler}
+              onClick={() => firstActionClickHandler(data.id)}
             >
               {FirstIcon ? <FirstIcon /> : firstActionContent}
             </span>
@@ -102,7 +102,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
           <Tooltip content={secondActionContent}>
             <span
               className="text-lg text-red-500 cursor-pointer hover:opacity-50"
-              onClick={secondActionClickHandler}
+              onClick={() => secondActionClickHandler(data.id)}
             >
               {SecondIcon ? <SecondIcon /> : secondActionContent}
             </span>

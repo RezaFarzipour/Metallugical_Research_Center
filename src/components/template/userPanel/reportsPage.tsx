@@ -8,7 +8,7 @@ import {
 } from "@/constants/tableData";
 import React, { useMemo } from "react";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/module/CustomeTable";
+import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 

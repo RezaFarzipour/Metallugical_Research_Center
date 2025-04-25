@@ -1,46 +1,43 @@
 "use client";
 import { Card } from "@heroui/react";
 import React, { useState } from "react";
-
 import { twMerge } from "tailwind-merge";
 import { ImageContainer } from "./ImageContainer";
 import { CardContent } from "./CardContent";
 
-export type latestArticleType = {
-  id: number;
-  image: string;
-  date: string;
-  author: string;
-  articleTitle: string;
-  description: string;
-};
-
 type Props = {
-  data: latestArticleType[];
+  data: [];
+  isDate: boolean;
   widthConter: string;
   heightImg: string;
+  moreDetailsHref?: string;
   heightConter: string;
   view?: boolean;
 };
 
 const CardModule = ({
   data,
+  isDate,
+  moreDetailsHref,
   widthConter,
   heightImg,
   heightConter,
   view = true,
 }: Props) => {
   const [hoveredArticleId, setHoveredArticleId] = useState<number | null>(null);
+  console.log("adqawd", data);
 
   const cardStyles = {
     cardsBox: ` w-full max-w-[600px] h-[${heightImg}] col-span-12 sm:col-span-5 relative overflow-visible group`,
     cardsList: `w-full max-w-[900px]  flex flex-col md:flex-row  h-[300px]  group `,
   };
+  console.log("adwawd", data);
+
   return (
     <>
-      {data.map((article: latestArticleType) => (
+      {data.map((item) => (
         <div
-          key={article.id}
+          key={item.id}
           className={`flex justify-center items-center ${
             view ? "min-h-[28rem]" : "min-h-[20rem]"
           }`}
@@ -51,19 +48,20 @@ const CardModule = ({
             )}
           >
             <ImageContainer
-              image={article.image}
-              isHovered={hoveredArticleId === article.id}
+              image={item.image || item.cover_image}
+              isHovered={hoveredArticleId === item.id}
               setIsHovered={(isHovered) =>
-                setHoveredArticleId(isHovered ? article.id : null)
+                setHoveredArticleId(isHovered ? item.id : null)
               }
               view={view}
             />
 
             <CardContent
-              date={article.date}
-              author={article.author}
-              articleTitle={article.articleTitle}
-              description={article.description}
+              isDate={isDate}
+              date={item.date}
+              moreDetailsHref={moreDetailsHref}
+              name={item.name}
+              description={item.description}
               widthConter={widthConter}
               heightConter={heightConter}
               view={view}

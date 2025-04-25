@@ -9,7 +9,7 @@ import { useTableStore } from "@/store/useTableSlice";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import BtnLoader from "@/components/element/BtnLoader";
-import CustomeTable from "@/components/module/CustomeTable";
+import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import useUserData from "./useUserData";
 
 const UsersPage: React.FC = () => {
@@ -32,19 +32,18 @@ const UsersPage: React.FC = () => {
         <TitleStructureDashboards mainTitle="کاربران" />
 
         <FilteredContainer
-          users={formDataSignedUp}
+          datas={formDataSignedUp}
           INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={Usercolumns}
           quantity="کاربران"
+          topContents={true}
           viewContent={false}
           viewContentSmSize={false}
-          topContents={true}
+          addBtn={false}
+          columnsDropDownBtn={true}
+          rolesDropDown={true}
+          stausDropDown={false}
           bottomContents={true}
-          btn={false}
-          dropDownBtn={true}
-          roles={true}
-          product={false}
-          image={false}
         >
           {isPending ? (
             <div>

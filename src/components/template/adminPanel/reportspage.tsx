@@ -13,7 +13,7 @@ import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/module/CustomeTable";
+import CustomeTable from "@/components/module/customeTable/CustomeTable";
 
 const Reportspage: React.FC = () => {
   const { visibleColumns } = useTableStore();
@@ -31,20 +31,19 @@ const Reportspage: React.FC = () => {
         <TitleStructureDashboards mainTitle="گزارش ها" />
 
         <FilteredContainer
-          users={usersOrders}
+          datas={usersOrders}
           columns={columns}
           INITIAL_VISIBLE_COLUMNS={usersOrdersINITIAL_VISIBLE_COLUMNS}
           columns={Usercolumns}
           quantity="گزارش ها"
+          topContents={true}
           viewContent={false}
           viewContentSmSize={false}
-          topContents={true}
+          addBtn={false}
+          columnsDropDownBtn={true}
+          rolesDropDown={false}
+          stausDropDown={true}
           bottomContents={true}
-          btn={false}
-          dropDownBtn={true}
-          roles={false}
-          product={false}
-          image={false}
         >
           <CustomeTable
             headerColumns={headerColumns}

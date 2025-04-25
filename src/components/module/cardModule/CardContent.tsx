@@ -7,11 +7,13 @@ import { Button } from "@heroui/button";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import HoverIcon from "@/components/element/animations/ArrowIconEndContent";
+import Link from "next/link";
 
 interface CardContentProps {
   date: string;
-  author: string;
-  articleTitle: string;
+  isDate: boolean;
+  moreDetailsHref?: string;
+  name: string;
   description: string;
   widthConter: string;
   heightConter: string;
@@ -20,8 +22,9 @@ interface CardContentProps {
 
 export const CardContent: React.FC<CardContentProps> = ({
   date,
-  author,
-  articleTitle,
+  isDate,
+  moreDetailsHref,
+  name,
   description,
   widthConter,
   heightConter,
@@ -38,24 +41,27 @@ export const CardContent: React.FC<CardContentProps> = ({
   return (
     <div className={twMerge(view ? cardStyles.cardBox : cardStyles.cardList)}>
       <div className="flex justify-start gap-5">
-        <InfoItem icon={<SlCalender />} text={date} />
-        <InfoItem icon={<CgProfile />} text={author} />
+        {isDate && <InfoItem icon={<SlCalender />} text={date} />}
+        <InfoItem icon={<CgProfile />} text={name} />
       </div>
-      <h4 className="font-extrabold text-nowrap text-2xl">{articleTitle}</h4>
       <h6 className="font-light text-wrap text-justify">{description}</h6>
       <div className="mb-5">
-        <Button
-          className={`data-[hover]:bg-transparent data-[hover]:text-secondary-500 ${
-            isHovered ? "bg-gray-200" : ""
-          }`}
-          variant="light"
-          size="md"
-          endContent={<HoverIcon isHovered={isHovered} />}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          مشاهده ی مقاله
-        </Button>
+        {moreDetailsHref && (
+          <Link href={moreDetailsHref}>
+            <Button
+              className={`data-[hover]:bg-transparent data-[hover]:text-secondary-500  ${
+                isHovered ? "bg-gray-200" : ""
+              }`}
+              variant="light"
+              size="md"
+              endContent={<HoverIcon isHovered={isHovered} />}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              مشاهده ی بیشتر
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );

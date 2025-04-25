@@ -19,11 +19,11 @@ interface TopContentProps {
   }[];
   usersLength: number;
   quantity: string;
-  roles?: boolean;
-  dropDownBtn?: boolean;
-  btn?: React.ReactNode;
-  btnhref?: string;
-  product?: boolean;
+  rolesDropDown?: boolean;
+  stausDropDown?: boolean;
+  columnsDropDownBtn?: boolean;
+  addBtn?: React.ReactNode;
+  addBtnhref?: string;
   viewContent?: boolean;
   viewContentSmSize?: boolean;
 }
@@ -32,11 +32,11 @@ export default function TopContent({
   columns,
   usersLength,
   quantity,
-  roles,
-  btn,
-  btnhref,
-  dropDownBtn,
-  product,
+  rolesDropDown,
+  stausDropDown,
+  addBtn,
+  addBtnhref,
+  columnsDropDownBtn,
   viewContent,
   viewContentSmSize,
 }: TopContentProps) {
@@ -45,12 +45,10 @@ export default function TopContent({
     visibleColumns,
     statusFilter,
     rolesFilter,
-    productStatusFilter,
     view,
     setVisibleColumns,
     setStatusFilter,
     setRolesFilter,
-    setProductStatusFilter,
     setPage,
     setFilterValue,
     setRowsPerPage,
@@ -99,20 +97,18 @@ export default function TopContent({
         <div className="flex gap-3">
           <FilterSection
             columns={columns}
-            roles={roles}
-            product={product}
-            dropDownBtn={dropDownBtn}
+            rolesDropDown={rolesDropDown}
+            stausDropDown={stausDropDown}
+            columnsDropDownBtn={columnsDropDownBtn}
             rolesFilter={rolesFilter}
             statusFilter={statusFilter}
-            productStatusFilter={productStatusFilter}
             visibleColumns={visibleColumns}
             setRolesFilter={setRolesFilter}
             setStatusFilter={setStatusFilter}
-            setProductStatusFilter={setProductStatusFilter}
             setVisibleColumns={setVisibleColumns}
           />
-          {btn && (
-            <Link href={btnhref}>
+          {addBtn && (
+            <Link href={addBtnhref}>
               <Button
                 className="bg-secondary-500 text-white"
                 endContent={<FaPlus />}

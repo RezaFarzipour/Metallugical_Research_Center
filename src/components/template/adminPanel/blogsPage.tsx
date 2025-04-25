@@ -1,6 +1,6 @@
 "use client";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/module/CustomeTable";
+import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import {
   blogColumns,
@@ -32,19 +32,19 @@ export const BlogsPage: React.FC = () => {
       <div className=" p-4 md:p-6">
         <TitleStructureDashboards mainTitle="محصولات" />
         <FilteredContainer
-          users={blogs}
+          datas={blogs}
           INITIAL_VISIBLE_COLUMNS={blogsINITIAL_VISIBLE_COLUMNS}
           columns={Usercolumns}
           quantity="بلاگ ها"
+          topContents={true}
           viewContent={true}
           viewContentSmSize={false}
-          topContents={true}
+          addBtn={true}
+          addBtnhref="/admin/blogs/createblog"
+          columnsDropDownBtn={true}
+          rolesDropDown={false}
+          stausDropDown={false}
           bottomContents={true}
-          btn={true}
-          btnhref="/admin/blogs/createblog"
-          dropDownBtn={true}
-          roles={true}
-          product={false}
         >
           {!view ? (
             <CustomeTable

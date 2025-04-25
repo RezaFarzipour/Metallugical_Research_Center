@@ -1,9 +1,5 @@
 import { DropdownElement } from "@/components/element/DropdownElement";
-import {
-  productProgresOptions,
-  rolesOptions,
-  statusOptions,
-} from "@/constants/tableData";
+import { rolesOptions, statusOptions } from "@/constants/tableData";
 import React from "react";
 
 interface FilterSectionProps {
@@ -12,60 +8,58 @@ interface FilterSectionProps {
     uid: string;
     sortable?: boolean;
   }[];
-  roles?: boolean;
+  rolesDropDown?: boolean;
+  stausDropDown?: boolean;
   product?: boolean;
-  dropDownBtn?: boolean;
+  columnsDropDownBtn?: boolean;
   rolesFilter: Set<string>;
   statusFilter: Set<string>;
-  productStatusFilter: Set<string>;
   visibleColumns: Set<string>;
   setRolesFilter: (keys: Set<string>) => void;
   setStatusFilter: (keys: Set<string>) => void;
-  setProductStatusFilter: (keys: Set<string>) => void;
   setVisibleColumns: (keys: Set<string>) => void;
 }
 
 export const FilterSection: React.FC<FilterSectionProps> = ({
   columns,
-  roles,
-  product,
-  dropDownBtn,
+  rolesDropDown = false,
+  stausDropDown = false,
+  columnsDropDownBtn = false,
   rolesFilter,
   statusFilter,
-  productStatusFilter,
   visibleColumns,
   setRolesFilter,
   setStatusFilter,
-  setProductStatusFilter,
   setVisibleColumns,
 }) => {
-  const filterOptions = roles
-    ? rolesOptions
-    : product
-    ? productProgresOptions
-    : statusOptions;
+  let label: string | null = null;
+  let options: { name: string; uid: string }[] = [];
+  let selectedKeys: Set<string> = new Set();
+  let onSelectionChange: ((keys: Set<string>) => void) | undefined;
 
-  const selectedFilter = roles
-    ? rolesFilter
-    : product
-    ? productStatusFilter
-    : statusFilter;
-
-  const setFilter = roles
-    ? setRolesFilter
-    : product
-    ? setProductStatusFilter
-    : setStatusFilter;
+  if (rolesDropDown) {
+    label = "نقش";
+    options = rolesOptions;
+    selectedKeys = rolesFilter;
+    onSelectionChange = setRolesFilter;
+  } else if (stausDropDown) {
+    label = "وضعیت‌ها";
+    options = statusOptions;
+    selectedKeys = statusFilter;
+    onSelectionChange = setStatusFilter;
+  }
 
   return (
     <div className="flex gap-3">
-      <DropdownElement
-        label={roles ? "نقش" : "وضعیت‌ها"}
-        options={filterOptions}
-        selectedKeys={selectedFilter}
-        onSelectionChange={setFilter}
-      />
-      {dropDownBtn && (
+      {label && onSelectionChange && (
+        <DropdownElement
+          label={label}
+          options={options}
+          selectedKeys={selectedKeys}
+          onSelectionChange={onSelectionChange}
+        />
+      )}
+      {columnsDropDownBtn && (
         <DropdownElement
           label="ستون‌ها"
           options={columns}

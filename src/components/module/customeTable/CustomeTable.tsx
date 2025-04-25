@@ -9,7 +9,8 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/react";
-import { CellRenderer } from "../element/CellsRender";
+import { CellRenderer } from "./CellsRender";
+
 interface User {
   id: number;
   name: string;
@@ -36,8 +37,8 @@ interface CustomeTableProps {
   firstActionIcon?: React.FC;
   secondActionContent: string;
   secondActionIcon?: React.FC;
-  firstActionClickHandler: () => void;
-  secondActionClickHandler: () => void;
+  firstActionClickHandler: (id: number | string) => void;
+  secondActionClickHandler: (id: number | string) => void;
   image?: boolean;
 }
 
@@ -70,13 +71,13 @@ export default function CustomeTable({
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody  items={sortedItems}>
+      <TableBody items={sortedItems}>
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
               <TableCell>
                 <CellRenderer
-                  user={item}
+                  data={item}
                   columnKey={columnKey as keyof User | "actions"}
                   firstActionContent={firstActionContent}
                   firstActionIcon={firstActionIcon}
