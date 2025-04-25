@@ -1,4 +1,4 @@
-import CreateProductPage from "@/components/template/adminPanel/products/createProductPage";
+import { AdminServicesPage } from "@/components/template/adminPanel/services/adminServicesPage";
 import React from "react";
 
 type Props = {};
@@ -6,7 +6,7 @@ type Props = {};
 const page = (props: Props) => {
   return (
     <div>
-      <CreateProductPage />
+      <AdminServicesPage />
     </div>
   );
 };
