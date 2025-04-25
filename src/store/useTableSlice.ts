@@ -11,7 +11,6 @@ interface TableState {
     visibleColumns: Set<string>;
     statusFilter: string | Set<string>;
     rolesFilter: string | Set<string>;
-    productStatusFilter: string | Set<string>;
     rowsPerPage: number;
     sortDescriptor: SortDescriptor;
     page: number;
@@ -21,7 +20,6 @@ interface TableState {
     setVisibleColumns: (columns: Set<string>) => void;
     setStatusFilter: (filter: string | Set<string>) => void;
     setRolesFilter: (filter: string | Set<string>) => void;
-    setProductStatusFilter: (filter: string | Set<string>) => void;
     setRowsPerPage: (rows: number) => void;
     setSortDescriptor: (descriptor: SortDescriptor) => void;
     setPage: (page: number) => void;
@@ -34,7 +32,6 @@ export const useTableStore = create<TableState>((set) => ({
     visibleColumns: new Set<string>(),
     statusFilter: 'all',
     rolesFilter: 'all',
-    productStatusFilter: 'all',
     rowsPerPage: 5,
     sortDescriptor: { column: 'id', direction: 'ascending' },
     page: 1,
@@ -44,7 +41,6 @@ export const useTableStore = create<TableState>((set) => ({
     setVisibleColumns: (columns: Set<string>) => set({ visibleColumns: columns }),
     setStatusFilter: (filter: string | Set<string>) => set({ statusFilter: filter }),
     setRolesFilter: (filter: string | Set<string>) => set({ rolesFilter: filter }),
-    setProductStatusFilter: (filter: string | Set<string>) => set({ productStatusFilter: filter }),
     setRowsPerPage: (rows: number) => set({ rowsPerPage: rows }),
     setSortDescriptor: (descriptor: SortDescriptor) => set({ sortDescriptor: descriptor }),
     setPage: (page: number) => set({ page }),

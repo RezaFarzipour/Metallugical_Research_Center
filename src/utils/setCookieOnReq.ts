@@ -3,8 +3,8 @@ export default function setCookiesOnReq(cookies: any) {
   const options = {
     headers: {
       Cookie:
-        `${cookies.get("accessToken")?.name}=${cookies.get("accessToken")?.value
-        }; ${cookies.get("refreshToken")?.name}=${cookies.get("refreshToken")?.value
+        `${cookies.get("access_token")?.name}=${cookies.get("access_token")?.value
+        }; ${cookies.get("refresh_token")?.name}=${cookies.get("refresh_token")?.value
         }` || "-",
     },
   };

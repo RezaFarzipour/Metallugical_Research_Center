@@ -61,9 +61,9 @@ export const adminSidebarlinks: SidebarLink[] = [
   },
   {
     id: 2,
-    title: "محصولات",
+    title: "سرویس ها",
     icon: PiDeviceTablet,
-    to: "/admin/products"
+    to: "/admin/services"
   },
   {
     id: 3,

@@ -2,10 +2,10 @@
 import { useMemo } from "react";
 import { useTableStore } from "@/store/useTableSlice";
 
-interface User {
-    full_name: string,
+interface Data {
     id: number;
     name: string;
+    phone_number: string;
     email: string;
     role: string;
     status: string;
@@ -13,30 +13,29 @@ interface User {
     date: string;
     title: string;
     description: string;
-    image: string;
+    cover_image: string;
     author: string;
     articleTitle: string;
 }
 
-export function useFilteredContainer(users: User[]) {
+export function useFilteredContainer(datas: Data[]) {
     const {
         filterValue,
         statusFilter,
         rolesFilter,
-        productStatusFilter,
         rowsPerPage,
         sortDescriptor,
         page,
     } = useTableStore();
 
     // محاسبه فیلترهای مختلف
-    const filteredItems = useMemo<User[]>(() => {
-        let filteredUsers = [...users];
+    const filteredItems = useMemo<Data[]>(() => {
+        let filteredUsers = [...datas];
 
         const applyFilter = (
-            items: User[],
+            items: Data[],
             filter: string | Set<string>,
-            key: keyof User
+            key: keyof Data
         ) => {
             if (filter !== "all" && filter instanceof Set) {
                 return items.filter((item) => filter.has(item[key] as string));
@@ -58,10 +57,9 @@ export function useFilteredContainer(users: User[]) {
 
         filteredUsers = applyFilter(filteredUsers, statusFilter, "status");
         filteredUsers = applyFilter(filteredUsers, rolesFilter, "role");
-        filteredUsers = applyFilter(filteredUsers, productStatusFilter, "status");
 
         return filteredUsers;
-    }, [users, filterValue, statusFilter, rolesFilter, productStatusFilter]);
+    }, [datas, filterValue, statusFilter, rolesFilter,]);
 
     // محاسبه تعداد صفحات و آیتم‌های قابل نمایش
     const pages = Math.ceil(filteredItems.length / rowsPerPage);
@@ -75,8 +73,8 @@ export function useFilteredContainer(users: User[]) {
     // مرتب‌سازی آیتم‌ها
     const sortedItems = useMemo(() => {
         return [...paginatedItems].sort((a, b) => {
-            const first = a[sortDescriptor.column as keyof User];
-            const second = b[sortDescriptor.column as keyof User];
+            const first = a[sortDescriptor.column as keyof Data];
+            const second = b[sortDescriptor.column as keyof Data];
             const cmp = first < second ? -1 : first > second ? 1 : 0;
             return sortDescriptor.direction === "ascending" ? cmp : -cmp;
         });
