@@ -24,7 +24,7 @@ type FilteredService = {
     name: string;
     image?: string;
     actions: string;
-    rawId: number;       // id عددی برای مقاصد عملیاتی مثل حذف و ...
+    description: string;
 };
 
 type GroupedServices = {
@@ -42,7 +42,7 @@ const groupServicesByKeys = (data: RawService[], keys: readonly string[]): Group
                 name: service.service_name,
                 image: service.cover_image,
                 actions: service.id.toString(),
-                rawId: service.id,
+                description: service.description,
             });
             return acc;
         },
@@ -117,7 +117,7 @@ export const useAdminServicesData = () => {
             return;
         }
 
-        deletService(toEnglishNumbers(selectedServiceId), {
+        deletService({ id: toEnglishNumbers(selectedServiceId) }, {
             onSuccess: () => {
                 showToast("سرویس با موفقیت حذف شد", "success");
             },

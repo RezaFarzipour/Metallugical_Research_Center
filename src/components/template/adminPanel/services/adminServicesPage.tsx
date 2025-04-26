@@ -11,6 +11,7 @@ import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import BtnLoader from "@/components/element/BtnLoader";
 import { useAdminServicesData } from "./useAdminServicesData";
 import ModalModule from "@/components/element/ModalModule";
+import Empty from "@/components/element/Empty";
 
 export const AdminServicesPage: React.FC = () => {
   const {
@@ -26,8 +27,11 @@ export const AdminServicesPage: React.FC = () => {
     secondActionClickHandler,
     handleDeleteService,
   } = useAdminServicesData();
+  console.log("formDataServices", formDataServices);
 
   const { sortedItems } = useFilteredContainer(formDataServices);
+
+  const isEmpty = !formDataServices || formDataServices.length === 0;
 
   return (
     <div className="grid grid-cols-1">
@@ -38,7 +42,7 @@ export const AdminServicesPage: React.FC = () => {
           INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={Servicecolumns}
           quantity="سرویس ها "
-          topContents={true}
+          topContents={!!formDataServices?.length}
           viewContent={true}
           viewContentSmSize={false}
           columnsDropDownBtn={true}
@@ -46,12 +50,18 @@ export const AdminServicesPage: React.FC = () => {
           stausDropDown={false}
           addBtn={true}
           addBtnhref="/admin/services/create"
-          bottomContents={true}
+          bottomContents={!!formDataServices?.length}
         >
           {isPending ? (
             <div>
               <BtnLoader color="#377cfb" />
             </div>
+          ) : isEmpty ? (
+            <Empty
+              btnValue="افزودن سرویس"
+              btnHref="/admin/services/create"
+              spanValue="سرویسی"
+            />
           ) : !view ? (
             <CustomeTable
               headerColumns={headerColumns}
@@ -65,15 +75,16 @@ export const AdminServicesPage: React.FC = () => {
               image={true}
             />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-28">
               <CardModule
                 data={sortedItems}
                 isDate={false}
                 moreDetailsHref="/admin/services/details"
                 widthConter="100%"
-                heightImg="200px"
-                heightConter="150px"
+                heightImg="250px"
+                heightConter="200px"
                 view={view}
+                styleForAdmin={true}
               />
             </div>
           )}

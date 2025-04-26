@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { ImageContainer } from "./ImageContainer";
 import { CardContent } from "./CardContent";
+import clsx from "clsx";
 
 type Props = {
   data: [];
@@ -13,6 +14,7 @@ type Props = {
   moreDetailsHref?: string;
   heightConter: string;
   view?: boolean;
+  styleForAdmin: boolean;
 };
 
 const CardModule = ({
@@ -23,15 +25,16 @@ const CardModule = ({
   heightImg,
   heightConter,
   view = true,
+  styleForAdmin,
 }: Props) => {
   const [hoveredArticleId, setHoveredArticleId] = useState<number | null>(null);
-  console.log("adqawd", data);
 
   const cardStyles = {
-    cardsBox: ` w-full max-w-[600px] h-[${heightImg}] col-span-12 sm:col-span-5 relative overflow-visible group`,
-    cardsList: `w-full max-w-[900px]  flex flex-col md:flex-row  h-[300px]  group `,
+    cardsBox: clsx(
+      "w-full max-w-[600px] col-span-12 sm:col-span-5 relative overflow-visible group"
+    ),
+    cardsList: "w-full max-w-[900px] flex flex-col md:flex-row group",
   };
-  console.log("adwawd", data);
 
   return (
     <>
@@ -46,6 +49,7 @@ const CardModule = ({
             className={twMerge(
               view ? cardStyles.cardsBox : cardStyles.cardsList
             )}
+            style={view ? { height: heightImg } : { height: "auto" }}
           >
             <ImageContainer
               image={item.image || item.cover_image}
@@ -65,6 +69,7 @@ const CardModule = ({
               widthConter={widthConter}
               heightConter={heightConter}
               view={view}
+              styleForAdmin={styleForAdmin}
             />
           </Card>
         </div>
