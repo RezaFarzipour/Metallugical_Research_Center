@@ -4,10 +4,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { personalRegisterSchema } from "@/schemas/personalRegisterSchema";
-import { PersonalRegisterFormData } from "@/schemas/personalRegisterSchema";
 import Loading from "../../element/Loading";
 import Button from "../../element/Button";
-import RHFInput from "../../element/RHFInput";
+import PersonalDetailsForm from "../controller/PersonalDetailsForm";
 
 interface SendPersonalFormProps {
   onSubmit: (data: typeof personalRegisterSchema._type) => void;
@@ -26,31 +25,7 @@ const PersonalRegister: React.FC<SendPersonalFormProps> = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="relative">
-      <RHFInput<PersonalRegisterFormData>
-        register={register}
-        errors={errors}
-        label="نام "
-        type="text"
-        dir="rtl"
-        name="first_name"
-      />
-      <RHFInput<PersonalRegisterFormData>
-        register={register}
-        errors={errors}
-        label="  تام خانوادگی"
-        type="text"
-        dir="rtl"
-        name="last_name"
-      />
-
-      <RHFInput<PersonalRegisterFormData>
-        register={register}
-        errors={errors}
-        label="ایمبل "
-        type="email"
-        dir="rtl"
-        name="email"
-      />
+      <PersonalDetailsForm register={register} errors={errors} />
 
       <div className="pt-14">
         {isCheckingInput ? (

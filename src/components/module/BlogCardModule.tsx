@@ -4,7 +4,7 @@ import { LatestArticles } from "@/constants/data";
 import React from "react";
 import TitleStructure from "../element/TitleStructure";
 import SectionWrapper from "@/hoc/SectionWrapper";
-import CardModule from "./CardModule";
+import CardModule from "./cardModule/CardModule";
 
 const BlogCardModule = () => {
   return (

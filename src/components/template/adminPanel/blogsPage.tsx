@@ -1,6 +1,6 @@
 "use client";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/module/CustomeTable";
+import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import {
   blogColumns,
@@ -14,7 +14,7 @@ import { useTableStore } from "@/store/useTableSlice";
 import React, { useMemo } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
-import CardModule from "@/components/module/CardModule";
+import CardModule from "@/components/module/cardModule/CardModule";
 
 export const BlogsPage: React.FC = () => {
   const { view, visibleColumns } = useTableStore();
@@ -29,22 +29,22 @@ export const BlogsPage: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1">
-      <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
+      <div className=" p-4 md:p-6">
         <TitleStructureDashboards mainTitle="محصولات" />
         <FilteredContainer
-          users={blogs}
+          datas={blogs}
           INITIAL_VISIBLE_COLUMNS={blogsINITIAL_VISIBLE_COLUMNS}
           columns={Usercolumns}
           quantity="بلاگ ها"
+          topContents={true}
           viewContent={true}
           viewContentSmSize={false}
-          topContents={true}
+          addBtn={true}
+          addBtnhref="/admin/blogs/createblog"
+          columnsDropDownBtn={true}
+          rolesDropDown={false}
+          stausDropDown={false}
           bottomContents={true}
-          btn={true}
-          btnhref="/admin/blogs/createblog"
-          dropDownBtn={true}
-          roles={true}
-          product={false}
         >
           {!view ? (
             <CustomeTable

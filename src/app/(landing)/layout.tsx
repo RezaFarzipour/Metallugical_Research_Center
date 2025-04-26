@@ -7,7 +7,9 @@ export default function LandingLayout({
 }) {
   return (
     <>
-      <Layout>{children}</Layout>
+      <Layout>
+        <div className="xl:max-w-screen-xl ">{children}</div>
+      </Layout>
     </>
   );
 }

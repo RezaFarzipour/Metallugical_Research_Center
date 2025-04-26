@@ -1,17 +1,12 @@
 "use client";
 import React from "react";
-import AboutOverview from "../module/AboutOverview";
 import BlogCardModule from "../module/BlogCardModule";
 import FaqAccordian from "../module/FaqAccordian";
 import LandingHeader from "../module/LandingHeader";
 import { showToast } from "@/store/useToastSlice";
+import AboutOverview from "../module/aboutOverview/AboutOverview";
 
 const LandingPage = () => {
-
-
-
-  
-
   return (
     <main className="w-full overflow-x-hidden bg-[#fcfcfc]">
       {/* Hero Header */}

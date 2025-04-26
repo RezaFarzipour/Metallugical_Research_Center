@@ -64,7 +64,6 @@ const RHFInput = <T extends object>({
             errors[name] && inputStyles.error,
           ].filter(Boolean),
         }}
-        autoFocus
       />
       {errors[name] && (
         <p className={inputStyles.errorMessage.join(" ")}>

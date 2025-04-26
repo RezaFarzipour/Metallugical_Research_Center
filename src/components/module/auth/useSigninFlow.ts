@@ -1,4 +1,3 @@
-// hooks/useSigninFlow.ts
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
@@ -8,6 +7,7 @@ import { useGetUser } from "@/hooks/useAuth";
 import { showToast } from "@/store/useToastSlice";
 import { PhoneFormData } from "@/schemas/phoneSchema";
 import { PersonalRegisterFormData } from "@/schemas/personalRegisterSchema";
+import { UserProfileResponse } from "@/types";
 
 const RESEND_TIME = 90;
 
@@ -19,7 +19,9 @@ export const useSigninFlow = () => {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-  const userdata = useGetUser();
+  const { data } = useGetUser();
+  // اگر response وجود داشت، دیتا رو بگیر؛ وگرنه null باشه
+  const user: UserProfileResponse | null = data?.response?.data?.[0] ?? null;
 
   const sendOtpHandler = async (data: PhoneFormData) => {
     setLoading(true);
@@ -55,7 +57,7 @@ export const useSigninFlow = () => {
       }
       if (!response) return;
       const { data } = response;
-      const userRoles = userdata?.role;
+      const userRoles = user?.role;
 
       if (!data.is_signup) {
         setStep(3);

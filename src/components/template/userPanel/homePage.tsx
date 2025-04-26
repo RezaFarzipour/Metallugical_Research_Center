@@ -12,7 +12,7 @@ import { CgArrowLeft } from "react-icons/cg";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import { useTableStore } from "@/store/useTableSlice";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/module/CustomeTable";
+import CustomeTable from "@/components/module/customeTable/CustomeTable";
 
 const HomePage: React.FC = () => {
   const { visibleColumns } = useTableStore();

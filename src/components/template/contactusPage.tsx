@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import MapModule from "../module/MapModule";
-import ContactusInformation from "../module/ContactusInformation";
+import MapModule from "../module/contactUs/MapModule";
+import ContactusInformation from "../module/contactUs/ContactusInformation";
 
 //import { Divider } from "@heroui/react";
 

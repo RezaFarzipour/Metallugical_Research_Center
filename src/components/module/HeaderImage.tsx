@@ -18,6 +18,7 @@ const HeaderImage = ({
       <header className="relative w-full h-96">
         <Image
           src="/images/contactus.jpg"
+          priority
           alt="Contact Us"
           fill
           objectFit="cover"

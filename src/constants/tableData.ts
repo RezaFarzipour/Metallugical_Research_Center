@@ -96,105 +96,6 @@ export const usersOrdersINITIAL_VISIBLE_COLUMNS = [
     "amount",
     "actions",
 ];
-export const products = [
-    {
-        id: 1,
-        name: "Tony Reichert",
-        amount: "1000",
-        status: "تکمیل شده",
-        date: "1403/01/22",
-        image: "/images/blog1-img1.png",
-    },
-    {
-        id: 2,
-        name: "Zoey Lang",
-        amount: "1000",
-        status: "ناقص",
-        date: "1403/01/22",
-        image: "/images/blog1-img2.png",
-    },
-    {
-        id: 3,
-        name: "Jane Fisher",
-        amount: "1000",
-        status: "ناقص",
-        date: "1403/01/22",
-        image: "/images/blog1-img1.png",
-    },
-    {
-        id: 4,
-        name: "William Howard",
-        amount: "1000",
-        status: "ناقص",
-        date: "1403/01/22",
-        image: "/images/blog1-img2.png",
-    },
-    {
-        id: 5,
-        name: "علی محمدی",
-        amount: "1000",
-        status: "تکمیل شده",
-        date: "1403/01/22",
-        image: "/images/blog1-img1.png",
-    },
-    {
-        id: 6,
-        name: "Michael Smith",
-        amount: "1200",
-        status: "تکمیل شده",
-        date: "1403/01/22",
-        image: "/images/blog1-img2.png",
-    },
-    {
-        id: 7,
-        name: "Emily Johnson",
-        amount: "1500",
-        status: "ناقص",
-        date: "1403/01/22",
-        image: "/images/blog1-img2.png",
-    },
-    {
-        id: 8,
-        name: "David Brown",
-        amount: "800",
-        status: "ناقص",
-        date: "1403/01/22",
-        image: "/images/blog1-img1.png",
-    },
-    {
-        id: 9,
-        name: "Sophia Davis",
-        amount: "900",
-        status: "ناقص",
-        date: "1403/01/22",
-        image: "/images/blog1-img2.png",
-    },
-    {
-        id: 10,
-        name: "James Wilson",
-        amount: "1100",
-        status: "ناقص",
-        date: "1403/01/22",
-        image: "/images/blog1-img1.png",
-    },
-    {
-        id: 11,
-        name: "Isabella Martinez",
-        amount: "1300",
-        status: "ناقص",
-        date: "1403/01/22",
-        image: "/images/blog1-img2.png",
-    },
-];
-export const productsINITIAL_VISIBLE_COLUMNS = [
-    "id",
-    "name",
-    "status",
-    "date",
-    "amount",
-    "actions",
-];
-
 
 export const blogs = [
     {
@@ -303,6 +204,13 @@ export const Usercolumns = [
     { name: "شماره همراه", uid: "phone_number" },
     { name: "عملیات", uid: "actions" },
 ];
+export const Servicecolumns = [
+    { name: "#", uid: "id", sortable: true },
+    { name: "نام سرویس", uid: "name", sortable: true },
+    { name: "توضیحات", uid: "description", sortable: true },
+    { name: "قیمت", uid: "price" },
+    { name: "عملیات", uid: "actions" },
+];
 
 export const columns = [
     { name: "#", uid: "id", sortable: true },
@@ -335,10 +243,7 @@ export const rolesOptions = [
     { name: "کاربر", uid: "کاربر" },
 ];
 
-export const productProgresOptions = [
-    { name: "تکمیل شده", uid: "تکمیل شده" },
-    { name: "ناقص", uid: "ناقص" },
-];
+
 
 export const statusColorMap = {
     "انجام شده": "success",
@@ -346,6 +251,4 @@ export const statusColorMap = {
     "کنسل شده": "danger",
     "ادمین": "secondary",
     "کاربر": "primary",
-    "تکمیل شده": "success",
-    "ناقص": "warning",
 }; 

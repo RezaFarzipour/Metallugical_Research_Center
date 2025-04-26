@@ -47,19 +47,34 @@ export interface FormInputConfig {
   maxLength?: number;
   placeholder?: string;
   boleean?: boolean;
-  options?:{label:string,value:boolean}[]
+  options?: { label: string, value: boolean }[]
 }
 
 
 export interface UserProfileResponse {
 
-    username: string;
-    first_name: string;
-    last_name: string;
-    email: string;
-    is_signup: boolean;
-    phone_number: string;
-    role: "customer" | "admin";
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  is_signup: boolean;
+  phone_number: string;
+  role: "customer" | "admin";
 
- 
+
+}
+
+export type NavLinkItem = {
+  id: number;
+  title: string;
+  to: string;
+  icon: React.ElementType; // یا React.ComponentType برای آیکن
+};
+
+export interface serviceDataEditType {
+  id: number;
+  service_name: string;
+  description: string;
+  price: number;
+  cover_image: string;
 }

@@ -15,7 +15,7 @@ import { adminCards } from "@/constants/data";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/module/CustomeTable";
+import CustomeTable from "@/components/module/customeTable/CustomeTable";
 
 const HomePage: React.FC = () => {
   const { visibleColumns } = useTableStore();
@@ -30,12 +30,12 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 gap-6">
-      <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
+      <div className="p-4 md:p-6">
         <TitleStructureDashboards mainTitle="داشبورد" />
         <MiniCardModule cards={adminCards} />
       </div>
 
-      <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
+      <div className="p-4 md:p-6">
         <TitleStructureDashboards
           mainTitle="گزارش های اخیر"
           viewMore="مشاهده همه "
@@ -43,18 +43,17 @@ const HomePage: React.FC = () => {
           icon={<CgArrowLeft />}
         />
         <FilteredContainer
-          users={usersOrders}
+          datas={usersOrders}
           INITIAL_VISIBLE_COLUMNS={usersOrdersINITIAL_VISIBLE_COLUMNS}
           columns={Usercolumns}
+          topContents={false}
           viewContent={false}
           viewContentSmSize={false}
-          topContents={false}
+          addBtn={false}
+          columnsDropDownBtn={false}
+          rolesDropDown={false}
+          stausDropDown={true}
           bottomContents={false}
-          btn={false}
-          dropDownBtn={false}
-          roles={false}
-          product={false}
-          image={false}
         >
           <CustomeTable
             headerColumns={headerColumns}
