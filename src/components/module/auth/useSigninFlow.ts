@@ -55,7 +55,7 @@ export const useSigninFlow = () => {
       }
       if (!response) return;
       const { data } = response;
-      const userRoles = userdata?.response?.data[0].role;
+      const userRoles = userdata?.role;
 
       if (!data.is_signup) {
         setStep(3);

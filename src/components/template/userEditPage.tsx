@@ -7,20 +7,21 @@ import RHFInput from "@/components/element/RHFInput";
 import { PersonalRegisterFormData } from "@/schemas/personalRegisterSchema";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { Radio, RadioGroup } from "@heroui/react";
+import { UserProfileResponse } from "@/types";
 
-export default function UserEditPage(): JSX.Element {
+export default function UserEditPage({user}:{user:UserProfileResponse|undefined}): JSX.Element {
+
+//first_name:user?.response.data[0].first_name
+  console.log('rrr',user);
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<PersonalRegisterFormData>({
-    defaultValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      role: "",
-    },
+    
   });
+
 
   const onSubmit: SubmitHandler<PersonalRegisterFormData> = (data) => {
     console.log("فرم ارسال شد:", data);
@@ -47,6 +48,7 @@ export default function UserEditPage(): JSX.Element {
           type="text"
           dir="rtl"
           name="first_name"
+          
         />
         <RHFInput<PersonalRegisterFormData>
           register={register}

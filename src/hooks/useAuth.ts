@@ -8,5 +8,5 @@ export const useGetUser = () => {
     retry: false,
   });
 
-  return data
+  return data?.response?.data?.[0]
 };
