@@ -2,12 +2,15 @@
 import React from "react";
 import ServicesAction from "@/components/module/panelAction/ServicesAction";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
+import { serviceDataEditType } from "@/types";
 
-type Props = {};
+interface EditServicePageProps {
+  serviceDataEdit: serviceDataEditType;
+}
 
-const EditServicePage = ({ ServiceDataEdit }) => {
-  console.log("editData", ServiceDataEdit);
-
+const EditServicePage: React.FC<EditServicePageProps> = ({
+  serviceDataEdit,
+}) => {
   return (
     <div>
       <div className="mb-6">
@@ -17,7 +20,7 @@ const EditServicePage = ({ ServiceDataEdit }) => {
           panelHref="/admin/services"
         />
       </div>
-      <ServicesAction ServiceDataEdit={ServiceDataEdit} />
+      <ServicesAction serviceDataEdit={serviceDataEdit} />
     </div>
   );
 };

@@ -18,21 +18,16 @@ import useCreateService from "@/components/template/adminPanel/services/useCreat
 import useEditService from "@/components/template/adminPanel/services/useEditService";
 import { imageUrlToFile } from "@/utils/fileFormatter";
 import BtnLoader from "@/components/element/BtnLoader";
+import { serviceDataEditType } from "@/types";
 
 interface ServicesActionProps {
-  ServiceDataEdit?: Partial<{
-    id: number;
-    service_name: string;
-    description: string;
-    price: number | string;
-    cover_image: string;
-  }>;
+  serviceDataEdit?: Partial<serviceDataEditType>;
 }
 
 const ServicesAction: React.FC<ServicesActionProps> = ({
-  ServiceDataEdit = {},
+  serviceDataEdit = {},
 }) => {
-  const { id: editId } = ServiceDataEdit;
+  const { id: editId } = serviceDataEdit;
   const isEditSession = Boolean(editId);
 
   const {
@@ -40,7 +35,7 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
     description,
     price,
     cover_image: prevCoverImageUrl,
-  } = ServiceDataEdit;
+  } = serviceDataEdit;
 
   const [coverImageUrl, setCoverImageUrl] = useState<string | null>(
     prevCoverImageUrl || null
@@ -49,6 +44,15 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
   const { createService, isCreating } = useCreateService();
   const { editService, isEditing } = useEditService();
   const router = useRouter();
+
+  const parsedPrice =
+    price !== undefined
+      ? typeof price === "string"
+        ? Number.isNaN(parseInt(price))
+          ? undefined
+          : parseInt(price)
+        : price
+      : undefined;
 
   const {
     register,
@@ -63,7 +67,7 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
     defaultValues: {
       service_name: service_name || "",
       description: description || "",
-      price: price || "",
+      price: parsedPrice,
       cover_image: null,
     },
   });
@@ -94,7 +98,7 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
 
     if (isEditSession && editId) {
       editService(
-        { id: editId, data: formData },
+        { id: String(editId), data: formData },
         {
           onSuccess: () => {
             showToast("سرویس با موفقیت ویرایش شد", "success");
@@ -134,7 +138,6 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
             return (
               <FileInput
                 label="انتخاب کاور محصول"
-                name="cover_image"
                 errors={errors}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const file = event.target.files?.[0];
@@ -144,7 +147,7 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
                     setCoverImageUrl(URL.createObjectURL(file));
                   }
                 }}
-                {...rest}
+                {...rest} // اینجا name هم هست، پس پراپ name رو جدا نفرستید
               />
             );
           }}

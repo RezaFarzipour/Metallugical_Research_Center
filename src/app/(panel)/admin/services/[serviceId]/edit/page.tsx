@@ -2,13 +2,12 @@ import EditServicePage from "@/components/template/adminPanel/services/editServi
 import { getServicesByIdAdmin } from "@/services/service";
 import setCookiesOnReq from "@/utils/setCookieOnReq";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
 
 type PageProps = {
   params: { serviceId: string };
 };
 
-const page = async ({ params }: PageProps) => {
+const Page = async ({ params }: PageProps) => {
   const serviceId = params.serviceId;
 
   const cookieStore = cookies();
@@ -18,12 +17,11 @@ const page = async ({ params }: PageProps) => {
 
   console.log("data:", data);
 
-
   return (
     <div>
-      <EditServicePage ServiceDataEdit={data} />
+      <EditServicePage serviceDataEdit={data} />
     </div>
   );
 };
 
-export default page;
+export default Page;

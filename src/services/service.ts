@@ -30,7 +30,7 @@ export const editNewProduct = async ({
     data,
 }: {
     id: string;
-    data: []
+    data: FormData;
 }) => {
     const response = await http.patch(`service/s/admin/${id}/`, data);
     return response.data;

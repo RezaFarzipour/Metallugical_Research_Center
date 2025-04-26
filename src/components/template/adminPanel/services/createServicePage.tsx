@@ -2,9 +2,7 @@ import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import ServicesAction from "@/components/module/panelAction/ServicesAction";
 import React from "react";
 
-type Props = {};
-
-const createServicePage = (props: Props) => {
+const createServicePage = () => {
   return (
     <div>
       <div className="mb-6">

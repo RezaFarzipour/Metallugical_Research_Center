@@ -70,3 +70,11 @@ export type NavLinkItem = {
   to: string;
   icon: React.ElementType; // یا React.ComponentType برای آیکن
 };
+
+export interface serviceDataEditType {
+  id: number;
+  service_name: string;
+  description: string;
+  price: number;
+  cover_image: string;
+}
