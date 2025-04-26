@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
-import { Chip, Tooltip } from "@heroui/react";
+import { Chip } from "@heroui/react";
 import { statusColorMap } from "@/constants/tableData";
 import Image from "next/image";
+import EditBtn from "../panelAction/EditBtn";
+import DeleteBtn from "../panelAction/DeleteBtn";
 
 interface User {
   id: number;
@@ -35,9 +37,9 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
   data,
   columnKey,
   firstActionContent,
-  firstActionIcon: FirstIcon,
+  firstActionIcon,
   secondActionContent,
-  secondActionIcon: SecondIcon,
+  secondActionIcon,
   firstActionClickHandler,
   secondActionClickHandler,
   image,
@@ -90,23 +92,18 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
     case "actions":
       return (
         <div className="flex justify-center gap-2">
-          <Tooltip content={firstActionContent}>
-            <span
-              className="text-lg text-gray-400 cursor-pointer hover:opacity-50"
-              onClick={() => firstActionClickHandler(data.id)}
-            >
-              {FirstIcon ? <FirstIcon /> : firstActionContent}
-            </span>
-          </Tooltip>
-
-          <Tooltip content={secondActionContent}>
-            <span
-              className="text-lg text-red-500 cursor-pointer hover:opacity-50"
-              onClick={() => secondActionClickHandler(data.id)}
-            >
-              {SecondIcon ? <SecondIcon /> : secondActionContent}
-            </span>
-          </Tooltip>
+          <EditBtn
+            data={data}
+            firstActionContent={firstActionContent}
+            firstActionIcon={firstActionIcon}
+            firstActionClickHandler={firstActionClickHandler}
+          />
+          <DeleteBtn
+            data={data}
+            secondActionContent={secondActionContent}
+            secondActionIcon={secondActionIcon}
+            secondActionClickHandler={secondActionClickHandler}
+          />
         </div>
       );
     default:
