@@ -7,7 +7,7 @@ import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { PersonalRegisterFormData } from "@/schemas/personalRegisterSchema";
 import PersonalDetailsForm from "../module/controller/PersonalDetailsForm";
 
-export default function myProfilePage(): JSX.Element {
+export default function MyProfilePage(): JSX.Element {
   const {
     register,
     handleSubmit,

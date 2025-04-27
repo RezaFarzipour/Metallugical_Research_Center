@@ -14,8 +14,8 @@ import {
 import ServiceDetailsForm from "@/components/module/controller/ServiceDetailsForm";
 import { showToast } from "@/store/useToastSlice";
 import FileInput from "@/components/element/FileInput";
-import useCreateService from "@/components/template/adminPanel/services/useCreateService";
-import useEditService from "@/components/template/adminPanel/services/useEditService";
+import useCreateService from "@/components/template/adminPanel/AdminServices/useCreateService";
+import useEditService from "@/components/template/adminPanel/AdminServices/useEditService";
 import { imageUrlToFile } from "@/utils/fileFormatter";
 import BtnLoader from "@/components/element/BtnLoader";
 import { serviceDataEditType } from "@/types";

@@ -17,7 +17,7 @@ const ServiceDetailsForm: React.FC<ServiceDetailsFormProps> = ({
       <RHFInput<CreateServiceFormData>
         register={register}
         errors={errors}
-        label="نام محصول"
+        label="نام سرویس"
         type="text"
         dir="rtl"
         name="service_name"
