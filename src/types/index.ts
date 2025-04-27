@@ -51,19 +51,22 @@ export interface FormInputConfig {
 }
 
 
-export interface UserProfileResponse {
-
-  username: string;
-  first_name: string;
-  last_name: string;
+export interface User {
   email: string;
+  first_name: string;
   is_signup: boolean;
+  last_name: string;
   phone_number: string;
-  role: "customer" | "admin";
-
-
+  role: string;
+  username: string;
 }
 
+export interface UserProfileResponse {
+  response: {
+    data: User[]; // آرایه از User
+   
+  };
+}
 export type NavLinkItem = {
   id: number;
   title: string;
