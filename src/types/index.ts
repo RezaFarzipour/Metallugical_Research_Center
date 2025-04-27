@@ -78,3 +78,14 @@ export interface serviceDataEditType {
   price: number;
   cover_image: string;
 }
+
+
+export type AllUsersType = {
+  username:string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  is_signup: boolean;
+  phone_number: string;
+  role: "customer" | "admin";
+}

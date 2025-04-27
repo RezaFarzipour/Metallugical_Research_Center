@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from "axios";
 import http from "./httpService";
 
 export const sendUserProfile = async ({
@@ -19,18 +20,43 @@ export const sendUserProfile = async ({
 };
 
 export const getAllUserAdmin = async () => {
-
-  const response = await http.get(`user/admin/`,);
+  const response = await http.get(`user/admin/`);
   return response.data;
 };
 
+export const getUserByPhoneNumberAdmin = async (
+  phone_number: string,
+  options: AxiosRequestConfig
+) => {
+  try {
+    const response = await http.get(`user/admin/${phone_number}/`, options);
+    return response.data;
+  } catch (error) {
+    console.log("errrr", error);
+    throw error;
+  }
+};
 
-export const getUserByPhoneNumberAdmin = async ({
+export const editUserByPhoneNumberAdmin = async ({
   phone_number,
+  data,
 }: {
   phone_number: string;
-
+  data: { first_name: string; last_name: string; email: string; role: string,username:string,phone_number:string,  is_signup:boolean };
 }) => {
-  const response = await http.patch(`user/admin/${phone_number}/`);
-  return response.data;
+  try {
+    console.log("edit data", data);
+
+    const response = await http.patch(`user/admin/${phone_number}/`, data);
+    return response.data;
+  } catch (err) {
+    console.log("eddit err", err);
+
+    throw err;
+  }
 };
+
+
+export const deleteUser = ({phone_number}:{phone_number:string})=>{
+  return http.delete(`user/admin/${phone_number}/`)
+}
