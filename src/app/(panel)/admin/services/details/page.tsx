@@ -1,4 +1,4 @@
-import ServiceDetailsPage from "@/components/template/adminPanel/services/serviceDetailsPage";
+import ServiceDetailsPage from "@/components/template/adminPanel/AdminServices/serviceDetailsPage";
 import React from "react";
 
 const Details = () => {

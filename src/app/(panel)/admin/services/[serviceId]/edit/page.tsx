@@ -1,4 +1,4 @@
-import EditServicePage from "@/components/template/adminPanel/services/editServicePage";
+import EditServicePage from "@/components/template/adminPanel/AdminServices/editServicePage";
 import { getServicesByIdAdmin } from "@/services/service";
 import setCookiesOnReq from "@/utils/setCookieOnReq";
 import { cookies } from "next/headers";
@@ -10,12 +10,13 @@ type PageProps = {
 const Page = async ({ params }: PageProps) => {
   const serviceId = params.serviceId;
 
+  
+
   const cookieStore = cookies();
   const options = setCookiesOnReq(cookieStore);
 
   const data = await getServicesByIdAdmin(serviceId, options);
 
-  console.log("data:", data);
 
   return (
     <div>
