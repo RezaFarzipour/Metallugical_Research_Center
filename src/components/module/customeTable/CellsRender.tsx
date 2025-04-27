@@ -28,8 +28,8 @@ interface CellRendererProps {
   firstActionIcon?: React.FC;
   secondActionContent: string;
   secondActionIcon?: React.FC;
-  firstActionClickHandler: (id: number | string) => void;
-  secondActionClickHandler: (id: number | string) => void;
+  firstActionClickHandler: (id: number | string, phone_number: string) => void;
+  secondActionClickHandler: (id: number | string, phone_number: string) => void;
   image?: boolean;
 }
 
