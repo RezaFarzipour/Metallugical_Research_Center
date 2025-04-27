@@ -1,9 +1,10 @@
-import Reportspage from "@/components/template/adminPanel/reportsPage";
+
+import Reportspage from "@/components/template/adminPanel/reportspage";
 import React from "react";
 
-type Props = {};
 
-const page = (props: Props) => {
+
+const page = () => {
   return (
     <div>
       <Reportspage />

@@ -6,14 +6,15 @@ import { HiOutlineArrowLeftStartOnRectangle } from "react-icons/hi2";
 import { CiEdit } from "react-icons/ci";
 import { FC } from "react";
 import Logo from "@/components/element/Logo";
-import { NavLinkItem } from "@/types";
+import { NavLinkItem, User } from "@/types";
 
 type SideBarProps = {
   onClose?: () => void;
   navLinkData?: NavLinkItem[];
+  user?:User
 };
 
-const SideBar: FC<SideBarProps> = ({ onClose, navLinkData }) => {
+const SideBar: FC<SideBarProps> = ({ onClose, navLinkData ,user}) => {
   const logoutHandler = async () => {
     // نمونه‌ای از پیاده‌سازی logout
     console.log("Logging out...");
@@ -50,10 +51,10 @@ const SideBar: FC<SideBarProps> = ({ onClose, navLinkData }) => {
       {/* Footer */}
       <div className="flex items-center gap-4 justify-around mt-5">
         <p className="text-secondary-800 text-sm font-bold">
-          نام و نام خانوادگی
+        {user ? user.first_name + " " + user.last_name :"نام و نام خانوادگی"}
         </p>
         <div className="p-2 rounded-full border border-[#ddd] cursor-pointer">
-          <CiEdit size={17} />
+         <Link href={"/user/myProfile"}> <CiEdit size={17} /></Link>
         </div>
       </div>
     </div>

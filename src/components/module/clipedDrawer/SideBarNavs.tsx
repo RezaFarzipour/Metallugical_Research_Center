@@ -5,7 +5,7 @@ import { NavLinkItem } from "@/types";
 
 interface SideBarNavsProps {
   onClose?: () => void;
-  navLinkData: NavLinkItem[];
+  navLinkData: NavLinkItem[] | undefined;
 }
 
 export default function SideBarNavs({
@@ -16,7 +16,7 @@ export default function SideBarNavs({
 
   return (
     <ul className="space-y-2">
-      {navLinkData.map((nav) => {
+      {navLinkData?.map((nav) => {
         const isActive = pathname === nav.to;
 
         return (
