@@ -6,24 +6,61 @@ import Button from "@/components/element/Button";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { PersonalRegisterFormData } from "@/schemas/personalRegisterSchema";
 import PersonalDetailsForm from "../module/controller/PersonalDetailsForm";
+import { useGetUser } from "@/hooks/useAuth";
+import { User } from "@/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { editUserByPhoneNumberAdmin } from "@/services/user";
+import { showToast } from "@/store/useToastSlice";
+import BtnLoader from "../element/BtnLoader";
+
 
 export default function MyProfilePage(): JSX.Element {
+  const { data: user }: { data: User | undefined } = useGetUser();
+  const queryClient = useQueryClient();
+  const { isPending, mutateAsync } = useMutation({
+    mutationKey: ["update-user"],
+    mutationFn: editUserByPhoneNumberAdmin,
+  });
+
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<PersonalRegisterFormData>({
     defaultValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
+      first_name: user?.first_name || "",
+      last_name: user?.last_name || "",
+      email: user?.email || "",
       role: "",
     },
   });
 
-  const onSubmit: SubmitHandler<PersonalRegisterFormData> = (data) => {
-    console.log("فرم ارسال شد:", data);
-    // اینجا می‌تونی API call بزنی یا اطلاعات رو به ریداکس بفرستی
+  const onSubmit: SubmitHandler<PersonalRegisterFormData> = async (data) => {
+    await mutateAsync(
+      {
+        phone_number: user?.phone_number,
+        data: {
+          ...data,
+          role: user?.role,
+          username: user?.username,
+          phone_number: user?.phone_number,
+        },
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ["get-user"],
+          });
+          showToast("اطلاعات کاربر با موفقیت ویرایش شد", "success");
+    
+          reset();
+        },
+        onError: () => {
+          showToast("ویرایش کاربر با خطا مواجه شد", "error");
+        },
+      }
+    );
   };
 
   return (
@@ -41,7 +78,7 @@ export default function MyProfilePage(): JSX.Element {
       >
         <PersonalDetailsForm register={register} errors={errors} />
 
-        <Button type="submit">ثبت</Button>
+        <Button type="submit">{isPending ? <BtnLoader /> : "ویرایش"}</Button>
       </form>
     </div>
   );

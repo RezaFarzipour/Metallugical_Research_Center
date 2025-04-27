@@ -41,12 +41,18 @@ export const editUserByPhoneNumberAdmin = async ({
   phone_number,
   data,
 }: {
-  phone_number: string;
-  data: { first_name: string; last_name: string; email: string; role: string,username:string,phone_number:string,  is_signup:boolean };
+  phone_number: string | undefined;
+  data: {
+    first_name: string;
+    last_name: string;
+    email: string;
+    role?: string;
+    username?: string;
+    phone_number?: string 
+    is_signup?: boolean;
+  };
 }) => {
   try {
-    console.log("edit data", data);
-
     const response = await http.patch(`user/admin/${phone_number}/`, data);
     return response.data;
   } catch (err) {
@@ -56,7 +62,6 @@ export const editUserByPhoneNumberAdmin = async ({
   }
 };
 
-
-export const deleteUser = ({phone_number}:{phone_number:string})=>{
-  return http.delete(`user/admin/${phone_number}/`)
-}
+export const deleteUser = ({ phone_number }: { phone_number: string }) => {
+  return http.delete(`user/admin/${phone_number}/`);
+};
