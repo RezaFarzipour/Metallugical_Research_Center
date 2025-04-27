@@ -45,9 +45,9 @@ export const checkOtp = async (
 
 
 
-export const getUserProfile = async (): Promise<{
-  response?: AxiosResponse<UserProfileResponse[]>;
-}> => {
+export const getUserProfile = async () => {
   const response = await http.get("user/customer/");
+
+  
   return { response };
 };
