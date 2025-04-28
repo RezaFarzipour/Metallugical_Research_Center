@@ -11,6 +11,7 @@ interface FileInputProps {
   isRequired?: boolean;
   className?: string;
   errors?: FieldErrors;
+  multiple: boolean;
 }
 
 function FileInput({
@@ -21,6 +22,7 @@ function FileInput({
   isRequired,
   className,
   errors,
+  multiple,
   ...rest
 }: FileInputProps) {
   const errorMessages = errors?.[name];
@@ -37,6 +39,7 @@ function FileInput({
         {label}
         <TbArrowBarToDown className="w-5 h-5" />
         <Input
+          multiple={multiple}
           id="file-upload"
           type="file"
           className="sr-only hidden"

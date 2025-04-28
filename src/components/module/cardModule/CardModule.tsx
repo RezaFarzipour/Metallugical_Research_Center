@@ -5,13 +5,20 @@ import { twMerge } from "tailwind-merge";
 import { ImageContainer } from "./ImageContainer";
 import { CardContent } from "./CardContent";
 import clsx from "clsx";
-
+type DataItem = {
+  id: number;
+  name: string;
+  description: string;
+  image?: string;
+  cover_image?: string;
+  date?: string;
+};
 type Props = {
-  data: [];
+  data: DataItem[];
   isDate: boolean;
   widthConter: string;
   heightImg: string;
-  moreDetailsHref?: string;
+  isMoreDetails?: string;
   heightConter: string;
   view?: boolean;
   styleForAdmin: boolean;
@@ -20,7 +27,7 @@ type Props = {
 const CardModule = ({
   data,
   isDate,
-  moreDetailsHref,
+  isMoreDetails,
   widthConter,
   heightImg,
   heightConter,
@@ -62,8 +69,9 @@ const CardModule = ({
 
             <CardContent
               isDate={isDate}
-              date={item.date}
-              moreDetailsHref={moreDetailsHref}
+              date={item.date || ""}
+              id={item.id}
+              isMoreDetails={isMoreDetails}
               name={item.name}
               description={item.description}
               widthConter={widthConter}

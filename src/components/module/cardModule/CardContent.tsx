@@ -11,10 +11,12 @@ import Link from "next/link";
 import clsx from "clsx";
 import { RiPriceTag3Line, RiInformationLine } from "react-icons/ri";
 import { BsFileEarmarkFont } from "react-icons/bs";
+
 interface CardContentProps {
+  id: string; // این خط اضافه شد
   date: string;
   isDate: boolean;
-  moreDetailsHref?: string;
+  isMoreDetails?: string;
   name: string;
   description: string;
   widthConter: string;
@@ -22,10 +24,12 @@ interface CardContentProps {
   view: boolean;
   styleForAdmin: boolean;
 }
+
 export const CardContent: React.FC<CardContentProps> = ({
   date,
   isDate,
-  moreDetailsHref,
+  id,
+  isMoreDetails,
   name,
   description,
   widthConter,
@@ -44,9 +48,14 @@ export const CardContent: React.FC<CardContentProps> = ({
     ),
   };
 
-  const MoreDetailsButton = moreDetailsHref && (
+  const MoreDetailsHref =
+    isMoreDetails === "admin"
+      ? `/admin/services/${id}/details`
+      : `/services/${id}`;
+
+  const MoreDetailsButton = MoreDetailsHref && (
     <div className="mt-auto absolute left-0 bottom-0">
-      <Link href={moreDetailsHref}>
+      <Link href={MoreDetailsHref}>
         <Button
           className={`data-[hover]:bg-transparent data-[hover]:text-secondary-500 ${
             isHovered ? "bg-gray-200" : ""
