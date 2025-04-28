@@ -1,7 +1,16 @@
-'use client'
+"use client";
 import { TiHomeOutline } from "react-icons/ti";
 import { IoMdExit } from "react-icons/io";
-import { contactInfoType, DashboardMinicardProps, FAQItem, FormInputConfig, latestArticleType, SidebarLink, UserDashboardMinicardProps } from "@/types";
+import {
+  contactInfoType,
+  DashboardMinicardProps,
+  FAQItem,
+  FormInputConfig,
+  latestArticleType,
+  NavLinkItem,
+  SidebarLink,
+  UserDashboardMinicardProps,
+} from "@/types";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePhone } from "react-icons/md";
 import { CiMail } from "react-icons/ci";
@@ -26,7 +35,7 @@ export const userSidebarlinks: SidebarLink[] = [
     title: "داشبورد",
     icon: TiHomeOutline,
     hover: "text-primary-500",
-    to: "/user/home"
+    to: "/user/home",
   },
 
   {
@@ -34,50 +43,52 @@ export const userSidebarlinks: SidebarLink[] = [
     title: "سفارش های من",
     icon: TbWallet,
     hover: "text-primary-500",
-    to: "/user/myorders"
+    to: "/user/myorders",
   },
   {
     id: 2,
     title: "گزارش ها ",
     icon: TbReportSearch,
     hover: "text-primary-500",
-    to: "/user/reports"
+    to: "/user/reports",
   },
-
 ];
-export const adminSidebarlinks: SidebarLink[] = [
+export const adminSidebarlinks: NavLinkItem[] = [
   {
     id: 0,
     title: "داشبورد",
     icon: GrAppsRounded,
-    to: "/admin/home"
+    to: "/admin/home",
   },
 
   {
     id: 1,
     title: "کاربران",
     icon: LuUsers,
-    to: "/admin/users"
+    to: "/admin/users",
   },
   {
     id: 2,
     title: "سرویس ها",
     icon: PiDeviceTablet,
-    to: "/admin/services"
+    to: "/admin/services",
   },
   {
     id: 3,
-    title: "بلاگ ها",
+    title: "بلاگ ",
     icon: RiBloggerLine,
-    to: "/admin/blogs"
+    to: "/admin/blogs",
+    children: [
+      { id: 6, title: "دسته بندی ها", to: "/" },
+      { id: 7, title: "پست های منتشر شده", to: "/" },
+    ],
   },
   {
     id: 4,
     title: "گزارشات",
     icon: TbReportSearch,
-    to: "/admin/reports"
+    to: "/admin/reports",
   },
-
 ];
 
 // ... existing code ...
@@ -128,10 +139,6 @@ export const contactusinformation: contactInfoType[] = [
     icon: CiMail,
   },
 ];
-
-
-
-
 
 export const TableInfo: OrderTypes[] = [
   {
@@ -248,42 +255,40 @@ export const adminCards: DashboardMinicardProps[] = [
   },
 ];
 
-
-
-
-
 export const faqData: FAQItem[] = [
   {
     id: 1,
     question: "چگونه می‌توانم حساب کاربری ایجاد کنم؟",
-    answer: "برای ایجاد حساب کاربری، به صفحه ثبت‌نام بروید و اطلاعات خود را وارد کنید.",
+    answer:
+      "برای ایجاد حساب کاربری، به صفحه ثبت‌نام بروید و اطلاعات خود را وارد کنید.",
   },
   {
     id: 2,
     question: "چگونه می‌توانم رمز عبورم را تغییر دهم؟",
-    answer: "برای تغییر رمز عبور، وارد تنظیمات حساب کاربری شوید و گزینه تغییر رمز عبور را انتخاب کنید.",
+    answer:
+      "برای تغییر رمز عبور، وارد تنظیمات حساب کاربری شوید و گزینه تغییر رمز عبور را انتخاب کنید.",
   },
   {
     id: 3,
     question: "آیا امکان بازگردانی سفارش وجود دارد؟",
-    answer: "بله، در صورت داشتن شرایط بازگشت کالا، می‌توانید درخواست خود را از طریق پشتیبانی ثبت کنید.",
+    answer:
+      "بله، در صورت داشتن شرایط بازگشت کالا، می‌توانید درخواست خود را از طریق پشتیبانی ثبت کنید.",
   },
   {
     id: 4,
     question: "چگونه می‌توانم با پشتیبانی تماس بگیرم؟",
-    answer: "می‌توانید از طریق ایمیل، تلفن یا چت آنلاین با پشتیبانی در ارتباط باشید.",
+    answer:
+      "می‌توانید از طریق ایمیل، تلفن یا چت آنلاین با پشتیبانی در ارتباط باشید.",
   },
   {
     id: 5,
     question: "مدت زمان ارسال سفارش چقدر است؟",
-    answer: "مدت زمان ارسال سفارش بین ۳ تا ۷ روز کاری متغیر است، بسته به موقعیت جغرافیایی شما.",
+    answer:
+      "مدت زمان ارسال سفارش بین ۳ تا ۷ روز کاری متغیر است، بسته به موقعیت جغرافیایی شما.",
   },
 ];
 
-
-
 export const adduserInputData: FormInputConfig[] = [
-
   {
     id: 1,
     label: "نام ",
@@ -323,15 +328,12 @@ export const adduserInputData: FormInputConfig[] = [
     type: "text",
     placeholder: "نقش کاربر  را وارد کنید",
   },
-
-
-]
-
+];
 
 export interface dropDownItemType {
-  id: number,
-  label: string,
-  path: string,
+  id: number;
+  label: string;
+  path: string;
   icon: IconType;
 }
 

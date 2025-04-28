@@ -1,6 +1,7 @@
 "use client";
 import SideBar from "./SideBar";
 import DrawerElement from "@/components/element/DrawerElement";
+import { adminSidebarlinks } from "@/constants/data";
 
 import { User } from "@/types";
 
@@ -25,7 +26,7 @@ function Header({ data, isPending }: HeaderPropsType) {
         <div className="flex items-center">
           <div className="flex justify-center items-center ">
             <DrawerElement>
-              {(onClose) => <SideBar onClose={onClose} />}
+              {(onClose) => <SideBar navLinkData={adminSidebarlinks} user={data}  onClose={onClose} />}
             </DrawerElement>
             <span className="text-sm lg:text-lg font-bold text-secondary-700">
               سلام؛ {fullName}

@@ -12,13 +12,27 @@ export interface DashboardMinicardProps {
   count: number;
   icon: IconType;
 }
-export interface SidebarLink {
+
+export type sidebarchildren ={
+ id:number,title:string,to:string
+}
+// export interface SidebarLink {
+//   id: number;
+//   title: string;
+//   to: string;
+//   hover?: string;
+//   icon: IconType;
+//   children?:sidebarchildren[]
+// }
+
+export type NavLinkItem = {
   id: number;
   title: string;
   to: string;
-  hover?: string;
-  icon: IconType;
-}
+  icon: React.ElementType; // یا React.ComponentType برای آیکن
+  children?:sidebarchildren[]
+};
+
 
 //reza:
 
@@ -67,12 +81,6 @@ export interface UserProfileResponse {
    
   };
 }
-export type NavLinkItem = {
-  id: number;
-  title: string;
-  to: string;
-  icon: React.ElementType; // یا React.ComponentType برای آیکن
-};
 
 export interface serviceDataEditType {
   id: number;
