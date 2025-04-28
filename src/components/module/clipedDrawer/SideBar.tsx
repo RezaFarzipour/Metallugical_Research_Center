@@ -12,9 +12,10 @@ type SideBarProps = {
   onClose?: () => void;
   navLinkData?: NavLinkItem[];
   user?: User;
+  path:string
 };
 
-const SideBar: FC<SideBarProps> = ({ onClose, navLinkData, user }) => {
+const SideBar: FC<SideBarProps> = ({ onClose, navLinkData, user ,path}) => {
   const logoutHandler = async () => {
     // نمونه‌ای از پیاده‌سازی logout
     console.log("Logging out...");
@@ -54,7 +55,7 @@ const SideBar: FC<SideBarProps> = ({ onClose, navLinkData, user }) => {
           {user ? user.first_name + " " + user.last_name : "نام و نام خانوادگی"}
         </p>
         <div className="p-2 rounded-full border border-[#ddd] cursor-pointer">
-          <Link href={"/user/myProfile"}>
+          <Link href={path}>
             {" "}
             <CiEdit size={17} />
           </Link>

@@ -26,7 +26,14 @@ function Header({ data, isPending }: HeaderPropsType) {
         <div className="flex items-center">
           <div className="flex justify-center items-center ">
             <DrawerElement>
-              {(onClose) => <SideBar navLinkData={adminSidebarlinks} user={data}  onClose={onClose} />}
+              {(onClose) => (
+                <SideBar
+                  path={"/admin/userProfile"}
+                  navLinkData={adminSidebarlinks}
+                  user={data}
+                  onClose={onClose}
+                />
+              )}
             </DrawerElement>
             <span className="text-sm lg:text-lg font-bold text-secondary-700">
               سلام؛ {fullName}
@@ -34,7 +41,9 @@ function Header({ data, isPending }: HeaderPropsType) {
           </div>
         </div>
 
-        <div className="flex items-center gap-x-3">{today}</div>
+        <div className="flex items-center gap-x-3 text-secondary-600 font-bold">
+          {today}
+        </div>
       </div>
     </header>
   );

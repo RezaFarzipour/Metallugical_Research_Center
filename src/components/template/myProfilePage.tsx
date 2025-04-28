@@ -9,9 +9,10 @@ import PersonalDetailsForm from "../module/controller/PersonalDetailsForm";
 import { useGetUser } from "@/hooks/useAuth";
 import { User } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { editUserByPhoneNumberAdmin } from "@/services/user";
+
 import { showToast } from "@/store/useToastSlice";
 import BtnLoader from "../element/BtnLoader";
+import { editUserByPhoneNumberAdmin } from "@/services/api/user";
 
 
 export default function MyProfilePage(): JSX.Element {
