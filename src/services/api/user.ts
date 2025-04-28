@@ -1,4 +1,4 @@
-import http from "./httpService";
+import http from "../httpService";
 
 export const sendUserProfile = async ({
   phone_number,

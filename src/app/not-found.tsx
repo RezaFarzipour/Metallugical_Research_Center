@@ -1,6 +1,6 @@
 "use client";
 import useMoveBack from "@/hooks/userMoveBack";
-import { toPersianDigits } from "@/utils/numberFormatter";
+import { toPersianDigits } from "@/utils/formatter/numberFormatter";
 import { HiArrowRight } from "react-icons/hi";
 
 function NotFound() {

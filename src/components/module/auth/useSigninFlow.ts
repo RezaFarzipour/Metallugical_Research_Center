@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { sendOtp, checkOtp } from "@/services/auth";
-import { sendUserProfile } from "@/services/user";
+import { sendOtp, checkOtp } from "@/services/api/auth";
+import { sendUserProfile } from "@/services/api/user";
 import { useGetUser } from "@/hooks/useAuth";
 import { showToast } from "@/store/useToastSlice";
 import { PhoneFormData } from "@/schemas/phoneSchema";

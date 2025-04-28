@@ -1,4 +1,4 @@
-import { getUserProfile } from "@/services/auth";
+import { getUserProfile } from "@/services/api/auth";
 import { useQuery } from "@tanstack/react-query";
 
 

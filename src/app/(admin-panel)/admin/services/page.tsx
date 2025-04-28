@@ -1,9 +1,7 @@
 import { AdminServicesPage } from "@/components/template/adminPanel/services/adminServicesPage";
 import React from "react";
 
-type Props = {};
-
-const page = (props: Props) => {
+const page = () => {
   return (
     <div>
       <AdminServicesPage />

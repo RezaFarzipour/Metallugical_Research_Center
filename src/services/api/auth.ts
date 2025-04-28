@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { UserProfileResponse } from "@/types";
-import http from "./httpService";
+import http from "../httpService";
 
 export interface SendOtpResponse {
   message: string;

@@ -1,9 +1,7 @@
 import CreateServicePage from "@/components/template/adminPanel/services/createServicePage";
 import React from "react";
 
-type Props = {};
-
-const page = (props: Props) => {
+const page = () => {
   return (
     <div>
       <CreateServicePage />
