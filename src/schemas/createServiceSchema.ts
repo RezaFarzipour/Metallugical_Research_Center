@@ -13,7 +13,6 @@ export const createServiceSchema = z.object({
         .min(5, "توضیحات باید حداقل ۵ کاراکتر داشته باشد")
         .max(500, "توضیحات خیلی طولانی است"),
 
-
     price: z
         .union([
             z.string().regex(/^\d+$/, "قیمت باید فقط شامل عدد باشد"),

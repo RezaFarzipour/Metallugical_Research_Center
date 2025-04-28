@@ -1,6 +1,6 @@
 import { Button, NavbarContent, NavbarItem } from "@heroui/react";
 import { IoEnterOutline } from "react-icons/io5";
-import { UserProfileResponse } from "@/types";
+import { User } from "@/types";
 import { DropDown } from "./NavDropDown";
 import { dropDownItems } from "@/constants/data";
 import Link from "next/link";
@@ -8,7 +8,7 @@ import Link from "next/link";
 export const NavBarLeft = ({
   user,
 }: {
-  user: UserProfileResponse[] | null;
+  user: User | null;
 }) => {
   return (
     <NavbarContent justify="end">

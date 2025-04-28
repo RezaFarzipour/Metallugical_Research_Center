@@ -7,7 +7,7 @@ import { useGetUser } from "@/hooks/useAuth";
 import { showToast } from "@/store/useToastSlice";
 import { PhoneFormData } from "@/schemas/phoneSchema";
 import { PersonalRegisterFormData } from "@/schemas/personalRegisterSchema";
-import { UserProfileResponse } from "@/types";
+import { User } from "@/types";
 
 const RESEND_TIME = 90;
 
@@ -19,9 +19,9 @@ export const useSigninFlow = () => {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-  const { data } = useGetUser();
+  const { data } = useGetUser(); 
   // اگر response وجود داشت، دیتا رو بگیر؛ وگرنه null باشه
-  const user: UserProfileResponse | null = data?.response?.data?.[0] ?? null;
+  const user: User | null = data ?? null;
 
   const sendOtpHandler = async (data: PhoneFormData) => {
     setLoading(true);

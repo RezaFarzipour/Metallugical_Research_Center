@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Navbar } from "@heroui/react";
-import { UserProfileResponse } from "@/types";
 import { NavBarRight } from "@/components/module/navBar/NavBarRight";
 import { NavBarLeft } from "@/components/module/navBar/NavBarLeft";
 import MobileMenu from "@/components/module/navBar/MobileMenu";
@@ -18,8 +17,8 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { data, isPending } = useGetUser();
 
-  // اگر response وجود داشت، دیتا رو بگیر؛ وگرنه null باشه
-  const user: UserProfileResponse[] | null = data?.response?.data ?? null;
+
+
 
   return (
     <Navbar
@@ -31,7 +30,7 @@ const NavBar = () => {
       )} bg-white/50`}
     >
       <NavBarRight isMenuOpen={isMenuOpen} />
-      <NavBarLeft user={user} />
+      <NavBarLeft user={data ?? null} />
       <MobileMenu />
     </Navbar>
   );

@@ -1,14 +1,22 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllUserAdmin } from "@/services/api/user";
 import { translateRole } from "@/utils/translateRole";
 import { toPersianNumbers } from "@/utils/formatter/toPersianNumbers";
 import { Usercolumns } from "@/constants/tableData";
 import { useRouter } from "next/navigation";
+import { showToast } from "@/store/useToastSlice";
+import useDeleteUser from "./useDeleteUser";
 
 const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState({});
   const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
+  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
+    null
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isDeleting, userDelete } = useDeleteUser();
+
   const { data, isPending } = useQuery({
     queryKey: ["getAll-users"],
     queryFn: getAllUserAdmin,
@@ -43,7 +51,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
           id: toPersianNumbers(index + 1),
           role: translateRole(user.role),
           name,
-          phone_number: toPersianNumbers(user.phone_number),
+          phone_number: user.phone_number,
           is_signup: !!user.is_signup,
           actions: "action",
         };
@@ -70,16 +78,63 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
     ? formData.signedUp
     : [];
 
+  const firstActionClickHandler = useCallback(
+    (id: string| number, phone_number: string) => {
+      router.push(`/admin/users/${phone_number}/edit`);
+    },
+    [router]
+  );
 
-  const firstActionClickHandler = () => {
-    router.push("/admin/users/edit");
-  };
-  const secondActionClickHandler = () => { };
+  // باز کردن مودال حذف
+  const secondActionClickHandler = useCallback(
+    (id: string | number, phone_number: string) => {
+      if (!id) {
+        console.error("Invalid ID passed to secondActionClickHandler");
+        showToast("آیدی سرویس نامعتبر است", "error");
+        return;
+      }
 
+      setSelectedServiceId(phone_number);
+      setIsModalOpen(true);
+    },
+    []
+  );
+
+  // تایید حذف سرویس
+  const handleDeleteService = useCallback(() => {
+    if (!selectedServiceId) {
+      console.error("ID for deletion is undefined or null");
+      showToast("آیدی سرویس نامعتبر است", "error");
+      return;
+    }
+
+    userDelete(
+      { phone_number: selectedServiceId },
+      {
+        onSuccess: () => {
+          showToast("کاربر با موفقیت حذف شد", "success");
+        },
+        onError: () => {
+          showToast("حذف کاربر با خطا مواجه شد", "error");
+        },
+      }
+    );
+
+    setIsModalOpen(false);
+    setSelectedServiceId(null);
+  }, [selectedServiceId]);
 
   return {
-    formDataSignedUp, isPending, visibleKeys, headerColumns, firstActionClickHandler,
+    formDataSignedUp,
+    isPending,
+    visibleKeys,
+    headerColumns,
+    handleDeleteService,
+    firstActionClickHandler,
     secondActionClickHandler,
+    selectedServiceId,
+    setIsModalOpen,
+    isModalOpen,
   };
 };
 

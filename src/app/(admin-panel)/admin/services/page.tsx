@@ -1,4 +1,5 @@
-import { AdminServicesPage } from "@/components/template/adminPanel/services/adminServicesPage";
+
+import { AdminServicesPage } from "@/components/template/adminPanel/adminServices/adminServicesPage";
 import React from "react";
 
 const page = () => {

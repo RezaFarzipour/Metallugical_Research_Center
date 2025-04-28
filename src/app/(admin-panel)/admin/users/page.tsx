@@ -1,9 +1,9 @@
 import UsersPage from "@/components/template/adminPanel/users/usersPage";
 import React from "react";
 
-type Props = {};
 
-const page = (props: Props) => {
+
+const page = () => {
   return (
     <div>
       <UsersPage />

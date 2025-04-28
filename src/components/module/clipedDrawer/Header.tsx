@@ -1,20 +1,22 @@
 "use client";
-import Link from "next/link";
-import { Button } from "@heroui/button";
-import { Avatar } from "@heroui/react";
 import SideBar from "./SideBar";
 import DrawerElement from "@/components/element/DrawerElement";
-import { useGetUser } from "@/hooks/useAuth";
-import { UserProfileResponse } from "@/types";
+import { adminSidebarlinks } from "@/constants/data";
 
-function Header({}) {
-  const { data, isPending } = useGetUser();
+import { User } from "@/types";
 
-  // اگر response وجود داشت، دیتا رو بگیر؛ وگرنه null باشه
-  const user: UserProfileResponse[] | null = data?.response?.data ?? null;
+type HeaderPropsType = {
+  isPending: boolean;
+  data: User;
+};
 
-  // چک کردن وجود user قبل از دسترسی به آن
-  const fullName = user ? `${user[0].first_name} ${user[0].last_name}` : "";
+function Header({ data, isPending }: HeaderPropsType) {
+  const today = new Date().toLocaleDateString("fa-IR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const fullName = data ? `${data.first_name} ${data.last_name}` : "";
 
   return (
     <header
@@ -24,7 +26,7 @@ function Header({}) {
         <div className="flex items-center">
           <div className="flex justify-center items-center ">
             <DrawerElement>
-              {(onClose) => <SideBar onClose={onClose} />}
+              {(onClose) => <SideBar navLinkData={adminSidebarlinks} user={data}  onClose={onClose} />}
             </DrawerElement>
             <span className="text-sm lg:text-lg font-bold text-secondary-700">
               سلام؛ {fullName}
@@ -32,16 +34,7 @@ function Header({}) {
           </div>
         </div>
 
-        <div className="flex items-center gap-x-3">
-          <Link href="/profile">
-            <Button
-              isIconOnly
-              className={`border-secondaray-200 rounded-2xl flex cursor-pointer items-center`}
-            >
-              <Avatar src="/images/user.png" />
-            </Button>
-          </Link>
-        </div>
+        <div className="flex items-center gap-x-3">{today}</div>
       </div>
     </header>
   );

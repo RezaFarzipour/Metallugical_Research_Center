@@ -11,14 +11,15 @@ import { FaRegUser } from "react-icons/fa";
 import { MdOutlinePhoneEnabled } from "react-icons/md";
 import { IoExitOutline } from "react-icons/io5";
 import Link from "next/link";
+import { User } from "@/types";
 
 // interface DropDownProps {
-//   user: UserProfileResponse[];
+//   user: User;
 //   dropDownItems: (role: string) => dropDownItemType[];
 // }
 
 export const DropDown = ({ user, dropDownItems }) => {
-  const userRoles = user && user?.[0].role;
+  const userRoles = user && user.role;
 
   return (
     <Dropdown placement="bottom" className="w-[230px] ">
@@ -35,13 +36,13 @@ export const DropDown = ({ user, dropDownItems }) => {
               <span>
                 <FaRegUser size={"17px"} />
               </span>
-              {user?.[0]?.first_name}
+              {user?.first_name}
             </p>
             <p className="text-[12px] flex items-center gap-2 font-bold">
               <span>
                 <MdOutlinePhoneEnabled size={"17px"} />
               </span>
-              {user?.[0]?.phone_number}
+              {user?.phone_number}
             </p>
           </div>
 

@@ -11,11 +11,16 @@ import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import BtnLoader from "@/components/element/BtnLoader";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import useUserData from "./useUserData";
+import ModalModule from "@/components/element/ModalModule";
 
 const UsersPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
   const includeskey = ["email", "phone_number", "role"];
   const {
+    handleDeleteService,
+    selectedServiceId,
+    setIsModalOpen,
+    isModalOpen,
     formDataSignedUp,
     isPending,
     visibleKeys,
@@ -64,6 +69,21 @@ const UsersPage: React.FC = () => {
           )}
         </FilteredContainer>
       </div>
+
+      {isModalOpen && (
+        <ModalModule
+          title="حذف کاربر"
+          confirmText="تایید حذف"
+          cancelText="انصراف"
+          isOpen={isModalOpen}
+          onCancel={() => setIsModalOpen(false)}
+          onConfirm={handleDeleteService}
+        >
+          <p>
+            آیا مطمئنی می‌خوای کاربر با آیدی {selectedServiceId} رو حذف کنی؟
+          </p>
+        </ModalModule>
+      )}
     </div>
   );
 };
