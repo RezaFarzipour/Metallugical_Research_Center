@@ -18,7 +18,7 @@ const Dashboardlayout = ({ children }: DashboardProps) => {
     <div className="bg-secondary-0">
       <div className="grid grid-cols-12 h-screen">
         <aside className="col-span-12 lg:col-span-3 xl:col-span-2 hidden lg:block">
-          <SideBar user={data}  navLinkData={adminSidebarlinks} />
+          <SideBar user={data}  navLinkData={adminSidebarlinks} path={"/admin/myProfile"}/>
         </aside>
         <div className="col-span-12 lg:col-span-9 xl:col-span-10 h-screen flex flex-col">
           <Header data={data} isPending={isPending} />
