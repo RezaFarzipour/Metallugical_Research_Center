@@ -205,7 +205,7 @@ export const Usercolumns = [
     { name: "عملیات", uid: "actions" },
 ];
 export const Servicecolumns = [
-    { name: "#", uid: "id", sortable: true },
+    { name: "#", uid: "_id", sortable: true },
     { name: "نام سرویس", uid: "name", sortable: true },
     { name: "توضیحات", uid: "description", sortable: true },
     { name: "قیمت", uid: "price" },

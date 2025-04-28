@@ -1,4 +1,4 @@
-import CreateServicePage from "@/components/template/adminPanel/AdminServices/createServicePage";
+import CreateServicePage from "@/components/template/adminPanel/adminServices/createServicePage";
 import React from "react";
 
 const page = () => {
