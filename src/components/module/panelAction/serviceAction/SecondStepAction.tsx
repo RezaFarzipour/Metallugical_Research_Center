@@ -59,13 +59,23 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
     setExistingImageUrls,
   } = useSeCondStepAction({ filteredServiceImages, serviceId, setStep, reset });
 
-  useEffect(() => {
-    if (filteredServiceImages.length > 0) {
-      setExistingImageUrls(filteredServiceImages.map((img) => img.image));
-    } else {
-      setExistingImageUrls([]);
-    }
+  const memoizedImageUrls = React.useMemo(() => {
+    return filteredServiceImages.length > 0
+      ? filteredServiceImages.map((img) => img.image)
+      : [];
   }, [filteredServiceImages]);
+
+  useEffect(() => {
+    setExistingImageUrls((prevUrls) => {
+      // چک می‌کنیم آیا url ها تغییر کرده‌اند یا نه
+      const isEqual =
+        prevUrls.length === memoizedImageUrls.length &&
+        prevUrls.every((url, i) => url === memoizedImageUrls[i]);
+
+      if (isEqual) return prevUrls; // اگه برابر بودند، state رو تغییر نده
+      return memoizedImageUrls; // در غیر این صورت آپدیت کن
+    });
+  }, [memoizedImageUrls]);
 
   // حذف عکس جدید انتخاب شده از فرم و state
   const handleRemoveNewImage = (index: number) => {
