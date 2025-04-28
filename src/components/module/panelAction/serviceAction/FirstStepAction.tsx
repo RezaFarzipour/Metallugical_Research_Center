@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { Button } from "@heroui/button";
 import { IoTrashBinOutline } from "react-icons/io5";
-import { useRouter } from "next/navigation";
 import {
   CreateServiceFormData,
   createServiceSchema,
@@ -14,18 +13,22 @@ import {
 import ServiceDetailsForm from "@/components/module/controller/ServiceDetailsForm";
 import { showToast } from "@/store/useToastSlice";
 import FileInput from "@/components/element/FileInput";
-import useCreateService from "@/components/template/adminPanel/AdminServices/useCreateService";
-import useEditService from "@/components/template/adminPanel/AdminServices/useEditService";
-import { imageUrlToFile } from "@/utils/fileFormatter";
+import { imageUrlToFile } from "@/utils/formatter/fileFormatter";
 import BtnLoader from "@/components/element/BtnLoader";
 import { serviceDataEditType } from "@/types";
+import { useCreateService } from "@/components/module/panelAction/serviceAction/useCreateService";
+import { useEditService } from "@/components/module/panelAction/serviceAction/useEditService";
 
 interface ServicesActionProps {
   serviceDataEdit?: Partial<serviceDataEditType>;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+  setCreatedServiceId?: (id: string) => void; // اضافه شده برای پاس دادن id به استپ دوم
 }
 
-const ServicesAction: React.FC<ServicesActionProps> = ({
+const FirstStepAction: React.FC<ServicesActionProps> = ({
   serviceDataEdit = {},
+  setStep,
+  setCreatedServiceId,
 }) => {
   const { id: editId } = serviceDataEdit;
   const isEditSession = Boolean(editId);
@@ -43,7 +46,6 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
 
   const { createService, isCreating } = useCreateService();
   const { editService, isEditing } = useEditService();
-  const router = useRouter();
 
   const parsedPrice =
     price !== undefined
@@ -76,8 +78,8 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
     if (prevCoverImageUrl && isEditSession) {
       async function fetchImage() {
         const file = await imageUrlToFile(prevCoverImageUrl);
-        setValue("cover_image", file); // تنظیم فایل برای فیلد cover_image
-        setCoverImageUrl(URL.createObjectURL(file)); // نمایش تصویر قبلی
+        setValue("cover_image", file);
+        setCoverImageUrl(URL.createObjectURL(file));
       }
       fetchImage();
     }
@@ -88,13 +90,9 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
     formData.append("service_name", data.service_name);
     formData.append("description", data.description);
     formData.append("price", String(data.price));
-
-    // اگر کاربر تصویر جدیدی انتخاب کرده باشد، آن را اضافه کن.
     if (data.cover_image) {
       formData.append("cover_image", data.cover_image);
     }
-
-    console.log("📦 FormData for submit:", [...formData.entries()]);
 
     if (isEditSession && editId) {
       editService(
@@ -102,7 +100,7 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
         {
           onSuccess: () => {
             showToast("سرویس با موفقیت ویرایش شد", "success");
-            router.push("/admin/services");
+            setStep(2);
             reset();
           },
           onError: () => {
@@ -112,9 +110,15 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
       );
     } else {
       createService(formData, {
-        onSuccess: () => {
+        onSuccess: (response: any) => {
           showToast("سرویس با موفقیت ساخته شد", "success");
-          // router.push("/admin/services");
+          const newServiceId = response?.id;
+          if (newServiceId) {
+            setCreatedServiceId(newServiceId); // آیدی رو برای استپ دوم ذخیره میکنیم
+            setStep(2); // میریم مرحله بعد
+          } else {
+            showToast("خطا در دریافت اطلاعات سرویس", "error");
+          }
         },
         onError: () => {
           showToast("ساخت سرویس با خطا مواجه شد", "error");
@@ -124,7 +128,7 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
   };
 
   return (
-    <div className="text-default-700 p-8 flex flex-col md:flex-row gap-10 ">
+    <div className="text-default-700 p-8 flex flex-col md:flex-row gap-10">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"
@@ -134,23 +138,21 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
         <Controller
           name="cover_image"
           control={control}
-          render={({ field: { value, onChange, ...rest } }) => {
-            return (
-              <FileInput
-                label="انتخاب کاور محصول"
-                errors={errors}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  const file = event.target.files?.[0];
-                  console.log("Selected File:", file);
-                  if (file) {
-                    onChange(file);
-                    setCoverImageUrl(URL.createObjectURL(file));
-                  }
-                }}
-                {...rest} // اینجا name هم هست، پس پراپ name رو جدا نفرستید
-              />
-            );
-          }}
+          render={({ field: { value, onChange, ...rest } }) => (
+            <FileInput
+              multiple={false}
+              label="انتخاب کاور محصول"
+              errors={errors}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const file = event.target.files?.[0];
+                if (file) {
+                  onChange(file);
+                  setCoverImageUrl(URL.createObjectURL(file));
+                }
+              }}
+              {...rest}
+            />
+          )}
         />
 
         {coverImageUrl && (
@@ -189,4 +191,4 @@ const ServicesAction: React.FC<ServicesActionProps> = ({
   );
 };
 
-export default ServicesAction;
+export default FirstStepAction;

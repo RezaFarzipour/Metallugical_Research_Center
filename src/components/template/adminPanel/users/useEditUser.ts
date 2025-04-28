@@ -1,4 +1,4 @@
-import { editUserByPhoneNumberAdmin } from "@/services/user";
+import { editUserByPhoneNumberAdmin } from "@/services/api/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function useUserService() {

@@ -1,5 +1,5 @@
 import CarGallery from "@/components/module/ImageGallery";
-import { sp } from "@/utils/numberFormatter";
+import { sp } from "@/utils/formatter/numberFormatter";
 import { Button } from "@heroui/button";
 import Image from "next/image";
 import React from "react";

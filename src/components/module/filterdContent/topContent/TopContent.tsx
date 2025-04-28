@@ -9,7 +9,7 @@ import ViewToggle from "./ViewToggle";
 import { IoIosSearch } from "react-icons/io";
 import { Input } from "@heroui/react";
 import Link from "next/link";
-import { toPersianNumbers } from "@/utils/toPersianNumbers";
+import { toPersianNumbers } from "@/utils/formatter/toPersianNumbers";
 
 interface TopContentProps {
   columns: {

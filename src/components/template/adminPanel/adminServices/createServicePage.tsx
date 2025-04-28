@@ -1,20 +1,25 @@
-import BreadcrumbsElement from "@/components/element/Breadcrumbs";
-import ServicesAction from "@/components/module/panelAction/ServicesAction";
-import React from "react";
+"use client";
+import FirstStepAction from "@/components/module/panelAction/serviceAction/FirstStepAction";
+import SecondStepAction from "@/components/module/panelAction/serviceAction/SecondStepAction";
+import React, { useState } from "react";
 
-const createServicePage = () => {
+const CreateServiceWizard = () => {
+  const [step, setStep] = useState(1);
+  const [createdServiceId, setCreatedServiceId] = useState<string | null>(null);
+
   return (
-    <div>
-      <div className="mb-6">
-        <BreadcrumbsElement
-          item1="سرویس ها"
-          item2="ساخت سرویس"
-          panelHref="/admin/services"
+    <>
+      {step === 1 && (
+        <FirstStepAction
+          setStep={setStep}
+          setCreatedServiceId={setCreatedServiceId}
         />
-      </div>
-      <ServicesAction />
-    </div>
+      )}
+      {step === 2 && createdServiceId && (
+        <SecondStepAction serviceId={createdServiceId} setStep={setStep} />
+      )}
+    </>
   );
 };
 
-export default createServicePage;
+export default CreateServiceWizard;

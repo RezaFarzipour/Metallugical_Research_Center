@@ -8,7 +8,7 @@ import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import CardModule from "../module/cardModule/CardModule";
 import { useQuery } from "@tanstack/react-query";
-import { getAllServiceAdmin } from "@/services/service";
+import { getAllServiceAdmin } from "@/services/api/service";
 
 const Services: React.FC = () => {
   const { view } = useTableStore();

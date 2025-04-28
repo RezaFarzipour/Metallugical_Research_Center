@@ -1,8 +1,8 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getAllUserAdmin } from "@/services/user";
+import { getAllUserAdmin } from "@/services/api/user";
 import { translateRole } from "@/utils/translateRole";
-import { toPersianNumbers } from "@/utils/toPersianNumbers";
+import { toPersianNumbers } from "@/utils/formatter/toPersianNumbers";
 import { Usercolumns } from "@/constants/tableData";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/store/useToastSlice";

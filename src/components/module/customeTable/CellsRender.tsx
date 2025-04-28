@@ -3,8 +3,8 @@ import React from "react";
 import { Chip } from "@heroui/react";
 import { statusColorMap } from "@/constants/tableData";
 import Image from "next/image";
-import EditBtn from "../panelAction/EditBtn";
-import DeleteBtn from "../panelAction/DeleteBtn";
+import EditBtn from "./EditBtn";
+import DeleteBtn from "./DeleteBtn";
 
 interface User {
   id: number;

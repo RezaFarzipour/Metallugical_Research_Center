@@ -12,7 +12,6 @@ import useUserService from "./useEditUser";
 import { showToast } from "@/store/useToastSlice";
 import { useRouter } from "next/navigation";
 
-
 export type UserEditPageProps = {
   userData: AllUsersType;
 };
@@ -23,7 +22,7 @@ export default function UserEditPage({
   //first_name:user?.response.data[0].first_name
 
   const { first_name, last_name, email, role } = userData;
-  const {  userEdit } = useUserService();
+  const { userEdit } = useUserService();
   const router = useRouter();
 
   const {

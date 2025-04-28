@@ -1,20 +1,17 @@
 import { z } from "zod";
 
 // Regex برای تایید کاراکترهای فارسی
-const persianRegex = /^[\u0600-\u06FF\s]+$/;
 
 export const createServiceSchema = z.object({
     service_name: z
         .string()
         .min(2, "نام محصول باید حداقل ۲ کاراکتر باشد")
         .max(100, "نام محصول خیلی طولانی است"),
-        
 
     description: z
         .string()
         .min(5, "توضیحات باید حداقل ۵ کاراکتر داشته باشد")
         .max(500, "توضیحات خیلی طولانی است"),
-      
 
     price: z
         .union([
