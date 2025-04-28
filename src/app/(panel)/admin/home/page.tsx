@@ -1,9 +1,9 @@
 import HomePage from "@/components/template/adminPanel/homePage";
 import React from "react";
 
-type Props = {};
 
-const AdminDashboard = (props: Props) => {
+
+const AdminDashboard = () => {
   return (
     <div>
       <HomePage />

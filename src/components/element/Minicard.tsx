@@ -21,10 +21,10 @@ const Minicard = ({
       <p className="absolute top-10 right-8 text-md md:text-xl font-bold text-default-100">
         <Icon />
       </p>
-      <p className="absolute top-6  right-48 text-sm font-bold text-default-600 text-right">
+      <p className="absolute top-6  right-40 text-sm font-bold text-default-600 text-right">
         {label}
       </p>
-      <p className="absolute bottom-6 right-48 text-sm font-bold text-default-600">
+      <p className="absolute bottom-6 right-44 text-sm font-bold text-default-600">
         {count}
       </p>
     </div>
