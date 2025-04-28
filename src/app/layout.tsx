@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body
-        suppressHydrationWarning
+        suppressHydrationWarning={true}
         className={twMerge(
           "min-h-screen bg-background font-sans antialiased",
           fontIRANYekan.variable
