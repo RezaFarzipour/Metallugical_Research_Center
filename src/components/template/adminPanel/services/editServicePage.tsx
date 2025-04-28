@@ -1,16 +1,28 @@
 "use client";
-import React from "react";
-import ServicesAction from "@/components/module/panelAction/ServicesAction";
+import React, { useMemo, useState } from "react";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { serviceDataEditType } from "@/types";
-
+import FirstStepAction from "@/components/module/panelAction/serviceAction/FirstStepAction";
+import SecondStepAction from "@/components/module/panelAction/serviceAction/SecondStepAction";
+interface ServiceImageType {
+  id: string | number;
+  image: string;
+}
 interface EditServicePageProps {
   serviceDataEdit: serviceDataEditType;
+  filteredServiceImages: ServiceImageType[];
 }
 
 const EditServicePage: React.FC<EditServicePageProps> = ({
   serviceDataEdit,
+  filteredServiceImages,
 }) => {
+  const [step, setStep] = useState(1);
+
+  const memoizedFilteredServiceImages = useMemo(
+    () => filteredServiceImages,
+    [filteredServiceImages]
+  );
   return (
     <div>
       <div className="mb-6">
@@ -20,7 +32,16 @@ const EditServicePage: React.FC<EditServicePageProps> = ({
           panelHref="/admin/services"
         />
       </div>
-      <ServicesAction serviceDataEdit={serviceDataEdit} />
+
+      {step === 1 && (
+        <FirstStepAction serviceDataEdit={serviceDataEdit} setStep={setStep} />
+      )}
+
+      {step === 2 && (
+        <SecondStepAction
+          filteredServiceImages={memoizedFilteredServiceImages}
+        />
+      )}
     </div>
   );
 };

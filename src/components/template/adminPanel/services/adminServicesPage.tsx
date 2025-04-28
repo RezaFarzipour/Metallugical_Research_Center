@@ -9,9 +9,9 @@ import { TbEyeDiscount } from "react-icons/tb";
 import CardModule from "@/components/module/cardModule/CardModule";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import BtnLoader from "@/components/element/BtnLoader";
-import { useAdminServicesData } from "./useAdminServicesData";
 import ModalModule from "@/components/element/ModalModule";
 import Empty from "@/components/element/Empty";
+import { useAdminServicesDataAction } from "@/components/module/panelAction/serviceAction/useAdminServicesDataAction";
 
 export const AdminServicesPage: React.FC = () => {
   const {
@@ -26,8 +26,7 @@ export const AdminServicesPage: React.FC = () => {
     firstActionClickHandler,
     secondActionClickHandler,
     handleDeleteService,
-  } = useAdminServicesData();
-  console.log("formDataServices", formDataServices);
+  } = useAdminServicesDataAction();
 
   const { sortedItems } = useFilteredContainer(formDataServices);
 
@@ -79,7 +78,7 @@ export const AdminServicesPage: React.FC = () => {
               <CardModule
                 data={sortedItems}
                 isDate={false}
-                moreDetailsHref="/admin/services/details"
+                isMoreDetails="admin"
                 widthConter="100%"
                 heightImg="250px"
                 heightConter="200px"

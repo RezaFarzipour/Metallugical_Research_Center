@@ -1,10 +1,96 @@
-import BreadcrumbsElement from "@/components/element/Breadcrumbs";
-import CarGallery from "@/components/module/ImageGallery";
-import { toPersianNumbersWithComma } from "@/utils/toPersianNumbers";
+"use client";
+import React, { useCallback, useState } from "react";
 import Image from "next/image";
-import React from "react";
+import { useRouter } from "next/navigation";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
+import BreadcrumbsElement from "@/components/element/Breadcrumbs";
+import ModalModule from "@/components/element/ModalModule";
+import CarGallery from "@/components/module/ImageGallery";
+import { useDeleteService } from "@/components/module/panelAction/serviceAction/useDeleteService";
+import { showToast } from "@/store/useToastSlice";
+import {
+  toEnglishNumbers,
+  toPersianNumbersWithComma,
+} from "@/utils/formatter/toPersianNumbers";
 
-const ServiceDetailsPage = () => {
+const BASE_URL = "http://localhost:8000";
+
+interface ServiceImage {
+  id: number;
+  image: string;
+  service: number;
+}
+
+interface ServiceData {
+  id: number;
+  service_name: string;
+  description: string;
+  price: number;
+  cover_image: string;
+  "service-images": ServiceImage[];
+}
+
+interface ServiceDetailsPageProps {
+  dataByID: ServiceData;
+}
+
+const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
+  dataByID,
+}) => {
+  const {
+    service_name,
+    description,
+    price,
+    cover_image,
+    "service-images": serviceImages,
+  } = dataByID;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { deletService } = useDeleteService();
+  const router = useRouter();
+
+  const galleryImages =
+    serviceImages?.map((img) =>
+      img.image.startsWith("http") ? img.image : BASE_URL + img.image
+    ) || [];
+
+  const coverImageSrc = cover_image.startsWith("http")
+    ? cover_image
+    : BASE_URL + cover_image;
+
+  const handleEdit = useCallback(() => {
+    router.push(`/admin/services/${dataByID.id}/edit`);
+  }, [router, dataByID.id]);
+
+  const handleDelete = useCallback(() => {
+    if (!dataByID.id) {
+      showToast("آیدی سرویس نامعتبر است", "error");
+      return;
+    }
+    setIsModalOpen(true);
+  }, [dataByID.id]);
+
+  const handleDeleteService = useCallback(() => {
+    if (!dataByID.id) {
+      showToast("آیدی سرویس نامعتبر است", "error");
+      return;
+    }
+
+    deletService(
+      { id: toEnglishNumbers(dataByID.id) },
+      {
+        onSuccess: () => {
+          showToast("سرویس با موفقیت حذف شد", "success");
+          setIsModalOpen(false);
+          router.push("/admin/services");
+        },
+        onError: () => {
+          showToast("حذف سرویس با خطا مواجه شد", "error");
+        },
+      }
+    );
+  }, [dataByID.id, deletService, router]);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
@@ -16,39 +102,63 @@ const ServiceDetailsPage = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Product Info Section */}
         <div className="flex flex-col space-y-6">
           <div className="flex items-center space-x-4 rtl:space-x-reverse">
             <div className="relative w-16 h-16">
               <Image
                 className="rounded-full object-cover"
-                alt="Product Image"
+                alt={service_name}
                 fill
-                src="/images/blog1-img1.png"
+                src={coverImageSrc}
               />
             </div>
-            <h2 className="text-2xl font-bold text-gray-800">اسم محصول</h2>
+            <h2 className="text-2xl font-bold text-gray-800">{service_name}</h2>
           </div>
 
-          <p className="text-gray-600 leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sunt,
-            optio ex nostrum laudantium minima nemo alias iure, est error autem,
-            magnam minus esse consequatur nihil. Magnam ipsa sit itaque quas
-            saepe repellendus vel quaerat iste corporis debitis minus odit ex
-          </p>
+          <p className="text-gray-600 leading-relaxed">{description}</p>
 
           <div className="text-center">
             <span className="text-2xl font-bold text-primary-600">
-              قیمت محصول: {toPersianNumbersWithComma(100000)}
+              قیمت محصول: {toPersianNumbersWithComma(price)}
             </span>
+          </div>
+
+          {/* دکمه های ادیت و دیلیت با آیکون */}
+          <div className="flex space-x-4 rtl:space-x-reverse">
+            <button
+              onClick={handleEdit}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            >
+              <FiEdit size={20} />
+              <span className="hidden sm:inline">ویرایش</span>
+            </button>
+            <button
+              onClick={handleDelete}
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+            >
+              <FiTrash2 size={20} />
+              <span className="hidden sm:inline">حذف</span>
+            </button>
           </div>
         </div>
 
-        {/* Gallery Section */}
         <div className="w-full">
-          <CarGallery />
+          <CarGallery images={galleryImages} />
         </div>
       </div>
+
+      {isModalOpen && (
+        <ModalModule
+          title="حذف سرویس"
+          confirmText="تایید حذف"
+          cancelText="انصراف"
+          isOpen={isModalOpen}
+          onCancel={() => setIsModalOpen(false)}
+          onConfirm={handleDeleteService}
+        >
+          <p>آیا مطمئنی می‌خوای سرویس با آیدی {dataByID.id} رو حذف کنی؟</p>
+        </ModalModule>
+      )}
     </div>
   );
 };
