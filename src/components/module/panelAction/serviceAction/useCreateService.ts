@@ -12,8 +12,6 @@ export function useCreateService() {
         queryKey: ["getAll-services"],
       });
     },
-
-
   });
 
   return { isCreating, createService };
@@ -32,8 +30,6 @@ export function useCreateServiceImages() {
         queryKey: ["getAll-services"],
       });
     },
-
-
   });
 
   return { isCreatingImage, createServiceImage };

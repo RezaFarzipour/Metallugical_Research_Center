@@ -1,8 +1,7 @@
-import EditServicePage from "@/components/template/adminPanel/services/editServicePage";
+import EditServicePage from "@/components/template/adminPanel/AdminServices/editServicePage";
 import {
   getAllServiceImages,
   getServicesByIdAdmin,
-  getServicesImageById,
 } from "@/services/api/service";
 import setCookiesOnReq from "@/utils/auth/setCookieOnReq";
 import { toEnglishNumbers } from "@/utils/formatter/toPersianNumbers";

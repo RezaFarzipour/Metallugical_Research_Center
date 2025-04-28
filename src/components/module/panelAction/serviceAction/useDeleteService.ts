@@ -13,7 +13,6 @@ export function useDeleteService() {
         queryKey: ["getAll-services"],
       });
     },
-
   });
 
   return { isDeleting, deletService };
