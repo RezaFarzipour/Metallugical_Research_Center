@@ -87,12 +87,12 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
   };
 
   return (
-    <div className="text-default-700 p-8 flex flex-col md:flex-row gap-10">
+    <div className="text-default-700 p-8 flex flex-col md:flex-row gap-10 items-start">
       {/* تصاویر موجود با امکان ویرایش */}
-      <div className="flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg">
+      <div className=" flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg">
         <h2 className="text-lg font-bold">تصاویر موجود</h2>
         {existingImageUrls.length > 0 || newImageUrls.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 overflow-y-scroll max-h-40">
             {existingImageUrls.map((url, index) => (
               <div
                 key={`existing-${index}`}
@@ -157,7 +157,7 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
       {/* فرم اضافه کردن تصاویر جدید */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"
+        className=" flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"
       >
         <h2 className="text-lg font-bold">اضافه کردن تصاویر جدید</h2>
 
@@ -192,10 +192,10 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
 
         <div>
           {isCreatingImage || isEditingImage ? (
-            <BtnLoader />
+            <BtnLoader color="#2d66cf" />
           ) : (
             <Button type="submit" className="w-full">
-              آپلود عکس جدید
+              تایید
             </Button>
           )}
         </div>

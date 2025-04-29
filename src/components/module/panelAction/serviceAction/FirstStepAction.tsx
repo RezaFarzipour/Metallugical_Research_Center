@@ -128,7 +128,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
   };
 
   return (
-    <div className="text-default-700 p-8 flex flex-col md:flex-row gap-10">
+    <div className=" flex items-center justify-center p-8 text-default-700">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"

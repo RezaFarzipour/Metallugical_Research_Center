@@ -19,6 +19,7 @@ type RawService = {
 };
 
 type FilteredService = {
+    _id: string
     id: string;
     price: string;
     name: string;
@@ -34,9 +35,10 @@ type GroupedServices = {
 // تابع گروه‌بندی داده‌ها بیرون از هوک تعریف شده و با useCallback استفاده می‌شود
 const groupServicesByKeys = (data: RawService[], keys: readonly string[]): GroupedServices => {
     return data.reduce<GroupedServices>(
-        (acc, service) => {
+        (acc, service, index) => {
             // به جای فیلتر کلیدها، مستقیماً ساخت آبجکت فیلترشده
             acc.serviceUp.push({
+                _id: toPersianNumbers(index + 1),
                 id: toPersianNumbers(service.id),
                 price: toPersianNumbersWithComma(service.price),
                 name: service.service_name,

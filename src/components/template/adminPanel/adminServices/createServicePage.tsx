@@ -1,14 +1,22 @@
 "use client";
+import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import FirstStepAction from "@/components/module/panelAction/serviceAction/FirstStepAction";
 import SecondStepAction from "@/components/module/panelAction/serviceAction/SecondStepAction";
 import React, { useState } from "react";
 
-const CreateServiceWizard = () => {
+const CreateServicePage = () => {
   const [step, setStep] = useState(1);
   const [createdServiceId, setCreatedServiceId] = useState<string | null>(null);
 
   return (
     <>
+      <div className="mb-6">
+        <BreadcrumbsElement
+          item1="سرویس ها"
+          item2="ساخت سرویس"
+          panelHref="/admin/services"
+        />
+      </div>
       {step === 1 && (
         <FirstStepAction
           setStep={setStep}
@@ -22,4 +30,4 @@ const CreateServiceWizard = () => {
   );
 };
 
-export default CreateServiceWizard;
+export default CreateServicePage;
