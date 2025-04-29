@@ -79,8 +79,8 @@ export const adminSidebarlinks: NavLinkItem[] = [
     icon: RiBloggerLine,
     to: "/admin/blogs",
     children: [
-      { id: 6, title: "دسته بندی ها", to: "/" },
-      { id: 7, title: "پست های منتشر شده", to: "/" },
+      { id: 6, title: "دسته بندی ها", to: "/admin/blogs/blogcategory" },
+      { id: 7, title: " وبلاگ ها", to: "/admin/blogs" },
     ],
   },
   {
