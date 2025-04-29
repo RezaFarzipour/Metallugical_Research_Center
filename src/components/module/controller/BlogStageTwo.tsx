@@ -1,12 +1,26 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Image from "@tiptap/extension-image";
+import TextStyle from "@tiptap/extension-text-style";
+import Color from "@tiptap/extension-color";
+import TextAlign from "@tiptap/extension-text-align";
+import Subscript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
+import Underline from "@tiptap/extension-underline";
+import Heading from "@tiptap/extension-heading";
+import Blockquote from "@tiptap/extension-blockquote";
+import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import {
   Bold,
   Italic,
-  Underline,
+  Underline as UnderlineIcon,
   Strikethrough,
-  Subscript,
-  Superscript,
+  Subscript as SubIcon,
+  Superscript as SuperIcon,
+  Image as ImageIcon,
+  PaintBucket,
   Eraser,
   AlignLeft,
   AlignCenter,
@@ -14,279 +28,252 @@ import {
   AlignJustify,
   List,
   ListOrdered,
-  Indent,
-  Outdent,
   Undo2,
   Redo2,
-  Image,
-  PaintBucket,
   RefreshCcw,
+  Quote,
+  Minus,
 } from "lucide-react";
 import { Button } from "@heroui/button";
 
-// Types
-type ExecCommand = (command: string, value?: string | null) => void;
+const EditorWithToolbar = () => {
+  const [html, setHtml] = useState("");
 
-const toolbarButtons: {
-  icon: JSX.Element;
-  cmd: string;
-  title: string;
-}[] = [
-  { icon: <Bold size={18} />, cmd: "bold", title: "Bold" },
-  { icon: <Italic size={18} />, cmd: "italic", title: "Italic" },
-  { icon: <Underline size={18} />, cmd: "underline", title: "Underline" },
-  {
-    icon: <Strikethrough size={18} />,
-    cmd: "strikeThrough",
-    title: "Strikethrough",
-  },
-  { icon: <Subscript size={18} />, cmd: "subscript", title: "Subscript" },
-  { icon: <Superscript size={18} />, cmd: "superscript", title: "Superscript" },
-  { icon: <PaintBucket size={18} />, cmd: "textColor", title: "Text Color" },
-];
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        history: true,
+        bulletList: { keepMarks: true, keepAttributes: true },
+        orderedList: { keepMarks: true, keepAttributes: true },
+        heading: {
+          levels: [1, 2, 3, 4, 5, 6], // تعریف سطوح H1 تا H6
+        },
+      }),
+      Underline,
+      Subscript,
+      Superscript,
+      TextStyle,
+      Color,
+      Image,
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+      Heading,
+      Blockquote,
+      HorizontalRule,
+    ],
+  });
 
-const alignmentButtons: typeof toolbarButtons = [
-  { icon: <AlignLeft size={18} />, cmd: "justifyLeft", title: "Align Left" },
-  {
-    icon: <AlignCenter size={18} />,
-    cmd: "justifyCenter",
-    title: "Align Center",
-  },
-  { icon: <AlignRight size={18} />, cmd: "justifyRight", title: "Align Right" },
-  { icon: <AlignJustify size={18} />, cmd: "justifyFull", title: "Justify" },
-];
+  if (!editor) return null;
 
-const listButtons: typeof toolbarButtons = [
-  {
-    icon: <List size={18} />,
-    cmd: "insertUnorderedList",
-    title: "Bulleted List",
-  },
-  {
-    icon: <ListOrdered size={18} />,
-    cmd: "insertOrderedList",
-    title: "Numbered List",
-  },
-  { icon: <Outdent size={18} />, cmd: "outdent", title: "Outdent" },
-  { icon: <Indent size={18} />, cmd: "indent", title: "Indent" },
-];
-
-const commandHandlers: {
-  image: (execCmd: ExecCommand) => void;
-  textColor: (execCmd: ExecCommand) => void;
-  fontSize: (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    execCmd: ExecCommand
-  ) => void;
-} = {
-  image: (execCmd) => {
+  const addImage = () => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
-    input.onchange = () => {
+    input.onchange = async () => {
       const file = input.files?.[0];
       if (!file) return;
+
       const reader = new FileReader();
-      reader.onload = (e) => {
-        const imageDataUrl = e.target?.result;
-        if (typeof imageDataUrl === "string") {
-          execCmd("insertImage", imageDataUrl);
+      reader.onload = () => {
+        if (typeof reader.result === "string") {
+          editor.chain().focus().setImage({ src: reader.result }).run();
         }
       };
       reader.readAsDataURL(file);
     };
     input.click();
-  },
-  textColor: (execCmd) => {
+  };
+
+  const pickColor = () => {
     const input = document.createElement("input");
     input.type = "color";
-    input.onchange = () => execCmd("foreColor", input.value);
+    input.onchange = () => {
+      editor.chain().focus().setColor(input.value).run();
+    };
     input.click();
-  },
-  fontSize: (e, execCmd) => {
-    const size = e.target.value;
-    if (parseInt(size) >= 1 && parseInt(size) <= 7) execCmd("fontSize", size);
-  },
-};
-
-export default function WordToolbarClone(): JSX.Element {
-  const editorRef = useRef<HTMLDivElement | null>(null);
-  const [html, setHtml] = useState<string>("");
-
-  const execCmd: ExecCommand = (command, value = null) => {
-    document.execCommand(command, false, value);
-    editorRef.current?.focus();
   };
+
+  const buttons = [
+    {
+      icon: <Bold size={18} />,
+      action: () => editor.chain().focus().toggleBold().run(),
+      title: "Bold",
+    },
+    {
+      icon: <Italic size={18} />,
+      action: () => editor.chain().focus().toggleItalic().run(),
+      title: "Italic",
+    },
+    {
+      icon: <UnderlineIcon size={18} />,
+      action: () => editor.chain().focus().toggleUnderline().run(),
+      title: "Underline",
+    },
+    {
+      icon: <Strikethrough size={18} />,
+      action: () => editor.chain().focus().toggleStrike().run(),
+      title: "Strike",
+    },
+    {
+      icon: <SubIcon size={18} />,
+      action: () => editor.chain().focus().toggleSubscript().run(),
+      title: "Subscript",
+    },
+    {
+      icon: <SuperIcon size={18} />,
+      action: () => editor.chain().focus().toggleSuperscript().run(),
+      title: "Superscript",
+    },
+    { icon: <PaintBucket size={18} />, action: pickColor, title: "Color" },
+    { icon: <ImageIcon size={18} />, action: addImage, title: "Insert Image" },
+    {
+      icon: <Eraser size={18} />,
+      action: () => editor.chain().focus().clearNodes().unsetAllMarks().run(),
+      title: "Clear",
+    },
+  ];
+
+  const alignments = [
+    {
+      icon: <AlignLeft size={18} />,
+      action: () => editor.chain().focus().setTextAlign("left").run(),
+      title: "Align Left",
+    },
+    {
+      icon: <AlignCenter size={18} />,
+      action: () => editor.chain().focus().setTextAlign("center").run(),
+      title: "Align Center",
+    },
+    {
+      icon: <AlignRight size={18} />,
+      action: () => editor.chain().focus().setTextAlign("right").run(),
+      title: "Align Right",
+    },
+    {
+      icon: <AlignJustify size={18} />,
+      action: () => editor.chain().focus().setTextAlign("justify").run(),
+      title: "Justify",
+    },
+  ];
+
+  const lists = [
+    {
+      icon: <List size={18} />,
+      action: () => editor.chain().focus().toggleBulletList().run(),
+      title: "Bulleted List",
+    },
+    {
+      icon: <ListOrdered size={18} />,
+      action: () => editor.chain().focus().toggleOrderedList().run(),
+      title: "Ordered List",
+    },
+  ];
+
+  const undos = [
+    {
+      icon: <Undo2 size={18} />,
+      action: () => editor.chain().focus().undo().run(),
+      title: "Undo",
+    },
+    {
+      icon: <Redo2 size={18} />,
+      action: () => editor.chain().focus().redo().run(),
+      title: "Redo",
+    },
+    {
+      icon: <RefreshCcw size={18} />,
+      action: () => editor.commands.setContent(""),
+      title: "Clear Content",
+    },
+  ];
+
+  const headings = [
+    {
+      title: "H1",
+      action: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
+    },
+    {
+      title: "H2",
+      action: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+    },
+    {
+      title: "H3",
+      action: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
+    },
+    {
+      title: "H4",
+      action: () => editor.chain().focus().toggleHeading({ level: 4 }).run(),
+    },
+    {
+      title: "H5",
+      action: () => editor.chain().focus().toggleHeading({ level: 5 }).run(),
+    },
+    {
+      title: "H6",
+      action: () => editor.chain().focus().toggleHeading({ level: 6 }).run(),
+    },
+  ];
+  const blockquoteAndHrButtons = [
+    {
+      icon: <Quote size={18} />,
+      action: () => editor.chain().focus().toggleBlockquote().run(),
+      title: "Blockquote",
+    },
+    {
+      icon: <Minus size={18} />,
+      action: () => editor.chain().focus().setHorizontalRule().run(),
+      title: "Horizontal Rule",
+    },
+  ];
 
   return (
     <div className="p-4 bg-secondary-900 text-white min-h-screen">
-      <div className="relative flex flex-wrap gap-2 bg-secondary-900 p-3 rounded-lg ">
-        {/* ابزارها: پاک کردن و درج تصویر */}
-        <div className="flex flex-row md:flex-col gap-x-2 md:h-32 justify-between items-start border border-gray-700 rounded-lg p-2 bg-secondary-700">
+      <div className="flex flex-wrap gap-3 mb-4 bg-secondary-800 p-3 rounded-lg">
+        {[
+          ...headings,
+          ...buttons,
+          ...alignments,
+          ...lists,
+          ...undos,
+          ...blockquoteAndHrButtons,
+        ].map(({ title, icon, action }, idx) => (
           <Button
-            isIconOnly
-            onPress={() => execCmd("removeFormat")}
+            key={idx}
+            isIconOnly={!!icon}
+            onPress={action}
+            title={title}
             className="icon-btn"
-            title="Clear Formatting"
           >
-            <Eraser size={18} />
+            {icon || title}
           </Button>
-          <Button
-            isIconOnly
-            onPress={() => commandHandlers.image(execCmd)}
-            className="icon-btn"
-            title="Insert Image"
-          >
-            <Image size={18} />
-          </Button>
-        </div>
-
-        {/* اندازه فونت و دکمه‌ها */}
-        <div className="border border-gray-700 rounded-lg p-4 bg-secondary-700 grid grid-rows-[auto_1fr] gap-6">
-          <div>
-            <select
-              onChange={(e) => commandHandlers.fontSize(e, execCmd)}
-              defaultValue=""
-              className="text-black px-2 py-1 rounded w-full"
-              title="Font Size"
-            >
-              <option value="" disabled>
-                اندازه فونت
-              </option>
-              {[...Array(7)].map((_, i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1} (
-                  {
-                    [
-                      "بسیار کوچک",
-                      "کوچک",
-                      "معمولی",
-                      "متوسط",
-                      "بزرگ",
-                      "بسیار بزرگ",
-                      "خیلی بزرگ",
-                    ][i]
-                  }
-                  )
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="flex flex-wrap gap-2 justify-start">
-            {toolbarButtons.map(({ icon, cmd, title }) => (
-              <Button
-                key={cmd}
-                isIconOnly
-                onPress={() =>
-                  cmd === "textColor"
-                    ? commandHandlers.textColor(execCmd)
-                    : execCmd(cmd)
-                }
-                className="icon-btn"
-                title={title}
-              >
-                {icon}
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        {/* چیدمان و لیست‌ها */}
-        <div className="border border-gray-700 rounded-lg p-4 bg-secondary-700 grid grid-rows-[auto_1fr] gap-4">
-          <div className="flex gap-2">
-            {alignmentButtons.map(({ icon, cmd, title }) => (
-              <Button
-                key={cmd}
-                isIconOnly
-                onPress={() => execCmd(cmd)}
-                className="icon-btn"
-                title={title}
-              >
-                {icon}
-              </Button>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-2 justify-start">
-            {listButtons.map(({ icon, cmd, title }) => (
-              <Button
-                key={cmd}
-                isIconOnly
-                onPress={() => execCmd(cmd)}
-                className="icon-btn"
-                title={title}
-              >
-                {icon}
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        {/* Undo/Redo و ریست */}
-        <div className="absolute top-2 left-2 flex gap-2 p-2 z-10 rounded-lg bg-secondary-700">
-          {[
-            { icon: <Redo2 size={18} />, cmd: "redo", title: "Redo" },
-            { icon: <Undo2 size={18} />, cmd: "undo", title: "Undo" },
-          ].map(({ icon, cmd, title }) => (
-            <Button
-              key={cmd}
-              isIconOnly
-              onPress={() => execCmd(cmd)}
-              className="icon-btn"
-              title={title}
-            >
-              {icon}
-            </Button>
-          ))}
-          <Button
-            isIconOnly
-            onPress={() => {
-              if (editorRef.current) {
-                editorRef.current.innerHTML = "";
-              }
-              setHtml("");
-            }}
-          >
-            <RefreshCcw size={18} />
-          </Button>
-        </div>
-
-        {/* دکمه ذخیره‌سازی */}
-        <div className="absolute bottom-0 left-2 flex gap-2 z-10 ">
-          <Button
-            onPress={() => setHtml(editorRef.current?.innerHTML || "")}
-            className="bg-green-600 text-white px-3"
-          >
-            نمایش محتوا
-          </Button>
-          <Button className="bg-secondary-500 text-white px-3">
-            ذخیره محتوا
-          </Button>
-        </div>
+        ))}
+        <Button
+          onPress={() => setHtml(editor.getHTML())}
+          className="bg-green-600 text-white px-4"
+        >
+          ذخیره
+        </Button>
       </div>
 
-      {/* ویرایشگر */}
-      <div
-        ref={editorRef}
-        contentEditable
-        className="mt-4 min-h-[200px] border border-gray-600 p-4 rounded-lg bg-white text-black"
-        suppressContentEditableWarning
-      ></div>
-
-      {/* نمایش HTML */}
-      <div>
-        <h2 className="font-bold mt-4">نمایش HTML ذخیره‌شده:</h2>
-        <pre className="bg-gray-100 text-black p-2 whitespace-pre-wrap break-words">
-          {html}
-        </pre>
+      <div className="bg-white text-black p-4 rounded-lg min-h-[200px]">
+        <EditorContent editor={editor} />
       </div>
 
-      <div>
-        <h2 className="font-bold mt-4">نمایش محتوای HTML با استایل:</h2>
-        <div
-          className="border p-2 bg-white text-black"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      </div>
+      {html && (
+        <>
+          <h3 className="mt-6 font-bold">نمایش HTML:</h3>
+          <pre className="bg-gray-100 text-black p-2 whitespace-pre-wrap">
+            {html}
+          </pre>
+
+          <h3 className="mt-4 font-bold">نمایش رندرشده:</h3>
+          <div
+            className="bg-white text-black p-2 border rounded list-disc pl-5"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
+        </>
+      )}
     </div>
   );
-}
+};
+
+export default EditorWithToolbar;
