@@ -1,9 +1,9 @@
-import { BlogsPage } from "@/components/template/adminPanel/blogsPage";
+import { BlogsPage } from "@/components/template/adminPanel/blogs/blogsPage";
 import React from "react";
 
-type Props = {};
 
-const page = (props: Props) => {
+
+const page = () => {
   return (
     <div>
       <BlogsPage />
