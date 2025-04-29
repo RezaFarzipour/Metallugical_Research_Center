@@ -1,9 +1,8 @@
 import BlogStageOne from "@/components/module/controller/BlogsForm";
 import React from "react";
 
-type Props = {};
 
-const page = (props: Props) => {
+const page = () => {
   return (
     <div>
       <BlogStageOne />

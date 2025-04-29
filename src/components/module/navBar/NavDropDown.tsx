@@ -10,8 +10,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlinePhoneEnabled } from "react-icons/md";
 import { IoExitOutline } from "react-icons/io5";
-import Link from "next/link";
-import { User } from "@/types";
+
 
 // interface DropDownProps {
 //   user: User;
@@ -53,20 +52,20 @@ export const DropDown = ({ user, dropDownItems }) => {
           const Icon = item.icon;
           return (
             <DropdownItem
-              startContent={
-                <Icon
+            href={item.path}
+            
+              key={item.label}
+            >
+              <div
+             
+                className="flex gap-1 text-[12px] group-hover:text-blue-600 transition-colors duration-100"
+              >
+                 <Icon
                   size="17px"
                   className="text-default-500 group-hover:text-blue-600 transition-colors duration-100"
                 />
-              }
-              key={item.label}
-            >
-              <Link
-                href={item.path}
-                className="text-[12px] group-hover:text-blue-600 transition-colors duration-100"
-              >
                 {item.label}
-              </Link>
+              </div>
             </DropdownItem>
           );
         })}
