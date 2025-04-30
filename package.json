@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint","analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
@@ -64,6 +64,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "15.1.7",
     "postcss": "^8",
