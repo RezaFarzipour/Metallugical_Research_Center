@@ -1,6 +1,5 @@
 "use client";
 import { TiHomeOutline } from "react-icons/ti";
-import { IoMdExit } from "react-icons/io";
 import {
   contactInfoType,
   DashboardMinicardProps,
@@ -9,7 +8,6 @@ import {
   latestArticleType,
   NavLinkItem,
   SidebarLink,
-  UserDashboardMinicardProps,
 } from "@/types";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePhone } from "react-icons/md";
@@ -359,3 +357,5 @@ export const dropDownItems = (userRole: string): dropDownItemType[] => {
     },
   ];
 };
+
+// TextEditor Data:

@@ -2,8 +2,9 @@
 import React, { useMemo, useState } from "react";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { serviceDataEditType } from "@/types";
-import FirstStepAction from "@/components/module/panelAction/serviceAction/FirstStepAction";
-import SecondStepAction from "@/components/module/panelAction/serviceAction/SecondStepAction";
+import FirstStepAction from "./serviceAction/FirstStepAction";
+import SecondStepAction from "./serviceAction/SecondStepAction";
+
 interface ServiceImageType {
   id: string | number;
   image: string;

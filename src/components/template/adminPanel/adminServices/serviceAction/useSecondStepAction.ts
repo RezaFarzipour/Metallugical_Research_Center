@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/store/useToastSlice";
 import { CreaateServiceImagesFormData } from "@/schemas/creaateServiceImagesSchema";
-import { useCreateServiceImages } from "@/components/module/panelAction/serviceAction/useCreateService";
-import { useEditServiceImage } from "@/components/module/panelAction/serviceAction/useEditService";
-import { useDeleteServiceImage } from "@/components/module/panelAction/serviceAction/useDeleteService";
+import { useEditServiceImage } from "./useEditService";
+import { useCreateServiceImages } from "./useCreateService";
+import { useDeleteServiceImage } from "./useDeleteService";
+
 
 interface UseSecondStepLogicProps {
     filteredServiceImages: Array<{ id: string; service?: string | number }>;

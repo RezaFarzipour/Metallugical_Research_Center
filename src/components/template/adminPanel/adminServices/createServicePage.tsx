@@ -1,8 +1,9 @@
 "use client";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
-import FirstStepAction from "@/components/module/panelAction/serviceAction/FirstStepAction";
-import SecondStepAction from "@/components/module/panelAction/serviceAction/SecondStepAction";
+
 import React, { useState } from "react";
+import FirstStepAction from "./serviceAction/FirstStepAction";
+import SecondStepAction from "./serviceAction/SecondStepAction";
 
 const CreateServicePage = () => {
   const [step, setStep] = useState(1);
