@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site";
 import { twMerge } from "tailwind-merge";
 import "leaflet/dist/leaflet.css";
 import { Toast } from "@/components/element/Toast";
+import ApolloProviderWrapper from "@/providers/ApolloProviderWrapper";
 
 export const metadata: Metadata = {
   title: {
@@ -32,7 +33,9 @@ export default function RootLayout({
           fontIRANYekan.variable
         )}
       >
+         <ApolloProviderWrapper>
         <ReactQueryProvider>{children}</ReactQueryProvider>
+        </ApolloProviderWrapper>
         <Toast />
       </body>
     </html>
