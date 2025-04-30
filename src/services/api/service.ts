@@ -94,3 +94,9 @@ export const deleteServiceImageById = async ({
     const response = await http.delete(`service/images/admin/${id}/`);
     return response.data;
 };
+
+export const getAllServiceCustomer = async () => {
+    const response = await http.get(`service/s/customer/`);
+    return response.data;
+};
+

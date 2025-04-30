@@ -35,16 +35,21 @@ export const userSidebarlinks: SidebarLink[] = [
     hover: "text-primary-500",
     to: "/user/home",
   },
-
-  {
-    id: 1,
-    title: "سفارش های من",
-    icon: TbWallet,
-    hover: "text-primary-500",
-    to: "/user/myorders",
-  },
   {
     id: 2,
+    title: "رزرو ها",
+    icon: PiDeviceTablet,
+    to: "/reservation",
+  },
+  {
+    id: 3,
+    title: "رزرو های من ",
+    icon: TbWallet,
+    hover: "text-primary-500",
+    to: "/user/myreservs",
+  },
+  {
+    id: 4,
     title: "گزارش ها ",
     icon: TbReportSearch,
     hover: "text-primary-500",
@@ -67,22 +72,28 @@ export const adminSidebarlinks: NavLinkItem[] = [
   },
   {
     id: 2,
+    title: "رزرو ها",
+    icon: PiDeviceTablet,
+    to: "/reservation",
+  },
+  {
+    id: 3,
     title: "سرویس ها",
     icon: PiDeviceTablet,
     to: "/admin/services",
   },
   {
-    id: 3,
+    id: 4,
     title: "بلاگ ",
     icon: RiBloggerLine,
     to: "/admin/blogs",
     children: [
-      { id: 6, title: "دسته بندی ها", to: "/admin/blogs/blogcategory" },
-      { id: 7, title: " وبلاگ ها", to: "/admin/blogs" },
+      { id: 41, title: "دسته بندی ها", to: "/admin/blogs/blogcategory" },
+      { id: 42, title: " وبلاگ ها", to: "/admin/blogs" },
     ],
   },
   {
-    id: 4,
+    id: 5,
     title: "گزارشات",
     icon: TbReportSearch,
     to: "/admin/reports",
