@@ -6,12 +6,12 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import ModalModule from "@/components/element/ModalModule";
 import CarGallery from "@/components/module/ImageGallery";
-import { useDeleteService } from "@/components/module/panelAction/serviceAction/useDeleteService";
 import { showToast } from "@/store/useToastSlice";
 import {
   toEnglishNumbers,
   toPersianNumbersWithComma,
 } from "@/utils/formatter/toPersianNumbers";
+import { useDeleteService } from "./serviceAction/useDeleteService";
 
 const BASE_URL = "http://localhost:8000";
 

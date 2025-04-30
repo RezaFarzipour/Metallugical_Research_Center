@@ -16,8 +16,9 @@ import FileInput from "@/components/element/FileInput";
 import { imageUrlToFile } from "@/utils/formatter/fileFormatter";
 import BtnLoader from "@/components/element/BtnLoader";
 import { serviceDataEditType } from "@/types";
-import { useCreateService } from "@/components/module/panelAction/serviceAction/useCreateService";
-import { useEditService } from "@/components/module/panelAction/serviceAction/useEditService";
+import { useCreateService } from "./useCreateService";
+import { useEditService } from "./useEditService";
+
 
 interface ServicesActionProps {
   serviceDataEdit?: Partial<serviceDataEditType>;

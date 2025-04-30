@@ -11,7 +11,8 @@ import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import BtnLoader from "@/components/element/BtnLoader";
 import ModalModule from "@/components/element/ModalModule";
 import Empty from "@/components/element/Empty";
-import { useAdminServicesDataAction } from "@/components/module/panelAction/serviceAction/useAdminServicesDataAction";
+import { useAdminServicesDataAction } from "./serviceAction/useAdminServicesDataAction";
+
 
 export const AdminServicesPage: React.FC = () => {
   const {
