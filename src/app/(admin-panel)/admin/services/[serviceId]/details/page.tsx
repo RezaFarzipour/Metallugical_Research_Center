@@ -1,4 +1,5 @@
-import ServiceDetailsPage from "@/components/template/adminPanel/AdminServices/serviceDetailsPage";
+
+import ServiceDetailsPage from "@/components/template/adminPanel/adminServices/serviceDetailsPage";
 import { getServicesByIdAdmin } from "@/services/api/service";
 import setCookiesOnReq from "@/utils/auth/setCookieOnReq";
 import { cookies } from "next/headers";

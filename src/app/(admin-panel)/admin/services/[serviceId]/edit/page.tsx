@@ -1,4 +1,5 @@
-import EditServicePage from "@/components/template/adminPanel/AdminServices/editServicePage";
+
+import EditServicePage from "@/components/template/adminPanel/adminServices/editServicePage";
 import {
   getAllServiceImages,
   getServicesByIdAdmin,

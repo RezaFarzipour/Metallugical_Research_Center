@@ -16,6 +16,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
 import { useSeCondStepAction } from "./useSecondStepAction";
 
+
 interface ServiceImage {
   id: string | number;
   image: string;
