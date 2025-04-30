@@ -125,6 +125,11 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
 
           {/* دکمه های ادیت و دیلیت با آیکون */}
           <div className="flex space-x-4 rtl:space-x-reverse">
+            <div>
+              {/* <CustomeCallender  /> */}
+              شسیشی
+            </div>
+
             <button
               onClick={handleEdit}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
@@ -146,7 +151,6 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
           <CarGallery images={galleryImages} />
         </div>
       </div>
-
       {isModalOpen && (
         <ModalModule
           title="حذف سرویس"
