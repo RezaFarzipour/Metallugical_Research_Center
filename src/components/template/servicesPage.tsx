@@ -8,13 +8,13 @@ import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import CardModule from "../module/cardModule/CardModule";
 import { useQuery } from "@tanstack/react-query";
-import { getAllServiceAdmin } from "@/services/api/service";
+import { getAllServiceCustomer } from "@/services/api/service";
 
 const Services: React.FC = () => {
   const { view } = useTableStore();
   const { data, isPending } = useQuery({
-    queryKey: ["getAll-services"],
-    queryFn: getAllServiceAdmin,
+    queryKey: ["getAll-servicesCustomer"],
+    queryFn: getAllServiceCustomer,
   });
 
   // گرفتن آرایه‌ی سرویس‌ها از formData
