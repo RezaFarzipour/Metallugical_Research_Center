@@ -20,6 +20,7 @@ const Services: React.FC = () => {
   // گرفتن آرایه‌ی سرویس‌ها از formData
   const formDataServices = Array.isArray(data) ? data : [];
   const { sortedItems } = useFilteredContainer(formDataServices);
+  console.log('name',sortedItems);
 
   return (
     <div className="container flex flex-col items-center justify-center gap-5 max-w-screen-lg pt-72">
@@ -49,10 +50,12 @@ const Services: React.FC = () => {
             style={{ width: "1200px" }}
           >
             <CardModule
+              isDate={false}
               data={sortedItems}
               widthConter="100%"
-              heightImg="300px"
-              heightConter="350px"
+              heightImg="250px"
+              heightConter="200px"
+              styleForAdmin={true}
               view={view}
             />
           </div>

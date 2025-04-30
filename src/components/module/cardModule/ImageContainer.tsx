@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { shimmerEffect } from "@/utils/motion";
 
 interface ImageContainerProps {
-  image: string;
+  image: string | undefined;
   isHovered: boolean;
   setIsHovered: (hovered: boolean) => void;
   view: boolean;
@@ -26,7 +26,7 @@ export const ImageContainer: React.FC<ImageContainerProps> = ({
       onMouseLeave={() => setIsHovered(false)}
       alt="Card example background"
       className="  w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 group-hover:rotate-2 "
-      src={image}
+      src={image }
     />
     {isHovered && (
       <motion.div

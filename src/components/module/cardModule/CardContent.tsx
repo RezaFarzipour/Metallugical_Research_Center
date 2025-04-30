@@ -13,9 +13,9 @@ import { RiPriceTag3Line, RiInformationLine } from "react-icons/ri";
 import { BsFileEarmarkFont } from "react-icons/bs";
 
 interface CardContentProps {
-  id: string; // این خط اضافه شد
+  id: string | number; // این خط اضافه شد
   date: string;
-  isDate: boolean;
+  isDate: boolean | undefined;
   isMoreDetails?: string;
   name: string;
   description: string;
@@ -37,6 +37,8 @@ export const CardContent: React.FC<CardContentProps> = ({
   view,
   styleForAdmin,
 }) => {
+  console.log('name',name);
+  
   const [isHovered, setIsHovered] = React.useState(false);
 
   const cardStyles = {
@@ -72,7 +74,7 @@ export const CardContent: React.FC<CardContentProps> = ({
     </div>
   );
 
-  return styleForAdmin ? (
+  return styleForAdmin && view ? (
     <div
       className={clsx(
         "bg-gray-50 p-4 rounded-lg shadow-lg flex flex-col [&>div]:text-secondary-700",

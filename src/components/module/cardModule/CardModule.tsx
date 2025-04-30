@@ -8,6 +8,7 @@ import clsx from "clsx";
 type DataItem = {
   id: number;
   name: string;
+  service_name:string;
   description: string;
   image?: string;
   cover_image?: string;
@@ -15,7 +16,7 @@ type DataItem = {
 };
 type Props = {
   data: DataItem[];
-  isDate: boolean;
+  isDate?: boolean;
   widthConter: string;
   heightImg: string;
   isMoreDetails?: string;
@@ -72,7 +73,7 @@ const CardModule = ({
               date={item.date || ""}
               id={item.id}
               isMoreDetails={isMoreDetails}
-              name={item.name}
+              name={item.service_name}
               description={item.description}
               widthConter={widthConter}
               heightConter={heightConter}

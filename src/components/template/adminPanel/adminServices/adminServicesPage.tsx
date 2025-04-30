@@ -83,8 +83,8 @@ export const AdminServicesPage: React.FC = () => {
                 widthConter="100%"
                 heightImg="250px"
                 heightConter="200px"
-                view={view}
                 styleForAdmin={true}
+                view={view}
               />
             </div>
           )}
