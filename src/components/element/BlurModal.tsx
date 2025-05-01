@@ -10,20 +10,30 @@ import {
   Button,
   useDisclosure,
 } from "@heroui/react";
+import clsx from "clsx";
 
 // تعریف نوع props
 interface BlurModalProps {
   title: string;
   bodyContent: string | ReactNode;
   onConfirm?: () => void;
+  heightProp: "sm" | "md" | "lg" | "full";
 }
 
 export default function BlurModal({
   title,
   bodyContent,
   onConfirm,
+  heightProp,
 }: BlurModalProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const heightClass = {
+    sm: "h-64",
+    md: "h-96",
+    lg: "h-[600px]",
+    full: "min-h-screen",
+  };
 
   return (
     <>
@@ -37,7 +47,9 @@ export default function BlurModal({
         backdrop="blur"
         scrollBehavior="inside"
       >
-        <ModalContent className="w-full max-w-4xl min-h-screen">
+        <ModalContent
+          className={clsx("w-full max-w-4xl", heightClass[heightProp])}
+        >
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>

@@ -5,7 +5,7 @@ import BlurModal from "@/components/element/BlurModal";
 
 const BlogStageTwo = () => {
   const handleConfirm = () => {
-    console.log("Confirmed!");
+
   };
   return (
     <div>
@@ -13,11 +13,13 @@ const BlogStageTwo = () => {
         title="ساخت هدر بلاگ"
         bodyContent={<TextEditor />}
         onConfirm={handleConfirm}
+        heightProp="full"
       />
       <BlurModal
         title="ساخت متن"
         bodyContent={<TextEditor />}
         onConfirm={handleConfirm}
+        heightProp="full"
       />
       
     </div>
