@@ -37,7 +37,7 @@ export const CardContent: React.FC<CardContentProps> = ({
   view,
   styleForAdmin,
 }) => {
-  console.log('name',name);
+
   
   const [isHovered, setIsHovered] = React.useState(false);
 
@@ -53,7 +53,7 @@ export const CardContent: React.FC<CardContentProps> = ({
   const MoreDetailsHref =
     isMoreDetails === "admin"
       ? `/admin/services/${id}/details`
-      : `/services/${id}`;
+      : `/services/${id}/details`;
 
   const MoreDetailsButton = MoreDetailsHref && (
     <div className="mt-auto absolute left-0 bottom-0">
