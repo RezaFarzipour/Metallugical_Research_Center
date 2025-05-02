@@ -12,7 +12,7 @@ import {
   toPersianNumbersWithComma,
 } from "@/utils/formatter/toPersianNumbers";
 import { useDeleteService } from "./serviceAction/useDeleteService";
-
+import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
 
 const BASE_URL = "http://localhost:8000";
 
@@ -21,7 +21,11 @@ interface ServiceImage {
   image: string;
   service: number;
 }
-
+interface ReserveDate {
+  start_date: string;
+  end_date: string;
+  // یا هر فیلد دیگه‌ای که داخل ReserveDate هست
+}
 interface ServiceData {
   id: number;
   service_name: string;
@@ -29,6 +33,7 @@ interface ServiceData {
   price: number;
   cover_image: string;
   "service-images": ServiceImage[];
+  "service-reserve_date"?: ReserveDate[];
 }
 
 interface ServiceDetailsPageProps {
@@ -45,6 +50,10 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
     cover_image,
     "service-images": serviceImages,
   } = dataByID;
+
+  const dateRanges = formatDateRangesToPersian(
+    dataByID["service-reserve_date"] ?? []
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { deletService } = useDeleteService();
@@ -124,13 +133,14 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
             </span>
           </div>
 
+          {/*تاریخ باز */}
+          <div className="text-secondary-700">
+            <h2 className="font-bold">تاریخ های رزرو</h2>
+            {dateRanges}
+          </div>
+
           {/* دکمه های ادیت و دیلیت با آیکون */}
           <div className="flex space-x-4 rtl:space-x-reverse">
-            <div>
-              {/* <CustomeCallender  /> */}
-              شسیشی
-            </div>
-
             <button
               onClick={handleEdit}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"

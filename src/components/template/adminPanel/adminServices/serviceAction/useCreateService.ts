@@ -1,4 +1,4 @@
-import { createNewService, createServiceImages } from "@/services/api/service";
+import { createNewService, createServiceDateRange, createServiceImages } from "@/services/api/service";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useCreateService() {
@@ -33,4 +33,19 @@ export function useCreateServiceImages() {
   });
 
   return { isCreatingImage, createServiceImage };
+}
+export function useCreateServiceDateRange() {
+  const queryClient = useQueryClient();
+
+  const { isPending: isCreatingDateRange, mutateAsync: createDateRange } = useMutation({
+    mutationFn: createServiceDateRange,
+
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["getAll-services"],
+      });
+    },
+  });
+
+  return { isCreatingDateRange, createDateRange };
 }

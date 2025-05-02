@@ -2,9 +2,8 @@
 import React, { useMemo, useState } from "react";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { serviceDataEditType } from "@/types";
-import SecondStepAction from "./serviceAction/SecondStepAction";
 import FirstStepAction from "./serviceAction/FirstStepAction";
-
+import SecondStepAction from "./serviceAction/SecondStepAction";
 
 interface ServiceImageType {
   id: string | number;
@@ -42,6 +41,7 @@ const EditServicePage: React.FC<EditServicePageProps> = ({
       {step === 2 && (
         <SecondStepAction
           filteredServiceImages={memoizedFilteredServiceImages}
+          serviceRangeDate={serviceDataEdit}
         />
       )}
     </div>

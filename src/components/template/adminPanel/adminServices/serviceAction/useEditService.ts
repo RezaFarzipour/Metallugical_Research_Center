@@ -1,4 +1,4 @@
-import { editServiceByID, editServiceImageByID } from "@/services/api/service";
+import { editervicesDateRangeById, editServiceByID, editServiceImageByID } from "@/services/api/service";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 
@@ -35,6 +35,25 @@ export function useEditServiceImage() {
   });
 
   return { isEditingImage, editServiceImage };
+}
+
+
+export function useEditServiceDateRangeById() {
+  const queryClient = useQueryClient();
+
+  const { isPending: isEditingDateRange, mutateAsync: editServiceDateRange } = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: FormData }) => {
+      return editervicesDateRangeById({ id, data })
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["getAll-services"],
+      });
+    },
+  });
+
+  return { isEditingDateRange, editServiceDateRange };
 }
 
 

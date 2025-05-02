@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
@@ -13,8 +14,7 @@ import ModalModule from "@/components/element/ModalModule";
 import Empty from "@/components/element/Empty";
 import { useAdminServicesDataAction } from "./serviceAction/useAdminServicesDataAction";
 
-
-export const AdminServicesPage: React.FC = () => {
+export const AdminServicesPage: React.FC = ({}) => {
   const {
     isModalOpen,
     setIsModalOpen,

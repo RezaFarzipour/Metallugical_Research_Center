@@ -20,7 +20,7 @@ const Services: React.FC = () => {
   // گرفتن آرایه‌ی سرویس‌ها از formData
   const formDataServices = Array.isArray(data) ? data : [];
   const { sortedItems } = useFilteredContainer(formDataServices);
-  console.log('name',sortedItems);
+  console.log("name", sortedItems);
 
   return (
     <div className="container flex flex-col items-center justify-center gap-5 max-w-screen-lg pt-72">

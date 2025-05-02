@@ -7,8 +7,7 @@ import { toEnglishNumbers, toPersianNumbers, toPersianNumbersWithComma } from "@
 import { Servicecolumns } from "@/constants/tableData";
 import { showToast } from "@/store/useToastSlice";
 import { useDeleteService } from "./useDeleteService";
-
-const includesKey = ["service_name", "description", "price"] as const;
+import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
 
 type RawService = {
     id: string;
@@ -16,6 +15,7 @@ type RawService = {
     description: string;
     price: number;
     cover_image?: string;
+    "service-reserve_date"?: { id: number; reserved_from: string; reserved_to: string; service: number }[];
 };
 
 type FilteredService = {
@@ -25,32 +25,14 @@ type FilteredService = {
     name: string;
     image?: string;
     actions: string;
-    description: string;
+    description: string; dateRange: string;
 };
 
 type GroupedServices = {
     serviceUp: FilteredService[];
 };
 
-// تابع گروه‌بندی داده‌ها بیرون از هوک تعریف شده و با useCallback استفاده می‌شود
-const groupServicesByKeys = (data: RawService[], keys: readonly string[]): GroupedServices => {
-    return data.reduce<GroupedServices>(
-        (acc, service, index) => {
-            // به جای فیلتر کلیدها، مستقیماً ساخت آبجکت فیلترشده
-            acc.serviceUp.push({
-                _id: toPersianNumbers(index + 1),
-                id: toPersianNumbers(service.id),
-                price: toPersianNumbersWithComma(service.price),
-                name: service.service_name,
-                image: service.cover_image,
-                actions: service.id.toString(),
-                description: service.description,
-            });
-            return acc;
-        },
-        { serviceUp: [] }
-    );
-};
+
 
 export const useAdminServicesDataAction = () => {
     const { view, visibleColumns } = useTableStore();
@@ -63,6 +45,30 @@ export const useAdminServicesDataAction = () => {
 
     const router = useRouter();
 
+    // تابع گروه‌بندی داده‌ها بیرون از هوک تعریف شده و با useCallback استفاده می‌شود
+    const groupServicesByKeys = (data: RawService[]): GroupedServices => {
+        return data.reduce<GroupedServices>(
+            (acc, service, index) => {
+                const dateRanges = formatDateRangesToPersian(service["service-reserve_date"] ?? []);
+
+
+                // به جای فیلتر کلیدها، مستقیماً ساخت آبجکت فیلترشده
+                acc.serviceUp.push({
+                    _id: toPersianNumbers(index + 1),
+                    id: toPersianNumbers(service.id),
+                    price: toPersianNumbersWithComma(service.price),
+                    name: service.service_name,
+                    image: service.cover_image,
+                    actions: service.id.toString(),
+                    description: service.description,
+                    dateRange: dateRanges
+                });
+                return acc;
+            },
+            { serviceUp: [] }
+        );
+    };
+
     const { data, isPending, isError } = useQuery<RawService[]>({
         queryKey: ["getAll-services"],
         queryFn: getAllServiceAdmin,
@@ -72,7 +78,7 @@ export const useAdminServicesDataAction = () => {
     // گروه‌بندی داده‌ها هنگام تغییر data
     useEffect(() => {
         if (Array.isArray(data)) {
-            const grouped = groupServicesByKeys(data, includesKey);
+            const grouped = groupServicesByKeys(data);
             setFormData(grouped);
 
             if (grouped.serviceUp.length > 0) {
@@ -80,7 +86,6 @@ export const useAdminServicesDataAction = () => {
             }
         }
     }, [data]);
-
     // آرایه‌ی سرویس‌ها برای دسترسی راحت‌تر
     const formDataServices = Array.isArray(formData.serviceUp) ? formData.serviceUp : [];
 

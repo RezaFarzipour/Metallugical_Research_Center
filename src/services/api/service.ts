@@ -80,8 +80,6 @@ export const editServiceImageByID = async ({
     id: string;
     data: FormData;
 }) => {
-    console.log("idid", id);
-
     const response = await http.patch(`service/images/admin/${id}/`, data);
     return response.data;
 };
@@ -95,8 +93,48 @@ export const deleteServiceImageById = async ({
     return response.data;
 };
 
+
+// API DateRange:
+export const createServiceDateRange = async (data) => {
+    const response = await http.post(`service/reserve-date/admin/`, data);
+    return response.data;
+};
+export const getServicesDateRangeById = async (
+    id: string,
+    options?: AxiosRequestConfig
+) => {
+    try {
+        const response = await http.get(`service/reserve-date/admin/89/`, options);
+        return response.data;
+    } catch (error) {
+        console.log("error", error);
+    }
+};
+
+export const editervicesDateRangeById = async ({
+    id,
+    data,
+}: {
+    id: string;
+    data: FormData;
+}) => {
+    const response = await http.patch(`service/reserve-date/admin/${id}/`, data);
+    return response.data;
+};
+
+
+export const getAllReserveDate = async () => {
+    try {
+        const response = await http.get(`service/reserve-date/admin/`);
+        return response.data;
+    } catch (error) {
+        console.log("error", error);
+    }
+
+};
 export const getAllServiceCustomer = async () => {
     const response = await http.get(`service/s/customer/`);
     return response.data;
 };
+
 

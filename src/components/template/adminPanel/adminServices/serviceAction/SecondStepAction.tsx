@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@heroui/button";
@@ -14,8 +14,9 @@ import {
 } from "@/schemas/creaateServiceImagesSchema";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
+import AdminDateRangePicker from "@/components/module/customeDataPicker/AdminDateRangePicker";
+import TitleStructure from "@/components/element/TitleStructure";
 import { useSeCondStepAction } from "./useSecondStepAction";
-
 
 interface ServiceImage {
   id: string | number;
@@ -31,6 +32,7 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
   filteredServiceImages = [],
   serviceId,
   setStep,
+  serviceRangeDate,
 }) => {
   const {
     handleSubmit,
@@ -58,7 +60,14 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
     handleDeleteImage,
     setNewImageUrls,
     setExistingImageUrls,
-  } = useSeCondStepAction({ filteredServiceImages, serviceId, setStep, reset });
+    handleRangeSelect,
+  } = useSeCondStepAction({
+    filteredServiceImages,
+    serviceId,
+    serviceRangeDate,
+    setStep,
+    reset,
+  });
 
   const memoizedImageUrls = React.useMemo(() => {
     return filteredServiceImages.length > 0
@@ -160,7 +169,11 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
         onSubmit={handleSubmit(onSubmit)}
         className=" flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"
       >
-        <h2 className="text-lg font-bold">اضافه کردن تصاویر جدید</h2>
+        <TitleStructure>اضافه کردن تاریخ رزرو دستگاه</TitleStructure>
+        <div>
+          <AdminDateRangePicker onRangeSelect={handleRangeSelect} />
+        </div>
+        <TitleStructure>اضافه کردن تصاویر جدید</TitleStructure>
 
         <Controller
           name="images"

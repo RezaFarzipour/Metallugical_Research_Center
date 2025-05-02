@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/store/useToastSlice";
 import { CreaateServiceImagesFormData } from "@/schemas/creaateServiceImagesSchema";
-import { useEditServiceImage } from "./useEditService";
-import { useCreateServiceImages } from "./useCreateService";
+import { useEditServiceDateRangeById, useEditServiceImage } from "./useEditService";
+import { useCreateServiceDateRange, useCreateServiceImages } from "./useCreateService";
 import { useDeleteServiceImage } from "./useDeleteService";
 
 
@@ -16,16 +16,22 @@ interface UseSecondStepLogicProps {
 
 export function useSeCondStepAction({
     filteredServiceImages = [],
+    serviceRangeDate,
     serviceId,
     setStep,
     reset,
 }: UseSecondStepLogicProps) {
     const [existingImageUrls, setExistingImageUrls] = useState<string[]>([]);
     const [newImageUrls, setNewImageUrls] = useState<string[]>([]);
+    console.log("serviceRangeDate", serviceRangeDate);
+
 
     const { createServiceImage, isCreatingImage } = useCreateServiceImages();
     const { editServiceImage, isEditingImage } = useEditServiceImage();
     const { deletServiceImage } = useDeleteServiceImage();
+    const { isCreatingDateRange, createDateRange } = useCreateServiceDateRange();
+    const { isEditingDateRange, editServiceDateRange } = useEditServiceDateRangeById();
+
 
     const router = useRouter();
 
@@ -122,14 +128,59 @@ export function useSeCondStepAction({
         }
     };
 
+
+    const handleRangeSelect = (from: Date, to: Date) => {
+        if (!serviceIdNumber) {
+            showToast("شناسه سرویس موجود نیست.", "error");
+            return;
+        }
+
+        const reservedFrom = from.toISOString().split("T")[0]; // YYYY-MM-DD
+        const reservedTo = to.toISOString().split("T")[0];
+
+        const data = {
+            reserved_from: reservedFrom,
+            reserved_to: reservedTo,
+            service: serviceIdNumber
+        };
+
+        const RangeId = serviceRangeDate?.["service-reserve_date"][0].id
+        if (RangeId) {
+            editServiceDateRange(
+                { id: RangeId, data },
+                {
+                    onSuccess: () => {
+                        showToast("بازه‌ی زمانی با موفقیت ویرایش شد", "success");
+                    },
+                    onError: () => {
+                        showToast("خطا در ویرایش بازه زمانی", "error");
+                    },
+                }
+            );
+        } else {
+            createDateRange(data, {
+                onSuccess: () => {
+                    showToast("بازه زمانی با موفقیت اضافه شد", "success");
+                },
+                onError: () => {
+                    showToast("خطا در ذخیره بازه زمانی", "error");
+                },
+            });
+        }
+    };
+
+
+
     return {
         existingImageUrls,
         newImageUrls,
         isCreatingImage,
         isEditingImage,
+        isCreatingDateRange,
         onSubmit,
         handleEditImage,
         handleDeleteImage,
+        handleRangeSelect,
         setNewImageUrls,
         setExistingImageUrls,
     };
