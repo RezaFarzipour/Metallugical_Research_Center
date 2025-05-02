@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import TitleStructure from "../element/TitleStructure";
 import SectionWrapper from "@/hoc/SectionWrapper";
@@ -9,6 +8,7 @@ import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import CardModule from "../module/cardModule/CardModule";
 import { useQuery } from "@tanstack/react-query";
 import { getAllServiceCustomer } from "@/services/api/service";
+import BtnLoader from "../element/BtnLoader";
 
 const Services: React.FC = () => {
   const { view } = useTableStore();
@@ -20,10 +20,9 @@ const Services: React.FC = () => {
   // گرفتن آرایه‌ی سرویس‌ها از formData
   const formDataServices = Array.isArray(data) ? data : [];
   const { sortedItems } = useFilteredContainer(formDataServices);
-  console.log("name", sortedItems);
 
   return (
-    <div className="container flex flex-col items-center justify-center gap-5 max-w-screen-lg pt-72">
+    <div className="container flex flex-col items-center justify-center gap-5 max-w-screen-lg py-16">
       <h3 className="flex text-xl">
         <TitleStructure size="1rem">خدمات ما </TitleStructure>
       </h3>
@@ -43,22 +42,26 @@ const Services: React.FC = () => {
           stausDropDown={false}
           bottomContents={true}
         >
-          <div
-            className={`grid grid-cols-1 ${
-              view ? "sm:grid-cols-2 lg:grid-cols-3" : ""
-            } gap-4 mt-10 mb-32`}
-            style={{ width: "1200px" }}
-          >
-            <CardModule
-              isDate={false}
-              data={sortedItems}
-              widthConter="100%"
-              heightImg="250px"
-              heightConter="200px"
-              styleForAdmin={true}
-              view={view}
-            />
-          </div>
+          {isPending ? (
+            <BtnLoader />
+          ) : (
+            <div
+              className={`grid grid-cols-1 ${
+                view ? "sm:grid-cols-2 lg:grid-cols-3" : ""
+              } gap-4 mt-10 mb-32`}
+              style={{ width: "1200px" }}
+            >
+              <CardModule
+                isDate={false}
+                data={sortedItems}
+                widthConter="100%"
+                heightImg="250px"
+                heightConter="200px"
+                styleForAdmin={true}
+                view={view}
+              />
+            </div>
+          )}
         </FilteredContainer>
       </div>
     </div>

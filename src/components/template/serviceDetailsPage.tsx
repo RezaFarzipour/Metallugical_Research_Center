@@ -1,45 +1,116 @@
+"use client";
 import CarGallery from "@/components/module/ImageGallery";
 import { sp } from "@/utils/formatter/numberFormatter";
-import { Button } from "@heroui/button";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import BlurModal from "../element/BlurModal";
+import ServicesReserveModalBody from "../module/ServicesReserveModalBody";
+import { useMutation } from "@tanstack/react-query";
+import { postReservedService } from "@/services/api/service";
 
-const ServiceDetails = () => {
+
+interface ServiceImage {
+  id: number;
+  image: string;
+  service: number;
+}
+
+interface ServiceDataType {
+  id: number;
+  service_name: string;
+  description: string;
+  price: number;
+  cover_image: string;
+  "service-images": ServiceImage[];
+}
+
+const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
+  const BASE_URL = "http://localhost:8000";
+  const [startDate, setStartDate] = useState<string | null>("");
+  const [endDate, setEndDate] = useState<string | null>("");
+
+  const { isPending, mutateAsync, data, error } = useMutation({
+    mutationKey: ["post-reserve"],
+    mutationFn: postReservedService,
+  
+
+    onSuccess: (data) => {
+      console.log("data", data);
+    },
+
+    onError: (error) => {
+      console.log("error", error);
+    },
+  });
+
+
+  
+
+  const {
+    id,
+    service_name,
+    description,
+    price,
+    cover_image,
+    "service-images": serviceImages,
+  } = serviceData;
+
+
+
+  const coverImageSrc = cover_image.startsWith("http")
+    ? cover_image
+    : BASE_URL + cover_image;
+
+  const galleryImages =
+    serviceImages?.map((img) =>
+      img.image.startsWith("http") ? img.image : BASE_URL + img.image
+    ) || [];
+
+  const handleConfirm = async () => {
+    await mutateAsync();
+  };
+
   return (
-    <div className="w-full flex justify-center  gap-4 flex-col md:flex-row p-4">
+    <div className=" flex flex-col md:flex-row items-center justify-center gap-16 container py-20">
       {/* right section */}
-      <div className="w-full flex flex-col gap-4 mb-10 md:mb-0">
-        <div className="flex  text-center items-center my-5 gap-4">
-          <Image
-            className="rounded-full"
-            alt="image"
-            width={70}
-            height={70}
-            src={"/images/blog1-img1.png"}
-          />{" "}
-          <h2 className="text-2xl font-bold"> اسم محصول</h2>
+      <div className="w-full flex flex-col gap-4 mx-10 mb-10 md:mb-0">
+        <div className="flex items-center space-x-4 rtl:space-x-reverse">
+          <div className="relative w-16 h-16">
+            <Image
+              className="rounded-full object-cover"
+              alt={service_name}
+              fill
+              src={coverImageSrc}
+            />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800">{service_name}</h2>
         </div>
-        <p className="wrap text-justify text-default-400 mb-5">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel sunt,
-          optio ex nostrum laudantium minima nemo alias iure, est error autem,
-          magnam minus esse consequatur nihil. Magnam ipsa sit itaque quas saepe
-          repellendus vel quaerat iste corporis debitis minus odit ex
-        </p>
+        <p className="wrap text-justify text-default-400 mb-5">{description}</p>
 
         <div className="text-center my-5  font-bold text-2xl">
-          قیمت محصول:{sp(100000)}
+          قیمت محصول:{sp(price)}
         </div>
 
         <div className="flex justify-center w-full">
-          <Button className="bg-secondary-500 rounded-5 w-[90%] text-default-50">
-            رزرو کنید
-          </Button>
+          <BlurModal
+            heightProp="md"
+            title="رزرو کنید"
+            bodyContent={
+              <ServicesReserveModalBody
+                startDate={startDate}
+                setStartDate={setStartDate}
+                endDate={endDate}
+                setEndDate={setEndDate}
+              />
+            }
+            onConfirm={handleConfirm}
+          />
         </div>
       </div>
 
       {/* left section */}
       <div className="w-full mb-10 md:mb-0">
-        <CarGallery />
+        <CarGallery images={galleryImages} />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { useTableStore } from "@/store/useTableSlice";
 interface Data {
     id: number;
     name: string;
+    service_name:string
     phone_number: string;
     email: string;
     role: string;
