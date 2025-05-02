@@ -1,0 +1,34 @@
+import DateObject from "react-date-object";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+
+interface ReserveDate {
+    reserved_from: string; // مثلاً "2025-04-26"
+    reserved_to: string;
+}
+
+export function formatDateRangesToPersian(
+    reserveDates: ReserveDate[],
+    separator: string = " / ",
+    format: string = "YYYY/MM/DD"
+): string {
+    if (!Array.isArray(reserveDates)) return "";
+
+    return reserveDates
+        .map(({ reserved_from, reserved_to }) => {
+            const from = new DateObject({
+                date: new Date(reserved_from),
+                calendar: persian,
+                locale: persian_fa,
+            }).format(format);
+
+            const to = new DateObject({
+                date: new Date(reserved_to),
+                calendar: persian,
+                locale: persian_fa,
+            }).format(format);
+
+            return `${from} تا ${to}`;
+        })
+        .join(separator);
+}
