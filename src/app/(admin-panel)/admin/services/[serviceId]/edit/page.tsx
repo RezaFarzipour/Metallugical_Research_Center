@@ -1,4 +1,3 @@
-
 import EditServicePage from "@/components/template/adminPanel/adminServices/editServicePage";
 import {
   getAllServiceImages,
@@ -20,18 +19,12 @@ export default async function Page({ params }: PageProps) {
   const options = setCookiesOnReq(cookieStore);
 
   const serviceData = await getServicesByIdAdmin(serviceId, options);
-
-  // const serviceImageData = await getServicesImageById(serviceId, options);
   const serviceAllImageData = await getAllServiceImages(options);
 
-  // console.log("serviceImageData", serviceImageData);
-  console.log("serviceAllImageData", serviceAllImageData);
-  // console.log("serviceId", toEnglishNumbers(serviceIds));
   const filteredServiceImages = serviceAllImageData.filter(
     (image) => String(image.service) === String(toEnglishNumbers(serviceIds))
   );
 
-  console.log("filteredServiceImages", filteredServiceImages);
   if (!serviceData) {
     notFound();
   }

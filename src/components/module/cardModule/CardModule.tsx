@@ -8,11 +8,12 @@ import clsx from "clsx";
 type DataItem = {
   id: number;
   name: string;
-  service_name:string;
+  service_name?: string;
   description: string;
   image?: string;
   cover_image?: string;
   date?: string;
+  dateRange?: string;
 };
 type Props = {
   data: DataItem[];
@@ -69,12 +70,9 @@ const CardModule = ({
             />
 
             <CardContent
+              {...item}
               isDate={isDate}
-              date={item.date || ""}
-              id={item.id}
               isMoreDetails={isMoreDetails}
-              name={item.service_name}
-              description={item.description}
               widthConter={widthConter}
               heightConter={heightConter}
               view={view}

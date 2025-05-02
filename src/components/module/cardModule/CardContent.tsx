@@ -11,13 +11,17 @@ import Link from "next/link";
 import clsx from "clsx";
 import { RiPriceTag3Line, RiInformationLine } from "react-icons/ri";
 import { BsFileEarmarkFont } from "react-icons/bs";
+import { IoCalendarOutline } from "react-icons/io5";
 
 interface CardContentProps {
-  id: string | number; // این خط اضافه شد
+  id: string | number;
   date: string;
+  dateRange?: string;
+  price?: string;
   isDate: boolean | undefined;
   isMoreDetails?: string;
   name: string;
+  service_name?: string;
   description: string;
   widthConter: string;
   heightConter: string;
@@ -26,19 +30,20 @@ interface CardContentProps {
 }
 
 export const CardContent: React.FC<CardContentProps> = ({
-  date,
-  isDate,
   id,
+  date,
+  dateRange,
+  price,
+  isDate,
   isMoreDetails,
   name,
+  service_name,
   description,
   widthConter,
   heightConter,
   view,
   styleForAdmin,
 }) => {
-  console.log('name',name);
-  
   const [isHovered, setIsHovered] = React.useState(false);
 
   const cardStyles = {
@@ -55,7 +60,7 @@ export const CardContent: React.FC<CardContentProps> = ({
       ? `/admin/services/${id}/details`
       : `/services/${id}`;
 
-  const MoreDetailsButton = MoreDetailsHref && (
+  const MoreDetailsButton = (
     <div className="mt-auto absolute left-0 bottom-0">
       <Link href={MoreDetailsHref}>
         <Button
@@ -83,21 +88,30 @@ export const CardContent: React.FC<CardContentProps> = ({
       style={{ width: widthConter, height: heightConter }}
     >
       <div className="flex items-center gap-3">
-        <BsFileEarmarkFont className="text-xl " />
-        <h3 className="text-lg font-bold text-gray-600">{name}</h3>
+        <BsFileEarmarkFont className="text-xl" />
+        <h3 className="text-lg font-bold text-gray-600">
+          {service_name || name}
+        </h3>
       </div>
 
-      <div className="flex items-center gap-3 mt-2">
-        <RiPriceTag3Line className="text-xl" />
-        <p className="text-base font-medium text-gray-600">
-          قیمت: ۲۵۰,۰۰۰ تومان
-        </p>
-      </div>
+      {price && (
+        <div className="flex items-center gap-3 mt-2">
+          <RiPriceTag3Line className="text-xl" />
+          <p className="text-base font-medium text-gray-600">{price}</p>
+        </div>
+      )}
 
-      <div className="flex items-start gap-3 mt-2 flex-grow">
-        <RiInformationLine className="text-xl mt-1" />
+      <div className="flex items-center gap-3">
+        <IoCalendarOutline className="text-xl mt-1" />
         <p className="text-sm text-gray-600 text-justify">{description}</p>
       </div>
+
+      {dateRange && (
+        <div className="flex items-center gap-3">
+          <RiInformationLine className="text-xl mt-1" />
+          <p className="text-sm text-gray-600 text-justify">{dateRange}</p>
+        </div>
+      )}
 
       {MoreDetailsButton}
     </div>
@@ -111,7 +125,7 @@ export const CardContent: React.FC<CardContentProps> = ({
     >
       <div className="flex justify-start gap-5">
         {isDate && <InfoItem icon={<SlCalender />} text={date} />}
-        <InfoItem icon={<CgProfile />} text={name} />
+        <InfoItem icon={<CgProfile />} text={service_name || name} />
       </div>
 
       <h6 className="font-light text-wrap text-justify flex-grow">

@@ -19,6 +19,7 @@ interface User {
   image: string;
   author: string;
   articleTitle: string;
+  dateRange: string;
 }
 
 interface CellRendererProps {
@@ -61,21 +62,6 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
             )}
             <span>{data.name}</span>
           </div>
-        </div>
-      );
-    case "title":
-      return (
-        <div className="flex items-center gap-2">
-          {image && (
-            <Image src={data.image} alt={data.author} width={32} height={32} />
-          )}
-          <span>{data.author}</span>
-        </div>
-      );
-    case "role":
-      return (
-        <div className="flex flex-col">
-          <p className="text-sm font-bold capitalize">{cellValue}</p>
         </div>
       );
     case "status":

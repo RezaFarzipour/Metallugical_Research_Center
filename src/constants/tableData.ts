@@ -204,11 +204,13 @@ export const Usercolumns = [
     { name: "شماره همراه", uid: "phone_number" },
     { name: "عملیات", uid: "actions" },
 ];
+
 export const Servicecolumns = [
     { name: "#", uid: "_id", sortable: true },
     { name: "نام سرویس", uid: "name", sortable: true },
     { name: "توضیحات", uid: "description", sortable: true },
     { name: "قیمت", uid: "price" },
+    { name: "تاریخ باز", uid: "dateRange" },
     { name: "عملیات", uid: "actions" },
 ];
 
@@ -228,7 +230,7 @@ export const blogColumns = [
     { name: "عنوان", uid: "title", sortable: true },
     { name: "دسته بندی", uid: "category", sortable: true },
     { name: "عملیات", uid: "actions" },
-    {name:"تگ ها",uid:"tags",sortable:true}
+    { name: "تگ ها", uid: "tags", sortable: true }
 ];
 
 export const statusOptions = [
