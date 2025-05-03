@@ -11,7 +11,7 @@ export default function ContactUsLayout({
       <Layout>
         {/* banner section */}
         <HeaderImage headrName="خدمات" breadcrumbItem2="خدمات  ما" />
-        <div className="xl:max-w-screen-xl ">{children}</div>
+        <div className="xl:max-w-screen-xl mt-72">{children}</div>
       </Layout>
     </>
   );

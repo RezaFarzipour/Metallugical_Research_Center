@@ -14,9 +14,7 @@ const HeaderImage = ({
   panelHref,
 }: HeaderImageProps) => {
   return (
-    <div className="w-full relative z-0">
-      {" "}
-      {/* حذف absolute و top-0 */}
+    <div className="absolute top-0 left-0 w-full h-full z-0">
       <header className="relative w-full h-96">
         <Image
           src="/images/contactus.jpg"
@@ -24,7 +22,7 @@ const HeaderImage = ({
           alt="Contact Us"
           fill
           objectFit="cover"
-          className="brightness-50"
+          className=" z-0 brightness-50"
         />
 
         <div className="relative z-10 flex items-center justify-start h-full mr-14 text-white">
