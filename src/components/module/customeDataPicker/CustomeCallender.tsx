@@ -24,8 +24,20 @@ export default function CustomeDateRangePicker({
     null,
   ]);
 
-  const minDate = new Date(reserveData.reserved_from);
-  const maxDate = new Date(reserveData.reserved_to);
+  const minDate = new DateObject({
+    date: new Date(reserveData.reserved_from),
+    calendar: persian,
+    locale: persian_fa,
+  });
+
+  const maxDate = new DateObject({
+    date: new Date(reserveData.reserved_to),
+    calendar: persian,
+    locale: persian_fa,
+  });
+
+  console.log(minDate, "minDate");
+  console.log(maxDate, "maxDate");
 
   const handleRangeChange = (dates: any) => {
     setRange(dates);
