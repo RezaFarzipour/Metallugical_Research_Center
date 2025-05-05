@@ -1,14 +1,18 @@
 "use client";
 
-import { steps } from "@/constants/data";
 import React from "react";
 
-const Stepper = ({ currentStep }) => {
+type StepperType ={
+  steperDetails:{id: number, label:string }[] ,
+  currentStep:number
+}
+
+const Stepper = ({ currentStep ,steperDetails}:StepperType) => {
   return (
     <div dir="ltr" className=" flex justify-center items-center py-6">
       <div className="w-full max-w-md">
         <div className="flex justify-between items-center">
-          {steps.map((step, index) => (
+          {steperDetails.map((step, index) => (
             <React.Fragment key={step.id}>
               {/* Step */}
               <div className="flex flex-col items-center">
@@ -27,7 +31,7 @@ const Stepper = ({ currentStep }) => {
               </div>
 
               {/* Connector Line */}
-              {index < steps.length - 1 && (
+              {index < steperDetails.length - 1 && (
                 <div className="flex-1 h-0.5 bg-default-500 mx-1"></div>
               )}
             </React.Fragment>

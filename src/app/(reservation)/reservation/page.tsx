@@ -17,7 +17,7 @@ const Reservation = () => {
   const searchParams = useSearchParams();
   const reserveId = searchParams.get("reserve-id");
 
-  const [stage, setStage] = useState<number | null>(4);
+  const [stage, setStage] = useState<number | null>(null);
 
   useEffect(() => {
     if (!reserveId) return;
@@ -41,11 +41,11 @@ const Reservation = () => {
       refetchOnWindowFocus: false,
     });
 
-  // useEffect(() => {
-  //   if (data?.stage) {
-  //     setStage(data.stage);
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data?.stage) {
+      setStage(data.stage);
+    }
+  }, [data]);
 
   if (error) return showToast(error.message, "error");
 

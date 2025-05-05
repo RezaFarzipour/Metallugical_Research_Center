@@ -1,11 +1,13 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import SendOtpForm from "../module/auth/SendOtpForm";
 import CheckOtpForm from "../module/auth/CheckOtpForm";
 import PersonalRegister from "../module/auth/PersonalRegister";
 import { useSigninFlow } from "../module/auth/useSigninFlow";
+import { useStepperStore } from "@/store/useSteperSlice";
 
 const SigninPage: React.FC = () => {
+  const { setCurrentStep } = useStepperStore()
   const {
     step,
     setStep,
@@ -19,14 +21,19 @@ const SigninPage: React.FC = () => {
     onSubmitPersonalRegister,
   } = useSigninFlow();
 
+  useEffect(() => {
+    setCurrentStep(step);
+  }, [step, setCurrentStep]);
+
   const renderSteps = () => {
+
     switch (step) {
       case 1:
         return <SendOtpForm loading={loading} onSubmit={sendOtpHandler} />;
       case 2:
         return (
           <CheckOtpForm
-            onBack={() => setStep((s) => s - 1)}
+            onBack={() =>{ setStep(1); setCurrentStep(1) }}
             onSubmit={checkOtpHandler}
             onChange={handleOtpChange}
             onResendOtp={() => sendOtpHandler({ phone: phoneNumber })}
