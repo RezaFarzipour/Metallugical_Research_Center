@@ -1,9 +1,79 @@
-import React from 'react'
+"use client";
+import React from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getAllReserveCustomer } from "@/services/api/service";
+import { useGetUser } from "@/hooks/useAuth";
+import Stage2 from "@/components/template/reservation/Stage2";
+import Stage3 from "@/components/template/reservation/Stage3";
+import { ServiceDetailsType } from "@/types";
+import http from "@/services/httpService";
+import Stage4 from "@/components/template/reservation/Stage4";
+import { showToast } from "@/store/useToastSlice";
+import BtnLoader from "@/components/element/BtnLoader";
 
-const page = () => {
+const Reservation = () => {
+  const searchParams = useSearchParams();
+  const reserveId = searchParams.get("reserve-id");
+
+  const [stage, setStage] = useState<number | null>(4);
+
+  useEffect(() => {
+    if (!reserveId) return;
+  }, [reserveId]);
+
+  //find out that user is admin or customer
+  const { role } = useGetUser().data || {};
+
+  //find out which stage we are in!
+  const { data, error, isPending } = useQuery({
+    queryKey: ["get-stage", reserveId],
+    queryFn: ({ queryKey }) => getAllReserveCustomer(queryKey[1]),
+  });
+
+  //get service details
+  const { data: serviceData, isLoading: isServiceLoading } =
+    useQuery<ServiceDetailsType>({
+      queryKey: ["get-device-details", data?.service],
+      queryFn: () => http.get(`/service/s/customer/${data?.service}/`),
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: false,
+    });
+
+  // useEffect(() => {
+  //   if (data?.stage) {
+  //     setStage(data.stage);
+  //   }
+  // }, [data]);
+
+  if (error) return showToast(error.message, "error");
+
+  if (isPending) return <BtnLoader />;
+
   return (
-    <div>page</div>
-  )
-}
+    <div className="p-6">
+      <div className="mb-4">مرحله {stage}</div>
 
-export default page
+      {stage === 2 && (
+        <div>
+          <Stage2
+          setStage={setStage}
+            role={role}
+            data={data}
+            reserveId={reserveId}
+            servicedata={serviceData}
+            isServiceLoading={isServiceLoading}
+          />
+        </div>
+      )}
+      {stage === 3 && (
+        <Stage3 reserveId={reserveId} role={role} data={data}  setStage={setStage} serviceData={serviceData} />
+      )}
+
+      {stage === 4 && <Stage4 data={data}  setStage={setStage} role={role} serviceData={serviceData}  reserveId={reserveId}/>}
+    </div>
+  );
+};
+
+export default Reservation;
