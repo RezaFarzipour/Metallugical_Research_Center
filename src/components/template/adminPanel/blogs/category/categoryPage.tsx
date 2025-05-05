@@ -8,10 +8,12 @@ import Empty from "@/components/element/Empty";
 import BtnLoader from "@/components/element/BtnLoader";
 import Link from "next/link";
 import Table from "@/components/element/Table";
-import ModalModule from "@/components/element/ModalModule"; // افزودن مودال
+import ModalModule from "@/components/element/ModalModule";
 import { getAllCategoryAdmin } from "@/services/api/blogs";
-import { useDeleteService } from "../useDeleteCategory";
+import { useDeleteBlogCategory } from "../useDeleteCategory";
 import { showToast } from "@/store/useToastSlice";
+import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
+import { FaPlus } from "react-icons/fa";
 
 const CategoryBlog = () => {
   const queryClient = useQueryClient();
@@ -20,7 +22,7 @@ const CategoryBlog = () => {
     queryFn: getAllCategoryAdmin,
   });
 
-  const { deletBlogCategory } = useDeleteService();
+  const { deletBlogCategory } = useDeleteBlogCategory();
 
   // وضعیت مودال
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,9 +66,17 @@ const CategoryBlog = () => {
 
   return (
     <div>
-      <Link href={"/admin/blogs/category/create"}>
-        <Button>افزودن دسته‌بندی</Button>
-      </Link>
+      <TitleStructureDashboards mainTitle="دست بندی" />
+      <div className="flex justify-end w-[95%]  mb-4">
+        <Link href={"/admin/blogs/category/create"}>
+          <Button
+            className="bg-secondary-500 text-white"
+            endContent={<FaPlus />}
+          >
+            افزودن
+          </Button>
+        </Link>
+      </div>
 
       <div className="mt-8 overflow-x-auto">
         {isPending ? (
@@ -91,11 +101,15 @@ const CategoryBlog = () => {
                   <td>{item.slug}</td>
                   <td className=" flex justify-center items-center">
                     <Link href={`/admin/blogs/category/create?id=${item.id}`}>
-                      <Button isIconOnly>
+                      <Button isIconOnly className="bg-transparent">
                         <TbEyeDiscount />
                       </Button>
                     </Link>
-                    <Button isIconOnly onPress={() => openModal(item.id)}>
+                    <Button
+                      isIconOnly
+                      className="bg-transparent"
+                      onPress={() => openModal(item.id)}
+                    >
                       <MdDeleteOutline color="red" />
                     </Button>
                   </td>

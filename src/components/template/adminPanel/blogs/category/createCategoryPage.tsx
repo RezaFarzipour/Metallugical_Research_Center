@@ -4,8 +4,8 @@ import RHFInput from "@/components/element/RHFInput";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCreateService } from "../useCreate";
-import { useEditService } from "../useEditService";
+import { useCreateCategory, useCreateService } from "../useCreate";
+import { useEditCategory, useEditService } from "../useEditService";
 import { showToast } from "@/store/useToastSlice";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -13,6 +13,7 @@ import { getBlogCategoryById } from "@/services/api/blogs";
 import { useEffect } from "react";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import BtnLoader from "@/components/element/BtnLoader";
+import { Button } from "@heroui/button";
 
 const categorySchema = z.object({
   category_name: z.string().min(1, "نام دسته‌بندی باید پر شود"),
@@ -64,8 +65,8 @@ export default function CreateCategory() {
     }
   }, [isEditMode, isSuccess, categoryData, reset]);
 
-  const { createCategory } = useCreateService();
-  const { editBlogCategory } = useEditService();
+  const { createCategory } = useCreateCategory();
+  const { editBlogCategory } = useEditCategory();
 
   const onSubmit = (formData: CategoryFormData) => {
     if (isEditMode && editId) {
@@ -111,7 +112,10 @@ export default function CreateCategory() {
         <h2 className="text-lg font-semibold mb-4">
           {isEditMode ? "ویرایش دسته‌بندی" : "افزودن دسته‌بندی جدید"}
         </h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className=" p-6 rounded-xl  space-y-5 bg-white shadow-md mt-10"
+        >
           <RHFInput
             register={register}
             errors={errors}
@@ -128,12 +132,9 @@ export default function CreateCategory() {
             dir="rtl"
             name="slug"
           />
-          <button
-            type="submit"
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg"
-          >
+          <Button type="submit" className="w-full">
             {isEditMode ? "ذخیره تغییرات" : "افزودن"}
-          </button>
+          </Button>
         </form>
       </div>
     </>
