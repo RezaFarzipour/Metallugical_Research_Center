@@ -10,6 +10,9 @@ import { FaAngleDown } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { MdOutlinePhoneEnabled } from "react-icons/md";
 import { IoExitOutline } from "react-icons/io5";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { logOut } from "@/services/api/auth";
+import { showToast } from "@/store/useToastSlice";
 
 
 // interface DropDownProps {
@@ -17,8 +20,10 @@ import { IoExitOutline } from "react-icons/io5";
 //   dropDownItems: (role: string) => dropDownItemType[];
 // }
 
-export const DropDown = ({ user, dropDownItems }) => {
+export const DropDown = ({ user, dropDownItems ,logoutHandler}) => {
+
   const userRoles = user && user.role;
+
 
   return (
     <Dropdown placement="bottom" className="w-[230px] ">
@@ -71,6 +76,7 @@ export const DropDown = ({ user, dropDownItems }) => {
         })}
 
         <DropdownItem
+        onPress={logoutHandler}
           startContent={<IoExitOutline size="17px" />}
           key="logout"
           color="danger"

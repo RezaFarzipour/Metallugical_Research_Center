@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Navbar } from "@heroui/react";
 import { NavBarRight } from "@/components/module/navBar/NavBarRight";
 import { NavBarLeft } from "@/components/module/navBar/NavBarLeft";
 import MobileMenu from "@/components/module/navBar/MobileMenu";
 import { useGetUser } from "@/hooks/useAuth";
+import { useUserStore } from "@/store/useUserdata";
 
 const navbarStyles = {
   base: "z-10 shadow-md bg-inherit mb-0 transition-all duration-200 border-b border-b-secondary-300",
@@ -14,8 +15,13 @@ const navbarStyles = {
 };
 
 const NavBar = () => {
+  const setUser = useUserStore((state) => state.setUser);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const { data, isPending } = useGetUser();
+  const { data:user, isPending } = useGetUser();
+
+  useEffect(() => {
+    setUser(user || null);
+  }, [user]);
 
   return (
     <Navbar
@@ -27,7 +33,7 @@ const NavBar = () => {
       )} bg-white/50`}
     >
       <NavBarRight isMenuOpen={isMenuOpen} />
-      <NavBarLeft user={data ?? null} />
+      <NavBarLeft  />
       <MobileMenu />
     </Navbar>
   );
