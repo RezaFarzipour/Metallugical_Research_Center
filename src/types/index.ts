@@ -100,3 +100,29 @@ export type AllUsersType = {
   phone_number: string;
   role: "customer" | "admin";
 }
+
+
+
+export type ServiceDetailsType = {
+  data: {
+    id: number;
+    service_name: string;
+    description: string;
+    price: number;
+    cover_image: string;
+  };
+};
+
+
+export type reservationDataType ={
+ 
+    is_reservation_time_verified: boolean;
+    admin_description: string;
+    reserve_duration: number;
+    total_price: number;
+    reserve_from?: string;
+    stage:number,
+    reserve_to?: string;
+    service?: string;
+
+}
