@@ -69,8 +69,8 @@ export const editServiceImageByID = async ({
   id: string;
   data: FormData;
 }) => {
-    const response = await http.patch(`service/images/admin/${id}/`, data);
-    return response.data;
+  const response = await http.patch(`service/images/admin/${id}/`, data);
+  return response.data;
 };
 
 export const deleteServiceImageById = async ({ id }: { id: string }) => {
@@ -78,44 +78,41 @@ export const deleteServiceImageById = async ({ id }: { id: string }) => {
   return response.data;
 };
 
-
 // API DateRange:
 export const createServiceDateRange = async (data) => {
-    const response = await http.post(`service/reserve-date/admin/`, data);
-    return response.data;
+  const response = await http.post(`service/reserve-date/admin/`, data);
+  return response.data;
 };
 export const getServicesDateRangeById = async (
-    id: string,
-    options?: AxiosRequestConfig
+  id: string,
+  options?: AxiosRequestConfig
 ) => {
-    try {
-        const response = await http.get(`service/reserve-date/admin/89/`, options);
-        return response.data;
-    } catch (error) {
-        console.log("error", error);
-    }
+  try {
+    const response = await http.get(`service/reserve-date/admin/89/`, options);
+    return response.data;
+  } catch (error) {
+    console.log("error", error);
+  }
 };
 
 export const editervicesDateRangeById = async ({
-    id,
-    data,
+  id,
+  data,
 }: {
-    id: string;
-    data: FormData;
+  id: string;
+  data: FormData;
 }) => {
-    const response = await http.patch(`service/reserve-date/admin/${id}/`, data);
-    return response.data;
+  const response = await http.patch(`service/reserve-date/admin/${id}/`, data);
+  return response.data;
 };
 
-
 export const getAllReserveDate = async () => {
-    try {
-        const response = await http.get(`service/reserve-date/admin/`);
-        return response.data;
-    } catch (error) {
-        console.log("error", error);
-    }
-
+  try {
+    const response = await http.get(`service/reserve-date/admin/`);
+    return response.data;
+  } catch (error) {
+    console.log("error", error);
+  }
 };
 export const getAllServiceCustomer = async () => {
   const response = await http.get(`service/s/customer/`);
@@ -138,3 +135,102 @@ export const postReservedService = async () => {
   const response = await http.post(`/reserve`);
   return response.data;
 };
+
+// stage1
+
+export async function patchReserveDetails({
+  reserveId,
+  reserve_from,
+  reserve_to,
+  service,
+}: {
+  reserve_from: string | null;
+  reserve_to: string | null;
+  service: string | null;
+  reserveId: string | null;
+}): Promise<any> {
+  const response = await http.patch(
+    `/reserve?reserve-id=${reserveId}&next-stage=1`,
+    {
+      reserve_from,
+      reserve_to,
+      service,
+    }
+  );
+
+  return response.data;
+}
+
+//stage2
+
+export async function patchAcceptStage2({
+  reserveId,
+  is_reservation_time_verified,
+  admin_description,
+  reserve_duration,
+  total_price,
+}: {
+  reserve_duration: number;
+  is_reservation_time_verified: boolean;
+  admin_description: string;
+  reserveId: string | null;
+  total_price: number;
+}): Promise<any> {
+  const response = await http.patch(
+    `/reserve?reserve-id=${reserveId}&next-stage=1`,
+    {
+      is_reservation_time_verified,
+      admin_description,
+      reserve_duration,
+      total_price,
+    }
+  );
+
+  return response.data;
+}
+
+export const getAllReserveCustomer = async (reserveId: string | null) => {
+  const response = await http.get(`/reserve?reserve-id=${reserveId}`);
+  return response.data;
+};
+
+export async function PatchRejectStage2({
+  reserveId,
+  admin_description,
+  service
+}: {
+  admin_description: string;
+  reserveId: string | null;
+  service:string | undefined
+}): Promise<any> {
+  const response = await http.patch(
+    `/reserve?reserve-id=${reserveId}&next-stage=0`,
+    {
+      admin_description,
+      service
+    }
+  );
+
+  return response.data;
+}
+
+
+
+
+export async function sendReceipt({
+  reserveId,
+ data
+}: {
+  reserveId: string | null;
+  data: FormData;
+}): Promise<any> {
+  
+  const response = await http.patch(
+    `/reserve?reserve-id=${reserveId}&next-stage=1`,
+    
+      data
+    
+  );
+
+  return response.data;
+}

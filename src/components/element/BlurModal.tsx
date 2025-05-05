@@ -14,7 +14,7 @@ import clsx from "clsx";
 
 // تعریف نوع props
 interface BlurModalProps {
-  title: string;
+  title: string | element;
   bodyContent: string | ReactNode;
   onConfirm?: () => void;
   heightProp: "sm" | "md" | "lg" | "full";

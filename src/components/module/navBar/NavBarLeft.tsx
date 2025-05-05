@@ -4,17 +4,41 @@ import { User } from "@/types";
 import { DropDown } from "./NavDropDown";
 import { dropDownItems } from "@/constants/data";
 import Link from "next/link";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { logOut } from "@/services/api/auth";
+import { showToast } from "@/store/useToastSlice";
+import { useUserStore } from "@/store/useUserdata";
 
-export const NavBarLeft = ({
-  user,
-}: {
-  user: User | null;
-}) => {
+export const NavBarLeft = () => {
+
+  const { user,setUser } = useUserStore();
+  const queryClient = useQueryClient();
+  const { mutateAsync: asyncLogOut } = useMutation({
+    mutationFn: logOut,
+    onSuccess: () => {
+      showToast("با موفقیت خارج شدید", "success");
+      queryClient.removeQueries({ queryKey: ["get-user"] });
+      setUser(null);
+     
+
+    },
+    onError: () => {
+      showToast("خروج با خطا مواجه شد", "error");
+    },
+  });
+
+console.log("user",user)
+
+
+  const logoutHandler = async () => {
+    await asyncLogOut();
+  };
+
   return (
     <NavbarContent justify="end">
-      {user ? (
+      {user && user != null ? (
         <NavbarItem className=" flex">
-          <DropDown user={user} dropDownItems={dropDownItems} />
+          <DropDown logoutHandler={logoutHandler} user={user} dropDownItems={dropDownItems} />
         </NavbarItem>
       ) : (
         <NavbarItem>

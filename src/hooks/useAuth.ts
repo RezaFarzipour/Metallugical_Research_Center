@@ -7,7 +7,8 @@ export const useGetUser = () =>
     queryKey: ["get-user"],
     queryFn: getUserProfile,
     retry: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
     select: (response) => response?.response?.data[0],
 
   }

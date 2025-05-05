@@ -122,10 +122,10 @@ export const LatestArticles: latestArticleType[] = [
   },
 ];
 
-export const steps = [
-  { id: 1, label: "احراز هویت" },
-  { id: 2, label: "تکمیل اطلاعات" },
-  { id: 3, label: "ثبت سفارش" },
+export const Authsteps = [
+  { id: 1, label: " ارسال شماره همراه" },
+  { id: 2, label: " تایید کد" },
+  { id: 3, label: " ثبت اطلاعات" },
 ];
 
 export const contactusinformation: contactInfoType[] = [

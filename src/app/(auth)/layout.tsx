@@ -1,17 +1,23 @@
+"use client"
 import BgAnimateShape from "@/components/element/animations/BgAnimateShape";
 import Stepper from "@/components/module/Stepper";
+import { Authsteps } from "@/constants/data";
+import { useStepperStore } from "@/store/useSteperSlice";
 import Image from "next/image";
 
-export const metadata = {
-  title: "Auth",
-  description: "Auth",
-};
+// export const metadata = {
+//   title: "Auth",
+//   description: "Auth",
+// };
 
 interface AuthLayoutProps {
   children: React.ReactNode;
 }
 
+
+
 export default function AuthLayout({ children }: AuthLayoutProps) {
+  const { currentStep } = useStepperStore();
   return (
     <div className="flex items-center justify-center h-screen bg-secondary-50">
       <div className="flex w-full h-full relative overflow-hidden">
@@ -39,7 +45,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
             className="brightness-[75%] "
           />
           <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/2">
-            <Stepper currentStep={1} />
+            <Stepper currentStep={currentStep}  steperDetails={Authsteps}/>
           </div>
         </div>
       </div>
