@@ -6,8 +6,14 @@ import Image from "next/image";
 import React, { useState } from "react";
 import BlurModal from "../element/BlurModal";
 import { useMutation } from "@tanstack/react-query";
-import { postReservedService } from "@/services/api/service";
+import {
+  patchReserveDetails,
+  postReservedService,
+} from "@/services/api/service";
 import CustomeDateRangePicker from "../module/customeDataPicker/CustomeCallender";
+import { useRouter } from "next/navigation";
+import BtnLoader from "../element/BtnLoader";
+import { useGetUser } from "@/hooks/useAuth";
 
 interface ServiceImage {
   id: number;
@@ -16,7 +22,7 @@ interface ServiceImage {
 }
 
 interface ServiceReserveDate {
-  id: number;
+  id: string;
   reserved_from: string;
   reserved_to: string;
   service: number;
@@ -40,16 +46,15 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
   const [startDate, setStartDate] = useState<string | null>("");
   const [endDate, setEndDate] = useState<string | null>("");
 
+  const router = useRouter();
+
   // handle reserve range
-  const {
-    id: reservedId,
-    reserved_from,
-    reserved_to,
-  } = serviceData?.["service-reserve_date"]?.[0] || {};
+  const { id, reserved_from, reserved_to } =
+    serviceData?.["service-reserve_date"]?.[0] || {};
 
   // extract other data
   const {
-    id,
+    id: serviceId,
     service_name,
     description,
     price,
@@ -68,15 +73,48 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
     ) || [];
 
   // mutation
-  const { mutateAsync: createServiceReserve } = useMutation({
-    mutationKey: ["post-reserve"],
-    mutationFn: postReservedService,
-    onSuccess: (data) => console.log("data", data),
-    onError: (error) => console.log("error", error),
+  const { mutateAsync: createServiceReserve, isPending: isCreating } =
+    useMutation({
+      mutationKey: ["post-reserve"],
+      mutationFn: postReservedService,
+    });
+
+  const {
+    mutateAsync: patchReserve,
+    isPending: isPatching,
+  } = useMutation({
+    mutationKey: ["patch-reserve"],
+    mutationFn: patchReserveDetails,
   });
 
+
+
+  const { data:userData } = useGetUser();
+
+
+
   const handleConfirm = async () => {
-    await createServiceReserve();
+
+if(!userData || userData.length ===0) {
+
+  router.push('/auth')
+  return
+}
+
+    try {
+      const { id } = await createServiceReserve();
+
+      await patchReserve({
+        reserve_from: startDate,
+        reserve_to: endDate,
+        service: serviceId.toString(),
+        reserveId:id
+      });
+
+      router.push(`/reservation?reserve-id=${id}&next-stage=1`);
+    } catch (e) {
+      console.log('err',e);
+    }
   };
 
   const rangeHandler = (reserved_from: Date, reserved_to: Date) => {
@@ -108,8 +146,8 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
 
         <div className="flex justify-center w-full">
           <BlurModal
-            heightProp="md"
-            title="رزرو کنید"
+            heightProp="sm"
+            title={isCreating || isPatching ? <BtnLoader /> : " انتخاب رزرو"}
             bodyContent={
               <CustomeDateRangePicker
                 onRangeSelect={rangeHandler}
