@@ -18,10 +18,12 @@ interface BlurModalProps {
   bodyContent: string | ReactNode;
   onConfirm?: () => void;
   heightProp: "sm" | "md" | "lg" | "full";
+  icon?: ReactNode;
 }
 
 export default function BlurModal({
   title,
+  icon,
   bodyContent,
   onConfirm,
   heightProp,
@@ -37,7 +39,11 @@ export default function BlurModal({
 
   return (
     <>
-      <Button color="primary" onPress={onOpen}>
+      <Button
+        onPress={onOpen}
+        className="bg-secondary-500 text-white"
+        endContent={icon}
+      >
         {title}
       </Button>
 
@@ -65,7 +71,8 @@ export default function BlurModal({
                   بستن
                 </Button>
                 <Button
-                  color="primary"
+                  type="submit"
+                  className="bg-secondary-500 text-white"
                   onPress={() => {
                     onConfirm?.();
                     onClose();

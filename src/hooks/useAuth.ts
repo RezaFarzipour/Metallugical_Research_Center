@@ -8,8 +8,8 @@ export const useGetUser = () =>
     queryFn: getUserProfile,
     retry: false,
     refetchOnWindowFocus: true,
-    select: (response) => response?.response?.data[0], 
-  
+    select: (response) => response?.response?.data[0],
+
   }
 
-);
+  );

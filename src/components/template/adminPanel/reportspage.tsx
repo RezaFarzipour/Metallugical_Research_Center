@@ -48,10 +48,6 @@ const Reportspage: React.FC = () => {
           <CustomeTable
             headerColumns={headerColumns}
             sortedItems={sortedItems}
-            firstActionContent="تایید"
-            firstActionIcon={AiOutlineCheck}
-            secondActionContent="لغو"
-            secondActionIcon={AiOutlineClose}
             image={true}
           />
         </FilteredContainer>

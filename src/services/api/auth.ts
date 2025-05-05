@@ -1,5 +1,4 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { UserProfileResponse } from "@/types";
 import http from "../httpService";
 
 export interface SendOtpResponse {
@@ -47,7 +46,11 @@ export const checkOtp = async (
 
 export const getUserProfile = async () => {
   const response = await http.get("user/customer/");
-
-  
   return { response };
 };
+
+export const logOut = async () => {
+  const response = await http.post(`authentication/logout/`);
+  return response.data;
+};
+

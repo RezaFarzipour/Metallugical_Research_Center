@@ -117,3 +117,37 @@ body {
     margin: 2rem 0;
   }
 }
+
+/* TABLE */
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+table .title-row {
+  background-color: rgb(243, 244, 246);
+}
+
+table td,
+table th {
+  border-bottom: 1px solid rgb(229, 231, 235);
+  text-align: center;
+  white-space: nowrap;
+
+}
+
+table th {
+  padding: 0.6rem 1rem;
+  color: rgb(75, 85, 99);
+  font-size: 0.9rem;
+}
+a {
+  display: block;
+}
+table td {
+  font-size: 0.85rem;
+  padding: 1rem 1rem;
+  color: rgb(75, 85, 99);
+}

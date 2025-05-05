@@ -7,21 +7,37 @@ import { CiEdit } from "react-icons/ci";
 import { FC } from "react";
 import Logo from "@/components/element/Logo";
 import { NavLinkItem, User } from "@/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { showToast } from "@/store/useToastSlice";
+import { useRouter } from "next/navigation";
+import { logOut } from "@/services/api/auth";
 
 type SideBarProps = {
   onClose?: () => void;
   navLinkData?: NavLinkItem[];
   user?: User;
-  path:string
+  path: string;
 };
 
-const SideBar: FC<SideBarProps> = ({ onClose, navLinkData, user ,path}) => {
-  const logoutHandler = async () => {
-    // نمونه‌ای از پیاده‌سازی logout
-    console.log("Logging out...");
-    // اینجا می‌تونی کوکی یا localStorage رو پاک کنی و redirect بزنی
-  };
+const SideBar: FC<SideBarProps> = ({ onClose, navLinkData, user, path }) => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
 
+  const { mutateAsync: asyncLogOut } = useMutation({
+    mutationFn: logOut,
+    onSuccess: () => {
+      showToast("با موفقیت خارج شدید", "success");
+      queryClient.removeQueries({ queryKey: ["get-user"] });
+      router.replace("/");
+    },
+    onError: () => {
+      showToast("خروج با خطا مواجه شد", "error");
+    },
+  });
+
+  const logoutHandler = async () => {
+    await asyncLogOut();
+  };
   return (
     <div className="overflow-y-auto flex flex-col p-5 h-screen pt-10 lg:pt-8">
       {/* Drawer Header */}

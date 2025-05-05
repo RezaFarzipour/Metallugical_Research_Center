@@ -63,19 +63,19 @@ export const adminSidebarlinks: NavLinkItem[] = [
     icon: GrAppsRounded,
     to: "/admin/home",
   },
-
   {
     id: 1,
+    title: "رزرو ها",
+    icon: PiDeviceTablet,
+    to: "/admin/reservse",
+  },
+  {
+    id: 2,
     title: "کاربران",
     icon: LuUsers,
     to: "/admin/users",
   },
-  {
-    id: 2,
-    title: "رزرو ها",
-    icon: PiDeviceTablet,
-    to: "/reservation",
-  },
+
   {
     id: 3,
     title: "سرویس ها",
@@ -88,7 +88,7 @@ export const adminSidebarlinks: NavLinkItem[] = [
     icon: RiBloggerLine,
     to: "/admin/blogs",
     children: [
-      { id: 41, title: "دسته بندی ها", to: "/admin/blogs/blogcategory" },
+      { id: 41, title: "دسته بندی ها", to: "/admin/blogs/category" },
       { id: 42, title: " وبلاگ ها", to: "/admin/blogs" },
     ],
   },

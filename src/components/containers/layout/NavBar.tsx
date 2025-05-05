@@ -17,9 +17,6 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { data, isPending } = useGetUser();
 
-
-
-
   return (
     <Navbar
       shouldHideOnScroll
