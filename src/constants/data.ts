@@ -63,19 +63,19 @@ export const adminSidebarlinks: NavLinkItem[] = [
     icon: GrAppsRounded,
     to: "/admin/home",
   },
-
   {
     id: 1,
+    title: "رزرو ها",
+    icon: PiDeviceTablet,
+    to: "/admin/reservse",
+  },
+  {
+    id: 2,
     title: "کاربران",
     icon: LuUsers,
     to: "/admin/users",
   },
-  {
-    id: 2,
-    title: "رزرو ها",
-    icon: PiDeviceTablet,
-    to: "/reservation",
-  },
+
   {
     id: 3,
     title: "سرویس ها",
