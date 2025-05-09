@@ -128,6 +128,16 @@ export const Authsteps = [
   { id: 3, label: " ثبت اطلاعات" },
 ];
 
+export const reserveStep = [
+  { id: 1, label: "انتخاب سرویس" },
+  { id: 2, label: "تایید ادمین" },
+
+  { id: 3, label: "پرداخت" },
+  { id: 4, label: "تایید پرداخت" },
+  { id: 5, label: "تایید نهایی" },
+  { id: 6, label: "اتمام رزرو" },
+];
+
 export const contactusinformation: contactInfoType[] = [
   {
     id: 1,
