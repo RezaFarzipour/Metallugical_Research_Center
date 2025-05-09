@@ -1,11 +1,11 @@
 
-import { createNewBlogCategory } from "@/services/api/blogs";
+import { createNewBlog, createNewBlogCategory } from "@/services/api/blogs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export function useCreateService() {
+export function useCreateCategory() {
     const queryClient = useQueryClient();
 
-    const { isPending: isCategory, mutateAsync: createCategory } = useMutation({
+    const { isPending: isPendingCategory, mutateAsync: createCategory } = useMutation({
         mutationFn: createNewBlogCategory,
         onSuccess: (data) => {
 
@@ -15,6 +15,24 @@ export function useCreateService() {
         },
     });
 
-    return { isCategory, createCategory };
+    return { isPendingCategory, createCategory };
 }
+
+export function useCreateBlog() {
+    const queryClient = useQueryClient();
+
+    const { isPending: isPendingBlog, mutateAsync: createBlog } = useMutation({
+        mutationFn: createNewBlog,
+
+        onSuccess: (data) => {
+
+            queryClient.invalidateQueries({
+                queryKey: ["getAll-blogs"],
+            });
+        },
+    });
+
+    return { isPendingBlog, createBlog };
+}
+
 

@@ -97,7 +97,7 @@ export const BlogsPage: React.FC = () => {
     formDataServices,
     visibleKeys,
     headerColumns,
-    loading, 
+    loading,
     error,
     firstActionClickHandler,
     secondActionClickHandler,
@@ -116,15 +116,15 @@ export const BlogsPage: React.FC = () => {
           INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={blogColumns}
           quantity="بلاگ ها"
-          topContents={true}
+          topContents={!!formDataServices?.length}
           viewContent={true}
           viewContentSmSize={false}
           addBtn={true}
-          addBtnhref="/admin/blogs/createblog"
+          addBtnhref="/admin/blogs/create/stage1"
           columnsDropDownBtn={true}
           rolesDropDown={false}
           stausDropDown={false}
-          bottomContents={true}
+          bottomContents={!!formDataServices?.length}
         >
           {loading ? (
             <div>
@@ -133,8 +133,8 @@ export const BlogsPage: React.FC = () => {
           ) : isEmpty ? (
             <Empty
               btnValue="افزودن وبلاگ"
-              btnHref="/admin/services/create"
-              spanValue="سرویسی"
+              btnHref="/admin/blogs/create/stage1"
+              spanValue="بلاگی"
             />
           ) : !view ? (
             <CustomeTable

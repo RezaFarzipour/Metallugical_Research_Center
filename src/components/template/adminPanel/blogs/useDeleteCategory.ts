@@ -1,11 +1,11 @@
-import { deleteBlogCategory } from "@/services/api/blogs";
+import { deleteBlog, deleteBlogCategory } from "@/services/api/blogs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 
-export function useDeleteService() {
+export function useDeleteBlogCategory() {
   const queryClient = useQueryClient();
 
-  const { isPending: isDeletingBlogCategory, mutateAsync: deletBlogCategory } = useMutation({
+  const { isPending: isPendingDeleteCategory, mutateAsync: deletBlogCategory } = useMutation({
     mutationFn: deleteBlogCategory,
     onSuccess: (data) => {
 
@@ -15,6 +15,23 @@ export function useDeleteService() {
     },
   });
 
-  return { isDeletingBlogCategory, deletBlogCategory };
+  return { isPendingDeleteCategory, deletBlogCategory };
 }
+
+export function useDeleteBlog() {
+  const queryClient = useQueryClient();
+
+  const { isPending: isPendingDeleteBlog, mutateAsync: deletBlogAsync } = useMutation({
+    mutationFn: deleteBlog,
+    onSuccess: (data) => {
+
+      queryClient.invalidateQueries({
+        queryKey: ["getAll-blogsCategory"],
+      });
+    },
+  });
+
+  return { isPendingDeleteBlog, deletBlogAsync };
+}
+
 

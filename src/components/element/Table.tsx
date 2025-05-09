@@ -6,8 +6,10 @@ interface TableProps {
 
 function Table({ children }: TableProps) {
   return (
-    <div className="bg-secondary-0 overflow-x-auto">
-      <table>{children}</table>
+    <div className="table-category-wrapper overflow-x-auto rounded-xl border border-gray-200">
+      <table className="table-category w-full text-sm text-gray-700 ">
+        {children}
+      </table>
     </div>
   );
 }
@@ -19,7 +21,9 @@ interface TableHeaderProps {
 function TableHeader({ children }: TableHeaderProps) {
   return (
     <thead>
-      <tr className="title-row">{children}</tr>
+      <tr className="table-category-header text-center text-gray-400">
+        {children}
+      </tr>
     </thead>
   );
 }
@@ -37,7 +41,7 @@ interface TableRowProps {
 }
 
 function TableRow({ children }: TableRowProps) {
-  return <tr>{children}</tr>;
+  return <tr className="border-b text-center ">{children}</tr>;
 }
 
 Table.Header = TableHeader;

@@ -1,11 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import http from "../httpService";
 
-export const getAllBlogsAdmin = async () => {
 
-    const response = await http.get(`blog/b/any/`);
-    return response.data;
-};
 export const getAllCategoryAdmin = async () => {
 
     const response = await http.get(`blog/category/admin/`);
@@ -42,4 +38,33 @@ export const getBlogCategoryById = async (
     } catch (error) {
         console.log("error", error);
     }
+};
+
+export const getAllBlogsAdmin = async () => {
+
+    const response = await http.get(`blog/b/any/`);
+    return response.data;
+};
+
+
+
+export const createNewBlog = async (data) => {
+    const response = await http.post(`blog/b/admin/`, data);
+    return response.data;
+};
+
+export const editBlogById = async ({
+    id,
+    data,
+}: {
+    id: string;
+    data: FormData;
+}) => {
+    const response = await http.patch(`blog/b/admin/${id}/`, data);
+    return response.data;
+};
+
+export const deleteBlog = async ({ id }: { id: string }) => {
+    const response = await http.delete(`blog/b/admin/${id}/`);
+    return response.data;
 };

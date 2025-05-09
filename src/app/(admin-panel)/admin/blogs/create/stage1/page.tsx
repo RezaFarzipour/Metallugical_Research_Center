@@ -1,11 +1,10 @@
-import BlogStageOne from "@/components/module/controller/BlogsForm";
+import Stage1 from "@/components/template/adminPanel/blogs/blogAction/Stage1";
 import React from "react";
-
 
 const page = () => {
   return (
     <div>
-      <BlogStageOne />
+      <Stage1 />
     </div>
   );
 };
