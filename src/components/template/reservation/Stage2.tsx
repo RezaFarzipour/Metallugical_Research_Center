@@ -1,67 +1,88 @@
 import BtnLoader from "@/components/element/BtnLoader";
+import { useCancelReserve } from "@/hooks/useCancelReserve";
+import { useRejectReserve } from "@/hooks/useRejectReserve";
 import {
   patchAcceptStage2,
-  PatchRejectStage2,
-
-} from "@/services/api/service";
-
+} from "@/services/api/reserve";
+import { showToast } from "@/store/useToastSlice";
 import { reservationDataType, ServiceDetailsType } from "@/types";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 type Stage2PropsType = {
   reserveId: string | null;
   role: "customer" | "admin";
-  servicedata:ServiceDetailsType | undefined,
-  isServiceLoading:boolean,
-  setStage:(stage: number)=>void,
-  data:reservationDataType
+  servicedata: ServiceDetailsType | undefined;
+  isServiceLoading: boolean;
+  setStage: (stage: number) => void;
+  data: reservationDataType;
 };
 
-
-
-const Stage2 = ({ role, data, reserveId  ,servicedata,isServiceLoading,setStage}: Stage2PropsType) => {
+const Stage2 = ({
+  role,
+  data,
+  reserveId,
+  servicedata,
+  isServiceLoading,
+  setStage,
+}: Stage2PropsType) => {
   const [description, setDescription] = useState<string>(
     data?.admin_description || ""
   );
   const [duration, setDuration] = useState<number>(data?.reserve_duration || 0);
   const [price, setPrice] = useState<number>(data?.total_price || 0);
+  const queryClient = useQueryClient();
+  const { cancelReserve, isCanceling } = useCancelReserve();
+  const { rejectReserve, isRejecting } = useRejectReserve();
 
-
+  const router = useRouter();
 
   const { isPending: isAccepting, mutateAsync: acceptStage2 } = useMutation({
     mutationKey: ["accept-stage2"],
     mutationFn: patchAcceptStage2,
   });
 
-  const { isPending: isRejecting, mutateAsync: rejectStage2 } = useMutation({
-    mutationKey: ["reject-stage2"],
-    mutationFn: PatchRejectStage2,
-  });
-
-
-  
+  //accept reserve by admin
 
   const accepthandler = async () => {
-    await acceptStage2({
-      reserveId,
-      admin_description: description,
-      reserve_duration: duration,
-      total_price: price,
-      is_reservation_time_verified: true,
-    });
-
-    setStage(data?.stage)
+    await acceptStage2(
+      {
+        reserveId,
+        admin_description: description,
+        reserve_duration: duration,
+        total_price: price,
+        is_reservation_time_verified: true,
+      },
+      {
+        onSuccess: async () => {
+          showToast("رزرو با موفقیت تایید شد", "success");
+          await queryClient.invalidateQueries({
+            queryKey: ["get-stage", reserveId],
+          });
+        },
+        onError: () => {
+          showToast("خطا در تایید رزرو", "error");
+        },
+      }
+    );
   };
 
+  //reject reserve by admin
+
   const rejecthandler = async () => {
-   
-    
-    await rejectStage2({
+    rejectReserve({
       reserveId,
-      admin_description: description,
-      service: data?.service
+      admin_description: "",
+      service: data?.service,
+    });
+  };
+
+  //cancle reserve
+  const cancelHandler = async () => {
+    cancelReserve(reserveId, () => {
+      router.push("/services");
     });
   };
 
@@ -137,7 +158,14 @@ const Stage2 = ({ role, data, reserveId  ,servicedata,isServiceLoading,setStage}
             onClick={rejecthandler}
             className="bg-red-500 text-white px-4 py-2 rounded"
           >
-            {isRejecting ? <BtnLoader /> : "رد کردن"}
+            {isRejecting ? <BtnLoader /> : "عدم تایید"}
+          </button>
+
+          <button
+            onClick={cancelHandler}
+            className="bg-orange-500 text-white px-4 py-2 rounded"
+          >
+            {isCanceling ? <BtnLoader /> : "لغو رزرو"}
           </button>
         </div>
       </div>
@@ -150,6 +178,14 @@ const Stage2 = ({ role, data, reserveId  ,servicedata,isServiceLoading,setStage}
       <p>
         در حال حاضر اطلاعات شما توسط ادمین در حال بررسی است. لطفاً منتظر بمانید.
       </p>
+      <div className="mt-4">
+        <button
+          onClick={cancelHandler}
+          className="bg-red-500 text-white px-4 py-2 rounded"
+        >
+          {isCanceling ? <BtnLoader /> : "کنسل کردن رزرو"}
+        </button>
+      </div>
     </div>
   );
 };
