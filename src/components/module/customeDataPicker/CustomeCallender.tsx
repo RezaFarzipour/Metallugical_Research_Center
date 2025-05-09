@@ -36,8 +36,7 @@ export default function CustomeDateRangePicker({
     locale: persian_fa,
   });
 
-  console.log(minDate, "minDate");
-  console.log(maxDate, "maxDate");
+
 
   const handleRangeChange = (dates: any) => {
     setRange(dates);
