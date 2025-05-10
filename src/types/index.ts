@@ -124,5 +124,6 @@ export type reservationDataType ={
     stage:number,
     reserve_to?: string;
     service?: string;
+    payment_image:string
 
 }

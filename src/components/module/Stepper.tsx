@@ -2,22 +2,22 @@
 
 import React from "react";
 
-type StepperType ={
-  steperDetails:{id: number, label:string }[] ,
-  currentStep:number
-}
+type StepperType = {
+  steperDetails: { id: number; label: string }[];
+  currentStep: number;
+};
 
-const Stepper = ({ currentStep ,steperDetails}:StepperType) => {
+const Stepper = ({ currentStep, steperDetails }: StepperType) => {
   return (
     <div dir="ltr" className=" flex justify-center items-center py-6">
       <div className="w-full max-w-md">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-1">
           {steperDetails.map((step, index) => (
             <React.Fragment key={step.id}>
               {/* Step */}
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center ">
                 <div
-                  className={`w-8 h-8 rounded-full flex justify-center items-center text-white font-bold ${
+                  className={`w-8 h-8 rounded-full flex justify-center items-center text-white font-bold text-center ${
                     currentStep >= step.id
                       ? "bg-secondary-500 text-white border-primary-500"
                       : "bg-default-500"
@@ -25,7 +25,7 @@ const Stepper = ({ currentStep ,steperDetails}:StepperType) => {
                 >
                   {step.id}
                 </div>
-                <p className="mt-2 text-sm text-secondary-50 font-bold ">
+                <p className="mt-2 text-sm text-secondary-50  font-bold text-nowrap ">
                   {step.label}
                 </p>
               </div>

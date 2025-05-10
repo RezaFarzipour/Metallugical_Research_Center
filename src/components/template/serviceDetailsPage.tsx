@@ -6,14 +6,15 @@ import Image from "next/image";
 import React, { useState } from "react";
 import BlurModal from "../element/BlurModal";
 import { useMutation } from "@tanstack/react-query";
-import {
-  patchReserveDetails,
-  postReservedService,
-} from "@/services/api/service";
 import CustomeDateRangePicker from "../module/customeDataPicker/CustomeCallender";
 import { useRouter } from "next/navigation";
 import BtnLoader from "../element/BtnLoader";
 import { useGetUser } from "@/hooks/useAuth";
+import {
+  patchReserveDetails,
+  postReservedService,
+} from "@/services/api/reserve";
+import { showToast } from "@/store/useToastSlice";
 
 interface ServiceImage {
   id: number;
@@ -79,27 +80,23 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
       mutationFn: postReservedService,
     });
 
-  const {
-    mutateAsync: patchReserve,
-    isPending: isPatching,
-  } = useMutation({
+  const { mutateAsync: patchReserve, isPending: isPatching } = useMutation({
     mutationKey: ["patch-reserve"],
     mutationFn: patchReserveDetails,
   });
 
-
-
-  const { data:userData } = useGetUser();
-
-
+  const { data: userData } = useGetUser();
 
   const handleConfirm = async () => {
+    if (!userData || userData.length === 0) {
+      router.push("/auth");
+      return;
+    }
 
-if(!userData || userData.length ===0) {
-
-  router.push('/auth')
-  return
-}
+    if (userData?.role === "admin") {
+      showToast("لطفا به عنوان کاربر عادی وارد شوید", "error");
+      return
+    }
 
     try {
       const { id } = await createServiceReserve();
@@ -108,12 +105,12 @@ if(!userData || userData.length ===0) {
         reserve_from: startDate,
         reserve_to: endDate,
         service: serviceId.toString(),
-        reserveId:id
+        reserveId: id,
       });
 
       router.push(`/reservation?reserve-id=${id}&next-stage=1`);
     } catch (e) {
-      console.log('err',e);
+      console.log("err", e);
     }
   };
 

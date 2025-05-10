@@ -2,15 +2,20 @@
 
 import BtnLoader from "@/components/element/BtnLoader";
 import FileInput from "@/components/element/FileInput";
+import { useCancelReserve } from "@/hooks/useCancelReserve";
+import { useRejectReserve } from "@/hooks/useRejectReserve";
 import {
   PaymentFormData,
   paymentImageSchema,
 } from "@/schemas/payment_ImageSchema";
-import { sendReceipt } from "@/services/api/service";
+import { sendReceipt } from "@/services/api/reserve";
+import { showToast } from "@/store/useToastSlice";
+
 import { reservationDataType, ServiceDetailsType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -18,13 +23,23 @@ type Props = {
   role: "customer" | "admin";
   serviceData: ServiceDetailsType | undefined;
   reserveId: string | null;
-  setStage:(stage: number)=>void,
-  data:reservationDataType
+  setStage: (stage: number) => void;
+  data: reservationDataType;
 };
 
-const Stage3 = ({ role, serviceData, reserveId ,setStage,data:reservationData}: Props) => {
+const Stage3 = ({
+  role,
+  serviceData,
+  reserveId,
+  setStage,
+  data: reservationData,
+}: Props) => {
   const [receiptFile, setReceiptFile] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+  const { cancelReserve, isCanceling } = useCancelReserve();
 
+
+  const router = useRouter();
   const {
     handleSubmit,
     formState: { errors },
@@ -39,29 +54,90 @@ const Stage3 = ({ role, serviceData, reserveId ,setStage,data:reservationData}: 
   const {
     isPending: isSending,
     mutateAsync: sendImage,
-    error,
-    
   } = useMutation({
     mutationKey: ["send-image"],
     mutationFn: sendReceipt,
   });
+
+  //accept by admin
 
   const onSubmit = async (data: PaymentFormData) => {
     if (!data.payment_image) return;
 
     const formData = new FormData();
     formData.append("payment_image", data.payment_image);
-    await sendImage({ reserveId, data: formData });
-    setStage(reservationData?.stage)
+    await sendImage({ reserveId, data: formData },
+      {
+        onSuccess:async()=>{
+          showToast("فیش پرداخت با موفقیت ارسال شد", "success");
+          await queryClient.invalidateQueries({ queryKey: ["get-stage", reserveId] });
+        },
+        onError: () => {
+          showToast("خطا در ارسال فیش پرداخت", "error");
+        },
+      }
+    );
+  
   };
 
-  const rejecthandler = () => {};
+  //reject by admin
+
+
+
+  //cancle reserve
+  const cancelHandler = () => {
+    cancelReserve(reserveId, () => {
+      router.push("/services");
+    });
+  };
 
   if (role === "admin") {
     return (
-      <div className="p-4 border rounded bg-yellow-50 text-center">
-        <p>در انتظار آپلود فیش پرداخت توسط کاربر...</p>
-      </div>
+      <>
+        <h2 className="text-lg font-semibold">اطلاعات دستگاه</h2>
+        <div className="flex items-center gap-4">
+          {serviceData?.data?.cover_image ? (
+            <Image
+              src={serviceData?.data?.cover_image}
+              width={400}
+              height={400}
+              alt={serviceData?.data?.service_name}
+              className="w-32 h-32 object-cover rounded"
+            />
+          ) : (
+            <div className="w-32 h-32 bg-gray-200 rounded flex items-center justify-center text-gray-500 text-sm">
+              بدون تصویر
+            </div>
+          )}
+
+          <div>
+            <p>
+              <strong>نام دستگاه:</strong> {serviceData?.data?.service_name}
+            </p>
+            <p>
+              <strong>توضیحات:</strong> {serviceData?.data?.description}
+            </p>
+            <p>
+              <strong>قیمت:</strong>{" "}
+              {reservationData?.total_price.toLocaleString()} تومان
+            </p>
+          </div>
+        </div>
+        <div className="p-4 border rounded bg-yellow-50 text-center">
+          <p>در انتظار آپلود فیش پرداخت توسط کاربر...</p>
+        </div>
+
+        <div className="mt-4">
+          <button
+            onClick={cancelHandler}
+            className="bg-red-500 text-white px-4 py-2 rounded"
+          >
+            {isCanceling ? <BtnLoader /> : "کنسل کردن رزرو"}
+          </button>
+
+        
+        </div>
+      </>
     );
   }
 
@@ -91,8 +167,8 @@ const Stage3 = ({ role, serviceData, reserveId ,setStage,data:reservationData}: 
             <strong>توضیحات:</strong> {serviceData?.data?.description}
           </p>
           <p>
-            <strong>قیمت:</strong> {serviceData?.data?.price?.toLocaleString()}{" "}
-            تومان
+            <strong>قیمت:</strong>{" "}
+            {reservationData?.total_price.toLocaleString()} تومان
           </p>
         </div>
       </div>
@@ -127,11 +203,18 @@ const Stage3 = ({ role, serviceData, reserveId ,setStage,data:reservationData}: 
               {isSending ? <BtnLoader /> : "ارسال"}
             </button>
             <button
-              onClick={rejecthandler}
+              onClick={cancelHandler}
               className="bg-red-500 text-white px-4 py-2 rounded"
             >
               کنسل
             </button>
+
+            {/* <button
+              onClick={cancelHandler}
+              className="bg-orange-500 text-white px-4 py-2 rounded"
+            >
+              مرحله ی قبل
+            </button> */}
           </div>
         </form>
 

@@ -27,7 +27,6 @@ export const NavBarLeft = () => {
     },
   });
 
-console.log("user",user)
 
 
   const logoutHandler = async () => {
