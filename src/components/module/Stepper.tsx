@@ -25,7 +25,7 @@ const Stepper = ({ currentStep, steperDetails }: StepperType) => {
                 >
                   {step.id}
                 </div>
-                <p className="mt-2 text-sm text-secondary-50  font-bold text-nowrap ">
+                <p className="mt-2 text-sm text-secondary-100  font-bold text-nowrap ">
                   {step.label}
                 </p>
               </div>

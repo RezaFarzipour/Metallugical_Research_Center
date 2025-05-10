@@ -128,16 +128,32 @@ export const Authsteps = [
   { id: 3, label: " ثبت اطلاعات" },
 ];
 
-export const reserveStep = [
-  { id: 1, label: "انتخاب سرویس" },
-  { id: 2, label: "تایید ادمین" },
+// export const reserveStep = [
+//   { id: 1, label: "انتخاب سرویس" },
+//   { id: 2, label: "تایید ادمین" },
 
-  { id: 3, label: "پرداخت" },
-  { id: 4, label: "تایید پرداخت" },
-  { id: 5, label: "تایید نهایی" },
-  { id: 6, label: "اتمام رزرو" },
-];
+//   { id: 3, label: "پرداخت" },
+//   { id: 4, label: "تایید پرداخت" },
+//   { id: 5, label: "تایید نهایی" },
+//   { id: 6, label: "اتمام رزرو" },
+// ];
+export const reserveStep = {
+  admin: [
+    { id: 1, label: "تایید رزرو سرویس" },
+    { id: 2, label: "ارسال فیش پرداخت " },
+    { id: 3, label: "تایید پرداخت" },
+    { id: 4, label: "تایید نهایی" },
+    { id: 5, label: "اتمام رزرو" },
+  ],
+  customer: [
+    { id: 1, label: "انتخاب سرویس" },
+    { id: 2, label: "انتظار تایید ادمین" },
+    { id: 3, label: "پرداخت" },
+    { id: 4, label: "انتظار تایید پرداخت" },
+    { id: 5, label: "تایید نهایی" },
 
+  ],
+};
 export const contactusinformation: contactInfoType[] = [
   {
     id: 1,
