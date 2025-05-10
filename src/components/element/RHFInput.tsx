@@ -33,7 +33,7 @@ const inputStyles = {
   errorMessage: ["mt-1", "text-sm", "text-red-500"],
 };
 
-interface PhoneInputProps<T extends object> {
+interface InputProps<T extends object> {
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
   label: string;
@@ -49,7 +49,7 @@ const RHFInput = <T extends object>({
   type,
   dir,
   name,
-}: PhoneInputProps<T>) => {
+}: InputProps<T>) => {
   return (
     <div className={inputStyles.wrapper}>
       <Input
@@ -58,6 +58,7 @@ const RHFInput = <T extends object>({
         label={label}
         dir={dir}
         variant="underlined"
+        isRequired
         classNames={{
           inputWrapper: [
             ...inputStyles.inputWrapper,
