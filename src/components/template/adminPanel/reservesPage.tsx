@@ -15,10 +15,21 @@ import FilteredContainer from "@/components/containers/FilteredContainer";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import { TbEyeDiscount } from "react-icons/tb";
 import { useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import {
+  getAllReserveCustomer,
+  getReserveCustomerById,
+} from "@/services/api/reserve";
 
 const ReservesPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
   const { sortedItems } = useFilteredContainer(usersOrders);
+  const reserveId = "";
+  const { data, error } = useQuery({
+    queryKey: ["get-reserve", reserveId],
+    queryFn: ({ queryKey }) => getReserveCustomerById(queryKey[1]),
+  });
+  console.log(data, "data");
   const router = useRouter();
   // محاسبه ستون‌های هدر
   const headerColumns = useMemo(() => {

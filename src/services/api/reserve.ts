@@ -1,14 +1,31 @@
-// stage1
+
 
 import http from "../httpService";
 
+export const getAllReserveCustomer = async () => {
+  try {
+    const response = await http.get(`/reserve`);
+    console.log(response.data, "response.data");
+    return response.data;
+
+  } catch (error) {
+    console.log(error, "error");
+
+  }
+};
+
+// stage1
+export const getReserveCustomerById = async (reserveId: string | null) => {
+  const response = await http.get(`/reserve?reserve-id=${reserveId}`);
+  return response.data;
+};
 
 export const postReservedService = async () => {
-    const response = await http.post(`/reserve`);
-    return response.data;
-  };
+  const response = await http.post(`/reserve`);
+  return response.data;
+};
 
-  
+
 
 export async function patchReserveDetails({
   reserveId,
@@ -61,10 +78,6 @@ export async function patchAcceptStage2({
   return response.data;
 }
 
-export const getAllReserveCustomer = async (reserveId: string | null) => {
-  const response = await http.get(`/reserve?reserve-id=${reserveId}`);
-  return response.data;
-};
 
 export async function PatchRejectStage2({
   reserveId,
@@ -124,58 +137,58 @@ export async function paymentVerified({
 
 
 export async function rejectPayment({
-    reserveId,
-    is_payment_verified,
-  }: {
-    reserveId: string | null;
-    is_payment_verified: boolean | undefined;
-  }): Promise<any> {
-    const response = await http.patch(
-      `/reserve?reserve-id=${reserveId}&next-stage=0`,
-      {
-        is_payment_verified,
-      }
-    );
-  
-    return response.data;
-  }
-  
+  reserveId,
+  is_payment_verified,
+}: {
+  reserveId: string | null;
+  is_payment_verified: boolean | undefined;
+}): Promise<any> {
+  const response = await http.patch(
+    `/reserve?reserve-id=${reserveId}&next-stage=0`,
+    {
+      is_payment_verified,
+    }
+  );
+
+  return response.data;
+}
+
 
 //stage5
 
 export async function adminFinalApprove({
-    reserveId,
-    is_finished,
-  }: {
-    reserveId: string | null;
-    is_finished: boolean;
-  }): Promise<any> {
-    const response = await http.patch(
-      `/reserve?reserve-id=${reserveId}&next-stage=1`,
-      {
-        is_finished,
-      }
-    );
-  
-    return response.data;
-  }
-  
+  reserveId,
+  is_finished,
+}: {
+  reserveId: string | null;
+  is_finished: boolean;
+}): Promise<any> {
+  const response = await http.patch(
+    `/reserve?reserve-id=${reserveId}&next-stage=1`,
+    {
+      is_finished,
+    }
+  );
 
-  //customer cancle reserve
+  return response.data;
+}
 
-  export async function cancleFunc({
-    reserveId,
 
-  }: {
-    reserveId: string | null;
+//customer cancle reserve
 
-  }): Promise<any> {
-    const response = await http.delete(
-      `/reserve?reserve-id=${reserveId}`,
+export async function cancleFunc({
+  reserveId,
 
- 
-    );
-  
-    return response.data;
-  }
+}: {
+  reserveId: string | null;
+
+}): Promise<any> {
+  const response = await http.delete(
+    `/reserve?reserve-id=${reserveId}`,
+
+
+  );
+
+  return response.data;
+}
 
