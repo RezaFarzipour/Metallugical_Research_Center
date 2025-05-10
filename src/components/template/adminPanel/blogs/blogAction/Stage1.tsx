@@ -11,39 +11,85 @@ import {
 import Image from "next/image";
 import { IoTrashBinOutline } from "react-icons/io5";
 import FileInput from "@/components/element/FileInput";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
-
-const categories = [
-  { value: "Technology", label: "Technology" },
-  { value: "Health", label: "Health" },
-  { value: "Science", label: "Science" },
-  { value: "Business", label: "Business" },
-  { value: "Travel", label: "Travel" },
-  { value: "Education", label: "Education" },
-];
+import { useBlogFormStore } from "@/store/useBlogFormStore";
+import { useCreateBlog } from "../useCreate";
+import { showToast } from "@/store/useToastSlice";
+import BtnLoader from "@/components/element/BtnLoader";
+import { useQuery } from "@tanstack/react-query";
+import { getAllCategoryAdmin } from "@/services/api/blogs";
+import RHFTagInput from "@/components/element/RHFTagInput";
 
 export default function Stage1() {
+  const { setFormData, setStep } = useBlogFormStore();
   const [coverImageUrl, setCoverImageUrl] = useState<string | null>(null);
+
+  const { data = [], isPending } = useQuery({
+    queryKey: ["getAll-blogsCategory"],
+    queryFn: getAllCategoryAdmin,
+  });
+
+  // تبدیل داده‌ها به گزینه‌های قابل استفاده در RHFSelect
+  const categoryOptions = data.map((category: any) => ({
+    value: category.id,
+    label: category.category_name,
+  }));
+
   const {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<BlogStageOneFormData>({
     resolver: zodResolver(blogStageOneSchema),
     mode: "onTouched",
     defaultValues: {
       title: "",
-      coverImage: "",
-      categoryList: [],
+      cover_image: null,
+      category_list: [],
       tags: [],
       slug: "",
     },
   });
 
+  const { isPendingBlog, createBlog } = useCreateBlog();
+
+  // مدیریت URL.createObjectURL
+  useEffect(() => {
+    return () => {
+      if (coverImageUrl) {
+        URL.revokeObjectURL(coverImageUrl);
+      }
+    };
+  }, [coverImageUrl]);
+
   const onSubmit = (data: BlogStageOneFormData) => {
-    console.log("Form Data:", data);
+    const formData = new FormData();
+
+    formData.append("title", data.title);
+    formData.append("slug", data.slug);
+    formData.append("category_list", JSON.stringify(data.category_list));
+    formData.append("tags", JSON.stringify(data.tags));
+    if (data.cover_image instanceof File) {
+      formData.append("cover_image", data.cover_image);
+    }
+
+    createBlog(formData, {
+      onSuccess: () => {
+        showToast("بلاگ با موفقیت ساخته شد", "success");
+        const dataToSave = {
+          ...data,
+          cover_image: coverImageUrl,
+        };
+        setFormData(dataToSave);
+        setStep(2);
+      },
+      onError: () => {
+        showToast("ساخت بلاگ با خطا مواجه شد", "error");
+      },
+    });
   };
 
   return (
@@ -55,7 +101,7 @@ export default function Stage1() {
           panelHref="/admin/blogs"
         />
       </div>
-      <div className=" flex items-center justify-center  text-default-700">
+      <div className="flex items-center justify-center text-default-700">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"
@@ -69,35 +115,35 @@ export default function Stage1() {
             name="title"
           />
 
-          {/* دسته بندی ها */}
           <RHFSelect
             label="دسته بندی‌ها"
-            name="categoryList"
+            name="category_list"
             control={control}
-            options={categories}
-            required
+            options={categoryOptions}
           />
 
-          <RHFInput<BlogStageOneFormData>
-            register={register}
-            errors={errors}
-            label="تگ ها "
-            type="text"
-            dir="rtl"
+          <Controller
             name="tags"
+            control={control}
+            rules={{
+              required: "تگ‌ها الزامی هستند",
+            }}
+            render={({ field }) => (
+              <RHFTagInput field={field} error={errors.tags} label="تگ ها" />
+            )}
           />
 
           <RHFInput<BlogStageOneFormData>
             register={register}
             errors={errors}
-            label="اسلاگ "
+            label="اسلاگ"
             type="text"
             dir="rtl"
             name="slug"
           />
 
           <Controller
-            name="coverImage"
+            name="cover_image"
             control={control}
             render={({ field: { value, onChange, ...rest } }) => (
               <FileInput
@@ -138,7 +184,9 @@ export default function Stage1() {
             </div>
           )}
 
-          <Button type="submit">مرحله بعد</Button>
+          <Button type="submit" disabled={isPendingBlog}>
+            {isPendingBlog ? <BtnLoader color="#377cfb" /> : "تایید"}
+          </Button>
         </form>
       </div>
     </div>

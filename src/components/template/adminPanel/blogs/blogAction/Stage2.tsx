@@ -3,8 +3,11 @@ import React from "react";
 import BlurModal from "@/components/element/BlurModal";
 import TextEditor from "@/components/module/textEditor/TextEditor";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
+import { useBlogFormStore } from "@/store/useBlogFormStore";
 
 const Stage2 = () => {
+  const { formData, setFormData, resetForm } = useBlogFormStore();
+
   const handleConfirm = () => {};
   return (
     <div>

@@ -120,7 +120,7 @@ export const BlogsPage: React.FC = () => {
           viewContent={true}
           viewContentSmSize={false}
           addBtn={true}
-          addBtnhref="/admin/blogs/create/stage1"
+          addBtnhref="/admin/blogs/create"
           columnsDropDownBtn={true}
           rolesDropDown={false}
           stausDropDown={false}
@@ -133,7 +133,7 @@ export const BlogsPage: React.FC = () => {
           ) : isEmpty ? (
             <Empty
               btnValue="افزودن وبلاگ"
-              btnHref="/admin/blogs/create/stage1"
+              btnHref="/admin/blogs/create"
               spanValue="بلاگی"
             />
           ) : !view ? (

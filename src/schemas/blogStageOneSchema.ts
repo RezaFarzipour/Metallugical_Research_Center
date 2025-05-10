@@ -2,9 +2,16 @@ import { z } from "zod";
 
 export const blogStageOneSchema = z.object({
     title: z.string().min(1, "عنوان الزامی است"),
-    coverImage: z.string().url("آدرس عکس معتبر نیست"),
+    cover_image: z
+        .union([
+            z.instanceof(File).refine((file) => file.size > 0, { message: "فایل الزامی است" }),
+            z.null(),
+        ])
+        .optional(),
     slug: z.string().min(1, "اسلاگ الزامی است"),
-    tags: z.string().min(1, "تگ الزامی است"),
+    tags: z.array(z.string()).min(1, "تگ الزامی است"),         
+    category_list: z.array(z.string()).min(1, "دسته‌بندی الزامی است"),
 });
+
 
 export type BlogStageOneFormData = z.infer<typeof blogStageOneSchema>;

@@ -46,6 +46,11 @@ export const getAllBlogsAdmin = async () => {
     return response.data;
 };
 
+export const getBlogCover = async () => {
+
+    const response = await http.get(`blog/b/admin/`);
+    return response.data;
+};
 
 
 export const createNewBlog = async (data) => {
