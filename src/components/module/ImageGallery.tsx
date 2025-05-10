@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { Button } from "@heroui/button";
 
 interface CarGalleryProps {
   images?: string[]; // آرایه رشته‌ای اختیاری
@@ -33,18 +34,18 @@ export default function CarGallery({ images }: CarGalleryProps) {
           height={300}
           className="rounded-lg object-cover w-full h-full"
         />
-        <button
-          onClick={() => changeImage(-1)}
+        <Button
+          onPress={() => changeImage(-1)}
           className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-md"
         >
           ❮
-        </button>
-        <button
-          onClick={() => changeImage(1)}
+        </Button>
+        <Button
+          onPress={() => changeImage(1)}
           className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-md"
         >
           ❯
-        </button>
+        </Button>
       </div>
 
       {/* تصاویر کوچک (Thumbnail) */}

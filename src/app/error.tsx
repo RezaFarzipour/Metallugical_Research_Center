@@ -1,5 +1,7 @@
 "use client";
 
+import { Button } from "@heroui/button";
+
 function Error({ error, reset }) {
   const isDev = process.env.NODE_ENV === "development";
 
@@ -12,12 +14,12 @@ function Error({ error, reset }) {
               ? error.message
               : "مشکلی پیش آمده است. لطفاً دوباره تلاش کنید."}
           </p>
-          <button
-            onClick={reset}
+          <Button
+            onPress={reset}
             className="flex items-center gap-x-2 text-secondary-500"
           >
             تلاش مجدد
-          </button>
+          </Button>
         </div>
       </div>
     </div>

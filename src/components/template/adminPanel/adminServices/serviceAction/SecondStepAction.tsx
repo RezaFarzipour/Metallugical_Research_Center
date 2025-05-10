@@ -150,7 +150,7 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
                 />
                 <Button
                   type="button"
-                  onClick={() => handleRemoveNewImage(index)}
+                  onPress={() => handleRemoveNewImage(index)}
                   isIconOnly
                   className="w-8 h-8 absolute left-1 top-2 bg-red-100"
                 >
