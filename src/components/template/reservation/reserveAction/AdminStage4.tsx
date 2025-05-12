@@ -7,6 +7,9 @@ import BtnLoader from "@/components/element/BtnLoader";
 import { showToast } from "@/store/useToastSlice";
 import { useCancelReserve } from "@/hooks/useCancelReserve";
 import { useRouter } from "next/navigation";
+import { sp } from "@/utils/formatter/numberFormatter";
+import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
+import { Button } from "@heroui/button";
 
 type AdminStage4 = {
   serviceData: ServiceDetailsType | undefined;
@@ -47,61 +50,56 @@ const AdminStage4 = ({ serviceData, data, reserveId }: AdminStage4) => {
   };
 
   return (
-    <div className="p-4 border rounded space-y-6">
-      <h2 className="text-lg font-semibold">اطلاعات نهایی رزرو</h2>
+    <div className="w-full container rounded-xl h-auto  bg-white p-4 [box-shadow:rgba(100,100,111,0.2)_0px_7px_29px_0px]">
+      <p className="font-bold text-md my-3">اطلاعات نهایی رزرو</p>
+      <p className="text-default-400 font-medium text-center mb-2">
+        تایید نهایی رزرو توسط شما انجام می‌شود.
+      </p>
 
-      <div className="flex items-center gap-4">
-        {serviceData?.data?.cover_image ? (
-          <Image
-            src={serviceData.data.cover_image}
-            width={100}
-            height={100}
-            alt="سرویس"
-            className="w-32 h-32 object-cover rounded"
-          />
-        ) : (
-          <div className="w-32 h-32 bg-gray-200 flex items-center justify-center text-sm text-gray-500 rounded">
-            بدون تصویر
+      {/* info section */}
+      <div className="bg-[#F0FDF4] p-6 rounded-md max-w-xl mx-auto">
+        <h2 className="text-lg font-bold mb-4 text-center">اطلاعات رزرو</h2>
+        <div className="grid grid-cols-2 gap-y-3 text-sm">
+          <div className="font-medium">کاربر</div>
+          <div>{data.user || "نامشخص"}</div>
+
+          <div className="font-medium">نام سرویس</div>
+          <div>{serviceData?.data.service_name || "نامشخص"}</div>
+
+          <div className="font-medium">توضیحات سرویس</div>
+          <div>{serviceData?.data.description || "نامشخص"}</div>
+
+          <div className="font-medium"> قیمت</div>
+          <div>{sp(serviceData?.data.price) || "نامشخص"}</div>
+
+          <div className="font-medium">تاریخ رزرو</div>
+          <div>
+            {formatDateRangesToPersian([
+              {
+                reserved_from: data.reserve_from || "",
+                reserved_to: data.reserve_to || "",
+              },
+            ]) || "?"}
           </div>
-        )}
-
-        <div className="space-y-1">
-          <p>
-            <strong>نام سرویس:</strong> {serviceData?.data?.service_name}
-          </p>
-          <p>
-            <strong>توضیحات:</strong> {serviceData?.data?.description}
-          </p>
-          <p>
-            <strong>قیمت کل:</strong> {data?.total_price?.toLocaleString()}{" "}
-            تومان
-          </p>
-          <p>
-            <strong>مدت زمان رزرو:</strong> {data?.reserve_duration} دقیقه
-          </p>
-          <p>
-            <strong>توضیحات ادمین:</strong> {data?.admin_description || "—"}
-          </p>
         </div>
       </div>
 
       <div className="space-y-4">
-        <p className="text-blue-600 font-medium">
-          تایید نهایی رزرو توسط شما انجام می‌شود.
-        </p>
         <div className="flex gap-4">
-          <button
-            onClick={onFinalApprove}
+          <Button
+          variant="bordered"
+            onPress={onFinalApprove}
             className="bg-green-600 text-white px-4 py-2 rounded"
           >
             {isPending ? <BtnLoader /> : "تایید نهایی ادمین"}
-          </button>
-          <button
-            onClick={cancelHandler}
+          </Button>
+          <Button
+           variant="bordered"
+            onPress={cancelHandler}
             className="bg-red-600 text-white px-4 py-2 rounded"
           >
             لغو رزرو
-          </button>
+          </Button>
         </div>
       </div>
     </div>
