@@ -9,6 +9,9 @@ import BtnLoader from "@/components/element/BtnLoader";
 import { useCancelReserve } from "@/hooks/useCancelReserve";
 import { useRouter } from "next/navigation";
 import { useRejectReserve } from "@/hooks/useRejectReserve";
+import { sp } from "@/utils/formatter/numberFormatter";
+import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
+import { Button } from "@heroui/button";
 
 type AdminStage3 = {
   serviceData: ServiceDetailsType | undefined;
@@ -65,72 +68,80 @@ const AdminStage3 = ({
   };
 
   return (
-    <div className="p-4 border rounded space-y-6">
-      <h2 className="text-lg font-semibold">اطلاعات سرویس</h2>
-      <div className="flex items-center gap-4">
-        {serviceData?.data?.cover_image ? (
-          <Image
-            src={serviceData.data.cover_image}
-            width={100}
-            height={100}
-            alt="سرویس"
-            className="w-32 h-32 object-cover rounded"
-          />
-        ) : (
-          <div className="w-32 h-32 bg-gray-200 flex items-center justify-center text-sm text-gray-500 rounded">
-            بدون تصویر
-          </div>
-        )}
+    <div className="w-full container rounded-xl h-auto  bg-white p-4 [box-shadow:rgba(100,100,111,0.2)_0px_7px_29px_0px]">
+      <p className="font-bold text-md my-3">تایید واریز</p>
+ 
+{/* info section */}
+      <div className="bg-blue-50 p-6 rounded-md max-w-xl mx-auto">
+        <h2 className="text-lg font-bold mb-4">اطلاعات رزرو</h2>
+        <div className="grid grid-cols-2 gap-y-3 text-sm">
+          <div className="font-medium">کاربر</div>
+          <div>{reservationData.user || "نامشخص"}</div>
 
-        <div className="space-y-1">
-          <p>
-            <strong>نام سرویس:</strong> {serviceData?.data?.service_name}
-          </p>
-          <p>
-            <strong>توضیحات:</strong> {serviceData?.data?.description}
-          </p>
-          <p>
-            <strong>قیمت:</strong>{" "}
-            {reservationData?.total_price.toLocaleString()} تومان
-          </p>
+          <div className="font-medium">نام سرویس</div>
+          <div>{serviceData?.data.service_name || "نامشخص"}</div>
+
+          <div className="font-medium">توضیحات سرویس</div>
+          <div>{serviceData?.data.description || "نامشخص"}</div>
+
+          <div className="font-medium"> قیمت</div>
+          <div>{sp(serviceData?.data.price) || "نامشخص"}</div>
+
+          <div className="font-medium">تاریخ رزرو</div>
+          <div>
+            {formatDateRangesToPersian([
+              {
+                reserved_from: reservationData.reserve_from || "",
+                reserved_to: reservationData.reserve_to || "",
+              },
+            ]) || "?"}
+          </div>
+        </div>
+      </div>
+      <h3 className="font-semibold text-md text-center my-4">
+        فیش واریزی توسط مشتری
+      </h3>
+      <div className="my-4 border-1 max-w-xl mx-auto border-default-200">
+        <div className="flex justify-center items-center p-3">
+          {reservationData?.payment_image ? (
+            <Image
+              src={imageUrl}
+              alt="فیش واریزی"
+              width={300}
+              height={300}
+              className="rounded border"
+            />
+          ) : (
+            <p className="text-gray-500">فایلی ارسال نشده است.</p>
+          )}
         </div>
       </div>
 
-      <div className="space-y-4">
-        <h3 className="font-semibold text-md">فیش واریزی توسط مشتری:</h3>
-        {reservationData?.payment_image ? (
-          <Image
-            src={imageUrl}
-            alt="فیش واریزی"
-            width={300}
-            height={300}
-            className="rounded border"
-          />
-        ) : (
-          <p className="text-gray-500">فایلی ارسال نشده است.</p>
-        )}
-
-        <div className="flex gap-4">
-          <button
-            onClick={accepthandler}
+      <div className="flex gap-3 mt-4 justify-between w-full">
+        <div className="flex gap-4 item-center">
+          <Button
+            variant="bordered"
+            onPress={accepthandler}
             className="bg-green-500 text-white px-4 py-2 rounded"
           >
-            {isPending ? <BtnLoader /> : "تایید"}
-          </button>
-          <button
-            onClick={rejectHandler}
+            {isPending ? <BtnLoader /> : "تایید "}
+          </Button>
+          <Button
+            variant="bordered"
+            onPress={rejectHandler}
             className="bg-red-500 text-white px-4 py-2 rounded"
           >
-            {isPending ? <BtnLoader /> : "عدم تایید"}
-          </button>
-
-          <button
-            onClick={cancelHandler}
-            className="bg-orange-500 text-white px-4 py-2 rounded"
-          >
-            {isPending ? <BtnLoader /> : "کنسل"}
-          </button>
+            {rejecting_payment ? <BtnLoader /> : "عدم تایید"}
+          </Button>
         </div>
+
+        <Button
+          variant="bordered"
+          onPress={cancelHandler}
+          className="bg-[#505E73] text-white px-4 py-2 rounded"
+        >
+          {isCanceling ? <BtnLoader /> : "لغو رزرو"}
+        </Button>
       </div>
     </div>
   );
