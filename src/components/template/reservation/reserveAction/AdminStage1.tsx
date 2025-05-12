@@ -5,6 +5,8 @@ import { patchAcceptStage2 } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
 import { reservationDataType, ServiceDetailsType } from "@/types";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
+import { sp } from "@/utils/formatter/numberFormatter";
+import { Button } from "@heroui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -80,6 +82,16 @@ const AdminStage1 = ({
     });
   };
 
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/,/g, ""); // حذف ویرگول‌های قبلی
+    const numeric = Number(raw);
+
+    if (!isNaN(numeric)) {
+      setPrice(numeric);
+    }
+  };
+
   if (isServiceLoading)
     return (
       <div>
@@ -88,27 +100,30 @@ const AdminStage1 = ({
     );
 
   return (
-    <div className="p-4 space-y-4 border rounded-md">
-      <h2 className="text-xl font-semibold">جزئیات رزرو</h2>
+    <div className="w-full container rounded-xl h-auto  bg-white p-4 [box-shadow:rgba(100,100,111,0.2)_0px_7px_29px_0px]">
+        <p className="font-bold text-md my-3">جزييات رزرو </p>
 
-      <div>
-        <p>
-          <strong>نام دستگاه:</strong>{" "}
-          {servicedata?.data.service_name || "نامشخص"}
-        </p>
+{/* info section */}
+<div className="bg-blue-50 p-6 rounded-md max-w-xl mx-auto">
+        <h2 className="text-lg font-bold mb-4">اطلاعات رزرو</h2>
+        <div className="grid grid-cols-2 gap-y-3 text-sm">
+          <div className="font-medium">نام سرویس:</div>
+          <div>{servicedata?.data.service_name ||"نامشخص"}</div>
 
-        <p>
-          تاریخ رزرو:{" "}
-          {formatDateRangesToPersian([
+          <div className="font-medium">توضیحات سرویس</div>
+          <div>{servicedata?.data.description || "نامشخص"}</div>
+
+          <div className="font-medium">تاریخ رزرو</div>
+          <div>{formatDateRangesToPersian([
             {
               reserved_from: data.reserve_from || "",
               reserved_to: data.reserve_to || "",
             },
-          ]) || "?"}
-        </p>
+          ]) || "?"}</div> 
+        </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-3 ">
         <div>
           <label className="block">مدت زمان اجاره (ساعت)</label>
           <input
@@ -124,8 +139,8 @@ const AdminStage1 = ({
           <input
             type="text"
             className="border px-2 py-1 w-full"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
+            value={sp(price)}
+            onChange={handleChange}
           />
         </div>
 
@@ -140,26 +155,32 @@ const AdminStage1 = ({
         </div>
       </div>
 
-      <div className="flex gap-3 mt-4">
-        <button
-          onClick={accepthandler}
+      <div className="flex gap-3 mt-4 justify-between w-full">
+        <div className="flex gap-4 item-center">
+        <Button
+        variant="bordered"
+          onPress={accepthandler}
           className="bg-green-500 text-white px-4 py-2 rounded"
         >
           {isAccepting ? <BtnLoader /> : "تایید "}
-        </button>
-        <button
-          onClick={rejecthandler}
+        </Button>
+        <Button
+         variant="bordered"
+         onPress={rejecthandler}
           className="bg-red-500 text-white px-4 py-2 rounded"
         >
           {isRejecting ? <BtnLoader /> : "عدم تایید"}
-        </button>
+        </Button>
+        </div>
+       
 
-        <button
-          onClick={cancelHandler}
-          className="bg-orange-500 text-white px-4 py-2 rounded"
+        <Button
+     variant="bordered"
+          onPress={cancelHandler}
+          className="bg-[#505E73] text-white px-4 py-2 rounded"
         >
           {isCanceling ? <BtnLoader /> : "لغو رزرو"}
-        </button>
+        </Button>
       </div>
     </div>
   );
