@@ -3,9 +3,13 @@
 import BtnLoader from "@/components/element/BtnLoader";
 import { useCancelReserve } from "@/hooks/useCancelReserve";
 import { reservationDataType, ServiceDetailsType } from "@/types";
+import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
+import { sp } from "@/utils/formatter/numberFormatter";
+import { Button } from "@heroui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { DotLoader } from "react-spinners";
 
 type AdminStage2Props = {
   serviceData: ServiceDetailsType | undefined;
@@ -22,6 +26,8 @@ const AdminStage2 = ({
 
   const router = useRouter();
 
+  console.log("reservationData", reservationData);
+
   //cancle reserve
   const cancelHandler = () => {
     cancelReserve(reserveId, () => {
@@ -31,46 +37,53 @@ const AdminStage2 = ({
 
   return (
     <>
-      <h2 className="text-lg font-semibold">اطلاعات دستگاه</h2>
-      <div className="flex items-center gap-4">
-        {serviceData?.data?.cover_image ? (
-          <Image
-            src={serviceData?.data?.cover_image}
-            width={400}
-            height={400}
-            alt={serviceData?.data?.service_name}
-            className="w-32 h-32 object-cover rounded"
-          />
-        ) : (
-          <div className="w-32 h-32 bg-gray-200 rounded flex items-center justify-center text-gray-500 text-sm">
-            بدون تصویر
-          </div>
-        )}
+      <div className="w-full container rounded-xl h-auto  bg-white p-4 [box-shadow:rgba(100,100,111,0.2)_0px_7px_29px_0px]">
+        <p className="font-bold text-md my-3">در انتظار پرداخت </p>
 
-        <div>
-          <p>
-            <strong>نام دستگاه:</strong> {serviceData?.data?.service_name}
-          </p>
-          <p>
-            <strong>توضیحات:</strong> {serviceData?.data?.description}
-          </p>
-          <p>
-            <strong>قیمت:</strong>{" "}
-            {reservationData?.total_price.toLocaleString()} تومان
+        <div className="my-4 flex  flex-col items-center justify-center gap-3">
+          <DotLoader color="blue" size={40} />
+          <p className="text-sm text-default-400">
+            در انتظار ارسال فیش واریز توسط مشتری
           </p>
         </div>
-      </div>
-      <div className="p-4 border rounded bg-yellow-50 text-center">
-        <p>در انتظار آپلود فیش پرداخت توسط کاربر...</p>
-      </div>
 
-      <div className="mt-4">
-        <button
-          onClick={cancelHandler}
-          className="bg-red-500 text-white px-4 py-2 rounded"
-        >
-          {isCanceling ? <BtnLoader /> : "کنسل کردن رزرو"}
-        </button>
+{/* info section */}
+
+        <div className="bg-blue-50 p-6 rounded-md max-w-xl mx-auto">
+          <h2 className="text-lg font-bold mb-4">اطلاعات رزرو</h2>
+          <div className="grid grid-cols-2 gap-y-3 text-sm">
+            <div className="font-medium">کاربر</div>
+            <div>{reservationData.user || "نامشخص"}</div>
+
+            <div className="font-medium">نام سرویس</div>
+            <div>{serviceData?.data.service_name || "نامشخص"}</div>
+
+            <div className="font-medium">توضیحات سرویس</div>
+            <div>{serviceData?.data.description || "نامشخص"}</div>
+
+            <div className="font-medium"> قیمت</div>
+            <div>{sp(serviceData?.data.price) || "نامشخص"}</div>
+
+            <div className="font-medium">تاریخ رزرو</div>
+            <div>
+              {formatDateRangesToPersian([
+                {
+                  reserved_from: reservationData.reserve_from || "",
+                  reserved_to: reservationData.reserve_to || "",
+                },
+              ]) || "?"}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <Button
+            onPress={cancelHandler}
+            className="bg-red-500 text-white px-4 py-2 rounded"
+          >
+            {isCanceling ? <BtnLoader /> : "کنسل کردن رزرو"}
+          </Button>
+        </div>
       </div>
     </>
   );
