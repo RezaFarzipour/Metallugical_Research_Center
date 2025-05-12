@@ -110,6 +110,7 @@ export type ServiceDetailsType = {
     description: string;
     price: number;
     cover_image: string;
+    reserve_duration:number
   };
 };
 
@@ -124,6 +125,7 @@ export type reservationDataType ={
     stage:number,
     reserve_to?: string;
     service?: string;
-    payment_image:string
+    payment_image:string;
+    user:string
 
 }

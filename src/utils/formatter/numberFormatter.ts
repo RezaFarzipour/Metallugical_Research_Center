@@ -4,7 +4,8 @@ export function toPersianDigits(n: number | string): string {
 }
 
 
-export const sp = (number:string |number ) => {
+export const sp = (number:string |number|undefined ) => {
+  if (number ===undefined) return;
   const seperatedNumber = number
     .toString()
     .match(/(\d+?)(?=(\d{3})+(?!\d)|$)/g);

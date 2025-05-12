@@ -35,7 +35,7 @@ export async function patchReserveDetails({
 }: {
   reserve_from: string | null;
   reserve_to: string | null;
-  service: string | null;
+  service: string | null  | undefined;
   reserveId: string | null;
 }): Promise<any> {
   const response = await http.patch(
