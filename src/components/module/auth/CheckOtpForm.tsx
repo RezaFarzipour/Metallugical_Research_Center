@@ -4,8 +4,8 @@ import React from "react";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { CiEdit } from "react-icons/ci";
 import OtpInput from "@/components/element/OtpInput";
-import Loading from "@/components/element/Loading";
 import Button from "@/components/element/Button";
+import { BtnLoader } from "@/components/element/Loader";
 
 interface CheckOtpFormProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -65,7 +65,7 @@ const CheckOtpForm: React.FC<CheckOtpFormProps> = ({
 
         <div>
           {isCheckingOtp ? (
-            <Loading />
+            <BtnLoader />
           ) : (
             <Button type="submit" variant="secondary" fullWidth>
               تایید کد

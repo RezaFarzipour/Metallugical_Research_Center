@@ -8,10 +8,10 @@ import { TbEyeDiscount } from "react-icons/tb";
 import { useTableStore } from "@/store/useTableSlice";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
-import BtnLoader from "@/components/element/BtnLoader";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import useUserData from "./useUserData";
 import ModalModule from "@/components/element/ModalModule";
+import { BtnLoader } from "@/components/element/Loader";
 
 const UsersPage: React.FC = () => {
   const { visibleColumns } = useTableStore();

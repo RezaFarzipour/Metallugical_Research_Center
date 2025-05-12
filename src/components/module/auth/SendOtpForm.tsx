@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { phoneSchema, PhoneFormData } from "@/schemas/phoneSchema";
 import Button from "@/components/element/Button";
 import RHFInput from "@/components/element/RHFInput";
-import BtnLoader from "@/components/element/BtnLoader";
+import { BtnLoader } from "@/components/element/Loader";
 
 interface SendOtpFormProps {
   onSubmit: (data: PhoneFormData) => void;

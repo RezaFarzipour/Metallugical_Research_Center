@@ -1,16 +1,13 @@
 "use client";
 
-import BtnLoader from "@/components/element/BtnLoader";
+import { BtnLoader } from "@/components/element/Loader";
 import CustomeDateRangePicker from "@/components/module/customeDataPicker/CustomeCallender";
 import { useGetUser } from "@/hooks/useAuth";
-import {
-  patchReserveDetails,
-  postReservedService,
-} from "@/services/api/reserve";
+import { patchReserveDetails } from "@/services/api/reserve";
 import { getServicesByIdCustomer } from "@/services/api/service";
 import { showToast } from "@/store/useToastSlice";
 import { serviceDataEditType } from "@/types";
-import { cn } from "@/utils/style/Cn";
+import { cn } from "@/utils/cn";
 import { Button } from "@heroui/button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -46,7 +43,6 @@ interface ServiceDataType {
 }
 
 const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
-
   const searchParams = useSearchParams();
   const reserveId = searchParams.get("reserve-id");
   const [selectedServiceId, setSelectedServiceId] = useState<number | null>(
@@ -108,7 +104,7 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
   }
 
   return (
-    <div className="w-full container rounded-xl h-auto  bg-white p-4 [box-shadow:rgba(100,100,111,0.2)_0px_7px_29px_0px]">
+    <div className="">
       <p className="font-bold text-md my-3">انتخاب سرویس</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -161,12 +157,12 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
 
       <div className="my-3">
         <Button
-        onPress={handleConfirm}
+          onPress={handleConfirm}
           className="bg-[#3B82F6] text-white"
           isDisabled={!startDate || !endDate}
           variant="solid"
         >
-       {isPatching ? <BtnLoader/>:"ادامه"}
+          {isPatching ? <BtnLoader /> : "ادامه"}
         </Button>
       </div>
     </div>

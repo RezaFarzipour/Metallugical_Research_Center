@@ -1,10 +1,10 @@
-import BtnLoader from "@/components/element/BtnLoader";
+import { BtnLoader } from "@/components/element/Loader";
+import ReserveInfo from "@/components/module/ReserveInfo";
 import { useCancelReserve } from "@/hooks/useCancelReserve";
 import { useRejectReserve } from "@/hooks/useRejectReserve";
 import { patchAcceptStage2 } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
 import { reservationDataType, ServiceDetailsType } from "@/types";
-import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
 import { sp } from "@/utils/formatter/numberFormatter";
 import { Button } from "@heroui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -15,20 +15,20 @@ type AdminStage1Type = {
   reserveId: string | null;
   servicedata: ServiceDetailsType | undefined;
   isServiceLoading: boolean;
-  data: reservationDataType;
+  reservationData: reservationDataType;
 };
 
 const AdminStage1 = ({
-  data,
+  reservationData,
   reserveId,
   servicedata,
   isServiceLoading,
 }: AdminStage1Type) => {
   const [description, setDescription] = useState<string>(
-    data?.admin_description || ""
+    reservationData?.admin_description || ""
   );
-  const [duration, setDuration] = useState<number>(data?.reserve_duration || 0);
-  const [price, setPrice] = useState<number>(data?.total_price || 0);
+  const [duration, setDuration] = useState<number>(reservationData?.reserve_duration || 0);
+  const [price, setPrice] = useState<number>(reservationData?.total_price || 0);
   const queryClient = useQueryClient();
   const { cancelReserve, isCanceling } = useCancelReserve();
   const { rejectReserve, isRejecting } = useRejectReserve();
@@ -71,7 +71,7 @@ const AdminStage1 = ({
     rejectReserve({
       reserveId,
       admin_description: "",
-      service: data?.service,
+      service: reservationData?.service,
     });
   };
 
@@ -81,7 +81,6 @@ const AdminStage1 = ({
       router.push("/services");
     });
   };
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/,/g, ""); // حذف ویرگول‌های قبلی
@@ -100,28 +99,8 @@ const AdminStage1 = ({
     );
 
   return (
-    <div className="w-full container rounded-xl h-auto  bg-white p-4 [box-shadow:rgba(100,100,111,0.2)_0px_7px_29px_0px]">
-        <p className="font-bold text-md my-3">جزييات رزرو </p>
-
-{/* info section */}
-<div className="bg-blue-50 p-6 rounded-md max-w-xl mx-auto">
-        <h2 className="text-lg font-bold mb-4">اطلاعات رزرو</h2>
-        <div className="grid grid-cols-2 gap-y-3 text-sm">
-          <div className="font-medium">نام سرویس:</div>
-          <div>{servicedata?.data.service_name ||"نامشخص"}</div>
-
-          <div className="font-medium">توضیحات سرویس</div>
-          <div>{servicedata?.data.description || "نامشخص"}</div>
-
-          <div className="font-medium">تاریخ رزرو</div>
-          <div>{formatDateRangesToPersian([
-            {
-              reserved_from: data.reserve_from || "",
-              reserved_to: data.reserve_to || "",
-            },
-          ]) || "?"}</div> 
-        </div>
-      </div>
+    <div className=" ">
+      <ReserveInfo serviceData={servicedata} reservationData={reservationData} />
 
       <div className="space-y-3 ">
         <div>
@@ -155,32 +134,30 @@ const AdminStage1 = ({
         </div>
       </div>
 
-      <div className="flex gap-3 mt-4 justify-between w-full">
-        <div className="flex gap-4 item-center">
-        <Button
-        variant="bordered"
-          onPress={accepthandler}
-          className="bg-green-500 text-white px-4 py-2 rounded"
-        >
-          {isAccepting ? <BtnLoader /> : "تایید "}
-        </Button>
-        <Button
-         variant="bordered"
-         onPress={rejecthandler}
-          className="bg-red-500 text-white px-4 py-2 rounded"
-        >
-          {isRejecting ? <BtnLoader /> : "عدم تایید"}
-        </Button>
+      <div className="flex gap-2 mt-4 justify-end w-full">
+        <div className="flex gap-2 item-center">
+          <Button
+            variant="bordered"
+            onPress={accepthandler}
+            className="bg-secondary-500 text-white px-4 py-2 "
+          >
+            {isAccepting ? <BtnLoader /> : "تایید "}
+          </Button>
+          <Button
+            variant="bordered"
+            onPress={rejecthandler}
+            className="bg-red-500 text-white px-4 py-2 "
+          >
+            {isRejecting ? <BtnLoader /> : "عدم تایید"}
+          </Button>
+          <Button
+            variant="bordered"
+            onPress={cancelHandler}
+            className="bg-default-300 text-white px-4 py-2 "
+          >
+            {isCanceling ? <BtnLoader /> : "لغو رزرو"}
+          </Button>
         </div>
-       
-
-        <Button
-     variant="bordered"
-          onPress={cancelHandler}
-          className="bg-[#505E73] text-white px-4 py-2 rounded"
-        >
-          {isCanceling ? <BtnLoader /> : "لغو رزرو"}
-        </Button>
       </div>
     </div>
   );

@@ -16,10 +16,10 @@ import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { useBlogFormStore } from "@/store/useBlogFormStore";
 import { useCreateBlog } from "../useCreate";
 import { showToast } from "@/store/useToastSlice";
-import BtnLoader from "@/components/element/BtnLoader";
 import { useQuery } from "@tanstack/react-query";
 import { getAllCategoryAdmin } from "@/services/api/blogs";
 import RHFTagInput from "@/components/element/RHFTagInput";
+import { BtnLoader } from "@/components/element/Loader";
 
 export default function Stage1() {
   const { setFormData, setStep } = useBlogFormStore();

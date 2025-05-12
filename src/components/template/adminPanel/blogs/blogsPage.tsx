@@ -86,7 +86,7 @@ import CardModule from "@/components/module/cardModule/CardModule";
 import { useAdminBlogDataAction } from "@/components/module/panelAction/blogAction/useAdminBlogDataAction";
 import ModalModule from "@/components/element/ModalModule";
 import Empty from "@/components/element/Empty";
-import BtnLoader from "@/components/element/BtnLoader";
+import { BtnLoader } from "@/components/element/Loader";
 
 export const BlogsPage: React.FC = () => {
   const {

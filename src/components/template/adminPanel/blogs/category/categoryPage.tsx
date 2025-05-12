@@ -5,7 +5,6 @@ import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
 import { Button } from "@heroui/button";
 import Empty from "@/components/element/Empty";
-import BtnLoader from "@/components/element/BtnLoader";
 import Link from "next/link";
 import Table from "@/components/element/Table";
 import ModalModule from "@/components/element/ModalModule";
@@ -14,6 +13,7 @@ import { useDeleteBlogCategory } from "../useDeleteCategory";
 import { showToast } from "@/store/useToastSlice";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { FaPlus } from "react-icons/fa";
+import { BtnLoader } from "@/components/element/Loader";
 
 const CategoryBlog = () => {
   const queryClient = useQueryClient();

@@ -8,6 +8,8 @@ type StepperType = {
 };
 
 const Stepper = ({ currentStep, steperDetails }: StepperType) => {
+  console.log(steperDetails.length, "steperDetails");
+
   return (
     <div dir="ltr" className=" flex justify-center items-center py-6">
       <div className="w-full max-w-md">

@@ -6,19 +6,19 @@ import { useGetUser } from "@/hooks/useAuth";
 import Stepper from "@/components/module/Stepper";
 import { useStepperStore } from "@/store/useSteperSlice";
 import { reserveStep } from "@/constants/data";
-import BtnLoader from "@/components/element/BtnLoader";
 import { showToast } from "@/store/useToastSlice";
 import { getReserveCustomerById } from "@/services/api/reserve";
 import AdminStage1 from "@/components/template/reservation/reserveAction/AdminStage1";
-import AdminStage2 from "@/components/template/reservation/reserveAction/AdminStage2";
 import AdminStage3 from "@/components/template/reservation/reserveAction/AdminStage3";
 import AdminStage4 from "@/components/template/reservation/reserveAction/AdminStage4";
-import FinalStep from "@/components/template/reservation/reserveAction/FinalStep";
 import CustomerStage3 from "@/components/template/reservation/reserveAction/CustomerStage3";
 import http from "@/services/httpService";
-import CustomerWaitingStage from "@/components/template/reservation/reserveAction/CustomerWaitingStage";
 import Stage1 from "./reserveAction/CustomerStage1";
 import { getAllServiceCustomer } from "@/services/api/service";
+import { BtnLoader } from "@/components/element/Loader";
+import WaitingStage from "@/components/template/reservation/reserveAction/WaitingStage";
+import AdminStage2 from "./reserveAction/AdminStage2";
+import FinalStage from "@/components/template/reservation/reserveAction/FinalStage";
 const ReservationTemplate = () => {
   const searchParams = useSearchParams();
   const reserveId = searchParams.get("reserve-id");
@@ -33,17 +33,21 @@ const ReservationTemplate = () => {
   const { role } = useGetUser().data || {};
 
   // Fetch data for the current reservation
-  const { data, error, isPending } = useQuery({
+  const {
+    data: reservationData,
+    error,
+    isPending,
+  } = useQuery({
     queryKey: ["get-stage", reserveId],
     queryFn: ({ queryKey }) => getReserveCustomerById(queryKey[1]),
   });
 
   // Fetch service details
   const { data: serviceData, isLoading: isServiceLoading } = useQuery({
-    queryKey: ["get-device-details", data?.service],
-    queryFn: () => http.get(`/service/s/customer/${data?.service}/`),
+    queryKey: ["get-device-details", reservationData?.service],
+    queryFn: () => http.get(`/service/s/customer/${reservationData?.service}/`),
     staleTime: 1000 * 60 * 5,
-    refetchOnWindowFocus: false,
+    refetchOnWindowFocus: true,
   });
 
   //get all services
@@ -54,11 +58,11 @@ const ReservationTemplate = () => {
   });
 
   useEffect(() => {
-    if (data?.stage) {
-      setStage(data.stage);
-      setCurrentStep(data.stage);
+    if (reservationData?.stage) {
+      setStage(reservationData.stage);
+      setCurrentStep(reservationData.stage);
     }
-  }, [data]);
+  }, [reservationData]);
 
   if (error) {
     showToast("خطا در دریافت اطلاعات", "error");
@@ -74,7 +78,7 @@ const ReservationTemplate = () => {
       step: 1,
       component: (
         <AdminStage1
-          data={data}
+          reservationData={reservationData}
           reserveId={reserveId}
           servicedata={serviceData}
           isServiceLoading={isServiceLoading}
@@ -86,8 +90,11 @@ const ReservationTemplate = () => {
       component: (
         <AdminStage2
           reserveId={reserveId}
-          data={data}
+          reservationData={reservationData}
           serviceData={serviceData}
+          typographyContent={{
+            main: "در انتظار ارسال فیش واریز توسط مشتری",
+          }}
         />
       ),
     },
@@ -95,7 +102,7 @@ const ReservationTemplate = () => {
       step: 3,
       component: (
         <AdminStage3
-          data={data}
+          reservationData={reservationData}
           serviceData={serviceData}
           reserveId={reserveId}
         />
@@ -106,12 +113,20 @@ const ReservationTemplate = () => {
       component: (
         <AdminStage4
           serviceData={serviceData}
-          data={data}
+          reservationData={reservationData}
           reserveId={reserveId}
         />
       ),
     },
-    { step: 5, component: <FinalStep data={data} serviceData={serviceData} /> },
+    {
+      step: 5,
+      component: (
+        <FinalStage
+          reservationData={reservationData}
+          serviceData={serviceData}
+        />
+      ),
+    },
   ];
 
   const customerSteps = [
@@ -127,10 +142,14 @@ const ReservationTemplate = () => {
     {
       step: 2,
       component: (
-        <CustomerWaitingStage
-          data={data}
+        <WaitingStage
+          reservationData={reservationData}
           serviceData={serviceData}
           reserveId={reserveId}
+          typographyContent={{
+            main: "درخواست شما در حال بررسی توسط ادمین است",
+            span: "فرآیند تأیید از طریق پیامک انجام می‌شود",
+          }}
         />
       ),
     },
@@ -139,7 +158,7 @@ const ReservationTemplate = () => {
       component: (
         <CustomerStage3
           reserveId={reserveId}
-          data={data}
+          reservationData={reservationData}
           serviceData={serviceData}
         />
       ),
@@ -147,24 +166,41 @@ const ReservationTemplate = () => {
     {
       step: 4,
       component: (
-        <CustomerWaitingStage
+        <WaitingStage
           reserveId={reserveId}
-          data={data}
+          reservationData={reservationData}
           serviceData={serviceData}
+          typographyContent={{
+            main: "درخواست شما در حال بررسی توسط ادمین است",
+            span: "فرآیند تأیید از طریق پیامک انجام می‌شود",
+          }}
         />
       ),
     },
     {
       step: 5,
       component: (
-        <CustomerWaitingStage
+        <WaitingStage
           reserveId={reserveId}
-          data={data}
+          reservationData={reservationData}
+          serviceData={serviceData}
+          typographyContent={{
+            main: "درخواست شما در حال بررسی توسط ادمین است",
+            span: "فرآیند تأیید از طریق پیامک انجام می‌شود",
+          }}
+        />
+      ),
+    },
+
+    {
+      step: 6,
+      component: (
+        <FinalStage
+          reservationData={reservationData}
           serviceData={serviceData}
         />
       ),
     },
-    { step: 6, component: <FinalStep data={data} serviceData={serviceData} /> },
   ];
 
   const stepsToShow = role === "admin" ? adminSteps : customerSteps;
@@ -192,13 +228,18 @@ const ReservationTemplate = () => {
 
   return (
     <div className="p-6">
-      <div className="mb-4">
+      <div className="mb-4 ">
         <Stepper currentStep={activeStep} steperDetails={steperDetails} />
       </div>
 
       {stepsToShow.map((step) =>
         step.step === activeStep ? (
-          <div key={step.step}>{step.component}</div>
+          <div
+            key={step.step}
+            className="w-full container rounded-xl h-auto bg-white p-4 shadow-lg shadow-secondary-50"
+          >
+            {step.component}
+          </div>
         ) : null
       )}
     </div>

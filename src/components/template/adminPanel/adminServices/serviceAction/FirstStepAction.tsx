@@ -14,10 +14,10 @@ import ServiceDetailsForm from "@/components/module/controller/ServiceDetailsFor
 import { showToast } from "@/store/useToastSlice";
 import FileInput from "@/components/element/FileInput";
 import { imageUrlToFile } from "@/utils/formatter/fileFormatter";
-import BtnLoader from "@/components/element/BtnLoader";
 import { serviceDataEditType } from "@/types";
 import { useCreateService } from "./useCreateService";
 import { useEditService } from "./useEditService";
+import { BtnLoader } from "@/components/element/Loader";
 
 
 interface ServicesActionProps {

@@ -4,9 +4,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { personalRegisterSchema } from "@/schemas/personalRegisterSchema";
-import Loading from "../../element/Loading";
 import Button from "../../element/Button";
 import PersonalDetailsForm from "../controller/PersonalDetailsForm";
+import { BtnLoader } from "@/components/element/Loader";
 
 interface SendPersonalFormProps {
   onSubmit: (data: typeof personalRegisterSchema._type) => void;
@@ -29,7 +29,7 @@ const PersonalRegister: React.FC<SendPersonalFormProps> = ({ onSubmit }) => {
 
       <div className="pt-14">
         {isCheckingInput ? (
-          <Loading />
+          <BtnLoader />
         ) : (
           <Button type="submit" variant="secondary" fullWidth>
             تایید
