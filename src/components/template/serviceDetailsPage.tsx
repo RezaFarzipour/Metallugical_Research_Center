@@ -39,18 +39,17 @@ interface ServiceDataType {
   "service-reserve_date"?: ServiceReserveDate[];
 }
 
-// ----------------------
-// Component
-// ----------------------
+
 const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
   const BASE_URL = "http://localhost:8000";
   const [startDate, setStartDate] = useState<string | null>("");
   const [endDate, setEndDate] = useState<string | null>("");
+  
 
   const router = useRouter();
 
   // handle reserve range
-  const { id, reserved_from, reserved_to } =
+  const { reserved_from, reserved_to } =
     serviceData?.["service-reserve_date"]?.[0] || {};
 
   // extract other data
