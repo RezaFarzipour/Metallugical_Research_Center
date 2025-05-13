@@ -9,9 +9,9 @@ type HeaderImageProps = {
 };
 
 const HeaderImage = ({
-  headrName,
+  breadcrumbItem1,
   breadcrumbItem2,
-  panelHref,
+  breadcrumbItem2Href,
 }: HeaderImageProps) => {
   return (
     <div className="absolute top-0 left-0 w-full h-full z-0">
@@ -27,11 +27,11 @@ const HeaderImage = ({
 
         <div className="relative z-10 flex items-center justify-start h-full mr-14 text-white">
           <div className="flex flex-col gap-4">
-            <h1 className="text-6xl font-bold">{headrName}</h1>
+            <h1 className="text-6xl font-bold">{breadcrumbItem1}</h1>
             <BreadcrumbsElement
               item1="خانه"
               item2={breadcrumbItem2}
-              panelHref={panelHref}
+              panelHref={breadcrumbItem2Href}
             />
           </div>
         </div>
