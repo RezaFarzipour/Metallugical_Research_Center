@@ -2,9 +2,7 @@ import { Button } from "@heroui/button";
 import Link from "next/link";
 import React from "react";
 
-type Props = {};
-
-const LandingHeader = (props: Props) => {
+const LandingHeader = () => {
   return (
     <section className=" relative w-full h-screen flex  justify-start overflow-hidden ">
       <div className="relative w-[90%] max-w-[800px] h-[220vh] md:h-[2300px] perspective-custom mt-[-60%] md:mt-[-80%] mr-[-20%] md:mr-[-5%]">

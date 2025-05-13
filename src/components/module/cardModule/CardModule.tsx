@@ -42,7 +42,7 @@ const CardModule = ({
     cardsBox: clsx(
       "w-full max-w-[600px] col-span-12 sm:col-span-5 relative overflow-visible group"
     ),
-    cardsList: "w-full max-w-[900px] flex flex-col md:flex-row group",
+    cardsList: "w-full max-w-[900px] flex flex-col md:flex-row ",
   };
 
   return (

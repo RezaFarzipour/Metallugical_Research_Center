@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
-import useIntersectionObserver from "../../../hooks/useIntersectionObserver";
-import { imageReveal, shimmerEffect } from "../../../utils/motion";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import { imageReveal, shimmerEffect } from "@/utils/motion";
 
 type ImageProps = {
   src: string;
