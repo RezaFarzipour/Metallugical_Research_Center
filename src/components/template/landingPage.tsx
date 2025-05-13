@@ -14,20 +14,20 @@ const LandingPage = () => {
         <LandingHeader />
       </section>
       {/* About Section */}
-      <section className="w-full py-20">
+      <section className="w-full mt-40">
         <AboutOverview />
       </section>
 
       {/* Services Section */}
-      <section className="w-fullpx-4 md:px-8 py-16">
+      <section className="w-full">
         <Services />
       </section>
       {/* FAQ Section */}
-      <section className="w-full  py-16 ">
+      <section className="w-full  my-40 ">
         <FaqAccordian />
       </section>
       {/* Blog Section */}
-      <section className="w-full max-w-7xl mx-auto px-4 md:px-8 py-16">
+      <section className="w-full my-40">
         <Blogs />
       </section>
     </main>

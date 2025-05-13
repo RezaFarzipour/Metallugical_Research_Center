@@ -10,19 +10,17 @@ type AnimationType = "spring" | "tween" | "linear";
 export const imageReveal = (delay: number = 0, width: number): Variants => {
     return {
         hidden: {
-            width: 0,
+            scaleX: 0,
             opacity: 0,
-            scale: 0,
+            transformOrigin: "right ",
         },
         show: {
-            width: `${width}px`,
+            scaleX: 1,
             opacity: 1,
-            scale: 1,
             transition: {
-                type: "spring",
-                delay,
-                duration: "0.8",
-                ease: "easeOut",
+                type: "tween",
+                duration: 0.2,
+                ease: "linear"
             },
         },
     };

@@ -26,12 +26,15 @@ export const ImageContainer: React.FC<ImageContainerProps> = ({
       initial="hidden"
     >
       {/* Main Image */}
-      <Image
-        width={500}
-        height={500}
-        alt="Card example background"
-        src={image}
-      />
+      <div className="relative w-full h-[300px]">
+        {/* یا ارتفاع دلخواه */}
+        <Image
+          src={image}
+          alt="Card example background"
+          fill
+          className="object-cover object-center"
+        />
+      </div>
       {/* Shimmer effect on hover */}
       {isHovered && (
         <motion.div
