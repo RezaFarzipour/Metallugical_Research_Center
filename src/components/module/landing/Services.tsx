@@ -5,12 +5,19 @@ import React from "react";
 import CardModule from "../cardModule/CardModule";
 import TitleStructure from "@/components/element/TitleStructure";
 import { useVisibleCount } from "@/hooks/useVisibleCount";
+import { fadeInSlide, staggerContainer } from "@/utils/motion";
+import { motion } from "framer-motion";
 
 const Services = () => {
   const visibleCount = useVisibleCount({ sm: 4, md: 4, lg: 6 });
 
   return (
-    <div className="full-w flex flex-col items-center justify-center gap-5 py-16 lg:py-6">
+    <motion.div
+      className="full-w flex flex-col items-center justify-center gap-5 py-16 lg:py-6"
+      variants={staggerContainer(0.2, 0.1)}
+      initial="hidden"
+      animate="show"
+    >
       <h3 className="flex text-xl">
         <TitleStructure size="1rem">خدمات ها</TitleStructure>
       </h3>
@@ -18,21 +25,29 @@ const Services = () => {
       <h2 className="font-extrabold text-2xl text-wrap">
         نگاهی به خدمات های ما بندازید.
       </h2>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        {LatestArticles.slice(0, visibleCount).map((item) => (
-          <CardModule
+        {LatestArticles.slice(0, visibleCount).map((item, index) => (
+          <motion.div
             key={item.id}
-            data={[item]}
-            widthConter="100%"
-            heightImg="250px"
-            heightConter="250px"
-            styleForAdmin={false}
-            view
-          />
+            variants={fadeInSlide("up", "tween", index * 0.1, 0.6)}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <CardModule
+              data={[item]}
+              widthConter="100%"
+              heightImg="250px"
+              heightConter="250px"
+              styleForAdmin={false}
+              view
+            />
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
-export default Services;
+export default Services

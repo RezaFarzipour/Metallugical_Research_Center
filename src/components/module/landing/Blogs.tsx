@@ -2,10 +2,11 @@
 
 import { LatestArticles } from "@/constants/data";
 import React from "react";
-import SectionWrapper from "@/hoc/SectionWrapper";
 import CardModule from "../cardModule/CardModule";
 import TitleStructure from "@/components/element/TitleStructure";
 import { useVisibleCount } from "@/hooks/useVisibleCount";
+import { motion } from "framer-motion";
+import { fadeInSlide } from "@/utils/motion";
 
 const Blogs = () => {
   const visibleCount = useVisibleCount({ sm: 2, md: 2, lg: 3 });
@@ -20,20 +21,27 @@ const Blogs = () => {
         نگاهی به آخرین مقالات ما بندازید.
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        {LatestArticles.slice(0, visibleCount).map((item) => (
-          <CardModule
+        {LatestArticles.slice(0, visibleCount).map((item, index) => (
+          <motion.div
             key={item.id}
-            data={[item]}
-            widthConter="100%"
-            heightImg="250px"
-            heightConter="250px"
-            styleForAdmin={false}
-            view
-          />
+            variants={fadeInSlide("up", "tween", index * 0.1, 0.6)}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <CardModule
+              data={[item]}
+              widthConter="100%"
+              heightImg="250px"
+              heightConter="250px"
+              styleForAdmin={false}
+              view
+            />
+          </motion.div>
         ))}
       </div>
     </div>
   );
 };
 
-export default SectionWrapper(Blogs, "Blog-Card");
+export default Blogs;

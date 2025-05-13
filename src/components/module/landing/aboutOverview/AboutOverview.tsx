@@ -4,7 +4,6 @@ import { images } from "@/constants/data";
 import BgAnimateShape from "@/components/element/animations/BgAnimateShape";
 import AboutImage from "./AboutImage";
 import AboutText from "./AboutText";
-import SectionWrapper from "@/hoc/SectionWrapper";
 
 const AboutOverview: React.FC = () => {
   return (
@@ -29,4 +28,4 @@ const AboutOverview: React.FC = () => {
   );
 };
 
-export default SectionWrapper(AboutOverview, "about-overwiew");
+export default AboutOverview;
