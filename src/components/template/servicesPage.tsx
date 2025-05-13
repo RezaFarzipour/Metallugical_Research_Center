@@ -12,13 +12,14 @@ import { BtnLoader } from "../element/Loader";
 import { staggerContainer } from "@/utils/motion";
 import { cn } from "@/utils/cn";
 
-const Services: React.FC = () => {
+const Services: React.FC = ({ initialData }) => {
   const { view } = useTableStore();
   const { data, isPending } = useQuery({
     queryKey: ["getAll-servicesCustomer"],
     queryFn: getAllServiceCustomer,
+    initialData, // 👈 داده اولیه از SSR
+    refetchOnWindowFocus: true, // 👈 فعال‌سازی رفرش تب
   });
-
   const formDataServices = Array.isArray(data) ? data : [];
   const { sortedItems } = useFilteredContainer(formDataServices);
 

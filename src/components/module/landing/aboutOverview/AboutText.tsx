@@ -7,7 +7,12 @@ const AboutText: React.FC = () => {
   return (
     <div className="w-1/2 pr-20 pt-20">
       <TitleStructure size="1rem">ماموریت و چشم‌انداز ما</TitleStructure>
-      <motion.div variants={fadeIn(0, 3, 1)}>
+      <motion.div
+        variants={fadeIn(0, 3, 1)}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <p className="w-2/3 font-bold text-[30px] pt-4">
           قدرت‌بخشی به کشفیات علمی آزمایشگاهی برای آینده.
         </p>
