@@ -9,9 +9,13 @@ export default function ContactUsLayout({
   return (
     <>
       <Layout>
-        {/* banner section */}
-        <HeaderImage headrName="خدمات" breadcrumbItem2="خدمات  ما" />
-        <div className="xl:max-w-screen-xl mt-72">{children}</div>
+        ={" "}
+        <HeaderImage
+          breadcrumbItem1="خدمات"
+          breadcrumbItem2="خدمات  ما"
+          breadcrumbItem2Href="/services"
+        />
+        <div className="mt-72">{children}</div>
       </Layout>
     </>
   );
