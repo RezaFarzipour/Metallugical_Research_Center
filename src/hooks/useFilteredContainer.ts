@@ -5,7 +5,7 @@ import { useTableStore } from "@/store/useTableSlice";
 interface Data {
     id: number;
     name: string;
-    service_name:string
+    service_name: string
     phone_number: string;
     email: string;
     role: string;
@@ -48,10 +48,11 @@ export function useFilteredContainer(datas: Data[]) {
             const lowerCaseFilter = filterValue.toLowerCase();
             filteredUsers = filteredUsers.filter((user) => {
                 const name = user.name?.toLowerCase() || "";
+                const service_name = user.service_name?.toLowerCase() || "";
                 const title = user.title?.toLowerCase() || "";
 
                 return (
-                    name.includes(lowerCaseFilter) || title.includes(lowerCaseFilter)
+                    name.includes(lowerCaseFilter) || service_name.includes(lowerCaseFilter) || title.includes(lowerCaseFilter)
                 );
             });
         }
