@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { ImageContainer } from "./ImageContainer";
 import { CardContent } from "./CardContent";
 import clsx from "clsx";
+import { cn } from "@/utils/cn";
 type DataItem = {
   id: number;
   name: string;
@@ -42,7 +43,7 @@ const CardModule = ({
     cardsBox: clsx(
       "w-full max-w-[600px] col-span-12 sm:col-span-5 relative overflow-visible group"
     ),
-    cardsList: "w-full max-w-[700px] max-h-[260px] flex flex-col md:flex-row ",
+    cardsList: "w-full max-w-[800px] max-h-[250px] flex flex-col md:flex-row ",
   };
 
   return (
@@ -50,14 +51,13 @@ const CardModule = ({
       {data.map((item) => (
         <div
           key={item.id}
-          className={`flex justify-center items-center ${
-            view ? "min-h-[28rem]" : "min-h-[20rem]"
-          }`}
+          className={cn(
+            "flex justify-center items-center",
+            view ? "min-h-[28rem]" : "min-h-[18rem]"
+          )}
         >
           <Card
-            className={twMerge(
-              view ? cardStyles.cardsBox : cardStyles.cardsList
-            )}
+            className={cn(view ? cardStyles.cardsBox : cardStyles.cardsList)}
             style={view ? { height: heightImg } : { height: "auto" }}
           >
             <ImageContainer
