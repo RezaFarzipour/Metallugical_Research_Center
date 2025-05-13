@@ -6,31 +6,10 @@ import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import TopContent from "../module/filterdContent/topContent/TopContent";
 import BottomContent from "../module/filterdContent/BottomContent";
 
-// interface User {
-//   id: number;
-//   name: string;
-//   email: string;
-//   role: string;
-//   status: string;
-//   amount: string;
-//   date: string;
-//   title: string;
-//   description: string;
-//   image: string;
-//   author: string;
-//   articleTitle: string;
-// }
 export interface TableData {
   id: number;
   [key: string]: any; // ویژگی‌های مختلف برای جداول مختلف
 }
-
-// interface ProductTableData extends TableData {
-//   productName: string;
-//   price: number;
-//   quantity: number;
-//   // ویژگی‌های خاص جدول محصولات
-// }
 interface PanelContainerProps<T extends TableData> {
   datas: T[]; // می‌توانید اینجا نوع داده‌ها را به‌صورت عمومی بگذارید
   INITIAL_VISIBLE_COLUMNS?: string[];

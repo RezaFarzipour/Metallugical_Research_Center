@@ -1,15 +1,14 @@
 "use client";
 import React, { useCallback } from "react";
-import RowsPerPageSelector from "./RowsPerPageSelector";
 import { useTableStore } from "@/store/useTableSlice";
 import { Button } from "@heroui/button";
 import { FaPlus } from "react-icons/fa";
-import { FilterSection } from "./FilterSection";
 import ViewToggle from "./ViewToggle";
-import { IoIosSearch } from "react-icons/io";
-import { Input } from "@heroui/react";
 import Link from "next/link";
 import { toPersianNumbers } from "@/utils/formatter/toPersianNumbers";
+import SearchField from "@/components/element/SearchField";
+import TableFilters from "./TableFilters";
+import { cn } from "@/utils/cn";
 
 interface TopContentProps {
   columns: {
@@ -40,34 +39,9 @@ export default function TopContent({
   viewContent,
   viewContentSmSize,
 }: TopContentProps) {
-  const {
-    filterValue,
-    visibleColumns,
-    statusFilter,
-    rolesFilter,
-    view,
-    setVisibleColumns,
-    setStatusFilter,
-    setRolesFilter,
-    setPage,
-    setFilterValue,
-    setRowsPerPage,
-    setView,
-  } = useTableStore();
+  const { view, setPage, setRowsPerPage, setView } = useTableStore();
 
-  const handleSearchChange = useCallback(
-    (value: string) => {
-      setFilterValue(value);
-      setPage(1);
-    },
-    [setFilterValue, setPage]
-  );
-
-  const handleClearSearch = useCallback(() => {
-    setFilterValue("");
-    setPage(1);
-  }, [setFilterValue, setPage]);
-
+  // تغییر سایز صفحه
   const handleRowsPerPageChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       setRowsPerPage(Number(e.target.value));
@@ -79,34 +53,21 @@ export default function TopContent({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center gap-3">
-        <div className={`${viewContentSmSize ? "hidden md:block" : ""}`}>
+        <div className={cn(viewContentSmSize ? "invisible md:block" : "")}>
           {viewContent && setView && (
             <ViewToggle view={view} setView={setView} />
           )}
         </div>
-        <Input
-          isClearable
-          className="w-full sm:max-w-[44%]"
-          placeholder="جستجو کنید"
-          startContent={<IoIosSearch />}
-          value={filterValue}
-          onClear={handleClearSearch}
-          onValueChange={handleSearchChange}
-        />
+        <SearchField />
 
         <div className="flex gap-3">
-          <FilterSection
-            columns={columns}
+          <TableFilters
             rolesDropDown={rolesDropDown}
             stausDropDown={stausDropDown}
             columnsDropDownBtn={columnsDropDownBtn}
-            rolesFilter={rolesFilter}
-            statusFilter={statusFilter}
-            visibleColumns={visibleColumns}
-            setRolesFilter={setRolesFilter}
-            setStatusFilter={setStatusFilter}
-            setVisibleColumns={setVisibleColumns}
+            columns={columns}
           />
+
           {addBtn && (
             <Link href={addBtnhref}>
               <Button
@@ -123,7 +84,17 @@ export default function TopContent({
         <span className="text-default-400 text-small">
           تعداد {quantity}: {toPersianNumbers(usersLength)}
         </span>
-        <RowsPerPageSelector onRowsPerPageChange={handleRowsPerPageChange} />
+        <label className="flex items-center text-default-400 text-small">
+          تعداد ردیف‌ها:
+          <select
+            className="bg-transparent outline-none text-default-400 text-small"
+            onChange={handleRowsPerPageChange}
+          >
+            <option value="5">۵</option>
+            <option value="10">۱۰</option>
+            <option value="15">۱۵</option>
+          </select>
+        </label>
       </div>
     </div>
   );
