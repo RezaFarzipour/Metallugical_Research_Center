@@ -5,8 +5,11 @@ import React from "react";
 import SectionWrapper from "@/hoc/SectionWrapper";
 import CardModule from "../cardModule/CardModule";
 import TitleStructure from "@/components/element/TitleStructure";
+import { useVisibleCount } from "@/hooks/useVisibleCount";
 
 const Blogs = () => {
+  const visibleCount = useVisibleCount({ sm: 2, md: 2, lg: 3 });
+
   return (
     <div className="full-w flex flex-col items-center justify-center gap-5 py-16 lg:py-6">
       <h3 className="flex text-xl">
@@ -16,13 +19,18 @@ const Blogs = () => {
       <h2 className="font-extrabold text-2xl text-wrap">
         نگاهی به آخرین مقالات ما بندازید.
       </h2>
-      <div className="flex flex-col gap-36 lg:gap-5 lg:flex-row justify-center w-full items-center p-4 ">
-        <CardModule
-          data={LatestArticles}
-          widthConter="95%"
-          heightImg="300px"
-          heightConter="250px"
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+        {LatestArticles.slice(0, visibleCount).map((item) => (
+          <CardModule
+            key={item.id}
+            data={[item]}
+            widthConter="100%"
+            heightImg="250px"
+            heightConter="250px"
+            styleForAdmin={false}
+            view
+          />
+        ))}
       </div>
     </div>
   );
