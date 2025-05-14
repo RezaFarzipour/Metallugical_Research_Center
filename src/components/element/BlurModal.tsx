@@ -11,24 +11,31 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import clsx from "clsx";
+import { isPageStatic } from "next/dist/build/utils";
+import BtnLoader from "./BtnLoader";
 
 // تعریف نوع props
 interface BlurModalProps {
-  title: string | element;
+  isOpen: boolean;
+  onClose: () => void;
+  title: string | React.ReactElement;
   bodyContent: string | ReactNode;
   onConfirm?: () => void;
   heightProp: "sm" | "md" | "lg" | "full";
   icon?: ReactNode;
+  isPatching?:boolean
 }
 
 export default function BlurModal({
+  isOpen,
+  onClose,
   title,
-  icon,
   bodyContent,
   onConfirm,
   heightProp,
+  isPatching
 }: BlurModalProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
 
   const heightClass = {
     sm: "h-64",
@@ -39,13 +46,7 @@ export default function BlurModal({
 
   return (
     <>
-      <Button
-        onPress={onOpen}
-        className="bg-secondary-500 text-white"
-        endContent={icon}
-      >
-        {title}
-      </Button>
+  
 
       <Modal
         isOpen={isOpen}
@@ -78,7 +79,7 @@ export default function BlurModal({
                     onClose();
                   }}
                 >
-                  تایید
+        {isPatching ? <BtnLoader/> : "تایید و ادامه"}
                 </Button>
               </ModalFooter>
             </>
