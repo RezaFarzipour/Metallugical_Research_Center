@@ -12,6 +12,7 @@ interface FileInputProps {
   className?: string;
   errors?: FieldErrors;
   multiple: boolean;
+  disabled?: boolean;
 }
 
 function FileInput({
@@ -23,6 +24,7 @@ function FileInput({
   className,
   errors,
   multiple,
+  disabled,
   ...rest
 }: FileInputProps) {
   const errorMessages = errors?.[name];
@@ -34,7 +36,7 @@ function FileInput({
         htmlFor="file-upload"
         className={`cursor-pointer border-2 ${
           hasError ? "border-red-500" : "border-primary-500"
-        } rounded-lg px-3 py-2 text-primary-500 flex items-center justify-center gap-x-2 ${className}`}
+        } rounded-lg px-3 py-1 text-primary-500 flex items-center justify-center gap-x-2 ${className}`}
       >
         {label}
         <TbArrowBarToDown className="w-5 h-5" />
@@ -47,6 +49,7 @@ function FileInput({
           dir={dir}
           onChange={onChange}
           required={isRequired}
+          disabled={disabled}
           {...rest}
         />
       </label>

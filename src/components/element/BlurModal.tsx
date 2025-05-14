@@ -10,15 +10,20 @@ import {
   Button,
   useDisclosure,
 } from "@heroui/react";
-import clsx from "clsx";
+import { cn } from "@/utils/cn";
+import { EditorItem } from "@/types";
 
-// تعریف نوع props
 interface BlurModalProps {
   title: string | element;
   bodyContent: string | ReactNode;
   onConfirm?: () => void;
   heightProp: "sm" | "md" | "lg" | "full";
   icon?: ReactNode;
+  disabled?: boolean;
+  setEditingItem?: (item: EditorItem) => void;
+  setEditingHtml?: (html: string) => void;
+  item?: EditorItem;
+  size?: "sm" | "md" | "lg";
 }
 
 export default function BlurModal({
@@ -27,6 +32,11 @@ export default function BlurModal({
   bodyContent,
   onConfirm,
   heightProp,
+  disabled,
+  setEditingItem,
+  setEditingHtml,
+  item,
+  size = "md",
 }: BlurModalProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -40,9 +50,16 @@ export default function BlurModal({
   return (
     <>
       <Button
-        onPress={onOpen}
-        className="bg-secondary-500 text-white"
+        onPress={() => {
+          onOpen();
+          if (item) {
+            setEditingItem?.(item);
+            setEditingHtml?.(item.content);
+          }
+        }}
+        className="bg-green-600  text-white"
         endContent={icon}
+        size={size}
       >
         {title}
       </Button>
@@ -54,7 +71,7 @@ export default function BlurModal({
         scrollBehavior="inside"
       >
         <ModalContent
-          className={clsx("w-full max-w-4xl", heightClass[heightProp])}
+          className={cn("w-full max-w-4xl", heightClass[heightProp])}
         >
           {(onClose) => (
             <>
@@ -72,11 +89,17 @@ export default function BlurModal({
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-secondary-500 text-white"
+                  className={cn(
+                    "text-white px-4 py-2 ",
+                    disabled
+                      ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                      : "bg-secondary-500 hover:bg-secondary-600"
+                  )}
                   onPress={() => {
                     onConfirm?.();
                     onClose();
                   }}
+                  disabled={disabled}
                 >
                   تایید
                 </Button>

@@ -49,8 +49,6 @@ export default function RHFTagInput({ field, error, label }: TagInputProps) {
 
   return (
     <div>
-      <label className="block mb-2 text-sm font-medium">{label}</label>
-
       {/* INPUT REAL برای react-hook-form */}
       <Input
         type="text"
