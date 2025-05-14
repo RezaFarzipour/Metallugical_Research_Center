@@ -23,7 +23,7 @@ const Services = () => {
       </h3>
 
       <h2 className="font-extrabold text-2xl text-wrap">
-        نگاهی به خدمات های ما بندازید.
+        نگاهی به خدمات  ما بندازید.
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">

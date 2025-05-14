@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import DatePicker, { DateObject } from "react-multi-date-picker";
+import DatePicker, { Calendar, DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 
@@ -49,8 +49,8 @@ export default function CustomeDateRangePicker({
 
   return (
     <div style={{ padding: "1rem" }}>
-      <h3>انتخاب بازه‌ی زمانی در محدوده انتخاب‌شده</h3>
-      <DatePicker
+      {/* <h3 className="mb-4">انتخاب بازه‌ی زمانی در محدوده انتخاب‌شده</h3> */}
+      <Calendar 
         value={range}
         onChange={handleRangeChange}
         range
@@ -59,8 +59,8 @@ export default function CustomeDateRangePicker({
         format="YYYY/MM/DD"
         calendar={persian}
         locale={persian_fa}
-        calendarPosition="bottom-left"
-        placeholder="بازه تاریخ را انتخاب کنید"
+        //calendarPosition="bottom-left"
+        //placeholder="بازه تاریخ را انتخاب کنید"
       />
     </div>
   );

@@ -15,6 +15,7 @@ import {
 } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
 import { BtnLoader } from "../element/Loader";
+import { Button } from "@heroui/button";
 
 interface ServiceImage {
   id: number;
@@ -39,12 +40,11 @@ interface ServiceDataType {
   "service-reserve_date"?: ServiceReserveDate[];
 }
 
-
 const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
   const BASE_URL = "http://localhost:8000";
   const [startDate, setStartDate] = useState<string | null>("");
   const [endDate, setEndDate] = useState<string | null>("");
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const router = useRouter();
 
@@ -94,7 +94,7 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
 
     if (userData?.role === "admin") {
       showToast("لطفا به عنوان کاربر عادی وارد شوید", "error");
-      return
+      return;
     }
 
     try {
@@ -140,10 +140,19 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
           قیمت محصول: {sp(price)}
         </div>
 
+        <Button
+          className="bg-blue-500 text-white"
+          onPress={() => setIsModalOpen(true)}
+        >
+          {isCreating || isPatching ? <BtnLoader /> : "انتخاب رزرو"}
+        </Button>
+
         <div className="flex justify-center w-full">
           <BlurModal
-            heightProp="sm"
-            title={isCreating || isPatching ? <BtnLoader /> : " انتخاب رزرو"}
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            heightProp="lg"
+            title=" انتخاب رزرو"
             bodyContent={
               <CustomeDateRangePicker
                 onRangeSelect={rangeHandler}

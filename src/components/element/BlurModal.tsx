@@ -14,7 +14,9 @@ import { cn } from "@/utils/cn";
 import { EditorItem } from "@/types";
 
 interface BlurModalProps {
-  title: string | element;
+  isOpen: boolean;
+  onClose: () => void;
+  title: string | React.ReactElement;
   bodyContent: string | ReactNode;
   onConfirm?: () => void;
   heightProp: "sm" | "md" | "lg" | "full";
@@ -28,7 +30,6 @@ interface BlurModalProps {
 
 export default function BlurModal({
   title,
-  icon,
   bodyContent,
   onConfirm,
   heightProp,
@@ -38,14 +39,13 @@ export default function BlurModal({
   item,
   size = "md",
 }: BlurModalProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   const heightClass = {
     sm: "h-64",
     md: "h-96",
     lg: "h-[600px]",
     full: "min-h-screen",
   };
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
@@ -58,7 +58,6 @@ export default function BlurModal({
           }
         }}
         className="bg-green-600  text-white"
-        endContent={icon}
         size={size}
       >
         {title}

@@ -62,7 +62,7 @@ const ReservationTemplate = () => {
       setStage(reservationData.stage);
       setCurrentStep(reservationData.stage);
     }
-  }, [reservationData]);
+  }, [reservationData,setCurrentStep]);
 
   if (error) {
     showToast("خطا در دریافت اطلاعات", "error");
