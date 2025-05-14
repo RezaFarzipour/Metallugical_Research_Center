@@ -120,6 +120,41 @@ export const LatestArticles: latestArticleType[] = [
     description:
       "با تنظیم بیشتر صنایع، تقاضا برای تجزیه و تحلیل کامل و دقیق در حال افزایش است. مقررات زیست محیطی جدید، به عنوان مثال، پروتکل آزمایش.",
   },
+  {
+    id: 3,
+    image: "/images/blog1-img2.png",
+    date: "1402/12/20",
+    author: "مریم زمانی",
+    articleTitle: "مقررات صنعت گرایش های نوظهور",
+    description:
+      "با تنظیم بیشتر صنایع، تقاضا برای تجزیه و تحلیل کامل و دقیق در حال افزایش است. مقررات زیست محیطی جدید، به عنوان مثال، پروتکل آزمایش.",
+  },
+  {
+    id: 4,
+    image: "/images/blog1-img2.png",
+    date: "1402/12/20",
+    author: "مریم زمانی",
+    articleTitle: "مقررات صنعت گرایش های نوظهور",
+    description:
+      "با تنظیم بیشتر صنایع، تقاضا برای تجزیه و تحلیل کامل و دقیق در حال افزایش است. مقررات زیست محیطی جدید، به عنوان مثال، پروتکل آزمایش.",
+  }, {
+    id: 5,
+    image: "/images/blog1-img2.png",
+    date: "1402/12/20",
+    author: "مریم زمانی",
+    articleTitle: "مقررات صنعت گرایش های نوظهور",
+    description:
+      "با تنظیم بیشتر صنایع، تقاضا برای تجزیه و تحلیل کامل و دقیق در حال افزایش است. مقررات زیست محیطی جدید، به عنوان مثال، پروتکل آزمایش.",
+  },
+  {
+    id: 6,
+    image: "/images/blog1-img2.png",
+    date: "1402/12/20",
+    author: "مریم زمانی",
+    articleTitle: "مقررات صنعت گرایش های نوظهور",
+    description:
+      "با تنظیم بیشتر صنایع، تقاضا برای تجزیه و تحلیل کامل و دقیق در حال افزایش است. مقررات زیست محیطی جدید، به عنوان مثال، پروتکل آزمایش.",
+  },
 ];
 
 export const Authsteps = [
@@ -209,7 +244,7 @@ export const images = [
       "object-cover absolute top-0 right-4 sm:right-8 md:right-16 lg:right-28 ",
   },
   {
-    src: "/images/about1-image2.png",
+    src: "/images/about1-image22.png",
     alt: "About image 2",
     width: 360,
     height: 360,
@@ -219,8 +254,8 @@ export const images = [
   {
     src: "/images/about1-image3.png",
     alt: "About image 3",
-    width: 340,
-    height: 340,
+    width: 350,
+    height: 350,
     className:
       "object-cover absolute top-[18rem] sm:top-[20rem] md:top-[22rem] lg:top-[28rem] right-4 sm:right-8 md:right-16 lg:right-28",
   },

@@ -11,8 +11,8 @@ import { User } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { showToast } from "@/store/useToastSlice";
-import BtnLoader from "../element/BtnLoader";
 import { editUserByPhoneNumberAdmin } from "@/services/api/user";
+import { BtnLoader } from "../element/Loader";
 
 
 export default function MyProfilePage(): JSX.Element {

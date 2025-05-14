@@ -1,12 +1,11 @@
 "use client";
-import BlurModal from "@/components/element/BlurModal";
-import BtnLoader from "@/components/element/BtnLoader";
+import { BtnLoader } from "@/components/element/Loader";
 import { useGetUser } from "@/hooks/useAuth";
 import { patchReserveDetails } from "@/services/api/reserve";
 import { getServicesByIdCustomer } from "@/services/api/service";
 import { showToast } from "@/store/useToastSlice";
 import { serviceDataEditType } from "@/types";
-import { cn } from "@/utils/style/Cn";
+import { cn } from "@/utils/cn";
 import { Button } from "@heroui/button";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
@@ -14,6 +13,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Stage1ModalBody from "./Stage1ModalBody";
 import { useQueryClient } from "@tanstack/react-query";
+import BlurModal from "@/components/element/BlurModal";
 
 type stage1Props = {
   allServices: serviceDataEditType[];

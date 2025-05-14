@@ -8,10 +8,10 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 import HoverIcon from "@/components/element/animations/ArrowIconEndContent";
 import Link from "next/link";
-import clsx from "clsx";
 import { RiPriceTag3Line, RiInformationLine } from "react-icons/ri";
 import { BsFileEarmarkFont } from "react-icons/bs";
 import { IoCalendarOutline } from "react-icons/io5";
+import { cn } from "@/utils/cn";
 
 interface CardContentProps {
   id: string | number;
@@ -47,10 +47,10 @@ export const CardContent: React.FC<CardContentProps> = ({
   const [isHovered, setIsHovered] = React.useState(false);
 
   const cardStyles = {
-    cardBox: clsx(
+    cardBox: cn(
       "flex flex-col gap-2 p-4 absolute left-1/2 -translate-x-1/2 bottom-[-160px] bg-[#ffffff] rounded-xl shadow-lg transition-transform duration-300 ease-out group-hover:translate-y-[-10px]"
     ),
-    cardList: clsx(
+    cardList: cn(
       "flex flex-col gap-4 p-4 w-full bg-[#ffffff] rounded-xl shadow-lg transition-transform duration-300 ease-out"
     ),
   };
@@ -81,7 +81,7 @@ export const CardContent: React.FC<CardContentProps> = ({
 
   return styleForAdmin && view ? (
     <div
-      className={clsx(
+      className={cn(
         "bg-gray-50 p-4 rounded-lg shadow-lg flex flex-col [&>div]:text-secondary-700",
         cardStyles.cardBox
       )}
@@ -117,20 +117,37 @@ export const CardContent: React.FC<CardContentProps> = ({
     </div>
   ) : (
     <div
-      className={twMerge(
+      className={cn(
         view ? cardStyles.cardBox : cardStyles.cardList,
-        "flex-col"
+        "flex-col [&>div]:text-secondary-700"
       )}
       style={view ? { width: widthConter, height: heightConter } : undefined}
     >
-      <div className="flex justify-start gap-5">
-        {isDate && <InfoItem icon={<SlCalender />} text={date} />}
-        <InfoItem icon={<CgProfile />} text={service_name || name} />
+      <div className="flex items-center gap-3">
+        <BsFileEarmarkFont className="text-xl" />
+        <h3 className="text-lg font-bold text-gray-600">
+          {service_name || name}
+        </h3>
       </div>
 
-      <h6 className="font-light text-wrap text-justify flex-grow">
-        {description}
-      </h6>
+      {price && (
+        <div className="flex items-center gap-3 mt-2">
+          <RiPriceTag3Line className="text-xl" />
+          <p className="text-base font-medium text-gray-600">{price}</p>
+        </div>
+      )}
+
+      <div className="flex items-center gap-3">
+        <IoCalendarOutline className="text-xl mt-1" />
+        <p className="text-sm text-gray-600 text-justify">{description}</p>
+      </div>
+
+      {dateRange && (
+        <div className="flex items-center gap-3">
+          <RiInformationLine className="text-xl mt-1" />
+          <p className="text-sm text-gray-600 text-justify">{dateRange}</p>
+        </div>
+      )}
 
       {MoreDetailsButton}
     </div>

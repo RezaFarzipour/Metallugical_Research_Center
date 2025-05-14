@@ -6,9 +6,22 @@ type BreadcrumbsProps = {
   item1?: string;
   item2?: string;
   panelHref?: string;
+  color?:
+    | "foreground"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "danger"
+    | undefined;
 };
 
-const BreadcrumbsElement = ({ item1, item2, panelHref }: BreadcrumbsProps) => {
+const BreadcrumbsElement = ({
+  item1,
+  item2,
+  panelHref,
+  color = "white",
+}: BreadcrumbsProps) => {
   return (
     <Breadcrumbs
       size="lg"
@@ -17,6 +30,7 @@ const BreadcrumbsElement = ({ item1, item2, panelHref }: BreadcrumbsProps) => {
         separator: "px-2",
       }}
       separator="/"
+      color={color}
     >
       <BreadcrumbItem className="pointer" href={panelHref}>
         {item1}

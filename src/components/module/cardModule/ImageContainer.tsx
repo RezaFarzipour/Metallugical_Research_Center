@@ -19,20 +19,26 @@ export const ImageContainer: React.FC<ImageContainerProps> = ({
   <div
     className={`relative w-full h-full overflow-hidden ${view && "rounded-xl"}`}
   >
-    <Image
-      width={500}
-      height={500}
+    <motion.div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      alt="Card example background"
       className="  w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 group-hover:rotate-2 "
-      src={image }
-    />
-    {isHovered && (
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 to-transparent opacity-50"
-        {...shimmerEffect()}
+      initial="hidden"
+    >
+      {/* Main Image */}
+      <Image
+        width={500}
+        height={500}
+        alt="Card example background"
+        src={image}
       />
-    )}
+      {/* Shimmer effect on hover */}
+      {isHovered && (
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-300 to-transparent opacity-50"
+          {...shimmerEffect()}
+        />
+      )}
+    </motion.div>
   </div>
 );

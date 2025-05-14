@@ -1,6 +1,5 @@
 import ServiceDetails from "@/components/template/serviceDetailsPage";
 import { getServicesByIdCustomer } from "@/services/api/service";
-
 import setCookiesOnReq from "@/utils/auth/setCookieOnReq";
 import { cookies } from "next/headers";
 import React from "react";

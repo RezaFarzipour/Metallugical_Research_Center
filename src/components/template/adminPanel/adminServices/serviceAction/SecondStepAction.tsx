@@ -5,7 +5,6 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@heroui/button";
 import FileInput from "@/components/element/FileInput";
-import BtnLoader from "@/components/element/BtnLoader";
 import Image from "next/image";
 import { IoTrashBinOutline } from "react-icons/io5";
 import {
@@ -17,6 +16,7 @@ import { TbEyeDiscount } from "react-icons/tb";
 import AdminDateRangePicker from "@/components/module/customeDataPicker/AdminDateRangePicker";
 import TitleStructure from "@/components/element/TitleStructure";
 import { useSeCondStepAction } from "./useSecondStepAction";
+import { BtnLoader } from "@/components/element/Loader";
 
 interface ServiceImage {
   id: string | number;

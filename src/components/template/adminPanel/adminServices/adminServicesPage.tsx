@@ -9,10 +9,10 @@ import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
 import CardModule from "@/components/module/cardModule/CardModule";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
-import BtnLoader from "@/components/element/BtnLoader";
 import ModalModule from "@/components/element/ModalModule";
 import Empty from "@/components/element/Empty";
 import { useAdminServicesDataAction } from "./serviceAction/useAdminServicesDataAction";
+import { BtnLoader } from "@/components/element/Loader";
 
 export const AdminServicesPage: React.FC = ({}) => {
   const {

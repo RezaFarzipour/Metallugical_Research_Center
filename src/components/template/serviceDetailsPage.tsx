@@ -8,13 +8,13 @@ import BlurModal from "../element/BlurModal";
 import { useMutation } from "@tanstack/react-query";
 import CustomeDateRangePicker from "../module/customeDataPicker/CustomeCallender";
 import { useRouter } from "next/navigation";
-import BtnLoader from "../element/BtnLoader";
 import { useGetUser } from "@/hooks/useAuth";
 import {
   patchReserveDetails,
   postReservedService,
 } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
+import { BtnLoader } from "../element/Loader";
 import { Button } from "@heroui/button";
 
 interface ServiceImage {

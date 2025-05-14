@@ -8,22 +8,19 @@ type AnimationType = "spring" | "tween" | "linear";
 
 // 1. imageReveal
 export const imageReveal = (delay: number = 0, width: number): Variants => {
-    const duration = Math.random() * 1.2 + 0.3;
     return {
         hidden: {
-            width: 0,
+            scaleX: 0,
             opacity: 0,
-            scale: 0,
+            transformOrigin: "right ",
         },
         show: {
-            width: `${width}px`,
+            scaleX: 1,
             opacity: 1,
-            scale: 1,
             transition: {
-                type: "spring",
-                delay,
-                duration,
-                ease: "easeOut",
+                type: "tween",
+                duration: 0.2,
+                ease: "linear"
             },
         },
     };

@@ -1,4 +1,5 @@
 import Services from "@/components/template/servicesPage";
+import { getAllServiceCustomer } from "@/services/api/service";
 
 export const metadata = {
   //   title: "Contact",
@@ -7,7 +8,9 @@ export const metadata = {
   },
 };
 
-function ServicesPage() {
-  return <Services />;
+async function ServicesPage() {
+  const data = await getAllServiceCustomer();
+
+  return <Services initialData={data} />;
 }
 export default ServicesPage;

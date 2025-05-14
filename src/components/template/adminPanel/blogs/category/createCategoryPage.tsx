@@ -12,8 +12,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getBlogCategoryById } from "@/services/api/blogs";
 import { useEffect } from "react";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
-import BtnLoader from "@/components/element/BtnLoader";
 import { Button } from "@heroui/button";
+import { BtnLoader } from "@/components/element/Loader";
 
 const categorySchema = z.object({
   category_name: z.string().min(1, "نام دسته‌بندی باید پر شود"),
