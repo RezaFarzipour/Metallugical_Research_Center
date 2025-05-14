@@ -8,11 +8,10 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure,
+
 } from "@heroui/react";
 import clsx from "clsx";
-import { isPageStatic } from "next/dist/build/utils";
-import BtnLoader from "./BtnLoader";
+import { BtnLoader } from "./Loader";
 
 // تعریف نوع props
 interface BlurModalProps {
