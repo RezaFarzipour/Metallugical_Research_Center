@@ -1,14 +1,20 @@
-// stores/useBlogFormStore.ts
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+type EditorItem = {
+    id: string;
+    type: 'text' | 'image';
+    content: string;
+};
 type BlogFormState = {
     step: number
     formData: {
+        id?: string;
         title: string
         category: string
         content: string
         image?: File | null
+        items: EditorItem[];
     }
     setStep: (step: number) => void
     setFormData: (data: Partial<BlogFormState['formData']>) => void
@@ -24,6 +30,7 @@ export const useBlogFormStore = create<BlogFormState>()(
                 category: '',
                 content: '',
                 image: null,
+                items: [],
             },
             setStep: (step) => set({ step }),
             setFormData: (data) =>
@@ -38,6 +45,7 @@ export const useBlogFormStore = create<BlogFormState>()(
                         category: '',
                         content: '',
                         image: null,
+                        items: [],
                     },
                 }),
         }),

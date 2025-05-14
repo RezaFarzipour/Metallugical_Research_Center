@@ -5,7 +5,6 @@ import {
   Strikethrough,
   Subscript as SubIcon,
   Superscript as SuperIcon,
-  Image as ImageIcon,
   PaintBucket,
   Eraser,
   AlignLeft,
@@ -32,8 +31,7 @@ export interface EditorButton {
 
 export const baseButtons = (
   editor: Editor,
-  pickColor: () => void,
-  addImage: () => void
+  pickColor: () => void
 ): EditorButton[] => [
   {
     icon: <Bold size={18} />,
@@ -66,7 +64,6 @@ export const baseButtons = (
     title: "Superscript",
   },
   { icon: <PaintBucket size={18} />, action: pickColor, title: "Color" },
-  { icon: <ImageIcon size={18} />, action: addImage, title: "Insert Image" },
   {
     icon: <Eraser size={18} />,
     action: () => editor.chain().focus().clearNodes().unsetAllMarks().run(),
@@ -112,15 +109,16 @@ export const listButtons = (editor: Editor): EditorButton[] => [
 
 export const undoButtons = (editor: Editor): EditorButton[] => [
   {
-    icon: <Undo2 size={18} />,
-    action: () => editor.chain().focus().undo().run(),
-    title: "Undo",
-  },
-  {
     icon: <Redo2 size={18} />,
     action: () => editor.chain().focus().redo().run(),
     title: "Redo",
   },
+  {
+    icon: <Undo2 size={18} />,
+    action: () => editor.chain().focus().undo().run(),
+    title: "Undo",
+  },
+
   {
     icon: <RefreshCcw size={18} />,
     action: () => editor.commands.setContent(""),

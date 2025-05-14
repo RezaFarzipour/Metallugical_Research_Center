@@ -77,11 +77,13 @@ export default function Stage1() {
     }
 
     createBlog(formData, {
-      onSuccess: () => {
+      onSuccess: (responseData) => {
+        // فرض بر این است که responseData همان شیٔی است که حاوی id است
         showToast("بلاگ با موفقیت ساخته شد", "success");
         const dataToSave = {
           ...data,
           cover_image: coverImageUrl,
+          id: responseData.id,
         };
         setFormData(dataToSave);
         setStep(2);

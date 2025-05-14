@@ -13,28 +13,20 @@ export interface DashboardMinicardProps {
   icon: IconType;
 }
 
-export type sidebarchildren ={
- id:number,title:string,to:string
+export type sidebarchildren = {
+  id: number, title: string, to: string
 }
-// export interface SidebarLink {
-//   id: number;
-//   title: string;
-//   to: string;
-//   hover?: string;
-//   icon: IconType;
-//   children?:sidebarchildren[]
-// }
+
 
 export type NavLinkItem = {
   id: number;
   title: string;
   to: string;
   icon: React.ElementType; // یا React.ComponentType برای آیکن
-  children?:sidebarchildren[]
+  children?: sidebarchildren[]
 };
 
 
-//reza:
 
 
 export type contactInfoType = {
@@ -78,7 +70,7 @@ export interface User {
 export interface UserProfileResponse {
   response: {
     data: User[]; // آرایه از User
-   
+
   };
 }
 
@@ -92,7 +84,7 @@ export interface serviceDataEditType {
 
 
 export type AllUsersType = {
-  username:string;
+  username: string;
   first_name: string;
   last_name: string;
   email: string;
@@ -110,22 +102,29 @@ export type ServiceDetailsType = {
     description: string;
     price: number;
     cover_image: string;
-    reserve_duration:number
+    reserve_duration: number
   };
 };
 
 
-export type reservationDataType ={
- 
-    is_reservation_time_verified: boolean;
-    admin_description: string;
-    reserve_duration: number;
-    total_price: number;
-    reserve_from?: string;
-    stage:number,
-    reserve_to?: string;
-    service?: string;
-    payment_image:string;
-    user:string
+export type reservationDataType = {
 
+  is_reservation_time_verified: boolean;
+  admin_description: string;
+  reserve_duration: number;
+  total_price: number;
+  reserve_from?: string;
+  stage: number,
+  reserve_to?: string;
+  service?: string;
+  payment_image: string;
+  user: string
+
+}
+
+
+export interface EditorItem {
+  id: string;
+  type: "text" | "image";
+  content: string;
 }

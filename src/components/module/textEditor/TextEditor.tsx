@@ -1,8 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Image from "@tiptap/extension-image";
 import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
 import TextAlign from "@tiptap/extension-text-align";
@@ -22,15 +21,26 @@ import {
   undoButtons,
 } from "./toolbarButtons";
 
-const TextEditor = () => {
-  const [html, setHtml] = useState("");
+// 📌 تعریف نوع دکمه
+type ToolbarButton = {
+  title: string;
+  icon?: React.ReactNode;
+  action: () => void;
+};
 
+// 📌 نوع props برای TextEditor
+interface TextEditorProps {
+  html: string;
+  setHtml: (value: string) => void;
+  onSave?: () => void;
+}
+const TextEditor: React.FC<TextEditorProps> = ({ html, setHtml, onSave }) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
         history: true,
-        bulletList: { keepMarks: true, keepAttributes: true },
-        orderedList: { keepMarks: true, keepAttributes: true },
+        bulletList: { keepMarks: true, keepAttributes: false },
+        orderedList: { keepMarks: true, keepAttributes: false },
         heading: {
           levels: [1, 2, 3, 4, 5, 6], // تعریف سطوح H1 تا H6
         },
@@ -40,7 +50,6 @@ const TextEditor = () => {
       Superscript,
       TextStyle,
       Color,
-      Image,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Heading,
       Blockquote,
@@ -49,25 +58,6 @@ const TextEditor = () => {
   });
 
   if (!editor) return null;
-
-  const addImage = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.onchange = async () => {
-      const file = input.files?.[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === "string") {
-          editor.chain().focus().setImage({ src: reader.result }).run();
-        }
-      };
-      reader.readAsDataURL(file);
-    };
-    input.click();
-  };
 
   const pickColor = () => {
     const input = document.createElement("input");
@@ -79,7 +69,7 @@ const TextEditor = () => {
   };
   const headingBtn = [...headingButtons(editor)];
   const allBtn = [
-    ...baseButtons(editor, pickColor, addImage),
+    ...baseButtons(editor, pickColor),
     ...alignmentButtons(editor),
     ...listButtons(editor),
     ...blockquoteAndHr(editor),
@@ -88,7 +78,6 @@ const TextEditor = () => {
 
   return (
     <div className="p-4 bg-secondary-900 text-white min-h-screen">
-      {/* باکس دکمه‌های اصلی */}
       <div className="relative flex flex-wrap gap-3 mb-4 bg-secondary-800 p-3 rounded-lg">
         <div className="bg-gray-200 p-3 rounded-lg mb-3 grid grid-cols-3 gap-2 w-2/3">
           {headingBtn.map(({ title, icon, action }, idx) => (
@@ -103,7 +92,6 @@ const TextEditor = () => {
             </Button>
           ))}
 
-          {/* اضافه کردن خط جدید برای مپ دوم */}
           <div className="col-span-3 ">
             {allBtn.map(({ title, icon, action }, idx) => (
               <Button
@@ -135,10 +123,13 @@ const TextEditor = () => {
 
         {/* دکمه ذخیره */}
         <Button
-          onPress={() => setHtml(editor.getHTML())}
+          onPress={() => {
+            setHtml(editor.getHTML());
+            onSave?.();
+          }}
           className="bg-green-600 text-white px-4 absolute bottom-4 left-3"
         >
-          ذخیره
+          پیش نمایش
         </Button>
       </div>
 
@@ -153,14 +144,14 @@ const TextEditor = () => {
       {/* نمایش HTML و رندر شده */}
       {html && (
         <>
-          <h3 className="mt-6 font-bold">نمایش HTML:</h3>
+          {/* <h3 className="mt-6 font-bold">نمایش HTML:</h3>
           <pre className="bg-gray-100 text-black p-2 whitespace-pre-wrap">
             {html}
-          </pre>
+          </pre> */}
 
-          <h3 className="mt-4 font-bold">نمایش رندرشده:</h3>
+          <h3 className="mt-4 font-bold ">پیش نمایش:</h3>
           <div
-            className="bg-white text-black p-2 border rounded list-disc pl-5"
+            className="bg-white text-black p-2 border rounded pl-5 list-custome br-custome"
             dangerouslySetInnerHTML={{ __html: html }}
           />
         </>

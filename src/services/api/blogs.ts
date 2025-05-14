@@ -55,6 +55,8 @@ export const getBlogCover = async () => {
 
 export const createNewBlog = async (data) => {
     const response = await http.post(`blog/b/admin/`, data);
+    console.log(response.data);
+
     return response.data;
 };
 
@@ -73,3 +75,14 @@ export const deleteBlog = async ({ id }: { id: string }) => {
     const response = await http.delete(`blog/b/admin/${id}/`);
     return response.data;
 };
+
+export const createNewBlogContent = async (data) => {
+    const response = await http.post(`blog/content/admin/`, data);
+    return response.data;
+};
+
+export const createNewBlogImageContent = async (data) => {
+    const response = await http.post(`blog/image/admin/`, data);
+    return response.data;
+};
+
