@@ -58,7 +58,7 @@ const ReservationTemplate = () => {
       setStage(data.stage);
       setCurrentStep(data.stage);
     }
-  }, [data]);
+  }, [data,setCurrentStep]);
 
   if (error) {
     showToast("خطا در دریافت اطلاعات", "error");
