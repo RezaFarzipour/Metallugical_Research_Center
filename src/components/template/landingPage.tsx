@@ -11,7 +11,6 @@ type LandingPageProps = {
   initialData: ServiceDetailsType[];
 };
 const LandingPage = ({ initialData }: LandingPageProps) => {
-
   return (
     <main className="w-full overflow-x-hidden ">
       {/* Hero Header */}
@@ -19,7 +18,7 @@ const LandingPage = ({ initialData }: LandingPageProps) => {
         <LandingHeader />
       </section>
       {/* About Section */}
-      <section className="w-full mt-40">
+      <section className="w-full mt-40 mx-auto xl:max-w-screen-xl">
         <AboutOverview />
       </section>
 
@@ -28,7 +27,7 @@ const LandingPage = ({ initialData }: LandingPageProps) => {
         <Services initialData={initialData} />
       </section>
       {/* FAQ Section */}
-      <section className="w-full  my-40 ">
+      <section className="w-full  my-40  mx-auto xl:max-w-screen-xl">
         <FaqAccordian />
       </section>
       {/* Blog Section */}

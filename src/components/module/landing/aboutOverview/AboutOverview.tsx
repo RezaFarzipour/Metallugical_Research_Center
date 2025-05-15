@@ -14,16 +14,16 @@ const AboutOverview: React.FC = () => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.25 }}
-      className="flex h-auto md:h-[800px] sm:h-[500px]"
+      className="flex flex-col md:flex-row  h-[500px] xl:h-[800px] "
     >
-      <div className="relative w-1/2 h-full">
+      <div className="hidden xl:flex relative xl:w-1/2 h-full">
         {/* Background Shape */}
         <div className="relative top-0 right-[-5rem]">
           <BgAnimateShape animation="animate-bounce " />
         </div>
 
         {/* Images */}
-        <div>
+        <div className="hidden xl:flex">
           {images.map((image, index) => (
             <AboutImage key={index} {...image} />
           ))}
@@ -31,6 +31,7 @@ const AboutOverview: React.FC = () => {
       </div>
 
       {/* Right Side: Text */}
+
       <AboutText />
     </motion.div>
   );

@@ -5,8 +5,14 @@ import { motion } from "framer-motion";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import Image from "next/image";
 import { fadeIn } from "@/utils/motion";
+import { cn } from "@/utils/cn";
 
-const BgAnimateShape: React.FC<Props> = ({ animation }) => {
+interface Props {
+  animation?: string;
+  width?: string;
+}
+
+const BgAnimateShape: React.FC<Props> = ({ animation, width }) => {
   const { ref: firstImageRef, isVisible } = useIntersectionObserver(0.5);
 
   return (
@@ -21,7 +27,14 @@ const BgAnimateShape: React.FC<Props> = ({ animation }) => {
         alt="About shape"
         width={300}
         height={200}
-        className={` ${animation} [animation-duration:12s]  w-[300px] md:w-[300px] lg:w-[300px] brightness-[80%]`}
+        className={cn(
+          animation,
+          "[animation-duration:12s]",
+          `w-[${width}px]`,
+          "md:w-[300px]",
+          "lg:w-[300px]",
+          "brightness-[80%]"
+        )}
       />
     </motion.div>
   );
