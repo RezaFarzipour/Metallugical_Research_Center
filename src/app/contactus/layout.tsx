@@ -15,7 +15,7 @@ export default function ContactUsLayout({
           breadcrumbItem2=" درباره ی ما"
           panelHref="/aboutus"
         />
-        <div className="xl:max-w-screen-xl ">{children}</div>
+        <div>{children}</div>
       </Layout>
     </>
   );

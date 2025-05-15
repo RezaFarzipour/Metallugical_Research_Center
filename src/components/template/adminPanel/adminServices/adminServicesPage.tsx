@@ -44,7 +44,7 @@ export const AdminServicesPage: React.FC = ({}) => {
           quantity="سرویس ها "
           topContents={!!formDataServices?.length}
           viewContent={true}
-          viewContentSmSize={false}
+          viewContentSmSize={true}
           columnsDropDownBtn={true}
           rolesDropDown={false}
           stausDropDown={false}
