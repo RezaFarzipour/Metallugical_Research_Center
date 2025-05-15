@@ -16,7 +16,7 @@ const FaqAccordian = () => {
       <div className="w-full flex flex-col-reverse md:flex-row justify-center items-center my-20 gap-10 px-10">
         {/* Accordion with animation */}
         <motion.div
-          className="w-full md:w-1/2 max-w-2xl"
+          className="w-full md:w-1/2 md:pt-14 max-w-2xl h-[400px]"
           variants={fadeInSlide("up", "tween", 0.2, 1)}
           initial="hidden"
           whileInView="show"
@@ -37,7 +37,7 @@ const FaqAccordian = () => {
 
         {/* Image with animation */}
         <motion.div
-          className="w-full md:w-1/2 max-w-lg flex justify-center"
+          className="w-full md:w-1/2 max-w-lg flex justify-center "
           variants={fadeInSlide("down", "tween", 0.2, 1)}
           initial="hidden"
           whileInView="show"
@@ -48,7 +48,7 @@ const FaqAccordian = () => {
             height={350}
             src="/images/faqs.png"
             alt="faq"
-            className="rounded-lg"
+            className="rounded-lg object-contain"
           />
         </motion.div>
       </div>
