@@ -18,8 +18,7 @@ export const personalRegisterSchema = z.object({
     .string()
     .email("ایمیل معتبر نیست"),
 
-  role: z.string(),
-
+  role: z.string().optional(),
 
 
 });

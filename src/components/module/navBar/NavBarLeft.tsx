@@ -10,8 +10,7 @@ import { showToast } from "@/store/useToastSlice";
 import { useUserStore } from "@/store/useUserdata";
 
 export const NavBarLeft = () => {
-
-  const { user,setUser } = useUserStore();
+  const { user, setUser } = useUserStore();
   const queryClient = useQueryClient();
   const { mutateAsync: asyncLogOut } = useMutation({
     mutationFn: logOut,
@@ -19,15 +18,11 @@ export const NavBarLeft = () => {
       showToast("با موفقیت خارج شدید", "success");
       queryClient.removeQueries({ queryKey: ["get-user"] });
       setUser(null);
-     
-
     },
     onError: () => {
       showToast("خروج با خطا مواجه شد", "error");
     },
   });
-
-
 
   const logoutHandler = async () => {
     await asyncLogOut();
@@ -37,7 +32,11 @@ export const NavBarLeft = () => {
     <NavbarContent justify="end">
       {user && user != null ? (
         <NavbarItem className=" flex">
-          <DropDown logoutHandler={logoutHandler} user={user} dropDownItems={dropDownItems} />
+          <DropDown
+            logoutHandler={logoutHandler}
+            user={user}
+            dropDownItems={dropDownItems}
+          />
         </NavbarItem>
       ) : (
         <NavbarItem>
