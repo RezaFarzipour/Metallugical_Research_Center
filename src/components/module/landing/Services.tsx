@@ -25,7 +25,7 @@ const Services = ({ initialData }: LandingPageProps) => {
         <TitleStructure size="1rem">خدمات ها</TitleStructure>
       </h3>
 
-      <h2 className="font-extrabold text-2xl text-wrap">
+      <h2 className="font-extrabold text-md md:text-2xl text-wrap">
         نگاهی به خدمات ما بندازید.
       </h2>
 
