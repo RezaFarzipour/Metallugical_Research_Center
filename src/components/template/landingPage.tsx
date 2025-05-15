@@ -5,8 +5,13 @@ import AboutOverview from "../module/landing/aboutOverview/AboutOverview";
 import FaqAccordian from "../module/landing/FaqAccordian";
 import Blogs from "../module/landing/Blogs";
 import Services from "../module/landing/Services";
+import { ServiceDetailsType } from "@/types";
 
-const LandingPage = ({ initialData }) => {
+type LandingPageProps = {
+  initialData: ServiceDetailsType[];
+};
+const LandingPage = ({ initialData }: LandingPageProps) => {
+
   return (
     <main className="w-full overflow-x-hidden ">
       {/* Hero Header */}

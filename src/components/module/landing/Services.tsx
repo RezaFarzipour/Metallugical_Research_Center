@@ -6,10 +6,13 @@ import TitleStructure from "@/components/element/TitleStructure";
 import { useVisibleCount } from "@/hooks/useVisibleCount";
 import { fadeInSlide, staggerContainer } from "@/utils/motion";
 import { motion } from "framer-motion";
+import { ServiceDetailsType } from "@/types";
 
-const Services = ({ initialData }) => {
+type LandingPageProps = {
+  initialData: ServiceDetailsType[];
+};
+const Services = ({ initialData }: LandingPageProps) => {
   const visibleCount = useVisibleCount({ sm: 4, md: 4, lg: 6 });
-  console.log(initialData, "initialData");
 
   return (
     <motion.div

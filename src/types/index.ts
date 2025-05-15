@@ -95,16 +95,16 @@ export type AllUsersType = {
 
 
 
-export type ServiceDetailsType = {
-  data: {
-    id: number;
-    service_name: string;
-    description: string;
-    price: number;
-    cover_image: string;
-    reserve_duration: number
-  };
-};
+// export type ServiceDetailsType = {
+//   data: {
+//     id: number;
+//     service_name: string;
+//     description: string;
+//     price: number;
+//     cover_image: string;
+//     reserve_duration: number
+//   };
+// };
 
 
 export type reservationDataType = {
@@ -122,9 +122,33 @@ export type reservationDataType = {
 
 }
 
-
+//services Type
 export interface EditorItem {
   id: string;
   type: "text" | "image";
   content: string;
 }
+
+
+export type ServiceImageType = {
+  id: number;
+  image: string;
+  service: number;
+};
+
+export type ServiceReserveDateType = {
+  id: number;
+  reserved_from: string; // می‌تونی بزاری Date اگه قراره تبدیل بشه
+  reserved_to: string;
+  service: number;
+};
+
+export type ServiceDetailsType = {
+  id: number;
+  service_name: string;
+  description: string;
+  price: number;
+  cover_image: string;
+  "service-images": ServiceImageType[];
+  "service-reserve_date": ServiceReserveDateType[];
+};
