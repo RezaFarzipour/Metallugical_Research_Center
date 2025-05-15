@@ -1,10 +1,12 @@
 "use client";
 
 import React from "react";
-import MapModule from "../module/contactUs/MapModule";
 import ContactusInformation from "../module/contactUs/ContactusInformation";
+import dynamic from "next/dynamic";
 
-//import { Divider } from "@heroui/react";
+const MapModule = dynamic(() => import("../module/contactUs/MapModule"), {
+  ssr: false,
+});
 
 const ContactusPage = () => {
   return (
@@ -16,7 +18,7 @@ const ContactusPage = () => {
       </div>
 
       {/* map section */}
-      <div>
+      <div className="w-full">
         <MapModule />
       </div>
     </div>
