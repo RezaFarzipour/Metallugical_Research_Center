@@ -51,7 +51,6 @@ const CardModule = ({
     ),
     cardsList: "w-full max-w-[800px] max-h-[250px] flex flex-col md:flex-row ",
   };
-  console.log(data, "dataa");
 
   return (
     <>

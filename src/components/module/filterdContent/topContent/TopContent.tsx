@@ -53,7 +53,7 @@ export default function TopContent({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center gap-3">
-        <div className={cn(viewContentSmSize ? "invisible md:block" : "")}>
+        <div className={cn(viewContentSmSize ? "hidden lg:block" : "hidden")}>
           {viewContent && setView && (
             <ViewToggle view={view} setView={setView} />
           )}

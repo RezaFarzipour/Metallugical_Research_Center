@@ -46,7 +46,7 @@ const Services: React.FC = ({ initialData }) => {
             quantity="سرویس ها"
             topContents={!!formDataServices?.length}
             viewContent={true}
-            viewContentSmSize={false}
+            viewContentSmSize={true}
             btn={false}
             dropDownBtn={false}
             roles={false}
@@ -72,7 +72,7 @@ const Services: React.FC = ({ initialData }) => {
                   widthConter="100%"
                   heightImg="250px"
                   heightConter="200px"
-                  styleForAdmin={true}
+                  styleForAdmin={false}
                   view={view}
                 />
               </div>

@@ -31,6 +31,7 @@ interface CardContentProps {
   heightConter: string;
   view: boolean;
   styleForAdmin: boolean;
+  dateRange: string;
 }
 
 const InfoRow = ({

@@ -3,7 +3,6 @@
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import MiniCardModule from "@/components/module/MiniCardModule";
 import React, { useMemo } from "react";
-import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { CgArrowLeft } from "react-icons/cg";
 import {
   columns,
@@ -53,7 +52,7 @@ const HomePage: React.FC = () => {
           columns={Usercolumns}
           topContents={false}
           viewContent={false}
-          viewContentSmSize={false}
+          viewContentSmSize={true}
           addBtn={false}
           columnsDropDownBtn={false}
           rolesDropDown={false}

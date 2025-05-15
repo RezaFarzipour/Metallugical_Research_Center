@@ -35,14 +35,14 @@ const ViewToggle: React.FC<ViewToggleProps> = ({ view, setView }) => {
 
   return (
     <div className="flex gap-2">
-      <AiFillAppstore
-        className={getIconClasses(view)}
-        onClick={() => handleViewChange(true)}
-      />
-
       <GoListUnordered
         className={getIconClasses(!view)}
         onClick={() => handleViewChange(false)}
+      />
+
+      <AiFillAppstore
+        className={getIconClasses(view)}
+        onClick={() => handleViewChange(true)}
       />
     </div>
   );
