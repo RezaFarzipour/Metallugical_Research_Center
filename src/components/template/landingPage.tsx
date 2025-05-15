@@ -6,7 +6,7 @@ import FaqAccordian from "../module/landing/FaqAccordian";
 import Blogs from "../module/landing/Blogs";
 import Services from "../module/landing/Services";
 
-const LandingPage = () => {
+const LandingPage = ({ initialData }) => {
   return (
     <main className="w-full overflow-x-hidden ">
       {/* Hero Header */}
@@ -20,7 +20,7 @@ const LandingPage = () => {
 
       {/* Services Section */}
       <section className="w-full">
-        <Services />
+        <Services initialData={initialData} />
       </section>
       {/* FAQ Section */}
       <section className="w-full  my-40 ">

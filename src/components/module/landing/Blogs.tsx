@@ -32,8 +32,8 @@ const Blogs = () => {
             <CardModule
               data={[item]}
               widthConter="100%"
-              heightImg="250px"
-              heightConter="250px"
+              heightImg="300px"
+              heightConter="200px"
               styleForAdmin={false}
               view
             />

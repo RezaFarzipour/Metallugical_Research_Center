@@ -5,6 +5,12 @@ import { ImageContainer } from "./ImageContainer";
 import { CardContent } from "./CardContent";
 import clsx from "clsx";
 import { cn } from "@/utils/cn";
+interface ReserveDate {
+  id: number;
+  reserved_from: string;
+  reserved_to: string;
+  service: number;
+}
 type DataItem = {
   id: number;
   name: string;
@@ -14,6 +20,7 @@ type DataItem = {
   cover_image?: string;
   date?: string;
   dateRange?: string;
+  "service-reserve_date"?: ReserveDate[];
 };
 type Props = {
   data: DataItem[];
@@ -44,6 +51,7 @@ const CardModule = ({
     ),
     cardsList: "w-full max-w-[800px] max-h-[250px] flex flex-col md:flex-row ",
   };
+  console.log(data, "dataa");
 
   return (
     <>
@@ -70,6 +78,7 @@ const CardModule = ({
 
             <CardContent
               {...item}
+              reserve_date={item["service-reserve_date"]}
               isDate={isDate}
               isMoreDetails={isMoreDetails}
               widthConter={widthConter}

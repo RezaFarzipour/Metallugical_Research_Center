@@ -1,24 +1,28 @@
 "use client";
 
-import { SlCalender } from "react-icons/sl";
-import { InfoItem } from "./InfoItem";
-import { CgProfile } from "react-icons/cg";
 import { Button } from "@heroui/button";
-import React from "react";
-import { twMerge } from "tailwind-merge";
+import React, { useState } from "react";
 import HoverIcon from "@/components/element/animations/ArrowIconEndContent";
 import Link from "next/link";
-import { RiPriceTag3Line, RiInformationLine } from "react-icons/ri";
-import { BsFileEarmarkFont } from "react-icons/bs";
+import { RiPriceTag3Line } from "react-icons/ri";
 import { IoCalendarOutline } from "react-icons/io5";
 import { cn } from "@/utils/cn";
+import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
+import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
+import { MdOutlineDescription, MdOutlineSubtitles } from "react-icons/md";
+import truncateText from "@/utils/formatter/truncateText";
+
+interface ReserveDate {
+  id: number;
+  reserved_from: string;
+  reserved_to: string;
+  service: number;
+}
 
 interface CardContentProps {
   id: string | number;
-  date: string;
-  dateRange?: string;
+  reserve_date?: ReserveDate[];
   price?: string;
-  isDate: boolean | undefined;
   isMoreDetails?: string;
   name: string;
   service_name?: string;
@@ -29,12 +33,37 @@ interface CardContentProps {
   styleForAdmin: boolean;
 }
 
+const InfoRow = ({
+  icon,
+  children,
+}: {
+  icon: React.ReactNode;
+  children: React.ReactNode;
+}) => (
+  <div className="flex items-center gap-3">
+    {icon}
+    {children}
+  </div>
+);
+
+const CardContentBox: React.FC<{
+  children: React.ReactNode;
+  width: string;
+  height: string;
+  className: string;
+}> = ({ children, width, height, className }) => (
+  <div
+    className={cn(className, "flex-col [&>div]:text-secondary-700")}
+    style={{ width, height }}
+  >
+    {children}
+  </div>
+);
+
 export const CardContent: React.FC<CardContentProps> = ({
   id,
-  date,
-  dateRange,
+  reserve_date,
   price,
-  isDate,
   isMoreDetails,
   name,
   service_name,
@@ -43,113 +72,85 @@ export const CardContent: React.FC<CardContentProps> = ({
   heightConter,
   view,
   styleForAdmin,
+  dateRange,
 }) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-
-  const cardStyles = {
-    cardBox: cn(
-      "flex flex-col gap-2 p-4 absolute left-1/2 -translate-x-1/2 bottom-[-160px] bg-[#ffffff] rounded-xl shadow-lg transition-transform duration-300 ease-out group-hover:translate-y-[-10px]"
-    ),
-    cardList: cn(
-      "flex flex-col gap-4 p-4 w-full bg-[#ffffff] rounded-xl shadow-lg transition-transform duration-300 ease-out"
-    ),
-  };
+  const [isHovered, setIsHovered] = useState(false);
 
   const MoreDetailsHref =
     isMoreDetails === "admin"
       ? `/admin/services/${id}/details`
       : `/services/${id}/details`;
 
-  const MoreDetailsButton = (
-    <div className="mt-auto absolute left-0 bottom-0">
-      <Link href={MoreDetailsHref}>
-        <Button
-          className={`data-[hover]:bg-transparent data-[hover]:text-secondary-500 ${
-            isHovered ? "bg-gray-200" : ""
-          }`}
-          variant="light"
-          size="md"
-          endContent={<HoverIcon isHovered={isHovered} />}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          مشاهده‌ی بیشتر
-        </Button>
-      </Link>
-    </div>
-  );
+  const cardStyles = {
+    box: cn(
+      "bg-gray-50 p-4 rounded-lg shadow-lg flex gap-1",
+      view
+        ? "absolute left-1/2 -translate-x-1/2 bottom-[-160px] group-hover:translate-y-[-10px] transition-transform duration-300 ease-out"
+        : "w-full"
+    ),
+  };
 
-  return styleForAdmin && view ? (
-    <div
-      className={cn(
-        "bg-gray-50 p-4 rounded-lg shadow-lg flex flex-col [&>div]:text-secondary-700",
-        cardStyles.cardBox
-      )}
-      style={{ width: widthConter, height: heightConter }}
+  return (
+    <CardContentBox
+      width={view ? widthConter : "100%"}
+      height={view ? heightConter : "auto"}
+      className={cardStyles.box}
     >
-      <div className="flex items-center gap-3">
-        <BsFileEarmarkFont className="text-xl" />
+      <InfoRow icon={<MdOutlineSubtitles className="text-xl" />}>
         <h3 className="text-lg font-bold text-gray-600">
           {service_name || name}
         </h3>
-      </div>
+      </InfoRow>
 
       {price && (
-        <div className="flex items-center gap-3 mt-2">
-          <RiPriceTag3Line className="text-xl" />
-          <p className="text-base font-medium text-gray-600">{price}</p>
-        </div>
+        <InfoRow icon={<RiPriceTag3Line className="text-xl" />}>
+          <p className="text-base  text-gray-600">
+            {toPersianNumbersWithComma(price)}
+          </p>
+        </InfoRow>
       )}
 
-      <div className="flex items-center gap-3">
-        <IoCalendarOutline className="text-xl mt-1" />
-        <p className="text-sm text-gray-600 text-justify">{description}</p>
+      <InfoRow icon={<MdOutlineDescription className="text-xl mt-1" />}>
+        <p className="text-sm text-gray-600 text-justify">
+          {truncateText(description, 20)}
+        </p>
+      </InfoRow>
+
+      {styleForAdmin && (
+        <InfoRow icon={<IoCalendarOutline size={20} className="mt-1" />}>
+          <p className="text-sm text-gray-600 text-justify pt-2">{dateRange}</p>
+        </InfoRow>
+      )}
+
+      {reserve_date && reserve_date.length > 0 && (
+        <InfoRow icon={<IoCalendarOutline size={20} className="mt-1" />}>
+          <ul className="text-sm text-gray-600">
+            {reserve_date.map((dateItem, index) => (
+              <li key={index} className="pt-2">
+                {formatDateRangesToPersian2(dateItem.reserved_from)} تا{" "}
+                {formatDateRangesToPersian2(dateItem.reserved_to)}
+              </li>
+            ))}
+          </ul>
+        </InfoRow>
+      )}
+
+      <div className="mt-auto absolute left-0 bottom-0">
+        <Link href={MoreDetailsHref}>
+          <Button
+            className={`data-[hover]:bg-transparent data-[hover]:text-secondary-500 ${
+              isHovered ? "bg-gray-200" : ""
+            }`}
+            variant="light"
+            size="md"
+            endContent={<HoverIcon isHovered={isHovered} />}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            مشاهده‌ی بیشتر
+          </Button>
+        </Link>
       </div>
-
-      {dateRange && (
-        <div className="flex items-center gap-3">
-          <RiInformationLine className="text-xl mt-1" />
-          <p className="text-sm text-gray-600 text-justify">{dateRange}</p>
-        </div>
-      )}
-
-      {MoreDetailsButton}
-    </div>
-  ) : (
-    <div
-      className={cn(
-        view ? cardStyles.cardBox : cardStyles.cardList,
-        "flex-col [&>div]:text-secondary-700"
-      )}
-      style={view ? { width: widthConter, height: heightConter } : undefined}
-    >
-      <div className="flex items-center gap-3">
-        <BsFileEarmarkFont className="text-xl" />
-        <h3 className="text-lg font-bold text-gray-600">
-          {service_name || name}
-        </h3>
-      </div>
-
-      {price && (
-        <div className="flex items-center gap-3 mt-2">
-          <RiPriceTag3Line className="text-xl" />
-          <p className="text-base font-medium text-gray-600">{price}</p>
-        </div>
-      )}
-
-      <div className="flex items-center gap-3">
-        <IoCalendarOutline className="text-xl mt-1" />
-        <p className="text-sm text-gray-600 text-justify">{description}</p>
-      </div>
-
-      {dateRange && (
-        <div className="flex items-center gap-3">
-          <RiInformationLine className="text-xl mt-1" />
-          <p className="text-sm text-gray-600 text-justify">{dateRange}</p>
-        </div>
-      )}
-
-      {MoreDetailsButton}
-    </div>
+    </CardContentBox>
   );
 };

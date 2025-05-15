@@ -32,3 +32,11 @@ export function formatDateRangesToPersian(
         })
         .join(separator);
 }
+
+export const formatDateRangesToPersian2 = (date: string): string => {
+  // برای مثال با dayjs:
+  // return dayjs(date).locale('fa').format('YYYY/MM/DD');
+
+  // یا اگر بدون کتابخانه:
+  return new Date(date).toLocaleDateString("fa-IR"); // ساده‌شده
+};

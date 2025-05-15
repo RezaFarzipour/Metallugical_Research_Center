@@ -1,10 +1,13 @@
 import LandingPage from "@/components/template/landingPage";
+import { getAllServiceCustomer } from "@/services/api/service";
 import React from "react";
 
-const Landing = () => {
+const Landing = async () => {
+  const data = await getAllServiceCustomer();
+
   return (
     <div>
-      <LandingPage />
+      <LandingPage initialData={data} />
     </div>
   );
 };
