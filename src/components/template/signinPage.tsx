@@ -7,7 +7,7 @@ import { useSigninFlow } from "../module/auth/useSigninFlow";
 import { useStepperStore } from "@/store/useSteperSlice";
 
 const SigninPage: React.FC = () => {
-  const { setCurrentStep } = useStepperStore()
+  const { setCurrentStep } = useStepperStore();
   const {
     step,
     setStep,
@@ -19,6 +19,8 @@ const SigninPage: React.FC = () => {
     sendOtpHandler,
     checkOtpHandler,
     onSubmitPersonalRegister,
+    checkOtpLoading,
+    isPersonalRegistering,
   } = useSigninFlow();
 
   useEffect(() => {
@@ -26,24 +28,32 @@ const SigninPage: React.FC = () => {
   }, [step, setCurrentStep]);
 
   const renderSteps = () => {
-
     switch (step) {
       case 1:
         return <SendOtpForm loading={loading} onSubmit={sendOtpHandler} />;
       case 2:
         return (
           <CheckOtpForm
-            onBack={() =>{ setStep(1); setCurrentStep(1) }}
+            onBack={() => {
+              setStep(1);
+              setCurrentStep(1);
+            }}
             onSubmit={checkOtpHandler}
             onChange={handleOtpChange}
             onResendOtp={() => sendOtpHandler({ phone: phoneNumber })}
             otp={otp}
             time={time}
             phoneNumber={phoneNumber}
+            loading={checkOtpLoading}
           />
         );
       case 3:
-        return <PersonalRegister onSubmit={onSubmitPersonalRegister} />;
+        return (
+          <PersonalRegister
+            loading={isPersonalRegistering}
+            onSubmitPersonalRegister={onSubmitPersonalRegister}
+          />
+        );
       default:
         return null;
     }

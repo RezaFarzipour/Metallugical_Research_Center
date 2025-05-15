@@ -9,11 +9,14 @@ import PersonalDetailsForm from "../controller/PersonalDetailsForm";
 import { BtnLoader } from "@/components/element/Loader";
 
 interface SendPersonalFormProps {
-  onSubmit: (data: typeof personalRegisterSchema._type) => void;
+  onSubmitPersonalRegister: (data: typeof personalRegisterSchema._type) => void;
+  loading: boolean;
 }
-const isCheckingInput = false;
 
-const PersonalRegister: React.FC<SendPersonalFormProps> = ({ onSubmit }) => {
+const PersonalRegister: React.FC<SendPersonalFormProps> = ({
+  onSubmitPersonalRegister,
+  loading,
+}) => {
   const {
     register,
     handleSubmit,
@@ -24,17 +27,16 @@ const PersonalRegister: React.FC<SendPersonalFormProps> = ({ onSubmit }) => {
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="relative">
+    <form
+      onSubmit={handleSubmit(onSubmitPersonalRegister)}
+      className="relative"
+    >
       <PersonalDetailsForm register={register} errors={errors} />
 
       <div className="pt-14">
-        {isCheckingInput ? (
-          <BtnLoader />
-        ) : (
-          <Button type="submit" variant="secondary" fullWidth>
-            تایید
-          </Button>
-        )}
+        <Button type="submit" variant="secondary" fullWidth>
+          {loading ? <BtnLoader /> : " تایید"}
+        </Button>
       </div>
     </form>
   );

@@ -17,9 +17,10 @@ export const useSigninFlow = () => {
   const [time, setTime] = useState(RESEND_TIME);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [loading, setLoading] = useState(false);
+  const [checkOtpLoading, setCheckOtpLoading] = useState(false);
 
   const router = useRouter();
-  const { data } = useGetUser(); 
+  const { data } = useGetUser();
   // اگر response وجود داشت، دیتا رو بگیر؛ وگرنه null باشه
   const user: User | null = data ?? null;
 
@@ -44,7 +45,8 @@ export const useSigninFlow = () => {
   };
   const checkOtpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
+
+    setCheckOtpLoading(true);
     try {
       const { response, error } = await checkOtp(phoneNumber, otp);
 
@@ -70,16 +72,18 @@ export const useSigninFlow = () => {
         "error"
       );
     } finally {
-      setLoading(false);
+      setCheckOtpLoading(false);
+
     }
   };
 
-  const mutation = useMutation({
+  const { mutateAsync, isPending: isPersonalRegistering } = useMutation({
     mutationKey: ["send-user-profile"],
     mutationFn: sendUserProfile,
   });
 
   const onSubmitPersonalRegister = async (data: PersonalRegisterFormData) => {
+
     const payload = {
       username: phoneNumber,
       first_name: data.first_name,
@@ -91,14 +95,16 @@ export const useSigninFlow = () => {
     };
 
     try {
-      await mutation.mutateAsync({
+      await mutateAsync({
         phone_number: phoneNumber,
         data: payload,
       });
-      router.push("/user/home"); // بعد از ثبت‌نام موفق
+
+      router.push("/"); // بعد از ثبت‌نام موفق
     } catch {
       showToast("ثبت‌نام با خطا مواجه شد", "error");
     }
+
   };
 
   const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,7 +125,7 @@ export const useSigninFlow = () => {
     handleOtpChange,
     time,
     phoneNumber,
-    loading,
+    loading, checkOtpLoading, isPersonalRegistering,
     sendOtpHandler,
     checkOtpHandler,
     onSubmitPersonalRegister,

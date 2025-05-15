@@ -49,7 +49,7 @@ export const editUserByPhoneNumberAdmin = async ({
     email: string;
     role?: string;
     username?: string;
-    phone_number?: string 
+    phone_number?: string
     is_signup?: boolean;
   };
 }) => {

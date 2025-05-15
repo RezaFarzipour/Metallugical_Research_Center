@@ -15,9 +15,9 @@ interface CheckOtpFormProps {
   onBack: () => void;
   time: number;
   onResendOtp: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  loading: boolean;
 }
 
-const isCheckingOtp = false;
 const CheckOtpForm: React.FC<CheckOtpFormProps> = ({
   onSubmit,
   otp,
@@ -26,6 +26,7 @@ const CheckOtpForm: React.FC<CheckOtpFormProps> = ({
   onResendOtp,
   onChange,
   phoneNumber,
+  loading,
 }) => {
   return (
     <div>
@@ -64,13 +65,9 @@ const CheckOtpForm: React.FC<CheckOtpFormProps> = ({
         </div>
 
         <div>
-          {isCheckingOtp ? (
-            <BtnLoader />
-          ) : (
-            <Button type="submit" variant="secondary" fullWidth>
-              تایید کد
-            </Button>
-          )}
+          <Button type="submit" variant="secondary" fullWidth>
+            {loading ? <BtnLoader /> : "ارسال کد تایید"}
+          </Button>
         </div>
       </form>
     </div>
