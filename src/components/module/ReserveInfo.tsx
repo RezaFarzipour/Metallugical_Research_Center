@@ -47,7 +47,16 @@ const ReserveInfo: React.FC<ReserveInfoProps> = ({
         <div>{sp(serviceData?.data?.price) || "نامشخص"}</div>
 
         <div className="font-medium">توضیحات ادمین:</div>
-        <div>{reservationData?.admin_description || "نامشخص"}</div>
+        <div
+          className="
+    max-h-32 w-full overflow-y-auto 
+    whitespace-pre-line
+    bg-default-100 rounded p-4 border
+    break-words
+  "
+        >
+          {reservationData?.admin_description || "نامشخص"}
+        </div>
 
         <div className="font-medium">تاریخ رزرو</div>
         <div>

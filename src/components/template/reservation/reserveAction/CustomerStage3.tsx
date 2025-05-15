@@ -112,6 +112,8 @@ const CustomerStage3 = ({
                           setReceiptFile(URL.createObjectURL(file)); // ذخیره‌ی آدرس تصویر
                         }
                       }}
+                      accept="image/*"
+                      capture="environment"
                       {...rest}
                     />
                   ) : (

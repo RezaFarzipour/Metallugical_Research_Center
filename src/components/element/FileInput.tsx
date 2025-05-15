@@ -13,8 +13,9 @@ interface FileInputProps {
   errors?: FieldErrors;
   multiple: boolean;
   disabled?: boolean;
+  accept?: string;
+  capture?: string;
 }
-
 function FileInput({
   label,
   name,
@@ -25,6 +26,8 @@ function FileInput({
   errors,
   multiple,
   disabled,
+  accept,
+  capture,
   ...rest
 }: FileInputProps) {
   const errorMessages = errors?.[name];
@@ -50,6 +53,8 @@ function FileInput({
           onChange={onChange}
           required={isRequired}
           disabled={disabled}
+          accept="image/*"
+          capture="environment"
           {...rest}
         />
       </label>
