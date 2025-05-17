@@ -174,7 +174,7 @@ export default function Stage1() {
               />
               <Button
                 type="button"
-                onClick={() => {
+                onPress={() => {
                   setCoverImageUrl(null);
                   setValue("cover_image", null);
                 }}
