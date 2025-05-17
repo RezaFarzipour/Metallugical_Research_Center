@@ -2,7 +2,7 @@
 
 import http from "../httpService";
 
-export const getAllReserveCustomer = async () => {
+export const getAllReserve = async () => {
   try {
     const response = await http.get(`/reserve`);
     console.log(response, "response.data");

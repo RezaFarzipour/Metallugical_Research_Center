@@ -10,7 +10,7 @@ import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import { TbEyeDiscount } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { getAllReserveCustomer } from "@/services/api/reserve";
+import { getAllReserve, getAllReserveCustomer } from "@/services/api/reserve";
 import { getAllUserAdmin } from "@/services/api/user";
 import { getAllServiceAdmin } from "@/services/api/service";
 import {
@@ -41,9 +41,9 @@ const ReservesPage: React.FC = () => {
   const { data: dataAllReserveCustomer, isLoading: isLoadingReserve } =
     useQuery({
       queryKey: ["get-Allreserve"],
-      queryFn: getAllReserveCustomer,
+      queryFn: getAllReserve,
     });
-  console.log(dataAllReserveCustomer, "dataAllReserveCustomer");
+
 
   const groupReservesByKeys = (reserves) => {
     return reserves.reduce(
