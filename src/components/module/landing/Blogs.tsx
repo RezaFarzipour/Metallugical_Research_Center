@@ -1,14 +1,17 @@
 "use client";
-
-import { LatestArticles } from "@/constants/data";
 import React from "react";
 import CardModule from "../cardModule/CardModule";
 import TitleStructure from "@/components/element/TitleStructure";
 import { useVisibleCount } from "@/hooks/useVisibleCount";
 import { motion } from "framer-motion";
 import { fadeInSlide } from "@/utils/motion";
+import {  BlogType } from "@/types";
 
-const Blogs = () => {
+type BlogsPropsType ={
+  AllBlogs:BlogType[]
+}
+
+const Blogs = ({AllBlogs}:BlogsPropsType) => {
   const visibleCount = useVisibleCount({ sm: 2, md: 2, lg: 3 });
 
   return (
@@ -21,7 +24,7 @@ const Blogs = () => {
         نگاهی به آخرین مقالات ما بندازید.
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        {LatestArticles.slice(0, visibleCount).map((item, index) => (
+        {AllBlogs.slice(0, visibleCount).map((item, index) => (
           <motion.div
             key={item.id}
             variants={fadeInSlide("up", "tween", index * 0.1, 0.6)}
@@ -29,7 +32,7 @@ const Blogs = () => {
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <CardModule
+            <CardModule<BlogType>
               data={[item]}
               widthConter="100%"
               heightImg="300px"

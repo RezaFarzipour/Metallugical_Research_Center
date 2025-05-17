@@ -16,6 +16,7 @@ import {
 import { showToast } from "@/store/useToastSlice";
 import { BtnLoader } from "../element/Loader";
 import { Button } from "@heroui/button";
+import Stage1ModalBody from "./reservation/reserveAction/Stage1ModalBody";
 
 interface ServiceImage {
   id: number;
@@ -118,6 +119,8 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
     setEndDate(reserved_to.toISOString().split("T")[0]);
   };
 
+  const isConfirmDisabled = !startDate || !endDate;
+
   return (
     <div className="flex flex-col md:flex-row items-center justify-center gap-16 container py-20">
       {/* Right Section */}
@@ -154,14 +157,15 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
             heightProp="lg"
             title=" انتخاب رزرو"
             bodyContent={
-              <CustomeDateRangePicker
-                onRangeSelect={rangeHandler}
-                reserveData={{
-                  reserved_from: reserved_from || "",
-                  reserved_to: reserved_to || "",
-                }}
+              <Stage1ModalBody
+                rangeHandler={rangeHandler}
+                reserved_to={reserved_to}
+                reserved_from={reserved_from}
+                serviceData={serviceData}
+               
               />
             }
+            disabled={isConfirmDisabled}
             onConfirm={handleConfirm}
           />
         </div>

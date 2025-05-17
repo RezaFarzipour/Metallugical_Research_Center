@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_BLOGS = gql`
-  {
-    query MyQuery {
+  
+    query getAllBlogs {
       blogs {
         coverImage
         id
@@ -11,5 +11,5 @@ export const GET_ALL_BLOGS = gql`
         title
       }
     }
-  }
+  
 `;

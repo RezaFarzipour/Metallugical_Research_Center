@@ -14,20 +14,18 @@ export interface DashboardMinicardProps {
 }
 
 export type sidebarchildren = {
-  id: number, title: string, to: string
-}
-
+  id: number;
+  title: string;
+  to: string;
+};
 
 export type NavLinkItem = {
   id: number;
   title: string;
   to: string;
   icon: React.ElementType; // یا React.ComponentType برای آیکن
-  children?: sidebarchildren[]
+  children?: sidebarchildren[];
 };
-
-
-
 
 export type contactInfoType = {
   id: number;
@@ -36,14 +34,11 @@ export type contactInfoType = {
   icon: React.ElementType;
 };
 
-
-
 export interface FAQItem {
   id: number;
   question: string;
   answer: string;
 }
-
 
 export interface FormInputConfig {
   id: number;
@@ -53,9 +48,8 @@ export interface FormInputConfig {
   maxLength?: number;
   placeholder?: string;
   boleean?: boolean;
-  options?: { label: string, value: boolean }[]
+  options?: { label: string; value: boolean }[];
 }
-
 
 export interface User {
   email: string;
@@ -70,7 +64,6 @@ export interface User {
 export interface UserProfileResponse {
   response: {
     data: User[]; // آرایه از User
-
   };
 }
 
@@ -82,7 +75,6 @@ export interface serviceDataEditType {
   cover_image: string;
 }
 
-
 export type AllUsersType = {
   username: string;
   first_name: string;
@@ -91,9 +83,7 @@ export type AllUsersType = {
   is_signup: boolean;
   phone_number: string;
   role: "customer" | "admin";
-}
-
-
+};
 
 // export type ServiceDetailsType = {
 //   data: {
@@ -106,21 +96,18 @@ export type AllUsersType = {
 //   };
 // };
 
-
 export type reservationDataType = {
-
   is_reservation_time_verified: boolean;
   admin_description: string;
   reserve_duration: number;
   total_price: number;
   reserve_from?: string;
-  stage: number,
+  stage: number;
   reserve_to?: string;
   service?: string;
   payment_image: string;
-  user: string
-
-}
+  user: string;
+};
 
 //services Type
 export interface EditorItem {
@@ -128,7 +115,6 @@ export interface EditorItem {
   type: "text" | "image";
   content: string;
 }
-
 
 export type ServiceImageType = {
   id: number;
@@ -152,3 +138,12 @@ export type ServiceDetailsType = {
   "service-images": ServiceImageType[];
   "service-reserve_date": ServiceReserveDateType[];
 };
+
+export type BlogType = {
+  coverImage: string;
+  id: number;
+  slug: string;
+  tags: string[];
+  title: string;
+};
+

@@ -38,7 +38,7 @@ const Services = ({ initialData }: LandingPageProps) => {
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <CardModule
+            <CardModule<ServiceDetailsType>
               data={[item]}
               widthConter="100%"
               heightImg="300px"

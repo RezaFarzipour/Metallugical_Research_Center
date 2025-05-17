@@ -23,7 +23,8 @@ const Stage2 = () => {
   const [editingHtml, setEditingHtml] = useState(""); // محتوای ویرایش شده متن
   const [coverImageUrl, setCoverImageUrl] = useState<string | null>(null);
   const [uploadedImageFile, setUploadedImageFile] = useState<File | null>(null);
-
+  const [isModalOpenCreateText, setIsModalOpenCreateText] = useState(false);
+  const [isModalOpenEditText, setIsModalOpenEditText] = useState(false);
   useEffect(() => {
     return () => {
       if (coverImageUrl) {
@@ -147,8 +148,17 @@ const Stage2 = () => {
         <div className="flex justify-between items-center gap-4">
           {/* دکمه‌های سمت راست: مودال افزودن متن و افزودن عکس */}
           <div className="flex gap-4">
+            <Button
+              className="bg-green-500 text-white"
+              onPress={() => setIsModalOpenCreateText(true)}
+            >
+              ساخت متن
+            </Button>
+
             {/* مودال افزودن متن */}
             <BlurModal
+              isOpen={isModalOpenCreateText}
+              onClose={() => setIsModalOpenCreateText(false)}
               title="ساخت متن"
               bodyContent={
                 <TextEditor
@@ -159,7 +169,7 @@ const Stage2 = () => {
               }
               onConfirm={addTextItem}
               heightProp="full"
-              disabled={!isSaved}
+              //disabled={!isSaved}
             />
 
             {/* ورودی فایل برای افزودن عکس */}
@@ -220,11 +230,25 @@ const Stage2 = () => {
 
                   <div className="flex items-center justify-end gap-2 pt-3">
                     {/* مودال برای ویرایش متن */}
+                    <Button
+                      className="bg-green-500 text-white"
+                      onPress={() => {
+                        setIsModalOpenEditText(true);
+                        if (item) {
+                          setEditingItem(item);
+                          setEditingHtml(item.content);
+                        }
+                      }}
+                    >
+                      ویرایش متن
+                    </Button>
                     <BlurModal
                       title="ویرایش متن"
-                      item={item}
-                      setEditingItem={setEditingItem}
-                      setEditingHtml={setEditingHtml}
+                      isOpen={isModalOpenEditText}
+                      onClose={() => setIsModalOpenEditText(false)}
+                      //item={item}
+                      //setEditingItem={setEditingItem}
+                      //setEditingHtml={setEditingHtml}
                       bodyContent={
                         <TextEditor
                           html={editingHtml} // محتوای ویرایش شده
