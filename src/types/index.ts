@@ -11,6 +11,7 @@ export interface DashboardMinicardProps {
   label: string;
   count: number;
   icon: IconType;
+  reserveLength?:number
 }
 
 export type sidebarchildren = {

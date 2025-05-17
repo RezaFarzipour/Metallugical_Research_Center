@@ -35,12 +35,7 @@ export const userSidebarlinks: SidebarLink[] = [
     hover: "text-primary-500",
     to: "/user/home",
   },
-  {
-    id: 2,
-    title: "رزرو ها",
-    icon: PiDeviceTablet,
-    to: "/reservation",
-  },
+
   {
     id: 3,
     title: "رزرو های من ",
@@ -261,31 +256,27 @@ export const images = [
   },
 ];
 
-export const userCards: DashboardMinicardProps[] = [
+export const getUserCards = (reserveLength: number,activeReservationCount:number): DashboardMinicardProps[] => [
   {
     color: "bg-primary-900",
-    shadow:
-      "shadow-[rgba(24,45,60,0.2)_-13px_0px,_rgba(24,45,60,0.1)_-23px_0px]",
+    shadow: "shadow-[rgba(24,45,60,0.2)_-13px_0px,_rgba(24,45,60,0.1)_-23px_0px]",
     icon: CiClock1,
     label: "تاریخ پیوستن",
     count: 10,
   },
   {
     color: "bg-secondary-500",
-    shadow:
-      "shadow-[rgba(55,124,251,0.2)_-13px_0px,_rgba(55,124,251,0.1)_-23px_0px]",
+    shadow: "shadow-[rgba(55,124,251,0.2)_-13px_0px,_rgba(55,124,251,0.1)_-23px_0px]",
     icon: PiDeviceTabletSpeakerLight,
-    label: "سفارش ها",
-    count: 10,
+    label: "رزرو های در حال انجام",
+    count: activeReservationCount,
   },
-
   {
     color: "bg-green-500",
-    shadow:
-      "shadow-[rgba(34,197,94,0.2)_-13px_0px,_rgba(34,197,94,0.1)_-23px_0px]",
+    shadow: "shadow-[rgba(34,197,94,0.2)_-13px_0px,_rgba(34,197,94,0.1)_-23px_0px]",
     icon: IoDocumentTextOutline,
-    label: "همه سفارش ها",
-    count: 10,
+    label: "همه رزرو ها",
+    count: reserveLength, // اینجا داینامیکش کردی
   },
 ];
 
