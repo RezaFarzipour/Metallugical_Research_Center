@@ -1,7 +1,7 @@
 "use client";
 
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import { Reservescolumns } from "@/constants/tableData";
+import { ReservesAdmincolumns } from "@/constants/tableData";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
@@ -10,7 +10,7 @@ import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import { TbEyeDiscount } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { getAllReserve, getAllReserveCustomer } from "@/services/api/reserve";
+import { getAllReserve } from "@/services/api/reserve";
 import { getAllUserAdmin } from "@/services/api/user";
 import { getAllServiceAdmin } from "@/services/api/service";
 import {
@@ -43,7 +43,6 @@ const ReservesPage: React.FC = () => {
       queryKey: ["get-Allreserve"],
       queryFn: getAllReserve,
     });
-
 
   const groupReservesByKeys = (reserves) => {
     return reserves.reduce(
@@ -126,9 +125,9 @@ const ReservesPage: React.FC = () => {
 
   // محاسبه ستون‌های هدر
   const headerColumns = useMemo(() => {
-    return visibleColumns.size === Reservescolumns.length
-      ? Reservescolumns
-      : Reservescolumns.filter((column) => visibleColumns.has(column.uid));
+    return visibleColumns.size === ReservesAdmincolumns.length
+      ? ReservesAdmincolumns
+      : ReservesAdmincolumns.filter((column) => visibleColumns.has(column.uid));
   }, [visibleColumns]);
 
   const firstActionClickHandler = useCallback(
@@ -147,7 +146,7 @@ const ReservesPage: React.FC = () => {
         <FilteredContainer
           datas={formDataReseves}
           INITIAL_VISIBLE_COLUMNS={visibleKeys}
-          columns={Reservescolumns}
+          columns={ReservesAdmincolumns}
           quantity="گزارش ها"
           topContents={!!formDataReseves?.length}
           viewContent={false}

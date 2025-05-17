@@ -214,7 +214,7 @@ export const Servicecolumns = [
   { name: "عملیات", uid: "actions" },
 ];
 
-export const Reservescolumns = [
+export const ReservesAdmincolumns = [
     { name: "#", uid: "_id", sortable: true },
     { name: "نام کاربر", uid: "name", sortable: true },
     { name: "شماره همراه", uid: "phone_number", sortable: true },

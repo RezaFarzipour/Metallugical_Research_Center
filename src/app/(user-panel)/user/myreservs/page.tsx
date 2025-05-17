@@ -36,7 +36,10 @@
 "use client";
 
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import { Reservescolumns, ReservesCustomercolumns } from "@/constants/tableData";
+import {
+  Reservescolumns,
+  ReservesCustomercolumns,
+} from "@/constants/tableData";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
@@ -95,26 +98,29 @@ const ReservesPage: React.FC = () => {
 
         const status =
           reserve.is_canceled === true
-            ? 2
+            ? "لغو شده"
             : reserve.is_finished === true
-            ? 1
-            : 0;
+            ? "تمام شده"
+            : "در حال انتظار";
+        const payment_status =
+          reserve.is_payment_verified === true
+            ? "پرداخت شده"
+            : "در انتظار پرداخت";
 
         acc.reserveUp.push({
           _id: toPersianNumbers(index + 1),
           id: reserve.id,
-          name: reserve.user,
+          name: toPersianNumbers(reserve.user),
           service_name,
           price: toPersianNumbersWithComma(reserve.total_price),
-       
+
           reserve_duration,
           actions: reserve.id.toString(),
           dateRange: dateRanges,
           admin_description: reserve.admin_description,
           stage: reserve.stage,
           status,
-          payment_status: reserve.is_payment_verified,
-         
+          payment_status,
         });
 
         return acc;
@@ -146,8 +152,6 @@ const ReservesPage: React.FC = () => {
     dataAllServiceAdmin,
     isLoadingService,
     isLoadingReserve,
-
-    
   ]);
 
   const { sortedItems } = useFilteredContainer(formDataReseves);
@@ -156,7 +160,9 @@ const ReservesPage: React.FC = () => {
   const headerColumns = useMemo(() => {
     return visibleColumns.size === ReservesCustomercolumns.length
       ? ReservesCustomercolumns
-      : ReservesCustomercolumns.filter((column) => visibleColumns.has(column.uid));
+      : ReservesCustomercolumns.filter((column) =>
+          visibleColumns.has(column.uid)
+        );
   }, [visibleColumns]);
 
   const firstActionClickHandler = useCallback(
