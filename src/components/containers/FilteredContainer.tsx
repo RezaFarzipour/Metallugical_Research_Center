@@ -20,6 +20,7 @@ interface PanelContainerProps<T extends TableData> {
   columnsDropDownBtn?: boolean;
   rolesDropDown: boolean;
   stausDropDown: boolean;
+  paymentStautsDropDown?: boolean;
   viewContent?: boolean;
   children: React.ReactNode;
   viewContentSmSize?: boolean;
@@ -37,6 +38,7 @@ export default function FilteredContainer({
   columnsDropDownBtn,
   rolesDropDown,
   stausDropDown,
+  paymentStautsDropDown,
   viewContent,
   children,
   btnClickHandler,
@@ -64,6 +66,7 @@ export default function FilteredContainer({
           columnsDropDownBtn={columnsDropDownBtn}
           rolesDropDown={rolesDropDown}
           stausDropDown={stausDropDown}
+          paymentStautsDropDown={paymentStautsDropDown}
           viewContent={viewContent}
           viewContentSmSize={viewContentSmSize}
         />

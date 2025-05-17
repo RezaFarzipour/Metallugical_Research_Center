@@ -20,11 +20,12 @@ interface TopContentProps {
   quantity: string;
   rolesDropDown?: boolean;
   stausDropDown?: boolean;
+  paymentStautsDropDown?: boolean;
   columnsDropDownBtn?: boolean;
   addBtn?: React.ReactNode;
   viewContent?: boolean;
   viewContentSmSize?: boolean;
-  btnClickHandler?:()=>void
+  btnClickHandler?: () => void;
 }
 
 export default function TopContent({
@@ -33,11 +34,12 @@ export default function TopContent({
   quantity,
   rolesDropDown,
   stausDropDown,
+  paymentStautsDropDown,
   addBtn,
   columnsDropDownBtn,
   viewContent,
   viewContentSmSize,
-  btnClickHandler
+  btnClickHandler,
 }: TopContentProps) {
   const { view, setPage, setRowsPerPage, setView } = useTableStore();
 
@@ -64,20 +66,19 @@ export default function TopContent({
           <TableFilters
             rolesDropDown={rolesDropDown}
             stausDropDown={stausDropDown}
+            paymentStautsDropDown={paymentStautsDropDown}
             columnsDropDownBtn={columnsDropDownBtn}
             columns={columns}
           />
 
           {addBtn && (
-      
-              <Button
+            <Button
               onPress={btnClickHandler}
-                className="bg-secondary-500 text-white"
-                endContent={<FaPlus />}
-              >
-                افزودن
-              </Button>
-     
+              className="bg-secondary-500 text-white"
+              endContent={<FaPlus />}
+            >
+              افزودن
+            </Button>
           )}
         </div>
       </div>

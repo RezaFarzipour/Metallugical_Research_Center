@@ -10,6 +10,7 @@ interface Data {
     email: string;
     role: string;
     status: string;
+    payment_status: string;
     amount: string;
     date: string;
     title: string;
@@ -23,6 +24,7 @@ export function useFilteredContainer(datas: Data[]) {
     const {
         filterValue,
         statusFilter,
+        peymentStatusFilter,
         rolesFilter,
         rowsPerPage,
         sortDescriptor,
@@ -38,6 +40,7 @@ export function useFilteredContainer(datas: Data[]) {
             filter: string | Set<string>,
             key: keyof Data
         ) => {
+
             if (filter !== "all" && filter instanceof Set) {
                 return items.filter((item) => filter.has(item[key] as string));
             }
@@ -57,11 +60,14 @@ export function useFilteredContainer(datas: Data[]) {
             });
         }
 
+
+
+        filteredUsers = applyFilter(filteredUsers, peymentStatusFilter, "payment_status");
         filteredUsers = applyFilter(filteredUsers, statusFilter, "status");
         filteredUsers = applyFilter(filteredUsers, rolesFilter, "role");
 
         return filteredUsers;
-    }, [datas, filterValue, statusFilter, rolesFilter,]);
+    }, [datas, filterValue, statusFilter, rolesFilter, peymentStatusFilter]);
 
     // محاسبه تعداد صفحات و آیتم‌های قابل نمایش
     const pages = Math.ceil(filteredItems.length / rowsPerPage);

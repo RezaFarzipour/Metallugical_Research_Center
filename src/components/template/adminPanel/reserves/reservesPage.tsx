@@ -41,6 +41,7 @@ const ReservesPage: React.FC = () => {
           columnsDropDownBtn={true}
           rolesDropDown={false}
           stausDropDown={false}
+          paymentStautsDropDown={true}
           bottomContents={!!formDataReseves?.length}
         >
           {isLoadingReserve ? (
