@@ -131,7 +131,7 @@ const ReservesPage: React.FC = () => {
 
   const firstActionClickHandler = useCallback(
     (id: string | number) => {
-      router.push(`/admin/services/${id}/details`);
+      router.push(`/reservation?reserve-id=${id}`);
     },
     [router]
   );
@@ -161,10 +161,7 @@ const ReservesPage: React.FC = () => {
               <BtnLoader color="#377cfb" />
             </div>
           ) : isEmpty ? (
-            <Empty
-              spanValue="رزروی"
-              btn={false}
-            />
+            <Empty spanValue="رزروی" btn={false} />
           ) : (
             <CustomeTable
               headerColumns={headerColumns}
