@@ -97,105 +97,8 @@ export const usersOrdersINITIAL_VISIBLE_COLUMNS = [
   "actions",
 ];
 
-// export const blogs = [
-//     {
-//         id: 1,
-//         title: "Understanding React",
-//         category: "Web Development",
-//         author: "Tony Reichert",
-//         date: "1403/01/22",
-//         image: "/images/blog1-img1.png",
-//     },
-//     {
-//         id: 2,
-//         title: "Advanced JavaScript",
-//         category: "Programming",
-//         author: "Zoey Lang",
-//         date: "1403/01/22",
-//         image: "/images/blog1-img2.png",
-//     },
-//     {
-//         id: 3,
-//         title: "UI/UX Design Principles",
-//         category: "Design",
-//         author: "Jane Fisher",
-//         date: "1403/01/22",
-//         image: "/images/blog1-img1.png",
-//     },
-//     {
-//         id: 4,
-//         title: "Node.js for Beginners",
-//         category: "Backend Development",
-//         author: "William Howard",
-//         date: "1403/01/22",
-//         image: "/images/blog1-img2.png",
-//     },
-//     {
-//         id: 5,
-//         title: "Introduction to AI",
-//         category: "Artificial Intelligence",
-//         author: "علی محمدی",
-//         date: "1403/01/22",
-//         image: "/images/blog1-img1.png",
-//     },
-//     {
-//         id: 6,
-//         title: "Data Structures in Python",
-//         category: "Programming",
-//         author: "Michael Smith",
-//         date: "1403/01/22",
-//         image: "/images/blog1-img2.png",
-//     },
-//     {
-//         id: 7,
-//         title: "Cloud Computing Basics",
-//         category: "Cloud Computing",
-//         author: "Emily Johnson",
-//         date: "1403/01/22",
-//         image: "/images/blog1-img1.png",
-//     },
-//     {
-//         id: 8,
-//         title: "Cybersecurity Essentials",
-//         category: "Security",
-//         author: "David Brown",
-//         date: "1403/01/22",
-//         image: "/images/blog1-img2.png",
-//     },
-//     {
-//         id: 9,
-//         title: "Machine Learning 101",
-//         category: "Machine Learning",
-//         author: "Sophia Davis",
-//         date: "1403/01/22",
-//         image: "/images/blog1-img1.png",
-//     },
-//     {
-//         id: 10,
-//         title: "Blockchain Explained",
-//         category: "Blockchain",
-//         author: "James Wilson",
-//         date: "1403/01/22",
-//         image: "/images/blog1-img2.png",
-//     },
-//     {
-//         id: 11,
-//         title: "Digital Marketing Trends",
-//         category: "Marketing",
-//         author: "Isabella Martinez",
-//         date: "1403/01/22",
-//         image: "/images/blog1-img1.png",
-//     },
-// ];
 
-// export const blogsINITIAL_VISIBLE_COLUMNS = [
-//     "id",
-//     "title",
-//     "category",
-//     "author",
-//     "date",
-//     "actions",
-// ];
+
 export const Usercolumns = [
   { name: "#", uid: "id", sortable: true },
   { name: "نام و نام خانوادگی", uid: "name", sortable: true },
@@ -215,18 +118,18 @@ export const Servicecolumns = [
 ];
 
 export const ReservesAdmincolumns = [
-    { name: "#", uid: "_id", sortable: true },
-    { name: "نام کاربر", uid: "name", sortable: true },
-    { name: "شماره همراه", uid: "phone_number", sortable: true },
-    { name: "نام سرویس", uid: "service_name", sortable: true },
-    { name: "قیمت", uid: "price" },
-    { name: "مدت زمان رزرو", uid: "reserve_duration" },
-    { name: "توضیحات", uid: "admin_description", sortable: true },
-    { name: "تاریخ رزرو", uid: "dateRange" },
-    { name: " وضعیت پرداخت", uid: "payment_status" },
-    { name: "وضعیت", uid: "status" },
-    { name: "مرحله", uid: "stage" },
-    { name: "عملیات", uid: "actions" },
+  { name: "#", uid: "_id", sortable: true },
+  { name: "نام کاربر", uid: "name", sortable: true },
+  { name: "شماره همراه", uid: "phone_number", sortable: true },
+  { name: "نام سرویس", uid: "service_name", sortable: true },
+  { name: "قیمت", uid: "price" },
+  { name: "مدت زمان رزرو", uid: "reserve_duration" },
+  { name: "توضیحات", uid: "admin_description", sortable: true },
+  { name: "تاریخ رزرو", uid: "dateRange" },
+  { name: " وضعیت پرداخت", uid: "payment_status" },
+  { name: "وضعیت", uid: "status" },
+  { name: "مرحله", uid: "stage" },
+  { name: "عملیات", uid: "actions" },
 ]
 export const ReservesCustomercolumns = [
   { name: "#", uid: "_id", sortable: true },
@@ -269,16 +172,18 @@ export const statusOptions = [
   { name: "درحال انتظار", uid: "درحال انتظار" },
   { name: "کنسل شده", uid: "کنسل شده" },
 ];
-
 export const rolesOptions = [
   { name: "ادمین", uid: "ادمین" },
   { name: "کاربر", uid: "کاربر" },
 ];
 
 export const statusColorMap = {
-  "انجام شده": "success",
+  "تمام شده": "success",
   "درحال انتظار": "warning",
-  "کنسل شده": "danger",
+  "لغو شده": "danger",
+  "پرداخت شده": "success",
+  "در انتظار پرداخت": "warning",
+
   ادمین: "secondary",
-  کاربر: "primary",
+  کاربر: "success",
 };

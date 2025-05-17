@@ -20,6 +20,7 @@ interface User {
   author: string;
   articleTitle: string;
   dateRange: string;
+  payment_status?: string;
 }
 
 interface CellRendererProps {
@@ -76,6 +77,30 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
           {cellValue}
         </Chip>
       );
+    case "payment_status":
+      return (
+        <Chip
+          className="capitalize"
+          color={
+            statusColorMap[data.payment_status as keyof typeof statusColorMap]
+          }
+          size="sm"
+          variant="flat"
+        >
+          {cellValue}
+        </Chip>
+      );
+    case "role":
+      return (
+        <Chip
+          className="capitalize"
+          color={statusColorMap[data.role as keyof typeof statusColorMap]}
+          size="sm"
+          variant="flat"
+        >
+          {cellValue}
+        </Chip>
+      );
     case "actions":
       return (
         <div className="flex justify-center gap-2">
@@ -94,6 +119,6 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
         </div>
       );
     default:
-      return <>{cellValue}</>;
+      return <span className="text-nowrap">{cellValue}</span>;
   }
 };
