@@ -67,7 +67,7 @@ const ReservesPage: React.FC = () => {
             : reserve.is_finished === true
             ? 1
             : 0;
-
+        const payment_status = reserve.is_payment_verified === true ? 1 : 2;
         acc.reserveUp.push({
           _id: toPersianNumbers(index + 1),
           id: reserve.id,
@@ -82,8 +82,7 @@ const ReservesPage: React.FC = () => {
           admin_description: reserve.admin_description,
           stage: reserve.stage,
           status,
-          payment_status: reserve.is_payment_verified,
-          reservation_time_status: reserve.is_reservation_time_verified,
+          payment_status,
         });
 
         return acc;
