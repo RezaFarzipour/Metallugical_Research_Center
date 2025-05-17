@@ -11,6 +11,7 @@ import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesTo
 import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 import { MdOutlineDescription, MdOutlineSubtitles } from "react-icons/md";
 import truncateText from "@/utils/formatter/truncateText";
+import { BlogType } from "@/types";
 
 interface ReserveDate {
   id: number;
@@ -19,19 +20,22 @@ interface ReserveDate {
   service: number;
 }
 
-interface CardContentProps {
-  id: string | number;
-  reserve_date?: ReserveDate[];
-  price?: string;
-  isMoreDetails?: string;
+interface ServiceCardData {
+  id: number;
   name: string;
   service_name?: string;
   description: string;
+  price?: string;
+  reserve_date?: ReserveDate[];
+  dateRange?: string;
+}
+
+interface CardContentProps extends Partial<ServiceCardData>, Partial<BlogType> {
   widthConter: string;
   heightConter: string;
   view: boolean;
   styleForAdmin: boolean;
-  dateRange: string;
+  isMoreDetails?: string;
 }
 
 const InfoRow = ({
@@ -68,19 +72,24 @@ export const CardContent: React.FC<CardContentProps> = ({
   isMoreDetails,
   name,
   service_name,
+  title,
   description,
   widthConter,
   heightConter,
   view,
   styleForAdmin,
   dateRange,
+  slug,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const MoreDetailsHref =
-    isMoreDetails === "admin"
-      ? `/admin/services/${id}/details`
-      : `/services/${id}/details`;
+  const isBlog = !!slug;
+
+  const MoreDetailsHref = isBlog
+    ? `/blogs/${slug}/${id}`
+    : isMoreDetails === "admin"
+    ? `/admin/services/${id}/details`
+    : `/services/${id}/details`;
 
   const cardStyles = {
     box: cn(
@@ -99,13 +108,13 @@ export const CardContent: React.FC<CardContentProps> = ({
     >
       <InfoRow icon={<MdOutlineSubtitles className="text-xl" />}>
         <h3 className="text-lg font-bold text-gray-600">
-          {service_name || name}
+          {service_name || name || title}
         </h3>
       </InfoRow>
 
       {price && (
         <InfoRow icon={<RiPriceTag3Line className="text-xl" />}>
-          <p className="text-base  text-gray-600">
+          <p className="text-base text-gray-600">
             {toPersianNumbersWithComma(price)}
           </p>
         </InfoRow>
@@ -113,11 +122,11 @@ export const CardContent: React.FC<CardContentProps> = ({
 
       <InfoRow icon={<MdOutlineDescription className="text-xl mt-1" />}>
         <p className="text-sm text-gray-600 text-justify">
-          {truncateText(description, 20)}
+          {truncateText(description || "", 20)}
         </p>
       </InfoRow>
 
-      {styleForAdmin && (
+      {styleForAdmin && dateRange && (
         <InfoRow icon={<IoCalendarOutline size={20} className="mt-1" />}>
           <p className="text-sm text-gray-600 text-justify pt-2">{dateRange}</p>
         </InfoRow>

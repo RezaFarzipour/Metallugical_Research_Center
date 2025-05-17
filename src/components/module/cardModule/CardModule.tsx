@@ -1,29 +1,15 @@
-"use client";
-import { Card } from "@heroui/react";
 import React, { useState } from "react";
+import { Card } from "@heroui/react";
 import { ImageContainer } from "./ImageContainer";
 import { CardContent } from "./CardContent";
 import clsx from "clsx";
 import { cn } from "@/utils/cn";
-interface ReserveDate {
-  id: number;
-  reserved_from: string;
-  reserved_to: string;
-  service: number;
-}
-type DataItem = {
-  id: number;
-  name: string;
-  service_name?: string;
-  description: string;
-  image?: string;
-  cover_image?: string;
-  date?: string;
-  dateRange?: string;
-  "service-reserve_date"?: ReserveDate[];
-};
-type Props = {
-  data: DataItem[];
+import type { ServiceDetailsType, BlogType } from "@/types";
+
+type CardData = ServiceDetailsType | BlogType;
+
+type Props<T extends CardData> = {
+  data: T[];
   isDate?: boolean;
   widthConter: string;
   heightImg: string;
@@ -33,17 +19,16 @@ type Props = {
   styleForAdmin: boolean;
 };
 
-const CardModule = ({
+const CardModule = <T extends CardData>({
   data,
-  isDate,
   isMoreDetails,
   widthConter,
   heightImg,
   heightConter,
   view = true,
   styleForAdmin,
-}: Props) => {
-  const [hoveredArticleId, setHoveredArticleId] = useState<number | null>(null);
+}: Props<T>) => {
+  const [hoveredId, setHoveredId] = useState<number | string | null>(null);
 
   const cardStyles = {
     cardsBox: clsx(
@@ -54,40 +39,53 @@ const CardModule = ({
 
   return (
     <>
-      {data.map((item) => (
-        <div
-          key={item.id}
-          className={cn(
-            "flex justify-center items-center",
-            view ? "min-h-[18rem]" : "min-h-[18rem]"
-          )}
-        >
-          <Card
-            className={cn(view ? cardStyles.cardsBox : cardStyles.cardsList)}
-            style={view ? { height: heightImg } : { height: "auto" }}
-          >
-            <ImageContainer
-              image={item.image || item.cover_image}
-              isHovered={hoveredArticleId === item.id}
-              setIsHovered={(isHovered) =>
-                setHoveredArticleId(isHovered ? item.id : null)
-              }
-              view={view}
-            />
+      {data.map((item) => {
+        const image =
+          "cover_image" in item
+            ? item.cover_image
+            : "coverImage" in item
+            ? item.coverImage
+            : undefined;
 
-            <CardContent
-              {...item}
-              reserve_date={item["service-reserve_date"]}
-              isDate={isDate}
-              isMoreDetails={isMoreDetails}
-              widthConter={widthConter}
-              heightConter={heightConter}
-              view={view}
-              styleForAdmin={styleForAdmin}
-            />
-          </Card>
-        </div>
-      ))}
+        return (
+          <div
+            key={item.id}
+            className={cn(
+              "flex justify-center items-center",
+              view ? "min-h-[18rem]" : "min-h-[18rem]"
+            )}
+          >
+            <Card
+              className={cn(view ? cardStyles.cardsBox : cardStyles.cardsList)}
+              style={view ? { height: heightImg } : { height: "auto" }}
+            >
+              <ImageContainer
+                image={image}
+                isHovered={hoveredId === item.id}
+                setIsHovered={(isHovered) =>
+                  setHoveredId(isHovered ? item.id : null)
+                }
+                view={view}
+              />
+
+              <CardContent
+                {...item}
+                reserve_date={
+                  "service-reserve_date" in item
+                    ? item["service-reserve_date"]
+                    : undefined
+                }
+              
+                isMoreDetails={isMoreDetails}
+                widthConter={widthConter}
+                heightConter={heightConter}
+                view={view}
+                styleForAdmin={styleForAdmin}
+              />
+            </Card>
+          </div>
+        );
+      })}
     </>
   );
 };
