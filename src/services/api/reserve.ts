@@ -14,12 +14,13 @@ export const getAllReserveCustomer = async () => {
   }
 };
 
-// stage1
+
 export const getReserveCustomerById = async (reserveId: string | null) => {
   const response = await http.get(`/reserve?reserve-id=${reserveId}`);
   return response.data;
 };
 
+// stage1
 export const postReservedService = async () => {
   const response = await http.post(`/reserve`);
   return response.data;

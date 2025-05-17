@@ -17,6 +17,7 @@ import { showToast } from "@/store/useToastSlice";
 import { BtnLoader } from "../element/Loader";
 import { Button } from "@heroui/button";
 import Stage1ModalBody from "./reservation/reserveAction/Stage1ModalBody";
+import { cn } from "@/utils/cn";
 
 interface ServiceImage {
   id: number;
@@ -43,8 +44,8 @@ interface ServiceDataType {
 
 const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
   const BASE_URL = "http://localhost:8000";
-  const [startDate, setStartDate] = useState<string | null>("");
-  const [endDate, setEndDate] = useState<string | null>("");
+  const [startDate, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const router = useRouter();
@@ -53,7 +54,6 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
   const { reserved_from, reserved_to } =
     serviceData?.["service-reserve_date"]?.[0] || {};
 
-  // extract other data
   const {
     id: serviceId,
     service_name,
@@ -63,7 +63,6 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
     "service-images": serviceImages,
   } = serviceData;
 
-  // formatting image urls
   const coverImageSrc = cover_image.startsWith("http")
     ? cover_image
     : BASE_URL + cover_image;
@@ -73,7 +72,6 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
       img.image.startsWith("http") ? img.image : BASE_URL + img.image
     ) || [];
 
-  // mutation
   const { mutateAsync: createServiceReserve, isPending: isCreating } =
     useMutation({
       mutationKey: ["post-reserve"],
@@ -139,36 +137,31 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
 
         <p className="wrap text-justify text-default-400 mb-5">{description}</p>
 
-        <div className="text-center my-5 font-bold text-2xl">
+        <div className="text-right my-5 font-bold text-2xl">
           قیمت محصول: {sp(price)}
         </div>
 
+        <div className="flex justify-center items-center w-full">
+          <CustomeDateRangePicker
+            onRangeSelect={rangeHandler}
+            reserveData={{
+              reserved_from: reserved_from || "",
+              reserved_to: reserved_to || "",
+            }}
+          />
+        </div>
         <Button
-          className="bg-blue-500 text-white"
-          onPress={() => setIsModalOpen(true)}
+          disabled={isConfirmDisabled}
+          className={cn(
+            "text-white px-4 py-2",
+            isConfirmDisabled
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-secondary-500 hover:bg-secondary-600"
+          )}
+          onPress={handleConfirm}
         >
           {isCreating || isPatching ? <BtnLoader /> : "انتخاب رزرو"}
         </Button>
-
-        <div className="flex justify-center w-full">
-          <BlurModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            heightProp="lg"
-            title=" انتخاب رزرو"
-            bodyContent={
-              <Stage1ModalBody
-                rangeHandler={rangeHandler}
-                reserved_to={reserved_to}
-                reserved_from={reserved_from}
-                serviceData={serviceData}
-               
-              />
-            }
-            disabled={isConfirmDisabled}
-            onConfirm={handleConfirm}
-          />
-        </div>
       </div>
 
       {/* Left Section */}
@@ -180,3 +173,4 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
 };
 
 export default ServiceDetails;
+
