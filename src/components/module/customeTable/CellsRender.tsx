@@ -64,6 +64,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
           </div>
         </div>
       );
+
     case "status":
       return (
         <Chip

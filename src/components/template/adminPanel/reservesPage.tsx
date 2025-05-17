@@ -63,10 +63,14 @@ const ReservesPage: React.FC = () => {
 
         const status =
           reserve.is_canceled === true
-            ? 2
+            ? "لغو شده"
             : reserve.is_finished === true
-            ? 1
-            : 0;
+            ? "تمام شده"
+            : "در حال انتظار";
+        const payment_status =
+          reserve.is_payment_verified === true
+            ? "پرداخت شده"
+            : "در انتظار پرداخت";
 
         acc.reserveUp.push({
           _id: toPersianNumbers(index + 1),
@@ -75,15 +79,13 @@ const ReservesPage: React.FC = () => {
           phone_number: toPersianNumbers(reserve.user),
           service_name,
           price: toPersianNumbersWithComma(reserve.total_price),
-          payment_image: reserve.payment_image,
           reserve_duration,
           actions: reserve.id.toString(),
           dateRange: dateRanges,
           admin_description: reserve.admin_description,
           stage: reserve.stage,
           status,
-          payment_status: reserve.is_payment_verified,
-          reservation_time_status: reserve.is_reservation_time_verified,
+          payment_status,
         });
 
         return acc;
