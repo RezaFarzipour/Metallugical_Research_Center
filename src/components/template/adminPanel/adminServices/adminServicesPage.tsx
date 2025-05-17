@@ -27,6 +27,7 @@ export const AdminServicesPage: React.FC = ({}) => {
     firstActionClickHandler,
     secondActionClickHandler,
     handleDeleteService,
+    router,
   } = useAdminServicesDataAction();
 
   const { sortedItems } = useFilteredContainer(formDataServices);
@@ -49,7 +50,7 @@ export const AdminServicesPage: React.FC = ({}) => {
           rolesDropDown={false}
           stausDropDown={false}
           addBtn={true}
-          addBtnhref="/admin/services/create"
+          btnClickHandler={() => router.push("/admin/services/create")}
           bottomContents={!!formDataServices?.length}
         >
           {isPending ? (

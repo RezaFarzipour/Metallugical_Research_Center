@@ -99,6 +99,7 @@ export const BlogsPage: React.FC = () => {
     headerColumns,
     loading,
     error,
+    router,
     firstActionClickHandler,
     secondActionClickHandler,
     handleDeleteService,
@@ -120,7 +121,7 @@ export const BlogsPage: React.FC = () => {
           viewContent={true}
           viewContentSmSize={false}
           addBtn={true}
-          addBtnhref="/admin/blogs/create"
+          btnClickHandler={() => router.push("/admin/blogs/create")}
           columnsDropDownBtn={true}
           rolesDropDown={false}
           stausDropDown={false}

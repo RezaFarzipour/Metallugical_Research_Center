@@ -22,9 +22,9 @@ interface TopContentProps {
   stausDropDown?: boolean;
   columnsDropDownBtn?: boolean;
   addBtn?: React.ReactNode;
-  addBtnhref?: string;
   viewContent?: boolean;
   viewContentSmSize?: boolean;
+  btnClickHandler?:()=>void
 }
 
 export default function TopContent({
@@ -34,10 +34,10 @@ export default function TopContent({
   rolesDropDown,
   stausDropDown,
   addBtn,
-  addBtnhref,
   columnsDropDownBtn,
   viewContent,
   viewContentSmSize,
+  btnClickHandler
 }: TopContentProps) {
   const { view, setPage, setRowsPerPage, setView } = useTableStore();
 
@@ -69,14 +69,15 @@ export default function TopContent({
           />
 
           {addBtn && (
-            <Link href={addBtnhref}>
+      
               <Button
+              onPress={btnClickHandler}
                 className="bg-secondary-500 text-white"
                 endContent={<FaPlus />}
               >
                 افزودن
               </Button>
-            </Link>
+     
           )}
         </div>
       </div>
