@@ -21,6 +21,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
     queryKey: ["getAll-users"],
     queryFn: getAllUserAdmin,
   });
+
   const router = useRouter();
 
   useEffect(() => {
@@ -79,7 +80,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
     : [];
 
   const firstActionClickHandler = useCallback(
-    (id: string| number, phone_number: string) => {
+    (id: string | number, phone_number: string) => {
       router.push(`/admin/users/${phone_number}/edit`);
     },
     [router]
