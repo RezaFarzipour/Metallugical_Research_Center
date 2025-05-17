@@ -47,22 +47,17 @@ import FilteredContainer from "@/components/containers/FilteredContainer";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import { TbEyeDiscount } from "react-icons/tb";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import { getAllUserAdmin } from "@/services/api/user";
-import {
-  getAllServiceAdmin,
-  getAllServiceCustomer,
-} from "@/services/api/service";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getAllServiceCustomer } from "@/services/api/service";
 import {
   toPersianNumbers,
   toPersianNumbersWithComma,
 } from "@/utils/formatter/toPersianNumbers";
-import { findName, findServiceName } from "@/utils/findeName";
+import { findServiceName } from "@/utils/findeName";
 import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
 import { BtnLoader } from "@/components/element/Loader";
 import Empty from "@/components/element/Empty";
-import { getAllReserve } from "@/services/api/reserve";
-import { useGetUser } from "@/hooks/useAuth";
+import { getAllReserve, postReservedService } from "@/services/api/reserve";
 
 const ReservesPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
@@ -80,6 +75,7 @@ const ReservesPage: React.FC = () => {
       queryKey: ["get-Allreserve"],
       queryFn: getAllReserve,
     });
+  console.log("dataAllReserveCustomer", dataAllReserveCustomer);
 
   const groupReservesByKeys = (reserves) => {
     return reserves.reduce(
@@ -113,7 +109,6 @@ const ReservesPage: React.FC = () => {
           name: toPersianNumbers(reserve.user),
           service_name,
           price: toPersianNumbersWithComma(reserve.total_price),
-
           reserve_duration,
           actions: reserve.id.toString(),
           dateRange: dateRanges,
@@ -139,8 +134,6 @@ const ReservesPage: React.FC = () => {
       Array.isArray(dataAllReserveCustomer.data)
     ) {
       const grouped = groupReservesByKeys(dataAllReserveCustomer.data);
-      console.log(grouped, "grouped");
-
       setFormData(grouped);
 
       if (grouped.reserveUp.length > 0) {
@@ -173,6 +166,22 @@ const ReservesPage: React.FC = () => {
   );
   const isEmpty = !formDataReseves || formDataReseves.length === 0;
 
+  //first post request when user click on continue button
+  const { mutateAsync: createServiceReserve, isPending: isCreating } =
+    useMutation({
+      mutationKey: ["post-reserve"],
+      mutationFn: postReservedService,
+    });
+
+  const handleReserve = async () => {
+    try {
+      const { id } = await createServiceReserve();
+      router.push(`/reservation?reserve-id=${id}`);
+    } catch (e) {
+      console.log("err", e);
+    }
+  };
+
   return (
     <div className="grid grid-cols-1">
       <div className=" p-4 md:p-6">
@@ -186,7 +195,8 @@ const ReservesPage: React.FC = () => {
           topContents={!!formDataReseves?.length}
           viewContent={false}
           viewContentSmSize={false}
-          addBtn={false}
+          addBtn={true}
+          btnClickHandler={handleReserve}
           columnsDropDownBtn={true}
           rolesDropDown={false}
           stausDropDown={true}

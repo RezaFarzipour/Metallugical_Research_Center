@@ -147,5 +147,6 @@ console.log('errrroooorrr',error);
         firstActionClickHandler,
         secondActionClickHandler,
         handleDeleteService,
+        router
     };
 };

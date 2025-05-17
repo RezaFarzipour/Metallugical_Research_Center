@@ -152,5 +152,6 @@ export const useAdminServicesDataAction = () => {
         firstActionClickHandler,
         secondActionClickHandler,
         handleDeleteService,
+        router
     };
 };

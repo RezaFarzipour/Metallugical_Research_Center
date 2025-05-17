@@ -17,13 +17,13 @@ interface PanelContainerProps<T extends TableData> {
   topContents?: boolean;
   bottomContents?: boolean;
   addBtn?: boolean;
-  addBtnhref?: string;
   columnsDropDownBtn?: boolean;
   rolesDropDown: boolean;
   stausDropDown: boolean;
   viewContent?: boolean;
   children: React.ReactNode;
   viewContentSmSize?: boolean;
+  btnClickHandler?: () => void;
 }
 
 export default function FilteredContainer({
@@ -34,12 +34,12 @@ export default function FilteredContainer({
   topContents,
   bottomContents,
   addBtn,
-  addBtnhref,
   columnsDropDownBtn,
   rolesDropDown,
   stausDropDown,
   viewContent,
   children,
+  btnClickHandler,
   viewContentSmSize,
 }: PanelContainerProps) {
   const { page, setPage } = useTableStore();
@@ -60,7 +60,7 @@ export default function FilteredContainer({
           usersLength={userData.length}
           quantity={quantity}
           addBtn={addBtn}
-          addBtnhref={addBtnhref}
+          btnClickHandler={btnClickHandler}
           columnsDropDownBtn={columnsDropDownBtn}
           rolesDropDown={rolesDropDown}
           stausDropDown={stausDropDown}
