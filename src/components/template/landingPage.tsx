@@ -5,12 +5,13 @@ import AboutOverview from "../module/landing/aboutOverview/AboutOverview";
 import FaqAccordian from "../module/landing/FaqAccordian";
 import Blogs from "../module/landing/Blogs";
 import Services from "../module/landing/Services";
-import { ServiceDetailsType } from "@/types";
+import { BlogsType, ServiceDetailsType } from "@/types";
 
 type LandingPageProps = {
   initialData: ServiceDetailsType[];
+  AllBlogs:BlogsType[]
 };
-const LandingPage = ({ initialData }: LandingPageProps) => {
+const LandingPage = ({ initialData,AllBlogs }: LandingPageProps) => {
   return (
     <main className="w-full overflow-x-hidden ">
       {/* Hero Header */}
@@ -32,7 +33,7 @@ const LandingPage = ({ initialData }: LandingPageProps) => {
       </section>
       {/* Blog Section */}
       <section className="w-full my-40">
-        <Blogs />
+        <Blogs  AllBlogs={AllBlogs}/>
       </section>
     </main>
   );
