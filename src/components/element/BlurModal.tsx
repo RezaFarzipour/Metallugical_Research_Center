@@ -8,11 +8,12 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure,
-} from "@heroui/react";
-import { cn } from "@/utils/cn";
-import { EditorItem } from "@/types";
 
+} from "@heroui/react";
+import clsx from "clsx";
+import { BtnLoader } from "./Loader";
+
+// تعریف نوع props
 interface BlurModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -21,47 +22,32 @@ interface BlurModalProps {
   onConfirm?: () => void;
   heightProp: "sm" | "md" | "lg" | "full";
   icon?: ReactNode;
+  isPatching?:boolean,
   disabled?: boolean;
-  setEditingItem?: (item: EditorItem) => void;
-  setEditingHtml?: (html: string) => void;
-  item?: EditorItem;
-  size?: "sm" | "md" | "lg";
 }
 
 export default function BlurModal({
+  isOpen,
+  onClose,
   title,
   bodyContent,
   onConfirm,
   heightProp,
+  isPatching,
   disabled,
-  setEditingItem,
-  setEditingHtml,
-  item,
-  size = "md",
 }: BlurModalProps) {
+
+
   const heightClass = {
     sm: "h-64",
     md: "h-96",
     lg: "h-[600px]",
     full: "min-h-screen",
   };
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <Button
-        onPress={() => {
-          onOpen();
-          if (item) {
-            setEditingItem?.(item);
-            setEditingHtml?.(item.content);
-          }
-        }}
-        className="bg-green-600  text-white"
-        size={size}
-      >
-        {title}
-      </Button>
+  
 
       <Modal
         isOpen={isOpen}
@@ -70,7 +56,7 @@ export default function BlurModal({
         scrollBehavior="inside"
       >
         <ModalContent
-          className={cn("w-full max-w-4xl", heightClass[heightProp])}
+          className={clsx("w-full max-w-4xl", heightClass[heightProp])}
         >
           {(onClose) => (
             <>
