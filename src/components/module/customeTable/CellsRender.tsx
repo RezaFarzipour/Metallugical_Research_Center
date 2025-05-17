@@ -60,7 +60,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
                 height={50}
               />
             )}
-            <span>{data.name}</span>
+            <span className="text-nowrap">{data.name}</span>
           </div>
         </div>
       );

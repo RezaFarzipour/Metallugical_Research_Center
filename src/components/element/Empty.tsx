@@ -2,13 +2,14 @@ import React from "react";
 import { HiArrowRight } from "react-icons/hi";
 import Link from "next/link";
 import Image from "next/image";
-import clsx from "clsx";
+import { cn } from "@/utils/cn";
 
 interface EmptyProps {
   btnValue?: string;
   btnHref?: string;
   spanValue: string;
   hidden?: boolean; // اگر false باشه، دکمه مخفی میشه
+  btn?: boolean;
 }
 
 const Empty = ({
@@ -16,6 +17,7 @@ const Empty = ({
   btnHref,
   spanValue,
   hidden = true,
+  btn = true,
 }: EmptyProps) => {
   return (
     <div className="container xl:max-w-screen-xl px-4 flex justify-center items-center">
@@ -30,19 +32,21 @@ const Empty = ({
           />
         </div>
         <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-secondary-700">
-          هنوز محتوایی برای نمایش وجود ندارد!
+          هنوز {spanValue} برای نمایش وجود ندارد!
         </h1>
         <p className="text-xs sm:text-sm text-secondary-500">
-          به نظر می‌رسد که هنوز {spanValue} ثبت نکرده‌اید یا محتوایی برای نمایش
-          در دسترس نیست.
+          به نظر می‌رسد که هنوز {spanValue} ثبت نکرده‌اید یا {spanValue} برای
+          نمایش در دسترس نیست.
         </p>
-        <div className={clsx("flex justify-center", !hidden && "hidden")}>
-          <Link href={btnHref || "/default-url"}>
-            <button className="flex items-center gap-x-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-primary-900 text-white hover:bg-primary-800 transition text-sm sm:text-base">
-              {btnValue}
-              <HiArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-          </Link>
+        <div className={cn("flex justify-center", !hidden && "hidden")}>
+          {btn && (
+            <Link href={btnHref || "/default-url"}>
+              <button className="flex items-center gap-x-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-primary-900 text-white hover:bg-primary-800 transition text-sm sm:text-base">
+                {btnValue}
+                <HiArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </div>
