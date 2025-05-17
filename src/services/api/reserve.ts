@@ -5,7 +5,7 @@ import http from "../httpService";
 export const getAllReserveCustomer = async () => {
   try {
     const response = await http.get(`/reserve`);
-    console.log(response.data, "response.data");
+    console.log(response, "response.data");
     return response.data;
 
   } catch (error) {
@@ -36,7 +36,7 @@ export async function patchReserveDetails({
 }: {
   reserve_from: string | null;
   reserve_to: string | null;
-  service: string | null  | undefined;
+  service: string | null | undefined;
   reserveId: string | null;
 }): Promise<any> {
   const response = await http.patch(

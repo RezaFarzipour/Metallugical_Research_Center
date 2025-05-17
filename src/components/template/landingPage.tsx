@@ -9,9 +9,9 @@ import { BlogsType, ServiceDetailsType } from "@/types";
 
 type LandingPageProps = {
   initialData: ServiceDetailsType[];
-  AllBlogs:BlogsType[]
+  AllBlogs: BlogsType[];
 };
-const LandingPage = ({ initialData,AllBlogs }: LandingPageProps) => {
+const LandingPage = ({ initialData, AllBlogs }: LandingPageProps) => {
   return (
     <main className="w-full overflow-x-hidden ">
       {/* Hero Header */}
@@ -33,7 +33,7 @@ const LandingPage = ({ initialData,AllBlogs }: LandingPageProps) => {
       </section>
       {/* Blog Section */}
       <section className="w-full my-40">
-        <Blogs  AllBlogs={AllBlogs}/>
+        <Blogs AllBlogs={AllBlogs} />
       </section>
     </main>
   );

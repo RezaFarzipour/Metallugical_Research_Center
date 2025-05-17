@@ -11,8 +11,12 @@ import { getAllServiceCustomer } from "@/services/api/service";
 import { BtnLoader } from "../element/Loader";
 import { staggerContainer } from "@/utils/motion";
 import { cn } from "@/utils/cn";
+import { ServiceDetailsType } from "@/types";
 
-const Services: React.FC = ({ initialData }) => {
+type ServicesPageProps = {
+  initialData: ServiceDetailsType[];
+};
+const Services = ({ initialData }: ServicesPageProps) => {
   const { view } = useTableStore();
   const { data, isPending } = useQuery({
     queryKey: ["getAll-servicesCustomer"],

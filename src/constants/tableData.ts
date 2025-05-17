@@ -214,6 +214,27 @@ export const Servicecolumns = [
     { name: "عملیات", uid: "actions" },
 ];
 
+export const Reservescolumns = [
+    { name: "#", uid: "_id", sortable: true },
+    { name: "نام کاربر", uid: "name", sortable: true },
+    { name: "شماره همراه", uid: "phone_number", sortable: true },
+    { name: "نام سرویس", uid: "service_name", sortable: true },
+    { name: "قیمت", uid: "price" },
+    { name: "مدت زمان رزرو", uid: "reserve_duration" },
+
+    { name: "توضیحات", uid: "admin_description", sortable: true },
+    { name: "فیش پرداخت", uid: "payment_image" },
+    { name: "تاریخ رزرو", uid: "dateRange" },
+
+    { name: " وضعیت پرداخت", uid: "payment_status" },
+    { name: "وضیعیت زمان (رزور)", uid: "reservation_time_status" },
+    { name: "وضعیت", uid: "status" },
+
+    { name: "مرحله", uid: "stage" },
+    { name: "عملیات", uid: "actions" },
+
+];
+
 export const columns = [
     { name: "#", uid: "id", sortable: true },
     { name: "نام", uid: "full-name", sortable: true },
