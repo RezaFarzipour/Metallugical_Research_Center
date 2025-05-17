@@ -12,6 +12,7 @@ import {
 } from "@heroui/react";
 import clsx from "clsx";
 import { BtnLoader } from "./Loader";
+import { cn } from "@/utils/cn";
 
 // تعریف نوع props
 interface BlurModalProps {
