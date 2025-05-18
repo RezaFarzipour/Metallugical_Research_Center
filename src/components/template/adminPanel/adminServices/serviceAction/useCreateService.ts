@@ -6,7 +6,7 @@ export function useCreateService() {
 
   const { isPending: isCreating, mutateAsync: createService } = useMutation({
     mutationFn: createNewService,
-    onSuccess: (data) => {
+    onSuccess: () => {
 
       queryClient.invalidateQueries({
         queryKey: ["getAll-services"],
@@ -24,7 +24,7 @@ export function useCreateServiceImages() {
 
   const { isPending: isCreatingImage, mutateAsync: createServiceImage } = useMutation({
     mutationFn: createServiceImages,
-    onSuccess: (data) => {
+    onSuccess: () => {
 
       queryClient.invalidateQueries({
         queryKey: ["getAll-services"],
@@ -40,7 +40,7 @@ export function useCreateServiceDateRange() {
   const { isPending: isCreatingDateRange, mutateAsync: createDateRange } = useMutation({
     mutationFn: createServiceDateRange,
 
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["getAll-services"],
       });

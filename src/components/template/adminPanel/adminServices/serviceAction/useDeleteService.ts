@@ -7,7 +7,7 @@ export function useDeleteService() {
 
   const { isPending: isDeleting, mutateAsync: deletService } = useMutation({
     mutationFn: deleteServiceById,
-    onSuccess: (data) => {
+    onSuccess: () => {
 
       queryClient.invalidateQueries({
         queryKey: ["getAll-services"],
@@ -25,7 +25,7 @@ export function useDeleteServiceImage() {
     mutationFn: ({ id }: { id: string }) => {
       return deleteServiceImageById({ id })
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
 
       queryClient.invalidateQueries({
         queryKey: ["getAll-services"],

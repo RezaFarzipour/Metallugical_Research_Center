@@ -6,10 +6,16 @@ import { useEditServiceDateRangeById, useEditServiceImage } from "./useEditServi
 import { useCreateServiceDateRange, useCreateServiceImages } from "./useCreateService";
 import { useDeleteServiceImage } from "./useDeleteService";
 
-
+interface ServiceReserveDate {
+    id: number;
+    reserved_from: string;
+    reserved_to: string;
+    service: number;
+}
 interface UseSecondStepLogicProps {
     filteredServiceImages: Array<{ id: string; service?: string | number }>;
     serviceId: string | number;
+    serviceRangeDate?: ServiceReserveDate[];
     setStep?: (step: number) => void;
     reset: () => void;
 }
@@ -30,7 +36,7 @@ export function useSeCondStepAction({
     const { editServiceImage, isEditingImage } = useEditServiceImage();
     const { deletServiceImage } = useDeleteServiceImage();
     const { isCreatingDateRange, createDateRange } = useCreateServiceDateRange();
-    const { isEditingDateRange, editServiceDateRange } = useEditServiceDateRangeById();
+    const { editServiceDateRange } = useEditServiceDateRangeById();
 
 
     const router = useRouter();
