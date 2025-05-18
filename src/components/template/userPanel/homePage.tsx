@@ -150,7 +150,7 @@ const HomePage: React.FC = () => {
       <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
         <TitleStructureDashboards
           mainTitle="آخرین سفارش های من"
-          viewMore="مشاهده همه سفارش ها"
+        
           href="/user/reports"
           icon={<CgArrowLeft />}
         />
