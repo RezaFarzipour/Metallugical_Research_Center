@@ -11,11 +11,32 @@ import { findName, findServiceName } from "@/utils/findeName";
 import { getAllReserve } from "@/services/api/reserve";
 import { getAllServiceAdmin } from "@/services/api/service";
 import { ReservesAdmincolumns } from "@/constants/tableData";
+import { Reserve } from "@/types";
 
 
-const useReserveData = (visibleColumns: Set<string>,) => {
+interface FormattedReserve {
+    _id: string;
+    id: string;
+    name: string;
+    phone_number: string;
+    service_name: string;
+    price: string;
+    reserve_duration: string;
+    actions: string;
+    dateRange: string;
+    admin_description: string;
+    stage: string;
+    status: string;
+    payment_status: string;
+}
+
+interface GroupedReserves {
+    reserveUp: FormattedReserve[];
+}
+
+const useReserveData = (visibleColumns: Set<string>) => {
     const router = useRouter();
-    const [formData, setFormData] = useState({ reserveUp: [] });
+    const [formData, setFormData] = useState<GroupedReserves>({ reserveUp: [] });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
     const {
@@ -43,25 +64,19 @@ const useReserveData = (visibleColumns: Set<string>,) => {
     });
 
     const groupReservesByKeys = (
-        reserves: any[]
-    ): { reserveUp: any[] } => {
+        reserves: Reserve[]
+    ): GroupedReserves => {
         const filteredReserves = reserves.filter(
             (reserve) => !reserve.is_canceled && !reserve.is_finished
         );
 
-        return filteredReserves.reduce(
+        return filteredReserves.reduce<GroupedReserves>(
             (acc, reserve, index) => {
-                const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"} تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"
-                    }`;
+                const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"} تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
                 const name = findName(dataUser ?? [], reserve.user);
-                const service_name = findServiceName(
-                    dataAllServiceAdmin ?? [],
-                    reserve.service
-                );
-                const reserve_duration = `${toPersianNumbers(
-                    reserve.reserve_duration
-                )} ساعت`;
+                const service_name = findServiceName(dataAllServiceAdmin ?? [], reserve.service);
+                const reserve_duration = `${toPersianNumbers(reserve.reserve_duration)} ساعت`;
 
                 const status = reserve.is_canceled
                     ? "لغو شده"
@@ -133,10 +148,9 @@ const useReserveData = (visibleColumns: Set<string>,) => {
         [router]
     );
 
-    const formDataReseves = Array.isArray(formData.reserveUp)
+    const formDataReseves: FormattedReserve[] = Array.isArray(formData.reserveUp)
         ? formData.reserveUp
         : [];
-
 
     const isEmpty = !formDataReseves || formDataReseves.length === 0;
 
