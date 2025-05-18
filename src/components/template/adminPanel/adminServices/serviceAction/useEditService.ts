@@ -7,7 +7,7 @@ export function useEditService() {
 
   const { isPending: isEditing, mutateAsync: editService } = useMutation({
     mutationFn: editServiceByID,
-    onSuccess: (data) => {
+    onSuccess: () => {
 
       queryClient.invalidateQueries({
         queryKey: ["getAll-services"],

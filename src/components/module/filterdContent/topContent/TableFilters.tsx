@@ -3,12 +3,17 @@
 import React, { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { DropdownElement } from "@/components/element/DropdownElement";
-import { rolesOptions, statusOptions } from "@/constants/tableData";
+import {
+  rolesOptions,
+  statusOptions,
+  statusOptionsPayment,
+} from "@/constants/tableData";
 import { useTableStore } from "@/store/useTableSlice";
 
 interface TableFiltersProps {
   rolesDropDown?: boolean;
   stausDropDown?: boolean;
+  paymentStautsDropDown?: boolean;
   columnsDropDownBtn?: boolean;
   columns: { name: string; uid: string }[];
 }
@@ -16,6 +21,7 @@ interface TableFiltersProps {
 export default function TableFilters({
   rolesDropDown,
   stausDropDown,
+  paymentStautsDropDown,
   columnsDropDownBtn,
   columns,
 }: TableFiltersProps) {
@@ -24,8 +30,10 @@ export default function TableFilters({
     setVisibleColumns,
     rolesFilter,
     statusFilter,
+    peymentStatusFilter,
     setRolesFilter,
     setStatusFilter,
+    setPeymentStatusFilter,
   } = useTableStore();
 
   const searchParams = useSearchParams();
@@ -35,6 +43,7 @@ export default function TableFilters({
   useEffect(() => {
     const roles = searchParams.get("roles");
     const status = searchParams.get("status");
+    const payment_status = searchParams.get("payment_status");
 
     if (roles) {
       setRolesFilter(new Set(roles.split(",")));
@@ -42,6 +51,9 @@ export default function TableFilters({
 
     if (status) {
       setStatusFilter(new Set(status.split(",")));
+    }
+    if (payment_status) {
+      setPeymentStatusFilter(new Set(payment_status.split(",")));
     }
   }, []);
 
@@ -67,7 +79,10 @@ export default function TableFilters({
     setStatusFilter(keys);
     updateQueryParam("status", keys);
   };
-
+  const handlepaymentStatusChange = (keys: Set<string>) => {
+    setPeymentStatusFilter(keys);
+    updateQueryParam("payment_status", keys);
+  };
   return (
     <div className="flex gap-3">
       {rolesDropDown && (
@@ -86,6 +101,15 @@ export default function TableFilters({
           onSelectionChange={handleStatusChange}
         />
       )}
+      {paymentStautsDropDown && (
+        <DropdownElement
+          label="وضعیت پرداخت ها"
+          options={statusOptionsPayment}
+          selectedKeys={peymentStatusFilter}
+          onSelectionChange={handlepaymentStatusChange}
+        />
+      )}
+
       {columnsDropDownBtn && (
         <DropdownElement
           label="ستون‌ها"

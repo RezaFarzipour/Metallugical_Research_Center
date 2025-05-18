@@ -14,8 +14,6 @@ import {
 import { useDeleteService } from "./serviceAction/useDeleteService";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
 
-const BASE_URL = "http://localhost:8000";
-
 interface ServiceImage {
   id: number;
   image: string;
@@ -61,12 +59,14 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
 
   const galleryImages =
     serviceImages?.map((img) =>
-      img.image.startsWith("http") ? img.image : BASE_URL + img.image
+      img.image.startsWith("http")
+        ? img.image
+        : process.env.NEXT_PUBLIC_IMAGE_BASE_URL + img.image
     ) || [];
 
   const coverImageSrc = cover_image.startsWith("http")
     ? cover_image
-    : BASE_URL + cover_image;
+    : process.env.NEXT_PUBLIC_IMAGE_BASE_URL + cover_image;
 
   const handleEdit = useCallback(() => {
     router.push(`/admin/services/${dataByID.id}/edit`);

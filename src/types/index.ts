@@ -11,7 +11,7 @@ export interface DashboardMinicardProps {
   label: string;
   count: number;
   icon: IconType;
-  reserveLength?:number
+  reserveLength?: number
 }
 
 export type sidebarchildren = {
@@ -148,3 +148,21 @@ export type BlogType = {
   title: string;
 };
 
+
+//reserve:
+export interface Reserve {
+  id: string;
+  stage: number;
+  is_canceled: boolean;
+  user: string;
+  reserve_from: string;
+  reserve_to: string;
+  service: string;
+  is_reservation_time_verified: boolean;
+  admin_description: string;
+  reserve_duration: number;
+  total_price: number;
+  payment_image: string;
+  is_payment_verified: boolean;
+  is_finished: boolean;
+}

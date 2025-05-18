@@ -19,7 +19,6 @@ import { useCreateService } from "./useCreateService";
 import { useEditService } from "./useEditService";
 import { BtnLoader } from "@/components/element/Loader";
 
-
 interface ServicesActionProps {
   serviceDataEdit?: Partial<serviceDataEditType>;
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -115,7 +114,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
           showToast("سرویس با موفقیت ساخته شد", "success");
           const newServiceId = response?.id;
           if (newServiceId) {
-            setCreatedServiceId(newServiceId); // آیدی رو برای استپ دوم ذخیره میکنیم
+            setCreatedServiceId?.(newServiceId); // آیدی رو برای استپ دوم ذخیره میکنیم
             setStep(2); // میریم مرحله بعد
           } else {
             showToast("خطا در دریافت اطلاعات سرویس", "error");
@@ -166,7 +165,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
             />
             <Button
               type="button"
-              onClick={() => {
+              onPress={() => {
                 setCoverImageUrl(null);
                 setValue("cover_image", null);
               }}

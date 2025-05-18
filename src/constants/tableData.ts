@@ -188,6 +188,11 @@ export const statusOptions = [
   { name: "درحال انتظار", uid: "درحال انتظار" },
   { name: "کنسل شده", uid: "کنسل شده" },
 ];
+export const statusOptionsPayment = [
+  { name: "پرداخت شده", uid: "پرداخت شده" },
+  { name: "در انتظار پرداخت", uid: "در انتظار پرداخت" },
+
+];
 export const rolesOptions = [
   { name: "ادمین", uid: "ادمین" },
   { name: "کاربر", uid: "کاربر" },
