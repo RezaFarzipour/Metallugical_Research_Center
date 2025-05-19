@@ -3,7 +3,7 @@ import { reservationDataType, ServiceDetailsType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { adminFinalApprove } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
-import { useCancelReserve } from "@/hooks/useCancelReserve";
+import { useCancelReserve } from "@/components/template/reservation/reserveAction/useCancelReserve";
 import { useRouter } from "next/navigation";
 import { Button } from "@heroui/button";
 import { BtnLoader } from "@/components/element/Loader";
@@ -15,7 +15,11 @@ type AdminStage4 = {
   reserveId: string | null;
 };
 
-const AdminStage4 = ({ serviceData, reservationData, reserveId }: AdminStage4) => {
+const AdminStage4 = ({
+  serviceData,
+  reservationData,
+  reserveId,
+}: AdminStage4) => {
   const queryClient = useQueryClient();
   const { cancelReserve, isCanceling } = useCancelReserve();
   const router = useRouter();

@@ -4,9 +4,9 @@ import { reservationDataType, ServiceDetailsType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { paymentVerified } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
-import { useCancelReserve } from "@/hooks/useCancelReserve";
+import { useCancelReserve } from "@/components/template/reservation/reserveAction/useCancelReserve";
 import { useRouter } from "next/navigation";
-import { useRejectReserve } from "@/hooks/useRejectReserve";
+import { useRejectReserve } from "@/components/template/reservation/reserveAction/useRejectReserve";
 import { Button } from "@heroui/button";
 import { BtnLoader } from "@/components/element/Loader";
 import ReserveInfo from "@/components/module/ReserveInfo";
@@ -20,7 +20,7 @@ type AdminStage3 = {
 const AdminStage3 = ({
   serviceData,
   reserveId,
-  reservationData
+  reservationData,
 }: AdminStage3) => {
   const imageUrl = `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${reservationData?.payment_image}`;
 

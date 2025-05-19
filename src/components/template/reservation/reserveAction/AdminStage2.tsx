@@ -1,6 +1,6 @@
 "use client";
 
-import { useCancelReserve } from "@/hooks/useCancelReserve";
+import { useCancelReserve } from "@/components/template/reservation/reserveAction/useCancelReserve";
 import { reservationDataType, ServiceDetailsType } from "@/types";
 import { useRouter } from "next/navigation";
 import React from "react";
