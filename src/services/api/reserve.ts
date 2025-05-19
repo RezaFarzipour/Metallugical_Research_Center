@@ -62,7 +62,7 @@ export async function patchAcceptStage2({
 }: {
   reserve_duration: number;
   is_reservation_time_verified: boolean;
-  admin_description: string;
+  admin_description: string | undefined;
   reserveId: string | null;
   total_price: number;
 }): Promise<any> {
