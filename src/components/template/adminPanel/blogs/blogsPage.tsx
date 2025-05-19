@@ -98,7 +98,6 @@ export const BlogsPage: React.FC = () => {
     visibleKeys,
     headerColumns,
     loading,
-    error,
     router,
     firstActionClickHandler,
     secondActionClickHandler,

@@ -1,4 +1,4 @@
-import Reportspage from "@/components/template/adminPanel/reportsPage";
+import Reportspage from "@/components/template/adminPanel/reportspage";
 import React from "react";
 
 const page = () => {

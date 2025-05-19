@@ -4,8 +4,8 @@ import React from "react";
 import Image from "next/image";
 import TitleStructure from "../element/TitleStructure";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
-import { sp } from "@/utils/formatter/numberFormatter";
 import { reservationDataType } from "@/types";
+import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 
 type ReserveInfoProps = {
   serviceData?: {
@@ -44,7 +44,12 @@ const ReserveInfo: React.FC<ReserveInfoProps> = ({
         <div>{serviceData?.data?.description || "نامشخص"}</div>
 
         <div className="font-medium">قیمت</div>
-        <div>{sp(serviceData?.data?.price) || "نامشخص"}</div>
+        <div>
+          {" "}
+          {serviceData?.data?.price != null
+            ? toPersianNumbersWithComma(serviceData.data.price)
+            : "نامشخص"}
+        </div>
 
         <div className="font-medium">توضیحات ادمین:</div>
         <div

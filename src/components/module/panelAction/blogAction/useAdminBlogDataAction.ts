@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useTableStore } from "@/store/useTableSlice";
-import { toEnglishNumbers, toPersianNumbers, toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
+import {  toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 import { blogColumns } from "@/constants/tableData";
 import { showToast } from "@/store/useToastSlice";
 import { getAllBlogsAdmin } from "@/services/api/blogs";
@@ -39,8 +39,8 @@ const groupServicesByKeys = (data: RawService[], keys: readonly string[]): Group
         (acc, blogs, index) => {
             // به جای فیلتر کلیدها، مستقیماً ساخت آبجکت فیلترشده
             acc.serviceUp.push({
-                _id: toPersianNumbers(index + 1),
-                id: toPersianNumbers(blogs.id),
+                _id: toPersianNumbersWithComma(index + 1),
+                id: toPersianNumbersWithComma(blogs.id),
                 title: blogs.title,
                 image: blogs.cover_image,
                 actions: blogs.id.toString(),

@@ -1,5 +1,5 @@
 import CarGallery from "@/components/module/ImageGallery";
-import { sp } from "@/utils/formatter/numberFormatter";
+import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 import CustomeDateRangePicker from "@/components/module/customeDataPicker/CustomeCallender";
 import React from "react";
 
@@ -54,32 +54,47 @@ const Stage1ModalBody = ({
     ) || [];
 
   return (
-    <div className="w-full  flex flex-col lg:flex-row justify-between items-start gap-32 ">
-      {/* left section */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-start items-start">
-        <CarGallery images={galleryImages} />
-        {/* title and price */}
-        <div className="flex w-full my-2 justify-between p-2">
-          <p className="font-bold text-xl text-[#0485c7]">{sp(price)} تومان</p>
-          <p className="font-bold text-xl">{service_name}</p>
+    <div className="w-full flex items-center flex-col gap-8">
+      {/* title and price */}
+      <div className="w-full lg:w-1/2  p-4 bg-white shadow rounded-lg space-y-2">
+        {/* ردیف اول: نام دستگاه */}
+        <div className="flex items-center justify-between">
+          <p className="font-bold text-sm">نام دستگاه</p>
+          <p className="font-bold text-sm text-[#0485c7]">{service_name}</p>
         </div>
-        {/* description */}
-        <div className="w-full p-2">
+
+        {/* ردیف دوم: قیمت */}
+        <div className="flex items-center justify-between">
+          <p className="font-bold text-sm">قیمت</p>
+          <p className="font-bold text-sm text-[#0485c7]">
+            {toPersianNumbersWithComma(price)} تومان
+          </p>
+        </div>
+
+        {/* ردیف سوم: توضیحات */}
+        <div className="flex items-center justify-between">
+          <p className="font-bold text-sm">توضیح</p>
           <p className="text-sm text-default-300">{description}</p>
         </div>
       </div>
 
-      {/* right section */}
-  
-      <div className="w-full lg:w-1/2 flex flex-col gap-4 p-2">
-    
-        <CustomeDateRangePicker
-          onRangeSelect={rangeHandler}
-          reserveData={{
-            reserved_from: reserved_from || "",
-            reserved_to: reserved_to || "",
-          }}
-        />
+      {/* content section: image gallery + calendar */}
+      <div className="w-full flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-20">
+        {/* left section: image gallery */}
+        <div className="w-full lg:w-1/2 flex   justify-center lg:justify-start items-center">
+          <CarGallery images={galleryImages} />
+        </div>
+
+        {/* right section: date picker */}
+        <div className="w-full lg:w-1/2 flex flex-col items-center gap-4 p-2">
+          <CustomeDateRangePicker
+            onRangeSelect={rangeHandler}
+            reserveData={{
+              reserved_from: reserved_from || "",
+              reserved_to: reserved_to || "",
+            }}
+          />
+        </div>
       </div>
     </div>
   );
