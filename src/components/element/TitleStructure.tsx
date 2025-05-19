@@ -23,7 +23,7 @@ const TitleStructure = ({ children, size }: Props) => {
 
         <p
           className={cn(
-            "flex justify-center items-center mr-2 font-bold text-gray-600 tracking-wide",
+            "flex justify-center items-center mr-2 font-bold text-gray-600 tracking-wide text-nowrap",
             size
           )}
         >

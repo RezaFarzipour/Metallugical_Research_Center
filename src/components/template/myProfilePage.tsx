@@ -9,7 +9,6 @@ import PersonalDetailsForm from "../module/controller/PersonalDetailsForm";
 import { useGetUser } from "@/hooks/useAuth";
 import { User } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 import { showToast } from "@/store/useToastSlice";
 import { editUserByPhoneNumberAdmin } from "@/services/api/user";
 import { BtnLoader } from "../element/Loader";

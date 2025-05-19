@@ -1,4 +1,4 @@
-import Services from "@/components/template/servicesPage";
+import Services from "@/components/template/services/servicesPage";
 import { getAllServiceCustomer } from "@/services/api/service";
 
 export const metadata = {

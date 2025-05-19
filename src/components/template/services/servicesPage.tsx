@@ -2,16 +2,16 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import TitleStructure from "../element/TitleStructure";
-import FilteredContainer from "../containers/FilteredContainer";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
-import CardModule from "../module/cardModule/CardModule";
 import { getAllServiceCustomer } from "@/services/api/service";
-import { BtnLoader } from "../element/Loader";
 import { staggerContainer } from "@/utils/motion";
 import { cn } from "@/utils/cn";
 import { ServiceDetailsType } from "@/types";
+import TitleStructure from "@/components/element/TitleStructure";
+import FilteredContainer from "@/components/containers/FilteredContainer";
+import { BtnLoader } from "@/components/element/Loader";
+import CardModule from "@/components/module/cardModule/CardModule";
 
 type ServicesPageProps = {
   initialData: ServiceDetailsType[];
