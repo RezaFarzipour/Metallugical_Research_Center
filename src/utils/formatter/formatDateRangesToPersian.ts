@@ -34,9 +34,30 @@ export function formatDateRangesToPersian(
 }
 
 export const formatDateRangesToPersian2 = (date: string): string => {
-  // برای مثال با dayjs:
-  // return dayjs(date).locale('fa').format('YYYY/MM/DD');
+    // برای مثال با dayjs:
+    // return dayjs(date).locale('fa').format('YYYY/MM/DD');
 
-  // یا اگر بدون کتابخانه:
-  return new Date(date).toLocaleDateString("fa-IR"); // ساده‌شده
+    // یا اگر بدون کتابخانه:
+    return new Date(date).toLocaleDateString("fa-IR"); // ساده‌شده
 };
+
+
+export function getDayPart() {
+  const getTimeOfDay = (hour) => {
+    if (hour >= 5 && hour < 12) {
+      return "صبح";
+    } else if (hour >= 12 && hour < 17) {
+      return "ظهر";
+    } else if (hour >= 17 && hour < 21) {
+      return "عصر";
+    } else {
+      return "شب";
+    }
+  };
+
+  // استفاده از تابع
+  const currentHour = new Date().getHours();
+  const timeOfDay = getTimeOfDay(currentHour);
+
+  return timeOfDay;
+}
