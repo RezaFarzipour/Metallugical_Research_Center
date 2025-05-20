@@ -19,6 +19,7 @@ import { BtnLoader } from "@/components/element/Loader";
 import WaitingStage from "@/components/template/reservation/reserveAction/WaitingStage";
 import AdminStage2 from "./reserveAction/AdminStage2";
 import FinalStage from "@/components/template/reservation/reserveAction/FinalStage";
+import { ServiceDetailsType } from "@/types";
 const ReservationTemplate = () => {
   const searchParams = useSearchParams();
   const reserveId = searchParams.get("reserve-id");
@@ -43,7 +44,7 @@ const ReservationTemplate = () => {
   });
 
   // Fetch service details
-  const { data: serviceData, isLoading: isServiceLoading } = useQuery({
+  const { data: serviceData, isLoading: isServiceLoading } = useQuery<ServiceDetailsType>({
     queryKey: ["get-device-details", reservationData?.service],
     queryFn: () => http.get(`/service/s/customer/${reservationData?.service}/`),
     staleTime: 1000 * 60 * 5,
