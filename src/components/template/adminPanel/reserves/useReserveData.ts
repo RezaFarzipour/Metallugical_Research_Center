@@ -24,7 +24,7 @@ interface FormattedReserve {
     reserve_duration: string;
     actions: string;
     dateRange: string;
-    description: string;
+    admin_description: string;
     stage: string;
     status: string;
     payment_status: string;

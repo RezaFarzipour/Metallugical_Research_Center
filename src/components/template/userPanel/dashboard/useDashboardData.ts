@@ -63,7 +63,7 @@ const useDashboardData = (visibleColumns: Set<string>) => {
           actions: reserve.id.toString(),
           dateRange: dateRanges,
           admin_description: reserve.admin_description,
-          stage: reserve.stage,
+          stage: toPersianNumbers(reserve.stage),
           status,
           payment_status,
         });
