@@ -33,7 +33,7 @@ export const userSidebarlinks: SidebarLink[] = [
     title: "داشبورد",
     icon: TiHomeOutline,
     hover: "text-primary-500",
-    to: "/user/dashbaord",
+    to: "/user/dashboard",
   },
 
   {
