@@ -56,7 +56,7 @@ const Stage1ModalBody = ({
   return (
     <div className="w-full flex items-center flex-col gap-8">
       {/* title and price */}
-      <div className="w-full lg:w-1/2  p-4 bg-white shadow rounded-lg space-y-2">
+      <div className="w-full   p-4 bg-white shadow rounded-lg space-y-2">
         {/* ردیف اول: نام دستگاه */}
         <div className="flex items-center justify-between">
           <p className="font-bold text-sm">نام دستگاه</p>
@@ -79,7 +79,7 @@ const Stage1ModalBody = ({
       </div>
 
       {/* content section: image gallery + calendar */}
-      <div className="w-full flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-20">
+      <div className="w-full flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-24">
         {/* left section: image gallery */}
         <div className="w-full lg:w-1/2 flex   justify-center lg:justify-start items-center">
           <CarGallery images={galleryImages} />
