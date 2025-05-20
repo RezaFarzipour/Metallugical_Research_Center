@@ -1,142 +1,141 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getAllUserAdmin } from "@/services/api/user";
-import { translateRole } from "@/utils/translateRole";
-import { toPersianNumbers } from "@/utils/formatter/toPersianNumbers";
-import { Usercolumns } from "@/constants/tableData";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { toPersianNumbers, toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 import { useRouter } from "next/navigation";
-import { showToast } from "@/store/useToastSlice";
-import { getAllReserveCustomer } from "@/services/api/reserve";
-//import useDeleteUser from "./useDeleteUser";
+import { getAllServiceCustomer } from "@/services/api/service";
+import { getAllReserve, postReservedService } from "@/services/api/reserve";
+import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
+import { findServiceName } from "@/utils/findeName";
+import { ReservesCustomercolumns } from "@/constants/tableData";
 
-const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
-  const [formData, setFormData] = useState({});
-  const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
-  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
-    null
-  );
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  //const { isDeleting, userDelete } = useDeleteUser();
 
-  const { data, isPending } = useQuery({
-    queryKey: ["getAll-reserve"],
-    queryFn: getAllReserveCustomer,
-  });
+const useReserveData = (visibleColumns: Set<string>,) => {
   const router = useRouter();
+  const [formData, setFormData] = useState({ reserveUp: [] });
+  const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (Array.isArray(data)) {
-      const result = groupUsersBySignup(data, includeskey);
-      setFormData(result);
+  const { data: dataAllServiceAdmin, isPending: isLoadingService } = useQuery({
+    queryKey: ["getAll-services"],
+    queryFn: getAllServiceCustomer,
+  });
 
-      if (result.signedUp.length > 0) {
-        const keys = Object.keys(result.signedUp[0]).filter(
-          (key) => key !== "is_signup"
+  const { data: dataAllReserveCustomer, isPending: isLoadingReserve } =
+    useQuery({
+      queryKey: ["get-Allreserve"],
+      queryFn: getAllReserve,
+    });
+
+  const groupReservesByKeys = (reserves) => {
+    return reserves.reduce(
+      (acc, reserve, index) => {
+        const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"
+          } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
+
+        const service_name = findServiceName(
+          dataAllServiceAdmin ?? [],
+          reserve.service
         );
-        setVisibleKeys(keys);
-      }
-    }
-  }, [data]);
+        const reserve_duration = `${toPersianNumbers(
+          reserve.reserve_duration
+        )} ساعت`;
 
-  function groupUsersBySignup(data: any[], keys: string[]) {
-    return data.reduce(
-      (acc, user, index) => {
-        const name = `${user.first_name} ${user.last_name}`.trim();
+        const status =
+          reserve.is_canceled === true
+            ? "لغو شده"
+            : reserve.is_finished === true
+              ? "تمام شده"
+              : "در حال انتظار";
+        const payment_status =
+          reserve.is_payment_verified === true
+            ? "پرداخت شده"
+            : "در انتظار پرداخت";
 
-        const filtered = Object.fromEntries(
-          Object.entries(user).filter(([key]) => keys.includes(key))
-        );
-
-        const simplified = {
-          ...filtered,
-          id: toPersianNumbers(index + 1),
-          role: translateRole(user.role),
-          name,
-          phone_number: user.phone_number,
-          is_signup: !!user.is_signup,
-          actions: "action",
-        };
-
-        if (user.is_signup) {
-          acc.signedUp.push(simplified);
-        } else {
-          acc.notSignedUp.push(simplified);
-        }
+        acc.reserveUp.push({
+          _id: toPersianNumbers(index + 1),
+          id: reserve.id,
+          name: toPersianNumbers(reserve.user),
+          service_name,
+          price: toPersianNumbersWithComma(reserve.total_price),
+          reserve_duration,
+          actions: reserve.id.toString(),
+          dateRange: dateRanges,
+          admin_description: reserve.admin_description,
+          stage: reserve.stage,
+          status,
+          payment_status,
+        });
 
         return acc;
       },
-      { signedUp: [], notSignedUp: [] }
+      { reserveUp: [] }
     );
-  }
+  };
 
+  const formDataReseves = Array.isArray(formData.reserveUp)
+    ? formData.reserveUp
+    : [];
+  useEffect(() => {
+    if (
+      !isLoadingService &&
+      !isLoadingReserve &&
+      Array.isArray(dataAllReserveCustomer.data)
+    ) {
+      const grouped = groupReservesByKeys(dataAllReserveCustomer.data);
+      setFormData(grouped);
+
+      if (grouped.reserveUp.length > 0) {
+        setVisibleKeys(Object.keys(grouped.reserveUp[0]));
+      }
+    }
+  }, [
+    dataAllReserveCustomer,
+    dataAllServiceAdmin,
+    isLoadingService,
+    isLoadingReserve,
+  ]);
+
+
+  // محاسبه ستون‌های هدر
   const headerColumns = useMemo(() => {
-    return visibleColumns.size === Usercolumns.length
-      ? Usercolumns
-      : Usercolumns.filter((column) => visibleColumns.has(column.uid));
+    return visibleColumns.size === ReservesCustomercolumns.length
+      ? ReservesCustomercolumns
+      : ReservesCustomercolumns.filter((column) =>
+        visibleColumns.has(column.uid)
+      );
   }, [visibleColumns]);
 
-  const formDataSignedUp = Array.isArray(formData.signedUp)
-    ? formData.signedUp
-    : [];
-
   const firstActionClickHandler = useCallback(
-    (id: string| number, phone_number: string) => {
-      router.push(`/admin/users/${phone_number}/edit`);
+    (id: string | number) => {
+      router.push(`/reservation?reserve-id=${id}`);
     },
     [router]
   );
+  const isEmpty = !formDataReseves || formDataReseves.length === 0;
 
-  // باز کردن مودال حذف
-  const secondActionClickHandler = useCallback(
-    (id: string | number, phone_number: string) => {
-      if (!id) {
-        console.error("Invalid ID passed to secondActionClickHandler");
-        showToast("آیدی سرویس نامعتبر است", "error");
-        return;
-      }
+  //first post request when user click on continue button
+  const { mutateAsync: createServiceReserve, isPending: isCreating } =
+    useMutation({
+      mutationKey: ["post-reserve"],
+      mutationFn: postReservedService,
+    });
 
-      setSelectedServiceId(phone_number);
-      setIsModalOpen(true);
-    },
-    []
-  );
-
-  // تایید حذف سرویس
-  const handleDeleteService = useCallback(() => {
-    if (!selectedServiceId) {
-      console.error("ID for deletion is undefined or null");
-      showToast("آیدی سرویس نامعتبر است", "error");
-      return;
+  const handleReserve = async () => {
+    try {
+      const { id } = await createServiceReserve();
+      router.push(`/reservation?reserve-id=${id}`);
+    } catch (e) {
+      console.log("err", e);
     }
-
-    // userDelete(
-    //   { phone_number: selectedServiceId },
-    //   {
-    //     onSuccess: () => {
-    //       showToast("کاربر با موفقیت حذف شد", "success");
-    //     },
-    //     onError: () => {
-    //       showToast("حذف کاربر با خطا مواجه شد", "error");
-    //     },
-    //   }
-    // );
-
-    setIsModalOpen(false);
-    setSelectedServiceId(null);
-  }, [selectedServiceId]);
-
+  };
   return {
-    formDataSignedUp,
-    isPending,
+    formDataReseves,
     visibleKeys,
     headerColumns,
-    handleDeleteService,
     firstActionClickHandler,
-    secondActionClickHandler,
-    selectedServiceId,
-    setIsModalOpen,
-    isModalOpen,
+    handleReserve,
+    isEmpty,
+    isLoadingReserve
   };
 };
 
-export default useUserData;
+export default useReserveData;
