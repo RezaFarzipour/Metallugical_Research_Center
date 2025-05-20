@@ -111,7 +111,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
       return (
         <div className="max-h-[100px]  overflow-y-auto px-4 pr-6 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
           <p className="text-sm text-gray-700 whitespace-pre-line">
-            {cellValue}
+            {cellValue ? cellValue : "توضیحاتی وجود ندارد"}
           </p>
         </div>
       );
