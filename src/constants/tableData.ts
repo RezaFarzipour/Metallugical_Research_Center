@@ -124,7 +124,7 @@ export const ReservesAdmincolumns = [
   { name: "نام سرویس", uid: "service_name", sortable: true },
   { name: "قیمت", uid: "price" },
   { name: "مدت زمان رزرو", uid: "reserve_duration" },
-  { name: "توضیحات", uid: "admin_description", sortable: true },
+  { name: "توضیحات", uid: "description", sortable: true },
   { name: "تاریخ رزرو", uid: "dateRange" },
   { name: " وضعیت پرداخت", uid: "payment_status" },
   { name: "وضعیت", uid: "status" },
@@ -138,7 +138,7 @@ export const ReservesCustomercolumns = [
   { name: "قیمت", uid: "price" },
   { name: "مدت زمان رزرو", uid: "reserve_duration" },
 
-  { name: "توضیحات", uid: "admin_description", sortable: true },
+  { name: "توضیحات", uid: "description", sortable: true },
   { name: "تاریخ رزرو", uid: "dateRange" },
 
   { name: " وضعیت پرداخت", uid: "payment_status" },
