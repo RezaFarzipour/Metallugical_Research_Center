@@ -33,7 +33,7 @@ export const userSidebarlinks: SidebarLink[] = [
     title: "داشبورد",
     icon: TiHomeOutline,
     hover: "text-primary-500",
-    to: "/user/home",
+    to: "/user/dashbaord",
   },
 
   {
@@ -403,7 +403,7 @@ export const dropDownItems = (userRole: string): dropDownItemType[] => {
     {
       id: 1,
       label: "حساب کاربری",
-      path: userRole === "customer" ? "/user/home" : "/admin/dashboard",
+      path: userRole === "customer" ? "/user/dashboard" : "/admin/dashboard",
       icon: CiHome,
     },
     {

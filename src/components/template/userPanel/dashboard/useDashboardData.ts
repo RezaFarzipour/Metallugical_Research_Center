@@ -1,29 +1,17 @@
-"use client";
-import React, { useMemo, useCallback, useEffect, useState } from "react";
-import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import MiniCardModule from "@/components/module/MiniCardModule";
-import { getUserCards } from "@/constants/data";
-import { CgArrowLeft } from "react-icons/cg";
-import { useFilteredContainer } from "@/hooks/useFilteredContainer";
-import { useTableStore } from "@/store/useTableSlice";
-import FilteredContainer from "@/components/containers/FilteredContainer";
-import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import { ReservesCustomercolumns } from "@/constants/tableData";
-import { TbEyeDiscount } from "react-icons/tb";
-import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { getAllReserve } from "@/services/api/reserve";
 import { getAllServiceCustomer } from "@/services/api/service";
+import { findServiceName } from "@/utils/findeName";
+import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
 import {
   toPersianNumbers,
   toPersianNumbersWithComma,
 } from "@/utils/formatter/toPersianNumbers";
-import { findServiceName } from "@/utils/findeName";
-import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
-import { BtnLoader } from "@/components/element/Loader";
-import Empty from "@/components/element/Empty";
-import { getAllReserve } from "@/services/api/reserve";
-const HomePage: React.FC = () => {
-  const { visibleColumns } = useTableStore();
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+const useDashboardData = (visibleColumns: Set<string>) => {
   const router = useRouter();
   const [formData, setFormData] = useState({ reserveUp: [] });
   const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
@@ -38,15 +26,6 @@ const HomePage: React.FC = () => {
       queryKey: ["get-Allreserve"],
       queryFn: getAllReserve,
     });
-
-  const reserveLength = dataAllReserveCustomer?.data?.length;
-
-  const activeReservations = dataAllReserveCustomer?.data?.filter(
-    (item) =>
-      item.stage < 6 && item.is_finished === false && item.is_canceled === false
-  );
-
-  const activeReservationCount = activeReservations?.length;
 
   const groupReservesByKeys = (reserves) => {
     return reserves.reduce(
@@ -98,6 +77,7 @@ const HomePage: React.FC = () => {
   const formDataReseves = Array.isArray(formData.reserveUp)
     ? formData.reserveUp
     : [];
+
   useEffect(() => {
     if (
       !isLoadingService &&
@@ -118,10 +98,6 @@ const HomePage: React.FC = () => {
     isLoadingReserve,
   ]);
 
-  const { sortedItems } = useFilteredContainer(formDataReseves);
-
-  const sliecedItems = formDataReseves.slice(0, 4);
-
   // محاسبه ستون‌های هدر
   const headerColumns = useMemo(() => {
     return visibleColumns.size === ReservesCustomercolumns.length
@@ -137,56 +113,30 @@ const HomePage: React.FC = () => {
     },
     [router]
   );
+
   const isEmpty = !formDataReseves || formDataReseves.length === 0;
-  return (
-    <div className="grid grid-cols-1 gap-6">
-      <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
-        <TitleStructureDashboards mainTitle="سوابق من" />
-        <MiniCardModule
-          cards={getUserCards(reserveLength, activeReservationCount)}
-        />
-      </div>
 
-      <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
-        <TitleStructureDashboards
-          mainTitle="آخرین سفارش های من"
-        
-          href="/user/reports"
-          icon={<CgArrowLeft />}
-        />
+  const reserveLength = dataAllReserveCustomer?.data?.length;
 
-        <FilteredContainer
-          datas={formDataReseves}
-          INITIAL_VISIBLE_COLUMNS={visibleKeys}
-          columns={ReservesCustomercolumns}
-          quantity="گزارش ها"
-          viewContent={false}
-          viewContentSmSize={false}
-          addBtn={false}
-          columnsDropDownBtn={true}
-          rolesDropDown={false}
-          stausDropDown={true}
-        >
-          {isLoadingReserve ? (
-            <div>
-              <BtnLoader color="#377cfb" />
-            </div>
-          ) : isEmpty ? (
-            <Empty spanValue="رزروی" btn={false} />
-          ) : (
-            <CustomeTable
-              headerColumns={headerColumns}
-              sortedItems={sliecedItems}
-              firstActionContent="جزئیات"
-              firstActionIcon={TbEyeDiscount}
-              firstActionClickHandler={firstActionClickHandler}
-              image={false}
-            />
-          )}
-        </FilteredContainer>
-      </div>
-    </div>
+  const activeReservations = dataAllReserveCustomer?.data?.filter(
+    (item) =>
+      item.stage < 6 && item.is_finished === false && item.is_canceled === false
   );
+
+  const activeReservationCount = activeReservations?.length;
+  const sliecedItems = formDataReseves.slice(0, 4);
+
+  return {
+    formDataReseves,
+    visibleKeys,
+    headerColumns,
+    firstActionClickHandler,
+    isEmpty,
+    isLoadingReserve,
+    reserveLength,
+    activeReservationCount,
+    sliecedItems,
+  };
 };
 
-export default HomePage;
+export default useDashboardData;

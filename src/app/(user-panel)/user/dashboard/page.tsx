@@ -1,10 +1,10 @@
-import HomePage from "@/components/template/userPanel/homePage";
+import DashboardPage from "@/components/template/userPanel/dashboard/homePage";
 import React from "react";
 
 const UserDashboard = () => {
   return (
     <div>
-      <HomePage />
+      <DashboardPage />
     </div>
   );
 };
