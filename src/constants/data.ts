@@ -56,7 +56,7 @@ export const adminSidebarlinks: NavLinkItem[] = [
     id: 0,
     title: "داشبورد",
     icon: GrAppsRounded,
-    to: "/admin/home",
+    to: "/admin/dashboard",
   },
   {
     id: 1,
@@ -256,7 +256,7 @@ export const images = [
   },
 ];
 
-export const getUserCards = (reserveLength: number,activeReservationCount:number): DashboardMinicardProps[] => [
+export const getUserCards = (reserveLength: number, activeReservationCount: number): DashboardMinicardProps[] => [
   {
     color: "bg-primary-900",
     shadow: "shadow-[rgba(24,45,60,0.2)_-13px_0px,_rgba(24,45,60,0.1)_-23px_0px]",
@@ -403,7 +403,7 @@ export const dropDownItems = (userRole: string): dropDownItemType[] => {
     {
       id: 1,
       label: "حساب کاربری",
-      path: userRole === "customer" ? "/user/home" : "/admin/home",
+      path: userRole === "customer" ? "/user/home" : "/admin/dashboard",
       icon: CiHome,
     },
     {

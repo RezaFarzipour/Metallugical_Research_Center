@@ -1,12 +1,10 @@
-import HomePage from "@/components/template/adminPanel/homePage";
+import DashboardPage from "@/components/template/adminPanel/dashboard/dashboardPage";
 import React from "react";
-
-
 
 const AdminDashboard = () => {
   return (
     <div>
-      <HomePage />
+      <DashboardPage />
     </div>
   );
 };
