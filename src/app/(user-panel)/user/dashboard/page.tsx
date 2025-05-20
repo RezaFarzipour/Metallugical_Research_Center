@@ -1,4 +1,4 @@
-import DashboardPage from "@/components/template/userPanel/dashboard/homePage";
+import DashboardPage from "@/components/template/userPanel/dashboard/dashboardPage";
 import React from "react";
 
 const UserDashboard = () => {

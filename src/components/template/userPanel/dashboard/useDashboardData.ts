@@ -16,12 +16,12 @@ const useDashboardData = (visibleColumns: Set<string>) => {
   const [formData, setFormData] = useState({ reserveUp: [] });
   const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
-  const { data: dataAllServiceAdmin, isLoading: isLoadingService } = useQuery({
+  const { data: dataAllServiceAdmin, isPending: isLoadingService } = useQuery({
     queryKey: ["getAll-services"],
     queryFn: getAllServiceCustomer,
   });
 
-  const { data: dataAllReserveCustomer, isLoading: isLoadingReserve } =
+  const { data: dataAllReserveCustomer, isPending: isLoadingReserve } =
     useQuery({
       queryKey: ["get-Allreserve"],
       queryFn: getAllReserve,

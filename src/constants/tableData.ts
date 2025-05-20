@@ -100,7 +100,10 @@ export const rolesOptions = [
   { name: "کاربر", uid: "کاربر" },
 ];
 
-export const statusColorMap = {
+
+
+
+export const statusColorMap : Record<string, "success" | "warning" | "danger" | "secondary" | "default" | "primary"> = {
   "تمام شده": "success",
   "در حال انتظار": "warning",
   "لغو شده": "danger",
