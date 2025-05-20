@@ -1,26 +1,22 @@
-import { ReportsCustomercolumns } from '@/constants/tableData';
-import { getAllReserve } from '@/services/api/reserve';
-import { getAllServiceCustomer } from '@/services/api/service';
-import { findServiceName } from '@/utils/findeName';
+import { ReportsAdmincolumns } from '@/constants/tableData';
+import useAdminDataQueries from '@/hooks/useDataQueries';
+import { findName, findServiceName } from '@/utils/findeName';
 import { formatDateRangesToPersian2 } from '@/utils/formatter/formatDateRangesToPersian';
 import { toPersianNumbers, toPersianNumbersWithComma } from '@/utils/formatter/toPersianNumbers';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react'
 
 const useReportsData = (visibleColumns: Set<string>) => {
     const [formData, setFormData] = useState({ reserveUp: [] });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
-    const { data: dataAllServiceAdmin, isLoading: isLoadingService } = useQuery({
-        queryKey: ["getAll-services"],
-        queryFn: getAllServiceCustomer,
-    });
-
-    const { data: dataAllReserveCustomer, isLoading: isLoadingReserve } =
-        useQuery({
-            queryKey: ["get-Allreserve"],
-            queryFn: getAllReserve,
-        });
+    const {
+        dataUser,
+        isLoadingUser,
+        dataAllServiceAdmin,
+        isLoadingService,
+        dataAllReserveCustomer,
+        isLoadingReserve,
+    } = useAdminDataQueries();
 
     const groupReservesByKeys = (reserves) => {
         return reserves.reduce(
@@ -28,6 +24,7 @@ const useReportsData = (visibleColumns: Set<string>) => {
                 const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"
                     } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
+                const name = findName(dataUser ?? [], reserve.user);
                 const service_name = findServiceName(
                     dataAllServiceAdmin ?? [],
                     reserve.service
@@ -50,7 +47,8 @@ const useReportsData = (visibleColumns: Set<string>) => {
                 acc.reserveUp.push({
                     _id: toPersianNumbers(index + 1),
                     id: reserve.id,
-                    name: toPersianNumbers(reserve.user),
+                    name,
+                    phone_number: toPersianNumbers(reserve.user),
                     service_name,
                     price: toPersianNumbersWithComma(reserve.total_price),
                     reserve_duration,
@@ -72,6 +70,7 @@ const useReportsData = (visibleColumns: Set<string>) => {
         : [];
     useEffect(() => {
         if (
+            !isLoadingUser &&
             !isLoadingService &&
             !isLoadingReserve &&
             Array.isArray(dataAllReserveCustomer.data)
@@ -86,15 +85,16 @@ const useReportsData = (visibleColumns: Set<string>) => {
     }, [
         dataAllReserveCustomer,
         dataAllServiceAdmin,
+        isLoadingUser,
         isLoadingService,
         isLoadingReserve,
     ]);
 
     // محاسبه ستون‌های هدر
     const headerColumns = useMemo(() => {
-        return visibleColumns.size === ReportsCustomercolumns.length
-            ? ReportsCustomercolumns
-            : ReportsCustomercolumns.filter((column) =>
+        return visibleColumns.size === ReportsAdmincolumns.length
+            ? ReportsAdmincolumns
+            : ReportsAdmincolumns.filter((column) =>
                 visibleColumns.has(column.uid)
             );
     }, [visibleColumns]);

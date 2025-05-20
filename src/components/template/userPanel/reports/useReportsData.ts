@@ -1,26 +1,20 @@
 import { ReportsCustomercolumns } from '@/constants/tableData';
-import { getAllReserve } from '@/services/api/reserve';
-import { getAllServiceCustomer } from '@/services/api/service';
+import useDataQueries from '@/hooks/useDataQueries';
 import { findServiceName } from '@/utils/findeName';
 import { formatDateRangesToPersian2 } from '@/utils/formatter/formatDateRangesToPersian';
 import { toPersianNumbers, toPersianNumbersWithComma } from '@/utils/formatter/toPersianNumbers';
-import { useQuery } from '@tanstack/react-query';
 import { useEffect, useMemo, useState } from 'react'
 
 const useReportsData = (visibleColumns: Set<string>) => {
     const [formData, setFormData] = useState({ reserveUp: [] });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
-    const { data: dataAllServiceAdmin, isPending: isLoadingService } = useQuery({
-        queryKey: ["getAll-services"],
-        queryFn: getAllServiceCustomer,
-    });
-
-    const { data: dataAllReserveCustomer, isPending: isLoadingReserve } =
-        useQuery({
-            queryKey: ["get-Allreserve"],
-            queryFn: getAllReserve,
-        });
+    const {
+        dataAllReserveCustomer,
+        isLoadingReserve,
+        dataAllServiceCustomer,
+        isLoadingServiceCustomer
+    } = useDataQueries();
 
     const groupReservesByKeys = (reserves) => {
         return reserves.reduce(
@@ -29,7 +23,7 @@ const useReportsData = (visibleColumns: Set<string>) => {
                     } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
                 const service_name = findServiceName(
-                    dataAllServiceAdmin ?? [],
+                    dataAllServiceCustomer ?? [],
                     reserve.service
                 );
                 const reserve_duration = `${toPersianNumbers(
@@ -56,7 +50,7 @@ const useReportsData = (visibleColumns: Set<string>) => {
                     reserve_duration,
                     dateRange: dateRanges,
                     admin_description: reserve.admin_description,
-                    stage:  toPersianNumbers(reserve.stage),
+                    stage: toPersianNumbers(reserve.stage),
                     status,
                     payment_status,
                 });
@@ -73,7 +67,7 @@ const useReportsData = (visibleColumns: Set<string>) => {
 
     useEffect(() => {
         if (
-            !isLoadingService &&
+            !isLoadingServiceCustomer &&
             !isLoadingReserve &&
             Array.isArray(dataAllReserveCustomer.data)
         ) {
@@ -86,8 +80,8 @@ const useReportsData = (visibleColumns: Set<string>) => {
         }
     }, [
         dataAllReserveCustomer,
-        dataAllServiceAdmin,
-        isLoadingService,
+        dataAllServiceCustomer,
+        isLoadingServiceCustomer,
         isLoadingReserve,
     ]);
     // محاسبه ستون‌های هدر

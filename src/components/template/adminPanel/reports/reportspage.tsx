@@ -1,6 +1,6 @@
 "use client";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import { ReportsCustomercolumns } from "@/constants/tableData";
+import { ReportsAdmincolumns } from "@/constants/tableData";
 import React from "react";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
@@ -29,7 +29,7 @@ const ReportsPage: React.FC = () => {
         <FilteredContainer
           datas={formDataReseves}
           INITIAL_VISIBLE_COLUMNS={visibleKeys}
-          columns={ReportsCustomercolumns}
+          columns={ReportsAdmincolumns}
           quantity="گزارش ها"
           topContents={!!formDataReseves?.length}
           viewContent={false}

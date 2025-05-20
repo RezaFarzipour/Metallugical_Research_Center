@@ -1,13 +1,11 @@
 import { ReservesCustomercolumns } from "@/constants/tableData";
-import { getAllReserve } from "@/services/api/reserve";
-import { getAllServiceCustomer } from "@/services/api/service";
+import useDataQueries from "@/hooks/useDataQueries";
 import { findServiceName } from "@/utils/findeName";
 import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
 import {
   toPersianNumbers,
   toPersianNumbersWithComma,
 } from "@/utils/formatter/toPersianNumbers";
-import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
@@ -16,26 +14,22 @@ const useDashboardData = (visibleColumns: Set<string>) => {
   const [formData, setFormData] = useState({ reserveUp: [] });
   const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
-  const { data: dataAllServiceAdmin, isPending: isLoadingService } = useQuery({
-    queryKey: ["getAll-services"],
-    queryFn: getAllServiceCustomer,
-  });
 
-  const { data: dataAllReserveCustomer, isPending: isLoadingReserve } =
-    useQuery({
-      queryKey: ["get-Allreserve"],
-      queryFn: getAllReserve,
-    });
+  const {
+    dataAllReserveCustomer,
+    isLoadingReserve,
+    dataAllServiceCustomer,
+    isLoadingServiceCustomer
+  } = useDataQueries();
 
   const groupReservesByKeys = (reserves) => {
     return reserves.reduce(
       (acc, reserve, index) => {
-        const dateRanges = `${
-          formatDateRangesToPersian2(reserve.reserve_from) || "?"
-        } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
+        const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"
+          } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
         const service_name = findServiceName(
-          dataAllServiceAdmin ?? [],
+          dataAllServiceCustomer ?? [],
           reserve.service
         );
         const reserve_duration = `${toPersianNumbers(
@@ -46,8 +40,8 @@ const useDashboardData = (visibleColumns: Set<string>) => {
           reserve.is_canceled === true
             ? "لغو شده"
             : reserve.is_finished === true
-            ? "تمام شده"
-            : "در حال انتظار";
+              ? "تمام شده"
+              : "در حال انتظار";
         const payment_status =
           reserve.is_payment_verified === true
             ? "پرداخت شده"
@@ -80,7 +74,7 @@ const useDashboardData = (visibleColumns: Set<string>) => {
 
   useEffect(() => {
     if (
-      !isLoadingService &&
+      !isLoadingServiceCustomer &&
       !isLoadingReserve &&
       Array.isArray(dataAllReserveCustomer.data)
     ) {
@@ -93,8 +87,8 @@ const useDashboardData = (visibleColumns: Set<string>) => {
     }
   }, [
     dataAllReserveCustomer,
-    dataAllServiceAdmin,
-    isLoadingService,
+    dataAllServiceCustomer,
+    isLoadingServiceCustomer,
     isLoadingReserve,
   ]);
 
@@ -103,8 +97,8 @@ const useDashboardData = (visibleColumns: Set<string>) => {
     return visibleColumns.size === ReservesCustomercolumns.length
       ? ReservesCustomercolumns
       : ReservesCustomercolumns.filter((column) =>
-          visibleColumns.has(column.uid)
-        );
+        visibleColumns.has(column.uid)
+      );
   }, [visibleColumns]);
 
   const firstActionClickHandler = useCallback(
