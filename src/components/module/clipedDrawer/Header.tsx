@@ -4,6 +4,7 @@ import DrawerElement from "@/components/element/DrawerElement";
 import { adminSidebarlinks } from "@/constants/data";
 
 import { User } from "@/types";
+import { getDayPart } from "@/utils/formatter/formatDateRangesToPersian";
 
 type HeaderPropsType = {
   isPending: boolean;
@@ -36,7 +37,10 @@ function Header({ data, isPending }: HeaderPropsType) {
               )}
             </DrawerElement>
             <span className="text-sm lg:text-lg font-bold text-secondary-700">
-              سلام؛ {fullName}
+              سلام؛ {fullName}&nbsp;
+            </span>
+            <span className="text-sm lg:text-md font-bold text-secondary-300">
+              | {getDayPart()} بخیر{" "}
             </span>
           </div>
         </div>
