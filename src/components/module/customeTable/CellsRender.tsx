@@ -17,6 +17,7 @@ interface User {
   date: string;
   title: string;
   description: string;
+  admin_description: string;
   image: string;
   author: string;
   articleTitle: string;
@@ -102,8 +103,18 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
           {cellValue}
         </Chip>
       );
+
     case "description":
       return <p>{truncateText(cellValue, 40)}</p>;
+
+    case "admin_description":
+      return (
+        <div className="max-h-[100px]  overflow-y-auto px-4 pr-6 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+          <p className="text-sm text-gray-700 whitespace-pre-line">
+            {cellValue}
+          </p>
+        </div>
+      );
 
     case "actions":
       return (

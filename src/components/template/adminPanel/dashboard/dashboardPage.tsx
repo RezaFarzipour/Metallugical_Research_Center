@@ -5,7 +5,7 @@ import MiniCardModule from "@/components/module/MiniCardModule";
 import React from "react";
 import { CgArrowLeft } from "react-icons/cg";
 import { ReservesAdmincolumns } from "@/constants/tableData";
-import { adminCards, getUserCards } from "@/constants/data";
+import { adminCards } from "@/constants/data";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
@@ -53,12 +53,15 @@ const DashboardPage: React.FC = () => {
           INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={ReservesAdmincolumns}
           quantity="رزرو ها"
+          topContents={false}
           viewContent={false}
           viewContentSmSize={false}
           addBtn={false}
           columnsDropDownBtn={true}
           rolesDropDown={false}
-          stausDropDown={true}
+          stausDropDown={false}
+          paymentStautsDropDown={true}
+          bottomContents={false}
         >
           {isLoadingReserve ? (
             <div>
