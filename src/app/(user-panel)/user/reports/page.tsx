@@ -1,4 +1,4 @@
-import ReportsPage from "@/components/template/userPanel/reportsPage";
+import ReportsPage from "@/components/template/userPanel/reports/reportsPage";
 import React from "react";
 
 function page() {
