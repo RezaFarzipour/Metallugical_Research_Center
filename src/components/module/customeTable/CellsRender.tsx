@@ -5,6 +5,7 @@ import { statusColorMap } from "@/constants/tableData";
 import Image from "next/image";
 import EditBtn from "./EditBtn";
 import DeleteBtn from "./DeleteBtn";
+import truncateText from "@/utils/formatter/truncateText";
 
 interface User {
   id: number;
@@ -101,6 +102,9 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
           {cellValue}
         </Chip>
       );
+    case "description":
+      return <p>{truncateText(cellValue, 40)}</p>;
+
     case "actions":
       return (
         <div className="flex justify-center gap-2">

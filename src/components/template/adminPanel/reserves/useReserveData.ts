@@ -24,7 +24,7 @@ interface FormattedReserve {
     reserve_duration: string;
     actions: string;
     dateRange: string;
-    admin_description: string;
+    description: string;
     stage: string;
     status: string;
     payment_status: string;
@@ -98,7 +98,7 @@ const useReserveData = (visibleColumns: Set<string>) => {
                     reserve_duration,
                     actions: reserve.id.toString(),
                     dateRange: dateRanges,
-                    admin_description: reserve.admin_description,
+                    description: reserve.admin_description,
                     stage: toPersianNumbers(reserve.stage),
                     status,
                     payment_status,

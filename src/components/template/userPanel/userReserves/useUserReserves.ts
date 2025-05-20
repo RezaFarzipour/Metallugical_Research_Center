@@ -59,7 +59,7 @@ const useReserveData = (visibleColumns: Set<string>,) => {
           reserve_duration,
           actions: reserve.id.toString(),
           dateRange: dateRanges,
-          admin_description: reserve.admin_description,
+          description: reserve.admin_description,
           stage: reserve.stage,
           status,
           payment_status,
