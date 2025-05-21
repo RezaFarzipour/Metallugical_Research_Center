@@ -4,7 +4,7 @@ import DrawerElement from "@/components/element/DrawerElement";
 import { adminSidebarlinks } from "@/constants/data";
 
 import { User } from "@/types";
-import { getDayPart } from "@/utils/formatter/formatDateRangesToPersian";
+import { getDayPart, today } from "@/utils/formatter/formatDateRangesToPersian";
 
 type HeaderPropsType = {
   isPending: boolean;
@@ -12,11 +12,6 @@ type HeaderPropsType = {
 };
 
 function Header({ data, isPending }: HeaderPropsType) {
-  const today = new Date().toLocaleDateString("fa-IR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
   const fullName = data ? `${data.first_name} ${data.last_name}` : "";
 
   return (
