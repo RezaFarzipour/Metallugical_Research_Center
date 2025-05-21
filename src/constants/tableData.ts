@@ -1,4 +1,3 @@
-
 export const Usercolumns = [
   { name: "#", uid: "id" },
   { name: "نام و نام خانوادگی", uid: "name" },
@@ -76,34 +75,33 @@ export const columns = [
 ];
 
 export const blogColumns = [
-  { name: "#", uid: "id" },
-  { name: "عنوان", uid: "title" },
-  { name: "دسته بندی", uid: "category" },
-  { name: "عملیات", uid: "actions" },
+  { name: "#", uid: "_id" },
+  { name: "عنوان", uid: "name" },
+
+  { name: "عکس ها", uid: "image" },
+  { name: "اسلاگ ", uid: "slug" },
   { name: "تگ ها", uid: "tags" },
+  { name: "عملیات", uid: "actions" },
 ];
 
-
-
 export const statusOptions = [
-  { name: "انجام شده", uid: "انجام شده" },
+  { name: "تمام شده", uid: "تمام شده" },
   { name: "درحال انتظار", uid: "درحال انتظار" },
-  { name: "کنسل شده", uid: "کنسل شده" },
+  { name: "لغو شده", uid: "لغو شده" },
 ];
 export const statusOptionsPayment = [
   { name: "پرداخت شده", uid: "پرداخت شده" },
   { name: "در انتظار پرداخت", uid: "در انتظار پرداخت" },
-
 ];
 export const rolesOptions = [
   { name: "ادمین", uid: "ادمین" },
   { name: "کاربر", uid: "کاربر" },
 ];
 
-
-
-
-export const statusColorMap : Record<string, "success" | "warning" | "danger" | "secondary" | "default" | "primary"> = {
+export const statusColorMap: Record<
+  string,
+  "success" | "warning" | "danger" | "secondary" | "default" | "primary"
+> = {
   "تمام شده": "success",
   "در حال انتظار": "warning",
   "لغو شده": "danger",
