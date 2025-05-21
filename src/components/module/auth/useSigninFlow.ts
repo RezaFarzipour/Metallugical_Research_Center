@@ -64,7 +64,7 @@ export const useSigninFlow = () => {
       if (!data.is_signup) {
         setStep(3);
       } else {
-        router.push(userRoles === "customer" ? "/user/home" : "/admin/home");
+        router.push(userRoles === "customer" ? "/user/dashboard" : "/admin/dashboard");
       }
     } catch {
       showToast(
