@@ -37,6 +37,7 @@ const ReportsPage: React.FC = () => {
           addBtn={false}
           columnsDropDownBtn={true}
           rolesDropDown={false}
+          paymentStautsDropDown={true}
           stausDropDown={true}
           bottomContents={!!formDataReseves?.length}
         >
