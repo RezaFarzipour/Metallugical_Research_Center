@@ -1,3 +1,4 @@
+import { userCards } from "@/constants/data";
 import { ReservesCustomercolumns } from "@/constants/tableData";
 import useDataQueries from "@/hooks/useDataQueries";
 import { findServiceName } from "@/utils/findeName";
@@ -114,11 +115,23 @@ const useDashboardData = (visibleColumns: Set<string>) => {
 
   const activeReservations = dataAllReserveCustomer?.data?.filter(
     (item) =>
-      item.stage < 6 && item.is_finished === false && item.is_canceled === false
+      item.stage < 6 && !item.is_finished && !item.is_canceled
   );
-
   const activeReservationCount = activeReservations?.length;
-  const sliecedItems = formDataReseves.slice(0, 4);
+  const cancelReservations = dataAllReserveCustomer?.data?.filter(
+    (item) =>
+      item.stage < 6 && !item.is_finished  && item.is_canceled
+  );
+  const cancelReservationCount = cancelReservations?.length;
+
+
+  const cardsWithCounts = {
+    cancelReserve: { ...userCards.cancelReservation, count: cancelReservationCount },
+    activeReserve: { ...userCards.activeReservation, count: activeReservationCount },
+    lengthReserve: { ...userCards.reserves, count: reserveLength },
+  };
+
+  const sliecedItems = formDataReseves.slice(-4);
 
   return {
     formDataReseves,
@@ -127,9 +140,8 @@ const useDashboardData = (visibleColumns: Set<string>) => {
     firstActionClickHandler,
     isEmpty,
     isLoadingReserve,
-    reserveLength,
-    activeReservationCount,
     sliecedItems,
+    cardsWithCounts
   };
 };
 
