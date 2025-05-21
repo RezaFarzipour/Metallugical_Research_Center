@@ -1,3 +1,6 @@
+import BlogPage from "@/components/template/weblog/WeblogPage";
+
+
 export const metadata = {
   //   title: "Bolgs",
   title: {
@@ -6,6 +9,8 @@ export const metadata = {
 };
 
 function BlogsPage() {
-  return <div>بلاگ ها </div>;
+  return (
+    <BlogPage/>
+  );
 }
 export default BlogsPage;
