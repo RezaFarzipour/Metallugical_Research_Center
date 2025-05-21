@@ -12,6 +12,7 @@ import { TbEyeDiscount } from "react-icons/tb";
 import { BtnLoader } from "@/components/element/Loader";
 import Empty from "@/components/element/Empty";
 import useDashboardData from "./useDashboardData";
+import Minicard from "@/components/element/Minicard";
 const DashboardPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
   const {
@@ -21,21 +22,22 @@ const DashboardPage: React.FC = () => {
     firstActionClickHandler,
     isEmpty,
     isLoadingReserve,
-    reserveLength,
-    activeReservationCount,
     sliecedItems,
+    cardsWithCounts,
   } = useDashboardData(visibleColumns);
 
   return (
     <div className="grid grid-cols-1 gap-6">
-      <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
+      <div className="p-4 md:p-6">
         <TitleStructureDashboards mainTitle="سوابق من" />
-        <MiniCardModule
-          cards={getUserCards(reserveLength, activeReservationCount)}
-        />
+        <div className="flex flex-col md:flex-row gap-4">
+          <Minicard {...cardsWithCounts.lengthReserve} />
+          <Minicard {...cardsWithCounts.activeReserve} />
+          <Minicard {...cardsWithCounts.cancelReserve} />
+        </div>
       </div>
 
-      <div className="bg-white rounded-sm shadow-md p-4 md:p-6">
+      <div className="p-4 md:p-6">
         <TitleStructureDashboards
           mainTitle="آخرین سفارش های من"
           href="/user/reports"

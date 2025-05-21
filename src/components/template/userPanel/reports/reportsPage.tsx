@@ -40,6 +40,7 @@ const ReportsPage: React.FC = () => {
           columnsDropDownBtn={true}
           rolesDropDown={false}
           stausDropDown={true}
+          paymentStautsDropDown={true}
           bottomContents={!!formDataReseves?.length}
         >
           {isLoadingReserve ? (

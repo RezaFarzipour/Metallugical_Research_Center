@@ -40,9 +40,9 @@ export const getBlogCategoryById = async (
     }
 };
 
-export const getAllBlogsAdmin = async () => {
+export const getAllBlogsAdmin = async (options) => {
 
-    const response = await http.get(`blog/b/any/`);
+    const response = await http.get(`blog/b/any/`, options);
     return response.data;
 };
 

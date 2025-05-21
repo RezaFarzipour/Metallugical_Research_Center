@@ -1,7 +1,9 @@
+"use client";
 import { Button, NavbarContent, NavbarItem } from "@heroui/react";
 import { IoEnterOutline } from "react-icons/io5";
 import { DropDown } from "./NavDropDown";
-import { dropDownItems } from "@/constants/data";import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { dropDownItems } from "@/constants/data";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { logOut } from "@/services/api/auth";
 import { showToast } from "@/store/useToastSlice";
 import { useUserStore } from "@/store/useUserdata";

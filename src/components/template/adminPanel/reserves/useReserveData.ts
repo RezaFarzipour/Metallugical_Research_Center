@@ -1,6 +1,4 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getAllUserAdmin } from "@/services/api/user";
 import {
     toPersianNumbers,
     toPersianNumbersWithComma,
@@ -8,10 +6,9 @@ import {
 import { useRouter } from "next/navigation";
 import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
 import { findName, findServiceName } from "@/utils/findeName";
-import { getAllReserve } from "@/services/api/reserve";
-import { getAllServiceAdmin } from "@/services/api/service";
 import { ReservesAdmincolumns } from "@/constants/tableData";
 import { Reserve } from "@/types";
+import useDataQueries from "@/hooks/useDataQueries";
 
 
 interface FormattedReserve {
@@ -40,28 +37,13 @@ const useReserveData = (visibleColumns: Set<string>) => {
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
     const {
-        data: dataUser,
-        isPending: isLoadingUser,
-    } = useQuery({
-        queryKey: ["getAll-users"],
-        queryFn: getAllUserAdmin,
-    });
-
-    const {
-        data: dataAllServiceAdmin,
-        isPending: isLoadingService,
-    } = useQuery({
-        queryKey: ["getAll-services"],
-        queryFn: getAllServiceAdmin,
-    });
-
-    const {
-        data: dataAllReserveCustomer,
-        isPending: isLoadingReserve,
-    } = useQuery({
-        queryKey: ["get-Allreserve"],
-        queryFn: getAllReserve,
-    });
+        dataUser,
+        isLoadingUser,
+        dataAllServiceAdmin,
+        isLoadingService,
+        dataAllReserveCustomer,
+        isLoadingReserve,
+    } = useDataQueries();
 
     const groupReservesByKeys = (
         reserves: Reserve[]

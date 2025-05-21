@@ -13,6 +13,7 @@ import {
 } from "@/services/api/blogs";
 import { useMutation } from "@tanstack/react-query";
 import { useBlogFormStore } from "@/store/useBlogFormStore";
+import { imageUrlToFile } from "@/utils/formatter/fileFormatter";
 
 const Stage2 = () => {
   const { formData, setFormData } = useBlogFormStore();
@@ -25,13 +26,24 @@ const Stage2 = () => {
   const [uploadedImageFile, setUploadedImageFile] = useState<File | null>(null);
   const [isModalOpenCreateText, setIsModalOpenCreateText] = useState(false);
   const [isModalOpenEditText, setIsModalOpenEditText] = useState(false);
+  // useEffect(() => {
+  //   return () => {
+  //     if (coverImageUrl) {
+  //       URL.revokeObjectURL(coverImageUrl);
+  //     }
+  //   };
+  // }, [coverImageUrl]);
+
   useEffect(() => {
-    return () => {
-      if (coverImageUrl) {
-        URL.revokeObjectURL(coverImageUrl);
+    if (coverImageUrl) {
+      // convert preve link to file
+      async function fetchMyApi() {
+        const file = await imageUrlToFile(coverImageUrl);
+        setUploadedImageFile("coverImage", file);
       }
-    };
-  }, [coverImageUrl]);
+      fetchMyApi();
+    }
+  }, []);
   // Mutation برای متن
   const contentMutation = useMutation({
     mutationFn: (content: { content: string; blog: string }) =>
@@ -68,6 +80,9 @@ const Stage2 = () => {
         await contentMutation.mutateAsync({
           content: textItem.content,
           blog: formData.id,
+          index: 0,
+          class_name: "skin-type",
+          is_multiline: false,
         });
       }
 
@@ -98,21 +113,10 @@ const Stage2 = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const id = Math.random().toString(36).substr(2, 9);
-      const fileUrl = URL.createObjectURL(file);
-      const newItem: EditorItem = {
-        id,
-        type: "image",
-        content: fileUrl,
-      };
-
-      setFormData({
-        items: [...items, newItem],
-      });
-      setCoverImageUrl(fileUrl);
-      setUploadedImageFile(file); //  ذخیره فایل برای ارسال به سرور
+      setCoverImageUrl(URL.createObjectURL(file));
     }
   };
+  console.log(formData, "formData");
 
   // تابع برای حذف یک آیتم
   const handleDeleteItem = (id: string) => {
@@ -195,13 +199,13 @@ const Stage2 = () => {
 
         <div className="flex flex-col gap-6 mt-6">
           {/* نمایش تصویر هدر */}
-          {items.find((item) => item.type === "image") && (
-            <div className="relative w-full h-64 rounded-lg overflow-hidden shadow-md">
+          {coverImageUrl && (
+            <div className="relative overflow-hidden rounded-lg h-64 ">
               <Image
-                src={items.find((item) => item.type === "image")!.content}
-                alt="Header"
                 fill
-                className="object-cover"
+                alt="cover-iamge"
+                src={coverImageUrl}
+                className="object-cover object-center"
               />
               <Button
                 onPress={() =>

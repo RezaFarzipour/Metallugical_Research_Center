@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Chip } from "@heroui/react";
+import { Chip, Tooltip } from "@heroui/react";
 import { statusColorMap } from "@/constants/tableData";
 import Image from "next/image";
 import EditBtn from "./EditBtn";
@@ -105,15 +105,20 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
       );
 
     case "description":
-      return <p>{truncateText(cellValue, 40)}</p>;
+      return <p>{truncateText(String(cellValue ?? ""), 40)}</p>;
 
     case "admin_description":
       return (
-        <div className="max-h-[100px]  overflow-y-auto px-4 pr-6 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
-          <p className="text-sm text-gray-700 whitespace-pre-line">
-            {cellValue ? cellValue : "توضیحاتی وجود ندارد"}
-          </p>
-        </div>
+        <Tooltip
+          content={cellValue || "توضیحاتی ثبت نشده"}
+          className="max-w-96 max-h-auto whitespace-pre-wrap break-words "
+        >
+          <Chip size="md" className="cursor-pointer" variant="shadow">
+            {cellValue
+              ? truncateText(String(cellValue), 40)
+              : "توضیحاتی ثبت نشده"}
+          </Chip>
+        </Tooltip>
       );
 
     case "actions":

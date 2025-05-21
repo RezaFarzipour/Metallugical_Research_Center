@@ -1,49 +1,32 @@
 "use client"
+import { adminCards } from '@/constants/data';
 import { ReservesAdmincolumns } from '@/constants/tableData';
-import { getAllReserve } from '@/services/api/reserve';
-import { getAllServiceAdmin } from '@/services/api/service';
-import { getAllUserAdmin } from '@/services/api/user';
+import useDataQueries from '@/hooks/useDataQueries';
 import { findName, findServiceName } from '@/utils/findeName';
 import { formatDateRangesToPersian2 } from '@/utils/formatter/formatDateRangesToPersian';
 import { toPersianNumbers, toPersianNumbersWithComma } from '@/utils/formatter/toPersianNumbers';
-import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-const useDashboardData = (visibleColumns: Set<string>) => {
+const useDashboardData = (visibleColumns: Set<string>, cardsData) => {
     const router = useRouter();
     const [formData, setFormData] = useState({ reserveUp: [] });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
     const {
-        data: dataUser,
-        isPending: isLoadingUser,
-    } = useQuery({
-        queryKey: ["getAll-users"],
-        queryFn: getAllUserAdmin,
-    });
+        dataUser,
+        isLoadingUser,
+        dataAllServiceAdmin,
+        isLoadingService,
+        dataAllReserveCustomer,
+        isLoadingReserve,
+    } = useDataQueries();
     const {
-        data: dataAllServiceAdmin,
-        isPending: isLoadingService,
-    } = useQuery({
-        queryKey: ["getAll-services"],
-        queryFn: getAllServiceAdmin,
-    });
-
-    const { data: dataAllReserveCustomer, isPending: isLoadingReserve } =
-        useQuery({
-            queryKey: ["get-Allreserve"],
-            queryFn: getAllReserve,
-        });
-
-    const reserveLength = dataAllReserveCustomer?.data?.length;
-
-    const activeReservations = dataAllReserveCustomer?.data?.filter(
-        (item) =>
-            item.stage < 6 && item.is_finished === false && item.is_canceled === false
-    );
-
-    const activeReservationCount = activeReservations?.length;
+        numberOfUsers,
+        numberOfServices,
+        numberOfReservations,
+        numberOfBlogs,
+    } = cardsData;
 
     const groupReservesByKeys = (reserves) => {
         return reserves.reduce(
@@ -90,9 +73,7 @@ const useDashboardData = (visibleColumns: Set<string>) => {
         );
     };
 
-    const formDataReseves = Array.isArray(formData.reserveUp)
-        ? formData.reserveUp
-        : [];
+
     useEffect(() => {
         if (
             !isLoadingUser &&
@@ -115,9 +96,12 @@ const useDashboardData = (visibleColumns: Set<string>) => {
         isLoadingReserve,
     ]);
 
+    const formDataReseves = Array.isArray(formData.reserveUp)
+        ? formData.reserveUp
+        : [];
+    console.log(formDataReseves, "formDataReseves");
 
-    const sliecedItems = formDataReseves.slice(0, 4);
-
+    const slicedItems = formDataReseves.slice(-4);
     // محاسبه ستون‌های هدر
     const headerColumns = useMemo(() => {
         return visibleColumns.size === ReservesAdmincolumns.length
@@ -133,7 +117,14 @@ const useDashboardData = (visibleColumns: Set<string>) => {
         },
         [router]
     );
-    const isEmpty = !formDataReseves || formDataReseves.length === 0;
+
+
+    const cardsWithCounts = {
+        users: { ...adminCards.users, count: numberOfUsers },
+        orders: { ...adminCards.orders, count: numberOfServices },
+        products: { ...adminCards.products, count: numberOfReservations },
+        blogs: { ...adminCards.blogs, count: numberOfBlogs },
+    };
 
     return {
         formDataReseves,
@@ -141,10 +132,7 @@ const useDashboardData = (visibleColumns: Set<string>) => {
         headerColumns,
         firstActionClickHandler,
         isLoadingReserve,
-        isEmpty,
-        reserveLength,
-        activeReservationCount,
-        sliecedItems,
+        slicedItems, cardsWithCounts
     };
 }
 

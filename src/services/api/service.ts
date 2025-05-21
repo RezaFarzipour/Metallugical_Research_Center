@@ -1,8 +1,8 @@
 import { AxiosRequestConfig } from "axios";
 import http from "../httpService";
 
-export const getAllServiceAdmin = async () => {
-  const response = await http.get(`service/s/admin/`);
+export const getAllServiceAdmin = async (options) => {
+  const response = await http.get(`service/s/admin/`, options);
   return response.data;
 };
 
@@ -114,8 +114,8 @@ export const getAllReserveDate = async () => {
     console.log("error", error);
   }
 };
-export const getAllServiceCustomer = async () => {
-  const response = await http.get(`service/s/customer/`);
+export const getAllServiceCustomer = async (options) => {
+  const response = await http.get(`service/s/customer/`, options);
   return response.data;
 };
 

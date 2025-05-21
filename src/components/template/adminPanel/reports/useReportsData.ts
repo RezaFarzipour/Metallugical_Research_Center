@@ -1,150 +1,112 @@
-import { ReportsCustomercolumns } from "@/constants/tableData";
-import { getAllReserve } from "@/services/api/reserve";
-import { getAllServiceCustomer } from "@/services/api/service";
-import { getAllUserAdmin } from "@/services/api/user";
-import { Reserve } from "@/types";
-import { findName, findServiceName } from "@/utils/findeName";
-import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
-import {
-  toPersianNumbers,
-  toPersianNumbersWithComma,
-} from "@/utils/formatter/toPersianNumbers";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
-
-interface FormattedReserve {
-  _id: string;
-  id: string;
-  name: string;
-  phone_number: string;
-  service_name: string;
-  price: string;
-  reserve_duration: string;
-  actions: string;
-  dateRange: string;
-  admin_description: string;
-  stage: string;
-  status: string;
-  payment_status: string;
-}
-
-interface GroupedReserves {
-  reserveUp: FormattedReserve[];
-}
+import { ReportsAdmincolumns } from '@/constants/tableData';
+import useAdminDataQueries from '@/hooks/useDataQueries';
+import { findName, findServiceName } from '@/utils/findeName';
+import { formatDateRangesToPersian2 } from '@/utils/formatter/formatDateRangesToPersian';
+import { toPersianNumbers, toPersianNumbersWithComma } from '@/utils/formatter/toPersianNumbers';
+import { useEffect, useMemo, useState } from 'react'
 
 const useReportsData = (visibleColumns: Set<string>) => {
-  const [formData, setFormData] = useState<GroupedReserves>({ reserveUp: [] });
-  const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
+    const [formData, setFormData] = useState({ reserveUp: [] });
+    const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
-  const { data: dataUser, isPending: isLoadingUser } = useQuery({
-    queryKey: ["getAll-users"],
-    queryFn: getAllUserAdmin,
-  });
-  const { data: dataAllServiceAdmin, isLoading: isLoadingService } = useQuery({
-    queryKey: ["getAll-services"],
-    queryFn: getAllServiceCustomer,
-  });
+    const {
+        dataUser,
+        isLoadingUser,
+        dataAllServiceAdmin,
+        isLoadingService,
+        dataAllReserveCustomer,
+        isLoadingReserve,
+    } = useAdminDataQueries();
 
-  const { data: dataAllReserveCustomer, isLoading: isLoadingReserve } =
-    useQuery({
-      queryKey: ["get-Allreserve"],
-      queryFn: getAllReserve,
-    });
+    const groupReservesByKeys = (reserves) => {
+        return reserves.reduce(
+            (acc, reserve, index) => {
+                const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"
+                    } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
-  const groupReservesByKeys = (reserves: Reserve[]): GroupedReserves => {
-    const filteredReserves = reserves.filter(
-      (reserve) => reserve.is_canceled || reserve.is_finished
-    );
-    return filteredReserves.reduce<GroupedReserves>(
-      (acc, reserve, index) => {
-        const dateRanges = `${
-          formatDateRangesToPersian2(reserve.reserve_from) || "?"
-        } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
+                const name = findName(dataUser ?? [], reserve.user);
+                const service_name = findServiceName(
+                    dataAllServiceAdmin ?? [],
+                    reserve.service
+                );
+                const reserve_duration = `${toPersianNumbers(
+                    reserve.reserve_duration
+                )} ساعت`;
 
-        const name = findName(dataUser ?? [], reserve.user);
-        const service_name = findServiceName(
-          dataAllServiceAdmin ?? [],
-          reserve.service
+                const status =
+                    reserve.is_canceled === true
+                        ? "لغو شده"
+                        : reserve.is_finished === true
+                            ? "تمام شده"
+                            : "در حال انتظار";
+                const payment_status =
+                    reserve.is_payment_verified === true
+                        ? "پرداخت شده"
+                        : "در انتظار پرداخت";
+
+                acc.reserveUp.push({
+                    _id: toPersianNumbers(index + 1),
+                    id: reserve.id,
+                    name,
+                    phone_number: toPersianNumbers(reserve.user),
+                    service_name,
+                    price: toPersianNumbersWithComma(reserve.total_price),
+                    reserve_duration,
+                    dateRange: dateRanges,
+                    admin_description: reserve.admin_description,
+                    stage: toPersianNumbers(reserve.stage),
+                    status,
+                    payment_status,
+                });
+
+                return acc;
+            },
+            { reserveUp: [] }
         );
-        const reserve_duration = `${toPersianNumbers(
-          reserve.reserve_duration
-        )} ساعت`;
+    };
 
-        const status =
-          reserve.is_canceled === true
-            ? "لغو شده"
-            : reserve.is_finished === true
-            ? "تمام شده"
-            : "در حال انتظار";
-        const payment_status =
-          reserve.is_payment_verified === true
-            ? "پرداخت شده"
-            : "در انتظار پرداخت";
+    const formDataReseves = Array.isArray(formData.reserveUp)
+        ? formData.reserveUp
+        : [];
+    useEffect(() => {
+        if (
+            !isLoadingUser &&
+            !isLoadingService &&
+            !isLoadingReserve &&
+            Array.isArray(dataAllReserveCustomer.data)
+        ) {
+            const grouped = groupReservesByKeys(dataAllReserveCustomer.data);
+            setFormData(grouped);
 
-        acc.reserveUp.push({
-          _id: toPersianNumbers(index + 1),
-          id: reserve.id,
-          name,
-          phone_number: toPersianNumbers(reserve.user),
-          service_name,
-          price: toPersianNumbersWithComma(reserve.total_price),
-          reserve_duration,
-          actions: reserve.id.toString(),
-          dateRange: dateRanges,
-          admin_description: reserve.admin_description,
-          stage: toPersianNumbers(reserve.stage),
-          status,
-          payment_status,
-        });
+            if (grouped.reserveUp.length > 0) {
+                setVisibleKeys(Object.keys(grouped.reserveUp[0]));
+            }
+        }
+    }, [
+        dataAllReserveCustomer,
+        dataAllServiceAdmin,
+        isLoadingUser,
+        isLoadingService,
+        isLoadingReserve,
+    ]);
 
-        return acc;
-      },
-      { reserveUp: [] }
-    );
-  };
+    // محاسبه ستون‌های هدر
+    const headerColumns = useMemo(() => {
+        return visibleColumns.size === ReportsAdmincolumns.length
+            ? ReportsAdmincolumns
+            : ReportsAdmincolumns.filter((column) =>
+                visibleColumns.has(column.uid)
+            );
+    }, [visibleColumns]);
 
-  const formDataReseves = Array.isArray(formData.reserveUp)
-    ? formData.reserveUp
-    : [];
-  useEffect(() => {
-    if (
-      !isLoadingUser &&
-      !isLoadingService &&
-      !isLoadingReserve &&
-      Array.isArray(dataAllReserveCustomer.data)
-    ) {
-      const grouped = groupReservesByKeys(dataAllReserveCustomer.data);
-      setFormData(grouped);
+    const isEmpty = !formDataReseves || formDataReseves.length === 0;
+    return {
+        formDataReseves,
+        visibleKeys,
+        headerColumns,
+        isLoadingReserve,
+        isEmpty,
+    };
+}
 
-      if (grouped.reserveUp.length > 0) {
-        setVisibleKeys(Object.keys(grouped.reserveUp[0]));
-      }
-    }
-  }, [
-    dataAllReserveCustomer,
-    dataAllServiceAdmin,
-    isLoadingUser,
-    isLoadingService,
-    isLoadingReserve,
-  ]);
-
-  // محاسبه ستون‌های هدر
-  const headerColumns = useMemo(() => {
-    return visibleColumns.size === ReportsCustomercolumns.length
-      ? ReportsCustomercolumns
-      : ReportsCustomercolumns.filter((column) =>
-          visibleColumns.has(column.uid)
-        );
-  }, [visibleColumns]);
-
-  const isEmpty = !formDataReseves || formDataReseves.length === 0;
-  return {
-    formDataReseves,
-    visibleKeys,
-    headerColumns,
-    isLoadingReserve,
-    isEmpty,
-  };
-};
-
-export default useReportsData;
+export default useReportsData

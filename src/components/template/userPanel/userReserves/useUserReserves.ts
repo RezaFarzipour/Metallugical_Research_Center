@@ -7,23 +7,19 @@ import { getAllReserve, postReservedService } from "@/services/api/reserve";
 import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
 import { findServiceName } from "@/utils/findeName";
 import { ReservesCustomercolumns } from "@/constants/tableData";
+import useDataQueries from "@/hooks/useDataQueries";
 
 
 const useReserveData = (visibleColumns: Set<string>,) => {
   const router = useRouter();
   const [formData, setFormData] = useState({ reserveUp: [] });
   const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
-
-  const { data: dataAllServiceAdmin, isPending: isLoadingService } = useQuery({
-    queryKey: ["getAll-services"],
-    queryFn: getAllServiceCustomer,
-  });
-
-  const { data: dataAllReserveCustomer, isPending: isLoadingReserve } =
-    useQuery({
-      queryKey: ["get-Allreserve"],
-      queryFn: getAllReserve,
-    });
+  const {
+    dataAllReserveCustomer,
+    isLoadingReserve,
+    dataAllServiceCustomer,
+    isLoadingServiceCustomer
+  } = useDataQueries();
 
   const groupReservesByKeys = (reserves) => {
     return reserves.reduce(
@@ -32,7 +28,7 @@ const useReserveData = (visibleColumns: Set<string>,) => {
           } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
         const service_name = findServiceName(
-          dataAllServiceAdmin ?? [],
+          dataAllServiceCustomer ?? [],
           reserve.service
         );
         const reserve_duration = `${toPersianNumbers(
@@ -76,7 +72,7 @@ const useReserveData = (visibleColumns: Set<string>,) => {
     : [];
   useEffect(() => {
     if (
-      !isLoadingService &&
+      !isLoadingServiceCustomer &&
       !isLoadingReserve &&
       Array.isArray(dataAllReserveCustomer.data)
     ) {
@@ -89,8 +85,8 @@ const useReserveData = (visibleColumns: Set<string>,) => {
     }
   }, [
     dataAllReserveCustomer,
-    dataAllServiceAdmin,
-    isLoadingService,
+    dataAllServiceCustomer,
+    isLoadingServiceCustomer,
     isLoadingReserve,
   ]);
 
