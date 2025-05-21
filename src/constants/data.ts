@@ -256,65 +256,56 @@ export const images = [
   },
 ];
 
-export const getUserCards = (reserveLength: number, activeReservationCount: number): DashboardMinicardProps[] => [
-  {
+export const userCards = {
+  cancelReservation: {
     color: "bg-primary-900",
     shadow: "shadow-[rgba(24,45,60,0.2)_-13px_0px,_rgba(24,45,60,0.1)_-23px_0px]",
     icon: CiClock1,
-    label: "تاریخ پیوستن",
-    count: 10,
+    label: "رزرو های لغو شده",
   },
-  {
+  activeReservation: {
     color: "bg-secondary-500",
     shadow: "shadow-[rgba(55,124,251,0.2)_-13px_0px,_rgba(55,124,251,0.1)_-23px_0px]",
     icon: PiDeviceTabletSpeakerLight,
     label: "رزرو های در حال انجام",
-    count: activeReservationCount,
   },
-  {
+  reserves: {
     color: "bg-green-500",
     shadow: "shadow-[rgba(34,197,94,0.2)_-13px_0px,_rgba(34,197,94,0.1)_-23px_0px]",
     icon: IoDocumentTextOutline,
     label: "همه رزرو ها",
-    count: reserveLength, // اینجا داینامیکش کردی
   },
-];
-
-export const adminCards: DashboardMinicardProps[] = [
-  {
+}
+export const adminCards = {
+  users: {
     color: "bg-primary-900",
     shadow:
       "shadow-[rgba(24,45,60,0.2)_-13px_0px,_rgba(24,45,60,0.1)_-23px_0px]",
     icon: LuUsers,
     label: "کاربران",
-    count: 10,
   },
-  {
+  orders: {
     color: "bg-secondary-500",
     shadow:
       "shadow-[rgba(55,124,251,0.2)_-13px_0px,_rgba(55,124,251,0.1)_-23px_0px]",
     icon: PiDeviceTabletSpeakerLight,
-    label: "سفارش ها",
-    count: 10,
+    label: "رزرو ها",
   },
-  {
+  products: {
     color: "bg-purple-500",
     shadow:
       "shadow-[rgba(168,85,247,0.2)_-13px_0px,_rgba(168,85,247,0.1)_-23px_0px]",
     icon: PiDeviceTablet,
-    label: "محصولات",
-    count: 10,
+    label: "سرویس ها",
   },
-
-  {
+  blogs: {
     color: "bg-green-500",
     shadow:
       "shadow-[rgba(34,197,94,0.2)_-13px_0px,_rgba(34,197,94,0.1)_-23px_0px]",
     icon: RiBloggerLine,
     label: "بلاگ ها",
-    count: 10,
   },
-];
+};
 
 export const faqData: FAQItem[] = [
   {

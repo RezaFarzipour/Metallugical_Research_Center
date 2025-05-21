@@ -20,8 +20,8 @@ export const sendUserProfile = async ({
   return response.data;
 };
 
-export const getAllUserAdmin = async () => {
-  const response = await http.get(`user/admin/`);
+export const getAllUserAdmin = async (options) => {
+  const response = await http.get(`user/admin/`, options);
   return response.data;
 };
 
