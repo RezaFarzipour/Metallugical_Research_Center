@@ -12,6 +12,7 @@ import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 import { MdOutlineDescription, MdOutlineSubtitles } from "react-icons/md";
 import truncateText from "@/utils/formatter/truncateText";
 import { BlogType } from "@/types";
+import { TiTags } from "react-icons/ti";
 
 interface ReserveDate {
   id: number;
@@ -36,6 +37,7 @@ interface CardContentProps extends Partial<ServiceCardData>, Partial<BlogType> {
   view: boolean;
   styleForAdmin: boolean;
   isMoreDetails?: string;
+  parsedTags?: string[];
 }
 
 const InfoRow = ({
@@ -77,6 +79,7 @@ export const CardContent: React.FC<CardContentProps> = ({
   widthConter,
   heightConter,
   view,
+  parsedTags,
   styleForAdmin,
   dateRange,
   slug,
@@ -106,6 +109,18 @@ export const CardContent: React.FC<CardContentProps> = ({
       height={view ? heightConter : "auto"}
       className={cardStyles.box}
     >
+      {parsedTags &&parsedTags.length > 0 && (
+        <InfoRow icon={<TiTags className="text-xl" />}>
+          {parsedTags?.map((tag: string, index: number) => (
+            <span
+              key={index}
+              className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded"
+            >
+              {tag}
+            </span>
+          ))}
+        </InfoRow>
+      )}
       <InfoRow icon={<MdOutlineSubtitles className="text-xl" />}>
         <h3 className="text-lg font-bold text-gray-600">
           {service_name || name || title}
@@ -119,12 +134,13 @@ export const CardContent: React.FC<CardContentProps> = ({
           </p>
         </InfoRow>
       )}
-
-      <InfoRow icon={<MdOutlineDescription className="text-xl mt-1" />}>
-        <p className="text-sm text-gray-600 text-justify">
-          {truncateText(description || "", 20)}
-        </p>
-      </InfoRow>
+      {description && (
+        <InfoRow icon={<MdOutlineDescription className="text-xl mt-1" />}>
+          <p className="text-sm text-gray-600 text-justify">
+            {truncateText(description || "", 20)}
+          </p>
+        </InfoRow>
+      )}
 
       {styleForAdmin && dateRange && (
         <InfoRow icon={<IoCalendarOutline size={20} className="mt-1" />}>
