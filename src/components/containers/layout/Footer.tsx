@@ -33,7 +33,7 @@ const Footer = () => {
     <div className="bg-default-50 w-full ">
       <div className="flex flex-col lg:flex-row lg:justify-between items-stretch text-center lg:text-right p-6 lg:p-10 gap-10 lg:gap-12">
         {/* دسترسی سریع */}
-        <div className="flex flex-col gap-4 items-start text-center  mr-7 lg:mr-0">
+        <div className="flex flex-col gap-4 items-start text-center   lg:mr-0">
           <p className="font-bold text-default-900 text-lg lg:text-xl">
             دسترسی سریع
           </p>
@@ -49,7 +49,7 @@ const Footer = () => {
         </div>
 
         {/* راه‌های ارتباطی */}
-        <div className="flex  gap-4 flex-col  items-start  text-center mr-7 lg:mr-8  mb-6  ">
+        <div className="flex  gap-4 flex-col  items-start  text-center  lg:mr-8  mb-6  ">
           <p className="font-bold text-default-900 text-lg lg:text-xl">
             راه‌های ارتباطی
           </p>
