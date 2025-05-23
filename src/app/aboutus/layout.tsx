@@ -10,9 +10,9 @@ export default function AboutUsLayout({
     <>
       <Layout>
          <HeaderImage
-          headrName="درباره ی ما"
-          breadcrumbItem2="ارتباط با ما"
-          panelHref="/contactus"
+          
+          breadcrumbItem1=" درباره ما"
+          panelHref="/"
         /> 
         <div className="xl:max-w-screen-xl ">{children}</div>
       </Layout>

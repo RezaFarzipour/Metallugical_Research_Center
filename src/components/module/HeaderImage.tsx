@@ -3,15 +3,15 @@ import Image from "next/image";
 import BreadcrumbsElement from "../element/Breadcrumbs";
 
 type HeaderImageProps = {
-  headrName: string;
-  breadcrumbItem2: string;
+ 
+  
   panelHref: string;
+  breadcrumbItem1: string;
 };
 
 const HeaderImage = ({
   breadcrumbItem1,
-  breadcrumbItem2,
-  breadcrumbItem2Href,
+  panelHref,
 }: HeaderImageProps) => {
   return (
     <div className="absolute top-0 left-0 w-full h-full z-0">
@@ -30,8 +30,8 @@ const HeaderImage = ({
             <h1 className="text-6xl font-bold">{breadcrumbItem1}</h1>
             <BreadcrumbsElement
               item1="خانه"
-              item2={breadcrumbItem2}
-              panelHref={breadcrumbItem2Href}
+              item2={breadcrumbItem1}
+              panelHref={panelHref}
             />
           </div>
         </div>

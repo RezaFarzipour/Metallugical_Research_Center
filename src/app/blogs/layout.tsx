@@ -11,9 +11,9 @@ export default function ContactUsLayout({
       <Layout>
         {/* banner section */}
         <HeaderImage
-          headrName="بلاگ ها "
-          breadcrumbItem2="بلاگ ها"
-          panelHref="/aboutus"
+                
+                breadcrumbItem1="  بلاگ"
+                panelHref="/"
         />
         <div className=" ">{children}</div>
       </Layout>

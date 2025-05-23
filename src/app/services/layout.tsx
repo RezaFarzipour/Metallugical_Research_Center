@@ -11,9 +11,9 @@ export default function ContactUsLayout({
       <Layout>
         ={" "}
         <HeaderImage
-          breadcrumbItem1="خدمات"
-          breadcrumbItem2="خدمات  ما"
-          breadcrumbItem2Href="/services"
+          
+          breadcrumbItem1="حدمات"
+          panelHref="/"
         />
         <div className="mt-72">{children}</div>
       </Layout>

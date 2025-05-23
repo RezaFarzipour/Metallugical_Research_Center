@@ -19,11 +19,11 @@ type BreadcrumbsProps = {
 const BreadcrumbsElement = ({
   item1,
   item2,
-  panelHref,
   color = "white",
 }: BreadcrumbsProps) => {
   return (
     <Breadcrumbs
+    className="cursor-pointer"
       size="lg"
       variant="light"
       itemClasses={{
@@ -32,10 +32,10 @@ const BreadcrumbsElement = ({
       separator="/"
       color={color}
     >
-      <BreadcrumbItem className="pointer" href={panelHref}>
+      <BreadcrumbItem className="pointer" href="/">
         {item1}
       </BreadcrumbItem>
-      <BreadcrumbItem className="pointer" href="/">
+      <BreadcrumbItem className="pointer" >
         {item2}
       </BreadcrumbItem>
     </Breadcrumbs>
