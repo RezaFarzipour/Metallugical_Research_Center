@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateCategory, useCreateService } from "../useCreate";
-import { useEditCategory, useEditService } from "../useEditService";
+import { useEditCategory, useEditService } from "../useEditCategory";
 import { showToast } from "@/store/useToastSlice";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
