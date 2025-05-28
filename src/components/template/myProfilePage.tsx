@@ -13,7 +13,6 @@ import { showToast } from "@/store/useToastSlice";
 import { editUserByPhoneNumberAdmin } from "@/services/api/user";
 import { BtnLoader } from "../element/Loader";
 
-
 export default function MyProfilePage(): JSX.Element {
   const { data: user }: { data: User | undefined } = useGetUser();
   const queryClient = useQueryClient();
@@ -53,7 +52,7 @@ export default function MyProfilePage(): JSX.Element {
             queryKey: ["get-user"],
           });
           showToast("اطلاعات کاربر با موفقیت ویرایش شد", "success");
-    
+
           reset();
         },
         onError: () => {
@@ -78,7 +77,9 @@ export default function MyProfilePage(): JSX.Element {
       >
         <PersonalDetailsForm register={register} errors={errors} />
 
-        <Button type="submit">{isPending ? <BtnLoader /> : "ویرایش"}</Button>
+        <Button variant="primary" type="submit" fullWidth>
+          {isPending ? <BtnLoader /> : "ویرایش"}
+        </Button>
       </form>
     </div>
   );

@@ -1,5 +1,4 @@
-import { Button } from "@heroui/button";
-import Link from "next/link";
+import Button from "@/components/element/Button";
 import React from "react";
 
 const LandingHeader = () => {
@@ -22,11 +21,9 @@ const LandingHeader = () => {
           <h2 className=" text-lg md:text-xl font-bold text-secondary-500">
             دانشگاه آزاد اسلامی زنجان
           </h2>
-          <Link href="/services">
-            <Button className="bg-secondary-600 text-white mt-4 px-6 py-2 text-sm md:text-base rounded-md hover:bg-secondary-700 transition duration-300">
-              همین حالا رزرو کن ...
-            </Button>
-          </Link>
+          <Button variant="primary" type="submit" path="/services">
+            همین حالا رزرو کن ...
+          </Button>
         </div>
       </div>
 

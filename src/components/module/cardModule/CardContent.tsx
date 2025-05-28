@@ -8,7 +8,10 @@ import { RiPriceTag3Line } from "react-icons/ri";
 import { IoCalendarOutline } from "react-icons/io5";
 import { cn } from "@/utils/cn";
 import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
-import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
+import {
+  toEnglishNumbers,
+  toPersianNumbersWithComma,
+} from "@/utils/formatter/toPersianNumbers";
 import { MdOutlineDescription, MdOutlineSubtitles } from "react-icons/md";
 import truncateText from "@/utils/formatter/truncateText";
 import { BlogType } from "@/types";
@@ -85,10 +88,15 @@ export const CardContent: React.FC<CardContentProps> = ({
 
   const isBlog = !!slug;
 
-  const MoreDetailsHref = isBlog
-    ? `/blogs/${slug}/${id}`
-    : isMoreDetails === "admin"
-    ? `/admin/services/${id}/details`
+  // const MoreDetailsHref = isBlog
+  //   ? `/blogs/${slug}/${id}`
+  //   : isMoreDetails === "admin"
+  //   ? `/admin/services/${id}/details`
+  //   : `/services/${id}/details`;
+  console.log(toEnglishNumbers(id), "id");
+
+  const MoreDetailsHref = isMoreDetails
+    ? `/admin${isMoreDetails}/${toEnglishNumbers(id)}/details`
     : `/services/${id}/details`;
 
   const cardStyles = {

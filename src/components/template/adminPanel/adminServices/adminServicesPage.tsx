@@ -80,7 +80,7 @@ export const AdminServicesPage: React.FC = ({}) => {
               <CardModule
                 data={sortedItems}
                 isDate={false}
-                isMoreDetails="admin"
+                isMoreDetails="/services"
                 widthConter="100%"
                 heightImg="250px"
                 heightConter="200px"
