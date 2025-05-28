@@ -36,9 +36,21 @@ const CardModule = <T extends CardData>({
     cardsList: "w-full max-w-[800px] max-h-[250px] flex flex-col md:flex-row ",
   };
 
+  let parsedTags: string[] = [];
+
   return (
     <>
       {data.map((item) => {
+        if ("tags" in item && item.tags) {
+          try {
+            const tagValue = Array.isArray(item.tags)
+              ? item.tags[0]
+              : item.tags;
+            parsedTags = JSON.parse(tagValue);
+          } catch (e) {
+            console.error("Invalid tags format:", item.tags);
+          }
+        }
         const image =
           "cover_image" in item
             ? item.cover_image
@@ -52,7 +64,7 @@ const CardModule = <T extends CardData>({
           <div
             key={item.id}
             className={cn(
-              "flex justify-center items-center",
+              "flex justify-center items-center ",
               view ? "min-h-[18rem]" : "min-h-[18rem]"
             )}
           >
@@ -69,7 +81,10 @@ const CardModule = <T extends CardData>({
                 view={view}
               />
 
+            
+
               <CardContent
+              parsedTags={parsedTags}
                 {...item}
                 reserve_date={
                   "service-reserve_date" in item

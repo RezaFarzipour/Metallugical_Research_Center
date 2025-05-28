@@ -11,11 +11,11 @@ export default function ContactUsLayout({
       <Layout>
         {/* banner section */}
         <HeaderImage
-          headrName="بلاگ ها "
-          breadcrumbItem2="بلاگ ها"
-          panelHref="/aboutus"
+                
+                breadcrumbItem1="  بلاگ"
+                panelHref="/"
         />
-        <div className="xl:max-w-screen-xl ">{children}</div>
+        <div className=" ">{children}</div>
       </Layout>
     </>
   );
