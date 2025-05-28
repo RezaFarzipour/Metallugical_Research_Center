@@ -22,6 +22,7 @@ const CategoryBlog = () => {
     queryFn: getAllCategoryAdmin,
   });
 
+
   const { deletBlogCategory } = useDeleteBlogCategory();
 
   // وضعیت مودال

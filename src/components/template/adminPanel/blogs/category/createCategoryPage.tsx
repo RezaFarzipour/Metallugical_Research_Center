@@ -69,9 +69,10 @@ export default function CreateCategory() {
   const { editBlogCategory } = useEditCategory();
 
   const onSubmit = (formData: CategoryFormData) => {
+    
     if (isEditMode && editId) {
       editBlogCategory(
-        { id: editId, form: formData },
+        { id: editId, category_name:formData.category_name,slug:formData.slug},
         {
           onSuccess: () => {
             showToast("دسته‌بندی با موفقیت ویرایش شد", "success");
