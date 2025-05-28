@@ -4,6 +4,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
+import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
@@ -50,6 +51,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ html, setHtml, onSave }) => {
       Superscript,
       TextStyle,
       Color,
+      Image,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Heading,
       Blockquote,
@@ -58,6 +60,25 @@ const TextEditor: React.FC<TextEditorProps> = ({ html, setHtml, onSave }) => {
   });
 
   if (!editor) return null;
+
+  const addImage = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === "string") {
+          editor.chain().focus().setImage({ src: reader.result }).run();
+        }
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  };
 
   const pickColor = () => {
     const input = document.createElement("input");
@@ -69,7 +90,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ html, setHtml, onSave }) => {
   };
   const headingBtn = [...headingButtons(editor)];
   const allBtn = [
-    ...baseButtons(editor, pickColor),
+    ...baseButtons(editor, pickColor, addImage),
     ...alignmentButtons(editor),
     ...listButtons(editor),
     ...blockquoteAndHr(editor),
