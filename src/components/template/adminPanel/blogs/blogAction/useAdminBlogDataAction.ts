@@ -166,17 +166,17 @@ import { GET_ALL_BLOGS } from "@/graphql/queries";
 
 export interface Blog {
 
-    coverImage: string;
-    id: string;
-    slug: string;
-    tags: string[]; 
-    title: string;
-  }
-  
-  export interface BlogResponse {
-    blogs: Blog[];
-  }
-  
+  coverImage: string;
+  id: string;
+  slug: string;
+  tags: string[];
+  title: string;
+}
+
+export interface BlogResponse {
+  blogs: Blog[];
+}
+
 
 type FilteredService = {
   _id: string;
@@ -200,7 +200,7 @@ export const useAdminBlogDataAction = () => {
     null
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log("formData",formData)
+  console.log("formData", formData)
 
   //   const { deletService } = useDeleteService();
 
@@ -212,7 +212,7 @@ export const useAdminBlogDataAction = () => {
         // به جای فیلتر کلیدها، مستقیماً ساخت آبجکت فیلترشده
         acc.blogUp.push({
           _id: toPersianNumbers(index + 1),
-          id: toPersianNumbers(blog.id),
+          id: blog.id,
           name: blog.title,
           image: blog.coverImage,
           actions: blog.id.toString(),
@@ -230,13 +230,13 @@ export const useAdminBlogDataAction = () => {
     error,
   } = useQuery<BlogResponse>(GET_ALL_BLOGS);
 
-  console.log(data?.blogs ,"dar");
+  console.log(data?.blogs, "dar");
 
   // گروه‌بندی داده‌ها هنگام تغییر data
   useEffect(() => {
     if (Array.isArray(data?.blogs)) {
       const grouped = groupServicesByKeys(data.blogs);
-      console.log("grouped",grouped)
+      console.log("grouped", grouped)
       setFormData(grouped);
 
       if (grouped.blogUp.length > 0) {

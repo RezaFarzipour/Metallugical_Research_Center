@@ -26,13 +26,8 @@ const Stage2 = () => {
   const [uploadedImageFile, setUploadedImageFile] = useState<File | null>(null);
   const [isModalOpenCreateText, setIsModalOpenCreateText] = useState(false);
   const [isModalOpenEditText, setIsModalOpenEditText] = useState(false);
-  // useEffect(() => {
-  //   return () => {
-  //     if (coverImageUrl) {
-  //       URL.revokeObjectURL(coverImageUrl);
-  //     }
-  //   };
-  // }, [coverImageUrl]);
+
+  console.log(formData, "formData in Stage2");
 
   useEffect(() => {
     if (coverImageUrl) {
@@ -46,10 +41,14 @@ const Stage2 = () => {
   }, []);
   // Mutation برای متن
   const contentMutation = useMutation({
-    mutationFn: (content: { content: string; blog: string }) =>
-      createNewBlogContent(content),
+    mutationFn: (content: {
+      content: string;
+      blog: string;
+      index: number;
+      class_name: string;
+      is_multiline: boolean;
+    }) => createNewBlogContent(content),
   });
-
   // Mutation برای تصویر
   const imageMutation = useMutation({
     mutationFn: async (formData: FormData & { blog: string }) => {
@@ -116,7 +115,6 @@ const Stage2 = () => {
       setCoverImageUrl(URL.createObjectURL(file));
     }
   };
-  console.log(formData, "formData");
 
   // تابع برای حذف یک آیتم
   const handleDeleteItem = (id: string) => {

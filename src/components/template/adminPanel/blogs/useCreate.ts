@@ -7,7 +7,7 @@ export function useCreateCategory() {
 
     const { isPending: isPendingCategory, mutateAsync: createCategory } = useMutation({
         mutationFn: createNewBlogCategory,
-        onSuccess: (data) => {
+        onSuccess: () => {
 
             queryClient.invalidateQueries({
                 queryKey: ["getAll-blogsCategory"],
