@@ -93,7 +93,7 @@ export default function BlogPage({
                 data={filteredBlogs}
                 widthConter="100%"
                 heightImg="250px"
-                heightConter="200px"
+                heightConter="150px"
                 styleForAdmin={false}
               />
             )}

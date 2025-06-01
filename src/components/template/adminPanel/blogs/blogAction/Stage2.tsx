@@ -1,11 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import BlurModal from "@/components/element/BlurModal";
 import TextEditor from "@/components/module/textEditor/TextEditor";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
-import FileInput from "@/components/element/FileInput";
 import { Button } from "@heroui/button";
-import Image from "next/image";
 import { EditorItem } from "@/types";
 import {
   createNewBlogContent,
@@ -13,7 +11,7 @@ import {
 } from "@/services/api/blogs";
 import { useMutation } from "@tanstack/react-query";
 import { useBlogFormStore } from "@/store/useBlogFormStore";
-import { imageUrlToFile } from "@/utils/formatter/fileFormatter";
+import { useRouter } from "next/navigation";
 
 const Stage2 = () => {
   const { formData, setFormData } = useBlogFormStore();
@@ -22,23 +20,10 @@ const Stage2 = () => {
   const [isSaved, setIsSaved] = useState(false); // برای ذخیره‌سازی محتوا
   const [editingItem, setEditingItem] = useState<EditorItem | null>(null);
   const [editingHtml, setEditingHtml] = useState(""); // محتوای ویرایش شده متن
-  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(null);
-  const [uploadedImageFile, setUploadedImageFile] = useState<File | null>(null);
   const [isModalOpenCreateText, setIsModalOpenCreateText] = useState(false);
   const [isModalOpenEditText, setIsModalOpenEditText] = useState(false);
 
-  console.log(formData, "formData in Stage2");
-
-  useEffect(() => {
-    if (coverImageUrl) {
-      // convert preve link to file
-      async function fetchMyApi() {
-        const file = await imageUrlToFile(coverImageUrl);
-        setUploadedImageFile("coverImage", file);
-      }
-      fetchMyApi();
-    }
-  }, []);
+  const router = useRouter();
   // Mutation برای متن
   const contentMutation = useMutation({
     mutationFn: (content: {
@@ -52,28 +37,16 @@ const Stage2 = () => {
   // Mutation برای تصویر
   const imageMutation = useMutation({
     mutationFn: async (formData: FormData & { blog: string }) => {
-      // لاگ گرفتن از formData
-      console.log("Form Data:", formData);
-
       // فراخوانی تابع برای ارسال درخواست
       return createNewBlogImageContent(formData);
     },
   });
 
   const handleSubmit = async () => {
-    const imageItem = items.find((item) => item.type === "image");
     const textItems = items.filter((item) => item.type === "text");
     if (!formData.id) return;
 
     try {
-      if (imageItem && uploadedImageFile) {
-        const formDataToSend = new FormData();
-        formDataToSend.append("image", uploadedImageFile);
-        formDataToSend.append("blog", formData.id);
-
-        await imageMutation.mutateAsync(formDataToSend as any); // ارسال به سرور
-      }
-
       // 2. ارسال هر متن جداگانه
       for (const textItem of textItems) {
         await contentMutation.mutateAsync({
@@ -84,7 +57,8 @@ const Stage2 = () => {
           is_multiline: false,
         });
       }
-
+      localStorage.clear();
+      router.push("/admin/blogs");
       alert("همه چیز با موفقیت ارسال شد!");
     } catch (error) {
       console.error("خطا در ارسال:", error);
@@ -107,13 +81,6 @@ const Stage2 = () => {
       content: "", // پاک کردن محتوای تکست بعد از افزودن
     });
     setIsSaved(false); // بعد از افزودن، حالت ذخیره‌سازی را غیرفعال می‌کنیم
-  };
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setCoverImageUrl(URL.createObjectURL(file));
-    }
   };
 
   // تابع برای حذف یک آیتم
@@ -173,15 +140,6 @@ const Stage2 = () => {
               heightProp="full"
               //disabled={!isSaved}
             />
-
-            {/* ورودی فایل برای افزودن عکس */}
-            <FileInput
-              multiple={false}
-              name="blogImage"
-              label="افزودن عکس هدر"
-              onChange={handleImageUpload} // تابع آپلود تصویر
-              disabled={items.some((item) => item.type === "image")}
-            />
           </div>
 
           {/* دکمه سمت چپ: ثبت */}
@@ -196,29 +154,6 @@ const Stage2 = () => {
         </div>
 
         <div className="flex flex-col gap-6 mt-6">
-          {/* نمایش تصویر هدر */}
-          {coverImageUrl && (
-            <div className="relative overflow-hidden rounded-lg h-64 ">
-              <Image
-                fill
-                alt="cover-iamge"
-                src={coverImageUrl}
-                className="object-cover object-center"
-              />
-              <Button
-                onPress={() =>
-                  handleDeleteItem(
-                    items.find((item) => item.type === "image")!.id
-                  )
-                }
-                size="sm"
-                className="absolute top-2 left-2 bg-white text-red-500"
-              >
-                حذف
-              </Button>
-            </div>
-          )}
-
           {/* نمایش متن‌ها */}
           <div className="flex flex-col gap-4">
             {items

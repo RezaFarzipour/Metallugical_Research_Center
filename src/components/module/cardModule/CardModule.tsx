@@ -81,10 +81,8 @@ const CardModule = <T extends CardData>({
                 view={view}
               />
 
-            
-
               <CardContent
-              parsedTags={parsedTags}
+                parsedTags={parsedTags}
                 {...item}
                 reserve_date={
                   "service-reserve_date" in item

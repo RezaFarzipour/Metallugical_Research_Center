@@ -9,8 +9,7 @@ export const blogStageOneSchema = z.object({
         ])
         .optional(),
     slug: z.string().min(1, "اسلاگ الزامی است"),
-    tags: z.array(z.string()).min(1, "تگ الزامی است"),         
-    category_list: z.array(z.string()).min(1, "دسته‌بندی الزامی است"),
+    tags: z.array(z.string()).min(1, "حداقل یک تگ وارد کنید"), category_list: z.array(z.string()).min(1, "دسته‌بندی الزامی است"),
 });
 
 

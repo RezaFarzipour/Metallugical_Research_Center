@@ -1,7 +1,6 @@
 "use client";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@heroui/button";
 import RHFInput from "@/components/element/RHFInput";
 import RHFSelect from "@/components/element/RHFSelect";
 import {
@@ -20,6 +19,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllCategoryAdmin } from "@/services/api/blogs";
 import RHFTagInput from "@/components/element/RHFTagInput";
 import { BtnLoader } from "@/components/element/Loader";
+import PrimaryButton from "@/components/element/Button";
+import { Button } from "@heroui/button";
 
 export default function Stage1() {
   const { setFormData, setStep } = useBlogFormStore();
@@ -128,10 +129,15 @@ export default function Stage1() {
             name="tags"
             control={control}
             rules={{
-              required: "تگ‌ها الزامی هستند",
+              validate: (value: string[]) =>
+                value && value.length > 0 ? true : "حداقل یک تگ وارد کنید",
             }}
-            render={({ field }) => (
-              <RHFTagInput field={field} error={errors.tags} label="تگ ها" />
+            render={({ field, fieldState }) => (
+              <RHFTagInput
+                field={field}
+                error={fieldState.error}
+                label="تگ‌ها"
+              />
             )}
           />
 
@@ -186,9 +192,9 @@ export default function Stage1() {
             </div>
           )}
 
-          <Button type="submit" disabled={isPendingBlog}>
-            {isPendingBlog ? <BtnLoader color="#377cfb" /> : "تایید"}
-          </Button>
+          <PrimaryButton type="submit" disabled={isPendingBlog}>
+            {isPendingBlog ? <BtnLoader /> : "تایید"}
+          </PrimaryButton>
         </form>
       </div>
     </div>
