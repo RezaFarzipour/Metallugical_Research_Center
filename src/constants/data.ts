@@ -132,7 +132,8 @@ export const LatestArticles: latestArticleType[] = [
     articleTitle: "مقررات صنعت گرایش های نوظهور",
     description:
       "با تنظیم بیشتر صنایع، تقاضا برای تجزیه و تحلیل کامل و دقیق در حال افزایش است. مقررات زیست محیطی جدید، به عنوان مثال، پروتکل آزمایش.",
-  }, {
+  },
+  {
     id: 5,
     image: "/images/blog1-img2.png",
     date: "1402/12/20",
@@ -181,7 +182,6 @@ export const reserveStep = {
     { id: 3, label: "پرداخت" },
     { id: 4, label: "انتظار تایید پرداخت" },
     { id: 5, label: "تایید نهایی" },
-
   ],
 };
 export const contactusinformation: contactInfoType[] = [
@@ -259,23 +259,26 @@ export const images = [
 export const userCards = {
   cancelReservation: {
     color: "bg-primary-900",
-    shadow: "shadow-[rgba(24,45,60,0.2)_-13px_0px,_rgba(24,45,60,0.1)_-23px_0px]",
+    shadow:
+      "shadow-[rgba(24,45,60,0.2)_-13px_0px,_rgba(24,45,60,0.1)_-23px_0px]",
     icon: CiClock1,
     label: "رزرو های لغو شده",
   },
   activeReservation: {
     color: "bg-secondary-500",
-    shadow: "shadow-[rgba(55,124,251,0.2)_-13px_0px,_rgba(55,124,251,0.1)_-23px_0px]",
+    shadow:
+      "shadow-[rgba(55,124,251,0.2)_-13px_0px,_rgba(55,124,251,0.1)_-23px_0px]",
     icon: PiDeviceTabletSpeakerLight,
     label: "رزرو های در حال انجام",
   },
   reserves: {
     color: "bg-green-500",
-    shadow: "shadow-[rgba(34,197,94,0.2)_-13px_0px,_rgba(34,197,94,0.1)_-23px_0px]",
+    shadow:
+      "shadow-[rgba(34,197,94,0.2)_-13px_0px,_rgba(34,197,94,0.1)_-23px_0px]",
     icon: IoDocumentTextOutline,
     label: "همه رزرو ها",
   },
-}
+};
 export const adminCards = {
   users: {
     color: "bg-primary-900",
@@ -318,13 +321,12 @@ export const faqData: FAQItem[] = [
     id: 2,
     question: "چگونه می‌توانم یک دستگاه را رزرو کنم؟",
     answer:
-     "برای رزرو دستگاه، ابتدا لازم است در سایت ثبت‌نام کرده یا وارد حساب کاربری خود شوید از ورود، دو روش برای انجام رزرو در اختیار دارید:از طریق پنل کاربری و مراجعه به بخش «رزروهای من»از طریق صفحه «خدمات» و انتخاب گزینه «رزرو جدید»با استفاده از هر یک از این روش‌ها، می‌توانید به‌راحتی دستگاه مورد نظر خود را انتخاب و رزرو نمایید."
+      "برای رزرو دستگاه، ابتدا لازم است در سایت ثبت‌نام کرده یا وارد حساب کاربری خود شوید از ورود، دو روش برای انجام رزرو در اختیار دارید:از طریق پنل کاربری و مراجعه به بخش «رزروهای من»از طریق صفحه «خدمات» و انتخاب گزینه «رزرو جدید»با استفاده از هر یک از این روش‌ها، می‌توانید به‌راحتی دستگاه مورد نظر خود را انتخاب و رزرو نمایید.",
   },
   {
     id: 3,
     question: "زمان تقریبی تایید رزرو چقدر است؟",
-    answer:
-    "بین چند دقیقه تا نهایت دوروز متغیر است"
+    answer: "بین چند دقیقه تا نهایت دوروز متغیر است",
   },
   {
     id: 4,
@@ -336,7 +338,7 @@ export const faqData: FAQItem[] = [
     id: 5,
     question: "در صورت لغو رزرو هزینه بازمیگردد؟",
     answer:
-     "بله،در صورت لغو رزرو توسط ادمین،هزینه در اسرع وقت به حساب بانکی شما بازگردانده میشود"
+      "بله،در صورت لغو رزرو توسط ادمین،هزینه در اسرع وقت به حساب بانکی شما بازگردانده میشود",
   },
 ];
 
@@ -399,14 +401,14 @@ export const dropDownItems = (userRole: string): dropDownItemType[] => {
     },
     {
       id: 2,
-      label: "سفارش های من",
-      path: "/user/myorders",
+      label: userRole === "customer" ? "سفارش های من" : "رزروها",
+      path: userRole === "customer" ? "/user/myorders" : "/admin/reservse",
       icon: FiShoppingCart,
     },
     {
       id: 3,
       label: "گزارش گیری",
-      path: "/user/reports",
+      path: userRole === "customer" ? "/user/reports" : "/admin/reports",
       icon: HiOutlineDocumentReport,
     },
   ];
