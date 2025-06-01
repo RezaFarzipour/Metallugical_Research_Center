@@ -2,7 +2,12 @@
 
 import { Input } from "@heroui/react";
 import React from "react";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldErrors,
+  Path,
+  FieldValues,
+} from "react-hook-form";
 
 const inputStyles = {
   inputWrapper: [
@@ -10,13 +15,11 @@ const inputStyles = {
     "transition-colors",
     "data-[hover=true]:border-secondary-300",
     "border-secondary-100",
-
     "after:content-['']",
     "after:rounded-full",
     "after:bg-secondary-500",
     "after:transition",
     "after:!duration-500",
-
     // dark theme
     "dark:border-secondary-100",
   ],
@@ -27,22 +30,21 @@ const inputStyles = {
     "text-default-600",
     "placeholder:text-default-600",
   ],
-
   error: ["border-red-500", "focus:border-red-500", "focus:ring-red-500/20"],
   wrapper: "relative",
   errorMessage: ["mt-1", "text-sm", "text-red-500"],
 };
 
-interface InputProps<T extends object> {
+interface InputProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
   label: string;
   type: string;
   dir: "ltr" | "rtl";
-  name: keyof T;
+  name: Path<T>;
 }
 
-const RHFInput = <T extends object>({
+const RHFInput = <T extends FieldValues>({
   register,
   errors,
   label,
@@ -50,6 +52,9 @@ const RHFInput = <T extends object>({
   dir,
   name,
 }: InputProps<T>) => {
+  const error = errors[name];
+  const errorMessage = error?.message as string | undefined;
+
   return (
     <div className={inputStyles.wrapper}>
       <Input
@@ -59,19 +64,20 @@ const RHFInput = <T extends object>({
         dir={dir}
         variant="underlined"
         isRequired
+        isInvalid={!!error}
+        errorMessage={errorMessage}
         classNames={{
           inputWrapper: [
             ...inputStyles.inputWrapper,
-            errors[name] && inputStyles.error,
-          ].filter(Boolean),
+            ...(error ? inputStyles.error : []),
+          ],
         }}
       />
-      {errors[name] && (
-        <p className={inputStyles.errorMessage.join(" ")}>
-          {errors[name]?.message?.toString()}
-        </p>
-      )}
+      {/* {errorMessage && (
+        <p className={inputStyles.errorMessage.join(" ")}>{errorMessage}</p>
+      )} */}
     </div>
   );
 };
+
 export default RHFInput;

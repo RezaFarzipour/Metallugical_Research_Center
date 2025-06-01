@@ -16,14 +16,22 @@ export const deleteBlogCategory = async ({ id }: { id: string }) => {
 };
 
 export const editBlogCategoryById = async ({
-  id,
-  data,
+    id,
+    category_name,
+    slug
 }: {
-  id: string;
-  data: FormData;
+    id: string;
+    category_name: string,
+    slug: string
 }) => {
-  const response = await http.patch(`blog/category/admin/${id}/`, data);
-  return response.data;
+    const response = await http.patch(`blog/category/admin/${id}/`, {
+        category_name,
+        slug
+    });
+
+
+
+    return response.data;
 };
 
 export const getBlogCategoryById = async (
@@ -42,6 +50,33 @@ export const getAllBlogsAdmin = async (options) => {
   const response = await http.get(`blog/b/any/`, options);
   return response.data;
 };
+
+export const getBlogContentById = async (
+    id: string,
+    options?: AxiosRequestConfig
+) => {
+    try {
+        const response = await http.get(`blog/content/admin/${id}/`, options);
+        return response.data;
+    } catch (error) {
+        console.log("error", error);
+    }
+};
+
+
+export const getBlogById = async (
+    id: string,
+    options?: AxiosRequestConfig
+) => {
+    try {
+        const response = await http.get(`blog/b/admin/${id}/`, options);
+        return response.data;
+    } catch (error) {
+        console.log("error", error);
+    }
+};
+
+
 
 export const getBlogCover = async () => {
   const response = await http.get(`blog/b/admin/`);

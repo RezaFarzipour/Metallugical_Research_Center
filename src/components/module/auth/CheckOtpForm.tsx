@@ -65,7 +65,7 @@ const CheckOtpForm: React.FC<CheckOtpFormProps> = ({
         </div>
 
         <div>
-          <Button type="submit" variant="secondary" fullWidth>
+          <Button type="submit" variant="primary" fullWidth>
             {loading ? <BtnLoader /> : "ارسال کد تایید"}
           </Button>
         </div>

@@ -2,7 +2,16 @@ import { Input } from "@heroui/react";
 import { useState } from "react";
 import { ControllerRenderProps, FieldError } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
-const inputStyles = {
+
+interface InputStyles {
+  inputWrapper: string[];
+  input: string[];
+  error: string[];
+  wrapper: string;
+  errorMessage: string[];
+}
+
+const inputStyles: InputStyles = {
   inputWrapper: [
     "bg-transparent",
     "transition-colors",
@@ -21,68 +30,80 @@ const inputStyles = {
     "text-default-600",
     "placeholder:text-default-600",
   ],
-  error: ["border-red-500", "focus:border-red-500", "focus:ring-red-500/20"],
+  error: ["border-red-500", "focus-within:border-red-500", "ring-red-500/20"],
   wrapper: "relative",
   errorMessage: ["mt-1", "text-sm", "text-red-500"],
 };
+
 interface TagInputProps {
-  field: ControllerRenderProps<any, any>;
+  field: ControllerRenderProps<{ tags: string[] }, "tags">;
   error?: FieldError;
   label: string;
 }
+
 export default function RHFTagInput({ field, error, label }: TagInputProps) {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string>("");
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if ((e.key === "Enter" || e.key === ",") && inputValue.trim()) {
       e.preventDefault();
-      if (!field.value.includes(inputValue.trim())) {
-        field.onChange([...field.value, inputValue.trim()]);
+      const trimmedValue = inputValue.trim();
+      const currentTags = Array.isArray(field.value) ? field.value : [];
+      if (!currentTags.includes(trimmedValue)) {
+        field.onChange([...currentTags, trimmedValue]);
       }
       setInputValue("");
     }
   };
 
   const removeTag = (tagToRemove: string) => {
-    field.onChange(field.value.filter((tag: string) => tag !== tagToRemove));
+    field.onChange(
+      (Array.isArray(field.value) ? field.value : []).filter(
+        (tag: string) => tag !== tagToRemove
+      )
+    );
   };
 
   return (
-    <div>
-      {/* INPUT REAL برای react-hook-form */}
+    <div className={inputStyles.wrapper}>
       <Input
         type="text"
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setInputValue(e.target.value)
+        }
         onKeyDown={handleKeyDown}
         placeholder="تگ را وارد کرده و Enter بزنید"
         variant="underlined"
+        label={label}
         classNames={{
           inputWrapper: [
             ...inputStyles.inputWrapper,
-            error && inputStyles.error,
-          ].filter(Boolean),
-          input: inputStyles.input.join(" "),
+            ...(error ? inputStyles.error : []),
+          ],
         }}
+        aria-label={label}
       />
 
-      {/* نمایش تگ‌ها */}
       <div className="flex flex-wrap gap-2 mt-2">
-        {field.value.map((tag: string, index: number) => (
-          <span
-            key={index}
-            className="bg-blue-100 text-blue-800 px-2 py-1 rounded flex items-center gap-1"
-          >
-            {tag}
-            <button type="button" onClick={() => removeTag(tag)}>
-              <IoClose size={16} />
-            </button>
-          </span>
-        ))}
+        {(Array.isArray(field.value) ? field.value : []).map(
+          (tag: string, index: number) => (
+            <span
+              key={index}
+              className="bg-blue-100 text-secondary-800 px-2 py-1 rounded flex items-center gap-1"
+            >
+              {tag}
+              <button
+                type="button"
+                onClick={() => removeTag(tag)}
+                aria-label={`حذف تگ ${tag}`}
+              >
+                <IoClose size={16} />
+              </button>
+            </span>
+          )
+        )}
       </div>
-
-      {/* ERROR MESSAGE */}
-      {error && <p className="text-red-500 text-sm mt-1">{error.message}</p>}
     </div>
   );
 }

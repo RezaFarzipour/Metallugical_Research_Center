@@ -194,6 +194,10 @@ export const useAdminBlogDataAction = () => {
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+
+
+
   const { deleteBLog } = useDeleteBlog();
 
   const router = useRouter();
@@ -223,11 +227,17 @@ export const useAdminBlogDataAction = () => {
     refetch,
   } = useQuery<BlogResponse>(GET_ALL_BLOGS);
 
+
+
+
+
   // گروه‌بندی داده‌ها هنگام تغییر data
   useEffect(() => {
     if (Array.isArray(data?.blogs)) {
       const grouped = groupServicesByKeys(data.blogs);
-      console.log("grouped", grouped);
+
+
+
       setFormData(grouped);
 
       if (grouped.blogUp.length > 0) {

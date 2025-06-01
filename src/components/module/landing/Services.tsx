@@ -7,6 +7,7 @@ import { useVisibleCount } from "@/hooks/useVisibleCount";
 import { fadeInSlide, staggerContainer } from "@/utils/motion";
 import { motion } from "framer-motion";
 import { ServiceDetailsType } from "@/types";
+import Button from "@/components/element/Button";
 
 type LandingPageProps = {
   initialData: ServiceDetailsType[];
@@ -24,11 +25,9 @@ const Services = ({ initialData }: LandingPageProps) => {
       <h3 className="flex text-xl">
         <TitleStructure size="1rem">خدمات ها</TitleStructure>
       </h3>
-
       <h2 className="font-extrabold text-md md:text-2xl text-wrap">
         نگاهی به خدمات ما بندازید.
       </h2>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
         {initialData.slice(0, visibleCount).map((item, index) => (
           <motion.div
@@ -49,6 +48,9 @@ const Services = ({ initialData }: LandingPageProps) => {
           </motion.div>
         ))}
       </div>
+      <Button variant="primary" type="submit" path="/services">
+        مشاهده همه خدمات ...
+      </Button>
     </motion.div>
   );
 };

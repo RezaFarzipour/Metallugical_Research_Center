@@ -36,12 +36,7 @@ const SendOtpForm: React.FC<SendOtpFormProps> = ({ onSubmit, loading }) => {
         name="phone"
       />
 
-      <Button
-        type="submit"
-        variant="secondary"
-        fullWidth
-        className="text-center"
-      >
+      <Button type="submit" variant="primary" fullWidth className="text-center">
         {loading ? <BtnLoader /> : "ارسال کد تایید"}
       </Button>
     </form>

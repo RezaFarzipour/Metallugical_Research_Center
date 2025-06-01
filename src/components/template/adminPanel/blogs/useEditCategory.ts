@@ -7,10 +7,11 @@ export function useEditCategory() {
 
   const { isPending: isPendingBlogCategory, mutateAsync: editBlogCategory } = useMutation({
 
-    mutationFn: ({ id, data }: { id: string; data: FormData }) => {
-      return editBlogCategoryById({ id, data })
+    mutationFn: ({ id, category_name ,slug}: { id: string; category_name: string, slug: string }) => {
+      return editBlogCategoryById({ id, category_name ,slug})
     },
     onSuccess: (data) => {
+      console.log(data, "data");
 
       queryClient.invalidateQueries({
         queryKey: ["getAll-blogsCategory"],

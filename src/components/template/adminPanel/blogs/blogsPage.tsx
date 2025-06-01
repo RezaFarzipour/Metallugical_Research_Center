@@ -1,4 +1,3 @@
-
 "use client";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
@@ -79,7 +78,7 @@ export const BlogsPage: React.FC = () => {
               <CardModule
                 data={sortedItems}
                 isDate={false}
-                isMoreDetails="admin"
+                isMoreDetails="/blogs"
                 widthConter="100%"
                 heightImg="250px"
                 heightConter="200px"

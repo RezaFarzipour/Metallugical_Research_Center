@@ -21,9 +21,8 @@ async function BlogsPage() {
 
   const data = await getAllBlogsCategory();
 
-
-
-
-  return <BlogPage AllBlogs={AllBlogs.blogs} loading={loading} initialData={data}/>;
+  return (
+    <BlogPage AllBlogs={AllBlogs.blogs} loading={loading} initialData={data} />
+  );
 }
 export default BlogsPage;

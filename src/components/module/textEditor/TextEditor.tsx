@@ -4,6 +4,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
+import Image from "@tiptap/extension-image";
 import TextAlign from "@tiptap/extension-text-align";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
@@ -50,6 +51,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ html, setHtml, onSave }) => {
       Superscript,
       TextStyle,
       Color,
+      Image,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Heading,
       Blockquote,
@@ -58,6 +60,25 @@ const TextEditor: React.FC<TextEditorProps> = ({ html, setHtml, onSave }) => {
   });
 
   if (!editor) return null;
+
+  const addImage = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (typeof reader.result === "string") {
+          editor.chain().focus().setImage({ src: reader.result }).run();
+        }
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  };
 
   const pickColor = () => {
     const input = document.createElement("input");
@@ -69,7 +90,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ html, setHtml, onSave }) => {
   };
   const headingBtn = [...headingButtons(editor)];
   const allBtn = [
-    ...baseButtons(editor, pickColor),
+    ...baseButtons(editor, pickColor, addImage),
     ...alignmentButtons(editor),
     ...listButtons(editor),
     ...blockquoteAndHr(editor),
@@ -77,9 +98,9 @@ const TextEditor: React.FC<TextEditorProps> = ({ html, setHtml, onSave }) => {
   const undoBtn = [...undoButtons(editor)];
 
   return (
-    <div className="p-4 bg-secondary-900 text-white min-h-screen">
-      <div className="relative flex flex-wrap gap-3 mb-4 bg-secondary-800 p-3 rounded-lg">
-        <div className="bg-gray-200 p-3 rounded-lg mb-3 grid grid-cols-3 gap-2 w-2/3">
+    <div className="p-4 bg-secondary-50 rounded-lg text-white">
+      <div className="relative flex flex-wrap gap-3 mb-4 bg-secondary-700 p-3 rounded-md">
+        <div className=" p-3 rounded-lg mb-3 grid grid-cols-3 gap-2 w-2/3">
           {headingBtn.map(({ title, icon, action }, idx) => (
             <Button
               key={idx}
@@ -132,26 +153,19 @@ const TextEditor: React.FC<TextEditorProps> = ({ html, setHtml, onSave }) => {
           پیش نمایش
         </Button>
       </div>
-
       {/* محتوای ویرایشگر */}
       <div
-        className="bg-white text-black p-4 rounded-lg min-h-[200px]"
+        className="bg-white text-black p-4 rounded-lg min-h-[200px] max-h-[400px] overflow-y-auto border border-gray-200 "
         onClick={() => editor?.chain().focus().run()}
       >
         <EditorContent editor={editor} />
       </div>
-
       {/* نمایش HTML و رندر شده */}
       {html && (
         <>
-          {/* <h3 className="mt-6 font-bold">نمایش HTML:</h3>
-          <pre className="bg-gray-100 text-black p-2 whitespace-pre-wrap">
-            {html}
-          </pre> */}
-
-          <h3 className="mt-4 font-bold ">پیش نمایش:</h3>
+          <h3 className="mt-4 font-bold text-gray-400">پیش نمایش:</h3>
           <div
-            className="bg-white text-black p-2 border rounded pl-5 list-custome br-custome"
+            className="bg-white  text-black p-2 border rounded pl-5 list-custome br-custome"
             dangerouslySetInnerHTML={{ __html: html }}
           />
         </>

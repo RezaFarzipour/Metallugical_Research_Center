@@ -1,37 +1,57 @@
+import { cn } from "@/utils/cn";
 import { Select, SelectItem } from "@heroui/react";
-import clsx from "clsx";
-import { Controller } from "react-hook-form";
+import { Controller, Control, FieldValues, Path } from "react-hook-form";
 
-function RHFSelect({ label, name, control, options }) {
+interface SelectOption {
+  value: string | number;
+  label: string;
+}
+
+interface RHFSelectProps<T extends FieldValues> {
+  label: string;
+  name: Path<T>;
+  control: Control<T>;
+  options: SelectOption[];
+}
+
+function RHFSelect<T extends FieldValues>({
+  label,
+  name,
+  control,
+  options,
+}: RHFSelectProps<T>) {
   return (
-    <div className="w-full max-w-xs">
+    <div className="w-full">
       <Controller
         control={control}
         name={name}
         rules={{
-          validate: (value) =>
+          validate: (value: (string | number)[]) =>
             value && value.length > 0 ? true : "حداقل یک مورد را انتخاب کنید",
         }}
         render={({ field, fieldState }) => {
           const { error } = fieldState;
+          const errorMessage = error?.message as string | undefined;
 
           return (
             <>
               <Select
                 selectedKeys={new Set(field.value ?? [])}
                 onSelectionChange={(keys) => {
-                  const selected = Array.from(keys); // به آرایه تبدیل می‌شود
-                  field.onChange(selected); // ست شدن در فرم
+                  const selected = Array.from(keys) as (string | number)[];
+                  field.onChange(selected);
                 }}
                 label={label}
                 placeholder="یک مورد را انتخاب کنید"
                 selectionMode="multiple"
                 variant="underlined"
                 isRequired
+                isInvalid={!!error}
+                errorMessage={errorMessage}
                 classNames={{
-                  base: "rounded-md px-2 py-1",
+                  base: "rounded-md  py-1 ",
                   label: "text-sm font-medium text-gray-500 mb-1",
-                  trigger: clsx(
+                  trigger: cn(
                     "border-b after:content-[''] after:bg-secondary-500 hover:border-blue-500 py-2 px-3 rounded-md",
                     {
                       "border-red-500": error,
@@ -46,12 +66,14 @@ function RHFSelect({ label, name, control, options }) {
                 }}
               >
                 {options.map((option) => (
-                  <SelectItem key={option.value}>{option.label}</SelectItem>
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
                 ))}
               </Select>
 
               {error && (
-                <p className="text-red-500 text-sm mt-1">{error.message}</p>
+                <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
               )}
             </>
           );

@@ -5,13 +5,14 @@ import TitleStructure from "@/components/element/TitleStructure";
 import { useVisibleCount } from "@/hooks/useVisibleCount";
 import { motion } from "framer-motion";
 import { fadeInSlide } from "@/utils/motion";
-import {  BlogType } from "@/types";
+import { BlogType } from "@/types";
+import Button from "@/components/element/Button";
 
-type BlogsPropsType ={
-  AllBlogs:BlogType[]
-}
+type BlogsPropsType = {
+  AllBlogs: BlogType[];
+};
 
-const Blogs = ({AllBlogs}:BlogsPropsType) => {
+const Blogs = ({ AllBlogs }: BlogsPropsType) => {
   const visibleCount = useVisibleCount({ sm: 2, md: 2, lg: 3 });
 
   return (
@@ -43,6 +44,9 @@ const Blogs = ({AllBlogs}:BlogsPropsType) => {
           </motion.div>
         ))}
       </div>
+      <Button variant="primary" type="submit" path="/blogs">
+        مشاهده همه بلاگ ها ...
+      </Button>
     </div>
   );
 };
