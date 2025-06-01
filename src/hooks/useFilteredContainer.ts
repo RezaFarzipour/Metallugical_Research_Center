@@ -4,20 +4,23 @@ import { useTableStore } from "@/store/useTableSlice";
 
 interface Data {
     id: number;
-    name: string;
-    service_name: string
-    phone_number: string;
-    email: string;
-    role: string;
-    status: string;
-    payment_status: string;
-    amount: string;
-    date: string;
-    title: string;
-    description: string;
-    cover_image: string;
-    author: string;
-    articleTitle: string;
+    name?: string;
+    service_name?: string
+    phone_number?: string;
+    email?: string;
+    role?: string;
+    status?: string;
+    payment_status?: string;
+    amount?: string;
+    date?: string;
+    title?: string;
+    description?: string;
+    cover_image?: string;
+    author?: string;
+    articleTitle?: string;
+    slug?: string;
+    tags?: string[];
+    coverImage?: string;
 }
 
 export function useFilteredContainer(datas: Data[]) {
@@ -83,7 +86,7 @@ export function useFilteredContainer(datas: Data[]) {
         return [...paginatedItems].sort((a, b) => {
             const first = a[sortDescriptor.column as keyof Data];
             const second = b[sortDescriptor.column as keyof Data];
-            const cmp = first < second ? -1 : first > second ? 1 : 0;
+            const cmp = first && second && first < second ? -1 : first && second && first > second ? 1 : 0;
             return sortDescriptor.direction === "ascending" ? cmp : -cmp;
         });
     }, [paginatedItems, sortDescriptor]);

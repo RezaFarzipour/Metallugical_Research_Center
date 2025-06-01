@@ -1,5 +1,3 @@
-
-
 import http from "../httpService";
 
 export const getAllReserve = async (options) => {
@@ -7,13 +5,10 @@ export const getAllReserve = async (options) => {
     const response = await http.get(`/reserve`, options);
     console.log(response, "response.data");
     return response.data;
-
   } catch (error) {
     console.log(error, "error");
-
   }
 };
-
 
 export const getReserveCustomerById = async (reserveId: string | null) => {
   const response = await http.get(`/reserve?reserve-id=${reserveId}`);
@@ -25,8 +20,6 @@ export const postReservedService = async () => {
   const response = await http.post(`/reserve`);
   return response.data;
 };
-
-
 
 export async function patchReserveDetails({
   reserveId,
@@ -78,7 +71,6 @@ export async function patchAcceptStage2({
 
   return response.data;
 }
-
 
 export async function PatchRejectStage2({
   reserveId,
@@ -135,25 +127,25 @@ export async function paymentVerified({
   return response.data;
 }
 
-
-
 export async function rejectPayment({
   reserveId,
   is_payment_verified,
+  admin_description,
 }: {
   reserveId: string | null;
   is_payment_verified: boolean | undefined;
+  admin_description: string | undefined;
 }): Promise<any> {
   const response = await http.patch(
     `/reserve?reserve-id=${reserveId}&next-stage=0`,
     {
       is_payment_verified,
+      admin_description
     }
   );
 
   return response.data;
 }
-
 
 //stage5
 
@@ -174,22 +166,14 @@ export async function adminFinalApprove({
   return response.data;
 }
 
-
 //customer cancle reserve
 
 export async function cancleFunc({
   reserveId,
-
 }: {
   reserveId: string | null;
-
 }): Promise<any> {
-  const response = await http.delete(
-    `/reserve?reserve-id=${reserveId}`,
-
-
-  );
+  const response = await http.delete(`/reserve?reserve-id=${reserveId}`);
 
   return response.data;
 }
-
