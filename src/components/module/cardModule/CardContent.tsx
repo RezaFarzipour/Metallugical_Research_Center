@@ -91,16 +91,16 @@ export const CardContent: React.FC<CardContentProps> = ({
 
   const isBlog = !!slug;
 
-  // const MoreDetailsHref = isBlog
-  //   ? `/blogs/${slug}/${id}`
-  //   : isMoreDetails === "admin"
-  //   ? `/admin/services/${id}/details`
-  //   : `/services/${id}/details`;
-  console.log(toEnglishNumbers(id), "id");
-
-  const MoreDetailsHref = isMoreDetails
-    ? `/admin${isMoreDetails}/${toEnglishNumbers(id)}/details`
+  const MoreDetailsHref = isBlog
+    ? `/blogs/${slug}/${id}`
+    : isMoreDetails === "admin"
+    ? `/admin/services/${id}/details`
     : `/services/${id}/details`;
+
+
+  // const MoreDetailsHref = isMoreDetails
+  //   ? `/admin${isMoreDetails}/${toEnglishNumbers(id)}/details`
+  //   : `/services/${id}/details`;
 
   const cardStyles = {
     box: cn(
