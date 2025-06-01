@@ -10,12 +10,8 @@ export default function ContactUsLayout({
     <>
       <Layout>
         {/* banner section */}
-        <HeaderImage
-                
-                breadcrumbItem1="  بلاگ"
-                panelHref="/"
-        />
-        <div className=" ">{children}</div>
+        <HeaderImage breadcrumbItem1="  بلاگ" panelHref="/" />
+        <div className="mt-72">{children}</div>
       </Layout>
     </>
   );
