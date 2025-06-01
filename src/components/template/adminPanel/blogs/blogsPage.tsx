@@ -24,8 +24,10 @@ export const BlogsPage: React.FC = () => {
     visibleKeys,
     headerColumns,
     firstActionClickHandler,
+    secondActionClickHandler,
     isPending,
     router,
+    handleDeleteBlog
   } = useAdminBlogDataAction();
 
   const { sortedItems } = useFilteredContainer(formDataBlogs);
@@ -69,7 +71,7 @@ export const BlogsPage: React.FC = () => {
               secondActionContent="حذف"
               secondActionIcon={MdDeleteOutline}
               firstActionClickHandler={firstActionClickHandler}
-              //secondActionClickHandler={secondActionClickHandler}
+              secondActionClickHandler={secondActionClickHandler}
               image={false}
             />
           ) : (
@@ -97,7 +99,7 @@ export const BlogsPage: React.FC = () => {
           cancelText="انصراف"
           isOpen={isModalOpen}
           onCancel={() => setIsModalOpen(false)}
-          onConfirm={handleDeleteService}
+          onConfirm={handleDeleteBlog}
         >
           <p>آیا مطمئنی می‌خوای بلاگ با آیدی {selectedServiceId} رو حذف کنی؟</p>
         </ModalModule>
