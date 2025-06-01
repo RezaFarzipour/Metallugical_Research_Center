@@ -1,7 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import BlurModal from "@/components/element/BlurModal";
-import TextEditor from "@/components/module/textEditor/TextEditor";
+import TextEditor, {
+  TextEditorRef,
+} from "@/components/module/textEditor/TextEditor";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { Button } from "@heroui/button";
 import { EditorItem } from "@/types";
@@ -15,16 +17,16 @@ import { useRouter } from "next/navigation";
 
 const Stage2 = () => {
   const { formData, setFormData } = useBlogFormStore();
-  const items = formData.items || []; // دریافت آیتم‌های موجود
-  const html = formData.content || ""; // محتوای متن ویرایش شده
-  const [isSaved, setIsSaved] = useState(false); // برای ذخیره‌سازی محتوا
+  const items = formData.items || [];
   const [editingItem, setEditingItem] = useState<EditorItem | null>(null);
-  const [editingHtml, setEditingHtml] = useState(""); // محتوای ویرایش شده متن
+  const [editingHtml, setEditingHtml] = useState("");
   const [isModalOpenCreateText, setIsModalOpenCreateText] = useState(false);
   const [isModalOpenEditText, setIsModalOpenEditText] = useState(false);
 
   const router = useRouter();
-  // Mutation برای متن
+  const editorRef = useRef<TextEditorRef>(null);
+  const editRef = useRef<TextEditorRef>(null);
+
   const contentMutation = useMutation({
     mutationFn: (content: {
       content: string;
@@ -34,10 +36,9 @@ const Stage2 = () => {
       is_multiline: boolean;
     }) => createNewBlogContent(content),
   });
-  // Mutation برای تصویر
+
   const imageMutation = useMutation({
     mutationFn: async (formData: FormData & { blog: string }) => {
-      // فراخوانی تابع برای ارسال درخواست
       return createNewBlogImageContent(formData);
     },
   });
@@ -47,7 +48,6 @@ const Stage2 = () => {
     if (!formData.id) return;
 
     try {
-      // 2. ارسال هر متن جداگانه
       for (const textItem of textItems) {
         await contentMutation.mutateAsync({
           content: textItem.content,
@@ -66,41 +66,39 @@ const Stage2 = () => {
     }
   };
 
-  // تابع برای افزودن یک آیتم متنی جدید
   const addTextItem = () => {
-    if (!html.trim()) return; // اگر محتوای متن خالی باشد، کاری انجام نده
+    const content = editorRef.current?.getHtml() || "";
+    if (!content.trim()) return;
 
     const newItem: EditorItem = {
-      id: Math.random().toString(36).substr(2, 9), // تولید یک id منحصر به فرد
+      id: Math.random().toString(36).substr(2, 9),
       type: "text",
-      content: html, // محتوای متن
+      content,
     };
 
     setFormData({
-      items: [...items, newItem], // افزودن آیتم جدید به لیست
-      content: "", // پاک کردن محتوای تکست بعد از افزودن
+      items: [...items, newItem],
     });
-    setIsSaved(false); // بعد از افزودن، حالت ذخیره‌سازی را غیرفعال می‌کنیم
+    setIsModalOpenCreateText(false);
   };
 
-  // تابع برای حذف یک آیتم
   const handleDeleteItem = (id: string) => {
     setFormData({
       items: items.filter((item) => item.id !== id),
     });
   };
 
-  // تابع برای به‌روزرسانی یک آیتم
   const handleUpdateItem = () => {
-    if (!editingItem) return; // اگر آیتمی برای ویرایش وجود ندارد، کاری انجام نده
+    const content = editRef.current?.getHtml() || "";
+    if (!editingItem) return;
 
     const updatedItems = items.map((item) =>
-      item.id === editingItem.id ? { ...item, content: editingHtml } : item
+      item.id === editingItem.id ? { ...item, content } : item
     );
 
-    setFormData({ items: updatedItems }); // به‌روزرسانی لیست آیتم‌ها
-    setEditingItem(null); // غیرفعال کردن ویرایش
-    setIsSaved(false); // بازنشانی حالت ذخیره‌سازی
+    setFormData({ items: updatedItems });
+    setEditingItem(null);
+    setIsModalOpenEditText(false);
   };
 
   return (
@@ -115,37 +113,27 @@ const Stage2 = () => {
 
       <div className="shadow-md bg-white rounded-lg p-4 mb-6 flex flex-col gap-4">
         <div className="flex justify-between items-center gap-4">
-          {/* دکمه‌های سمت راست: مودال افزودن متن و افزودن عکس */}
           <div className="flex gap-4">
             <Button
-              className="bg-green-500 text-white"
+              className="text-white bg-gradient-to-r from-green-500 to-green-700"
               onPress={() => setIsModalOpenCreateText(true)}
             >
-              ساخت متن
+              ساخت محتوا
             </Button>
 
-            {/* مودال افزودن متن */}
             <BlurModal
               isOpen={isModalOpenCreateText}
               onClose={() => setIsModalOpenCreateText(false)}
-              title="ساخت متن"
-              bodyContent={
-                <TextEditor
-                  html={html}
-                  setHtml={(newHtml) => setFormData({ content: newHtml })}
-                  onSave={() => setIsSaved(true)}
-                />
-              }
+              title="ساخت محتوا"
+              bodyContent={<TextEditor ref={editorRef} html="" />}
               onConfirm={addTextItem}
               heightProp="full"
-              //disabled={!isSaved}
             />
           </div>
 
-          {/* دکمه سمت چپ: ثبت */}
           <Button
             size="md"
-            className="bg-secondary-500 text-white"
+            className="text-white bg-gradient-to-r from-secondary-500 to-secondary-700"
             onPress={handleSubmit}
             isLoading={contentMutation.isPending || imageMutation.isPending}
           >
@@ -154,63 +142,48 @@ const Stage2 = () => {
         </div>
 
         <div className="flex flex-col gap-6 mt-6">
-          {/* نمایش متن‌ها */}
-          <div className="flex flex-col gap-4">
-            {items
-              .filter((item) => item.type === "text")
-              .map((item) => (
-                <div key={item.id} className="relative p-4 ">
-                  <div
-                    className=" text-gray-800 leading-7 prose max-w-none list-custome br-custome"
-                    dangerouslySetInnerHTML={{ __html: item.content }} // نمایش محتویات متن
+          {items
+            .filter((item) => item.type === "text")
+            .map((item) => (
+              <div key={item.id} className="relative p-4">
+                <div
+                  className="text-gray-800 leading-7 prose max-w-none list-custome br-custome"
+                  dangerouslySetInnerHTML={{ __html: item.content }}
+                />
+                <div className="flex items-center justify-end gap-2 pt-3">
+                  <Button
+                    className="text-white bg-gradient-to-r from-green-500 to-green-700"
+                    onPress={() => {
+                      setIsModalOpenEditText(true);
+                      setEditingItem(item);
+                      setEditingHtml(item.content);
+                    }}
+                    size="sm"
+                  >
+                    ویرایش متن
+                  </Button>
+
+                  <BlurModal
+                    title="ویرایش متن"
+                    isOpen={isModalOpenEditText}
+                    onClose={() => setIsModalOpenEditText(false)}
+                    bodyContent={
+                      <TextEditor ref={editRef} html={editingHtml} />
+                    }
+                    onConfirm={handleUpdateItem}
+                    heightProp="full"
                   />
 
-                  <div className="flex items-center justify-end gap-2 pt-3">
-                    {/* مودال برای ویرایش متن */}
-                    <Button
-                      className="bg-green-500 text-white"
-                      onPress={() => {
-                        setIsModalOpenEditText(true);
-                        if (item) {
-                          setEditingItem(item);
-                          setEditingHtml(item.content);
-                        }
-                      }}
-                    >
-                      ویرایش متن
-                    </Button>
-                    <BlurModal
-                      title="ویرایش متن"
-                      isOpen={isModalOpenEditText}
-                      onClose={() => setIsModalOpenEditText(false)}
-                      //item={item}
-                      //setEditingItem={setEditingItem}
-                      //setEditingHtml={setEditingHtml}
-                      bodyContent={
-                        <TextEditor
-                          html={editingHtml} // محتوای ویرایش شده
-                          setHtml={(newHtml) => setEditingHtml(newHtml)} // بروزرسانی محتوای ویرایش شده
-                          onSave={() => setIsSaved(true)} // ذخیره تغییرات
-                        />
-                      }
-                      onConfirm={handleUpdateItem} // تایید ویرایش
-                      heightProp="full"
-                      size="sm"
-                      disabled={!isSaved}
-                    />
-
-                    {/* دکمه حذف */}
-                    <Button
-                      onPress={() => handleDeleteItem(item.id)}
-                      size="sm"
-                      className="bg-red-500 text-white"
-                    >
-                      حذف
-                    </Button>
-                  </div>
+                  <Button
+                    onPress={() => handleDeleteItem(item.id)}
+                    size="sm"
+                    className="text-white bg-gradient-to-r from-red-500 to-red-700"
+                  >
+                    حذف
+                  </Button>
                 </div>
-              ))}
-          </div>
+              </div>
+            ))}
         </div>
       </div>
     </div>
