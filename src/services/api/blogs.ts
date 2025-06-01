@@ -77,6 +77,19 @@ export const getBlogById = async (
 };
 
 
+export const getBlogByIdAny = async (
+  id: string,
+  options?: AxiosRequestConfig
+) => {
+  try {
+      const response = await http.get(`blog/b/any/${id}/`, options);
+      return response.data;
+  } catch (error) {
+      console.log("error", error);
+  }
+};
+
+
 
 export const getBlogCover = async () => {
   const response = await http.get(`blog/b/admin/`);
