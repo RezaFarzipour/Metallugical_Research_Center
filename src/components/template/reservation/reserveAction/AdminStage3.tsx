@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { reservationDataType, ServiceDetailsType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { paymentVerified } from "@/services/api/reserve";
@@ -10,6 +10,9 @@ import { useRejectReserve } from "@/components/template/reservation/reserveActio
 import { Button } from "@heroui/button";
 import { BtnLoader } from "@/components/element/Loader";
 import ReserveInfo from "@/components/module/ReserveInfo";
+import RHFInput from "@/components/element/RHFInput";
+import BlurModal from "@/components/element/BlurModal";
+import { Input } from "@heroui/react";
 
 type AdminStage3 = {
   serviceData: ServiceDetailsType | undefined;
@@ -34,6 +37,8 @@ const AdminStage3 = ({
     mutationFn: paymentVerified,
   });
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ admin_description,setAdminDescription] = useState("");
   const queryClient = useQueryClient();
   const { cancelReserve, isCanceling } = useCancelReserve();
   const router = useRouter();
@@ -45,12 +50,21 @@ const AdminStage3 = ({
     await queryClient.invalidateQueries({ queryKey: ["get-stage", reserveId] });
   };
 
-  const rejectHandler = async () => {
+
+
+  const rejectHandler =()=>{
+    setIsModalOpen(true);
+   
+  };
+
+  const handleConfirm = async () => {
     rejectReservePaymentImage({
       reserveId,
       is_payment_verified: false,
+      admin_description
     });
-  };
+    setIsModalOpen(false);
+  }
 
   if (isError) {
     showToast("خطا در دریافت اطلاعات", "error");
@@ -76,6 +90,22 @@ const AdminStage3 = ({
           isAdminImage={true}
         />
       </div>
+
+      <BlurModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        // isPatching={isPatching}
+        title="توضیحات عدم تایید"  
+        heightProp="sm"
+        bodyContent={
+        <Input
+        onChange={(e) => setAdminDescription(e.target.value)}
+        placeholder="توضیحات"
+        />
+        }
+        onConfirm={handleConfirm}
+        // disabled={isConfirmDisabled}
+      />
 
       <div className="flex gap-3 mt-4 justify-end w-full">
         <div className="flex gap-4 item-center">

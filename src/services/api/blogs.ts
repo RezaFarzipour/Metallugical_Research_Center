@@ -77,6 +77,19 @@ export const getBlogById = async (
 };
 
 
+export const getBlogByIdAny = async (
+  id: string,
+  options?: AxiosRequestConfig
+) => {
+  try {
+      const response = await http.get(`blog/b/any/${id}/`, options);
+      return response.data;
+  } catch (error) {
+      console.log("error", error);
+  }
+};
+
+
 
 export const getBlogCover = async () => {
   const response = await http.get(`blog/b/admin/`);
@@ -118,5 +131,20 @@ export const createNewBlogImageContent = async (data) => {
 
 export const getAllBlogsCategory = async () => {
   const response = await http.get("blog/c/any/");
+  return response.data;
+};
+
+export const getBlogCategoryByIdCustomer = async (id: string | undefined) => {
+  try {
+    const response = await http.get(`blog/c/any/${id}/`);
+    return response.data;
+  } catch (err) {
+    console.log("err", err);
+  }
+};
+
+export const deleteBlogById = async ({ id }: { id: string }) => {
+  console.log("id", id);
+  const response = await http.delete(`blog/b/admin/${id}/`);
   return response.data;
 };

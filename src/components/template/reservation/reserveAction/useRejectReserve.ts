@@ -49,19 +49,22 @@ export const useRejectReserve = () => {
 
   const rejectReservePaymentImage =  async ({
     reserveId,
-    is_payment_verified
+    is_payment_verified,
+    admin_description
   }: {
     reserveId: string | null;
-    is_payment_verified?:boolean | undefined
+    is_payment_verified?:boolean | undefined,
+    admin_description?:string | undefined;
   }) => {
     try {
-      await paymentReject({ reserveId, is_payment_verified });
+      await paymentReject({ reserveId, is_payment_verified ,admin_description});
       showToast("پرداخت تایید نشد", "success");
 
       await queryClient.invalidateQueries({
         queryKey: ["get-stage", reserveId],
       });
     } catch (error) {
+      console.log("errr",error)
       showToast("خطا در عدم تایید پرداخت", "error");
     }
   };

@@ -14,7 +14,7 @@ const HeaderImage = ({
   panelHref,
 }: HeaderImageProps) => {
   return (
-    <div className="absolute top-0 left-0 w-full h-full z-0">
+    <div className="absolute top-0 left-0 w-full z-0">
       <header className="relative w-full h-96">
         <Image
           src="/images/contactus.jpg"

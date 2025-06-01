@@ -1,3 +1,4 @@
+
 "use client";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
@@ -23,8 +24,10 @@ export const BlogsPage: React.FC = () => {
     visibleKeys,
     headerColumns,
     firstActionClickHandler,
+    secondActionClickHandler,
     isPending,
     router,
+    handleDeleteBlog
   } = useAdminBlogDataAction();
 
   const { sortedItems } = useFilteredContainer(formDataBlogs);
@@ -68,7 +71,7 @@ export const BlogsPage: React.FC = () => {
               secondActionContent="حذف"
               secondActionIcon={MdDeleteOutline}
               firstActionClickHandler={firstActionClickHandler}
-              //secondActionClickHandler={secondActionClickHandler}
+              secondActionClickHandler={secondActionClickHandler}
               image={false}
             />
           ) : (
@@ -76,7 +79,7 @@ export const BlogsPage: React.FC = () => {
               <CardModule
                 data={sortedItems}
                 isDate={false}
-                isMoreDetails="/blogs"
+                isMoreDetails="admin"
                 widthConter="100%"
                 heightImg="250px"
                 heightConter="200px"
@@ -96,7 +99,7 @@ export const BlogsPage: React.FC = () => {
           cancelText="انصراف"
           isOpen={isModalOpen}
           onCancel={() => setIsModalOpen(false)}
-          onConfirm={handleDeleteService}
+          onConfirm={handleDeleteBlog}
         >
           <p>آیا مطمئنی می‌خوای بلاگ با آیدی {selectedServiceId} رو حذف کنی؟</p>
         </ModalModule>

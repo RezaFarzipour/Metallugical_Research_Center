@@ -1,16 +1,17 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { toPersianNumbers, toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
+import {
+  toPersianNumbers,
+  toPersianNumbersWithComma,
+} from "@/utils/formatter/toPersianNumbers";
 import { useRouter } from "next/navigation";
-import { getAllServiceCustomer } from "@/services/api/service";
-import { getAllReserve, postReservedService } from "@/services/api/reserve";
+import { postReservedService } from "@/services/api/reserve";
 import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
 import { findServiceName } from "@/utils/findeName";
 import { ReservesCustomercolumns } from "@/constants/tableData";
 import useDataQueries from "@/hooks/useDataQueries";
 
-
-const useReserveData = (visibleColumns: Set<string>,) => {
+const useReserveData = (visibleColumns: Set<string>) => {
   const router = useRouter();
   const [formData, setFormData] = useState({ reserveUp: [] });
   const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
@@ -18,14 +19,15 @@ const useReserveData = (visibleColumns: Set<string>,) => {
     dataAllReserveCustomer,
     isLoadingReserve,
     dataAllServiceCustomer,
-    isLoadingServiceCustomer
+    isLoadingServiceCustomer,
   } = useDataQueries();
 
   const groupReservesByKeys = (reserves) => {
     return reserves.reduce(
       (acc, reserve, index) => {
-        const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"
-          } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
+        const dateRanges = `${
+          formatDateRangesToPersian2(reserve.reserve_from) || "?"
+        } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
         const service_name = findServiceName(
           dataAllServiceCustomer ?? [],
@@ -39,8 +41,8 @@ const useReserveData = (visibleColumns: Set<string>,) => {
           reserve.is_canceled === true
             ? "لغو شده"
             : reserve.is_finished === true
-              ? "تمام شده"
-              : "در حال انتظار";
+            ? "تمام شده"
+            : "در حال انتظار";
         const payment_status =
           reserve.is_payment_verified === true
             ? "پرداخت شده"
@@ -90,14 +92,13 @@ const useReserveData = (visibleColumns: Set<string>,) => {
     isLoadingReserve,
   ]);
 
-
   // محاسبه ستون‌های هدر
   const headerColumns = useMemo(() => {
     return visibleColumns.size === ReservesCustomercolumns.length
       ? ReservesCustomercolumns
       : ReservesCustomercolumns.filter((column) =>
-        visibleColumns.has(column.uid)
-      );
+          visibleColumns.has(column.uid)
+        );
   }, [visibleColumns]);
 
   const firstActionClickHandler = useCallback(
@@ -130,7 +131,7 @@ const useReserveData = (visibleColumns: Set<string>,) => {
     firstActionClickHandler,
     handleReserve,
     isEmpty,
-    isLoadingReserve
+    isLoadingReserve,
   };
 };
 
