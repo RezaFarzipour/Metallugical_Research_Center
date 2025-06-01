@@ -19,6 +19,5 @@ export default async function Details({ params }: PageProps) {
 
   const blogData = await getBlogByIdAny(blogId, options);
 
-
   return <BlogDetailsPage dataByID={blogData} />;
 }

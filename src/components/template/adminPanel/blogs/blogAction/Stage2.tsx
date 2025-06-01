@@ -14,6 +14,8 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useBlogFormStore } from "@/store/useBlogFormStore";
 import { useRouter } from "next/navigation";
+import { BtnLoader } from "@/components/element/Loader";
+import { showToast } from "@/store/useToastSlice";
 
 const Stage2 = () => {
   const { formData, setFormData } = useBlogFormStore();
@@ -59,10 +61,9 @@ const Stage2 = () => {
       }
       localStorage.clear();
       router.push("/admin/blogs");
-      alert("همه چیز با موفقیت ارسال شد!");
+      showToast("بلاگ با موفقیت ایجاد شد", "success");
     } catch (error) {
-      console.error("خطا در ارسال:", error);
-      alert("مشکلی در ارسال وجود داشت.");
+      showToast("خطایی رخ داده است", "error");
     }
   };
 
@@ -135,9 +136,12 @@ const Stage2 = () => {
             size="md"
             className="text-white bg-gradient-to-r from-secondary-500 to-secondary-700"
             onPress={handleSubmit}
-            isLoading={contentMutation.isPending || imageMutation.isPending}
           >
-            ثبت
+            {contentMutation.isPending || imageMutation.isPending ? (
+              <BtnLoader />
+            ) : (
+              "ثبت"
+            )}
           </Button>
         </div>
 
