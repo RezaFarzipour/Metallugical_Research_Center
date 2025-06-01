@@ -97,7 +97,6 @@ export const CardContent: React.FC<CardContentProps> = ({
     ? `/admin/services/${id}/details`
     : `/services/${id}/details`;
 
-
   // const MoreDetailsHref = isMoreDetails
   //   ? `/admin${isMoreDetails}/${toEnglishNumbers(id)}/details`
   //   : `/services/${id}/details`;
@@ -117,7 +116,7 @@ export const CardContent: React.FC<CardContentProps> = ({
       height={view ? heightConter : "auto"}
       className={cardStyles.box}
     >
-      {parsedTags &&parsedTags.length > 0 && (
+      {parsedTags && parsedTags.length > 0 && (
         <InfoRow icon={<TiTags className="text-xl" />}>
           {parsedTags?.map((tag: string, index: number) => (
             <span
