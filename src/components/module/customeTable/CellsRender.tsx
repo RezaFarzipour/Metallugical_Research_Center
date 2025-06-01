@@ -111,7 +111,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
       return (
         <Tooltip
           content={cellValue || "توضیحاتی ثبت نشده"}
-          className="max-w-96 max-h-auto whitespace-pre-wrap break-words "
+          className="max-w-2xl max-h-auto whitespace-pre-wrap break-words p-6"
         >
           <Chip size="md" className="cursor-pointer" variant="shadow">
             {cellValue

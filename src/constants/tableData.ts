@@ -23,11 +23,11 @@ export const ReservesAdmincolumns = [
   { name: "نام سرویس", uid: "service_name" },
   { name: "قیمت", uid: "price" },
   { name: "مدت زمان رزرو", uid: "reserve_duration" },
-  { name: "توضیحات", uid: "admin_description" },
+  { name: "مرحله", uid: "stage" },
   { name: "تاریخ رزرو", uid: "dateRange" },
   { name: " وضعیت پرداخت", uid: "payment_status" },
   { name: "وضعیت", uid: "status" },
-  { name: "مرحله", uid: "stage" },
+  { name: "توضیحات", uid: "admin_description" },
   { name: "عملیات", uid: "actions" },
 ];
 export const ReservesCustomercolumns = [
@@ -36,11 +36,11 @@ export const ReservesCustomercolumns = [
   { name: "نام سرویس", uid: "service_name" },
   { name: "قیمت", uid: "price" },
   { name: "مدت زمان رزرو", uid: "reserve_duration" },
-  { name: "توضیحات", uid: "admin_description" },
   { name: "تاریخ رزرو", uid: "dateRange" },
+  { name: "مرحله", uid: "stage" },
   { name: " وضعیت پرداخت", uid: "payment_status" },
   { name: "وضعیت", uid: "status" },
-  { name: "مرحله", uid: "stage" },
+  { name: "توضیحات", uid: "admin_description" },
   { name: "عملیات", uid: "actions" },
 ];
 export const ReportsAdmincolumns = [
@@ -50,11 +50,11 @@ export const ReportsAdmincolumns = [
   { name: "نام سرویس", uid: "service_name" },
   { name: "قیمت", uid: "price" },
   { name: "مدت زمان رزرو", uid: "reserve_duration" },
-  { name: "توضیحات", uid: "admin_description" },
   { name: "تاریخ رزرو", uid: "dateRange" },
+  { name: "مرحله", uid: "stage" },
   { name: " وضعیت پرداخت", uid: "payment_status" },
   { name: "وضعیت", uid: "status" },
-  { name: "مرحله", uid: "stage" },
+  { name: "توضیحات", uid: "admin_description" },
 ];
 export const ReportsCustomercolumns = [
   { name: "#", uid: "_id" },
@@ -62,10 +62,10 @@ export const ReportsCustomercolumns = [
   { name: "نام سرویس", uid: "service_name" },
   { name: "قیمت", uid: "price" },
   { name: "مدت زمان رزرو", uid: "reserve_duration" },
-  { name: "توضیحات", uid: "admin_description" },
   { name: "تاریخ رزرو", uid: "dateRange" },
   { name: " وضعیت پرداخت", uid: "payment_status" },
   { name: "وضعیت", uid: "status" },
+  { name: "توضیحات", uid: "admin_description" },
   { name: "مرحله", uid: "stage" },
 ];
 
@@ -83,7 +83,6 @@ export const columns = [
 export const blogColumns = [
   { name: "#", uid: "_id" },
   { name: "عنوان", uid: "name" },
-
   { name: "عکس ها", uid: "image" },
   { name: "اسلاگ ", uid: "slug" },
   { name: "تگ ها", uid: "tags" },
