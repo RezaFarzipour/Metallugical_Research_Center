@@ -402,7 +402,7 @@ export const dropDownItems = (userRole: string): dropDownItemType[] => {
     {
       id: 2,
       label: userRole === "customer" ? "سفارش های من" : "رزروها",
-      path: userRole === "customer" ? "/user/myorders" : "/admin/reservse",
+      path: userRole === "customer" ? "/user/myreservs" : "/admin/reservse",
       icon: FiShoppingCart,
     },
     {
