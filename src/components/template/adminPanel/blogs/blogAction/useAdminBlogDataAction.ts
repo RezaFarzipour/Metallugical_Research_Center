@@ -151,32 +151,25 @@
 // };
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { getAllServiceAdmin } from "@/services/api/service";
 import { useTableStore } from "@/store/useTableSlice";
-import {
-  toEnglishNumbers,
-  toPersianNumbers,
-  toPersianNumbersWithComma,
-} from "@/utils/formatter/toPersianNumbers";
-import { blogColumns, Servicecolumns } from "@/constants/tableData";
+import { toPersianNumbers } from "@/utils/formatter/toPersianNumbers";
+import { blogColumns } from "@/constants/tableData";
 import { showToast } from "@/store/useToastSlice";
-import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_BLOGS } from "@/graphql/queries";
+import { useDeleteBlog } from "./useDeleteBlog";
 
 export interface Blog {
+  coverImage: string;
+  id: string;
+  slug: string;
+  tags: string[];
+  title: string;
+}
 
-    coverImage: string;
-    id: string;
-    slug: string;
-    tags: string[]; 
-    title: string;
-  }
-  
-  export interface BlogResponse {
-    blogs: Blog[];
-  }
-  
+export interface BlogResponse {
+  blogs: Blog[];
+}
 
 type FilteredService = {
   _id: string;
@@ -200,9 +193,8 @@ export const useAdminBlogDataAction = () => {
     null
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log("formData",formData)
 
-  //   const { deletService } = useDeleteService();
+  const { deleteBLog } = useDeleteBlog();
 
   const router = useRouter();
   // تابع گروه‌بندی داده‌ها بیرون از هوک تعریف شده و با useCallback استفاده می‌شود
@@ -212,7 +204,7 @@ export const useAdminBlogDataAction = () => {
         // به جای فیلتر کلیدها، مستقیماً ساخت آبجکت فیلترشده
         acc.blogUp.push({
           _id: toPersianNumbers(index + 1),
-          id: toPersianNumbers(blog.id),
+          id: blog.id,
           name: blog.title,
           image: blog.coverImage,
           actions: blog.id.toString(),
@@ -224,19 +216,18 @@ export const useAdminBlogDataAction = () => {
       { blogUp: [] }
     );
   };
+
   const {
     data,
     loading: isPending,
-    error,
+    refetch,
   } = useQuery<BlogResponse>(GET_ALL_BLOGS);
-
-  console.log(data?.blogs ,"dar");
 
   // گروه‌بندی داده‌ها هنگام تغییر data
   useEffect(() => {
     if (Array.isArray(data?.blogs)) {
       const grouped = groupServicesByKeys(data.blogs);
-      console.log("grouped",grouped)
+      console.log("grouped", grouped);
       setFormData(grouped);
 
       if (grouped.blogUp.length > 0) {
@@ -257,43 +248,47 @@ export const useAdminBlogDataAction = () => {
   // اکشن کلیک اول: رفتن به صفحه ویرایش
   const firstActionClickHandler = useCallback(
     (id: string | number) => {
-      router.push(`/admin/services/${id}/details`);
+      router.push(`/admin/blogs/${id}/details`);
     },
     [router]
   );
 
-  // باز کردن مودال حذف
-  // const secondActionClickHandler = useCallback((id: string | number) => {
-  //     if (!id) {
-  //         console.error("Invalid ID passed to secondActionClickHandler");
-  //         showToast("آیدی سرویس نامعتبر است", "error");
-  //         return;
-  //     }
+  //delete blog
+  const secondActionClickHandler = useCallback((id: string | number) => {
+    if (!id) {
+      console.error("Invalid ID passed to secondActionClickHandler");
+      showToast("آیدی سرویس نامعتبر است", "error");
+      return;
+    }
 
-  //     setSelectedServiceId(id);
-  //     setIsModalOpen(true);
-  // }, []);
+    setSelectedServiceId(id);
+    setIsModalOpen(true);
+  }, []);
 
-  // // تایید حذف سرویس
-  // const handleDeleteService = useCallback(() => {
-  //     if (!selectedServiceId) {
-  //         console.error("ID for deletion is undefined or null");
-  //         showToast("آیدی سرویس نامعتبر است", "error");
-  //         return;
-  //     }
+  // تایید حذف سرویس
+  const handleDeleteBlog = useCallback(() => {
+    if (!selectedServiceId) {
+      console.error("ID for deletion is undefined or null");
+      showToast("آیدی سرویس نامعتبر است", "error");
+      return;
+    }
 
-  //     deletService({ id: toEnglishNumbers(selectedServiceId) }, {
-  //         onSuccess: () => {
-  //             showToast("سرویس با موفقیت حذف شد", "success");
-  //         },
-  //         onError: () => {
-  //             showToast("حذف سرویس با خطا مواجه شد", "error");
-  //         },
-  //     });
+    deleteBLog(
+      { id: selectedServiceId },
+      {
+        onSuccess: async () => {
+          showToast("سرویس با موفقیت حذف شد", "success");
+          await refetch();
+        },
+        onError: () => {
+          showToast("حذف سرویس با خطا مواجه شد", "error");
+        },
+      }
+    );
 
-  //     setIsModalOpen(false);
-  //     setSelectedServiceId(null);
-  // }, [selectedServiceId]);
+    setIsModalOpen(false);
+    setSelectedServiceId(null);
+  }, [selectedServiceId]);
 
   return {
     isModalOpen,
@@ -305,6 +300,8 @@ export const useAdminBlogDataAction = () => {
     headerColumns,
     isPending,
     firstActionClickHandler,
+    secondActionClickHandler,
+    handleDeleteBlog,
     router,
   };
 };
