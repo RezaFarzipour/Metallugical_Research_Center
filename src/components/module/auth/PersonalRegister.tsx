@@ -34,7 +34,7 @@ const PersonalRegister: React.FC<SendPersonalFormProps> = ({
       <PersonalDetailsForm register={register} errors={errors} />
 
       <div className="pt-14">
-        <Button type="submit" variant="secondary" fullWidth>
+        <Button type="submit" variant="primary" fullWidth>
           {loading ? <BtnLoader /> : " تایید"}
         </Button>
       </div>
