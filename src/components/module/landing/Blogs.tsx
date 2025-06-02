@@ -21,7 +21,7 @@ const Blogs = ({ AllBlogs }: BlogsPropsType) => {
         <TitleStructure size="1rem"> وبلاگ های ما </TitleStructure>
       </h3>
 
-      <h2 className="font-extrabold text-md md:text-2xl text-wrap">
+      <h2 className="font-extrabold text-gray-700 text-md md:text-2xl text-wrap">
         نگاهی به آخرین مقالات ما بندازید.
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
