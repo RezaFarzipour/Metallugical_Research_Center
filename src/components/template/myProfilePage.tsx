@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX } from "react";
+import { JSX, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "@/components/element/Button";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
@@ -10,7 +10,7 @@ import { useGetUser } from "@/hooks/useAuth";
 import { User } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { showToast } from "@/store/useToastSlice";
-import { editUserByPhoneNumberAdmin } from "@/services/api/user";
+import { editUserByPhoneNumber } from "@/services/api/user";
 import { BtnLoader } from "../element/Loader";
 
 export default function MyProfilePage(): JSX.Element {
@@ -18,7 +18,7 @@ export default function MyProfilePage(): JSX.Element {
   const queryClient = useQueryClient();
   const { isPending, mutateAsync } = useMutation({
     mutationKey: ["update-user"],
-    mutationFn: editUserByPhoneNumberAdmin,
+    mutationFn: editUserByPhoneNumber,
   });
 
   const {
@@ -26,19 +26,24 @@ export default function MyProfilePage(): JSX.Element {
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<PersonalRegisterFormData>({
-    defaultValues: {
-      first_name: user?.first_name || "",
-      last_name: user?.last_name || "",
-      email: user?.email || "",
-      role: "",
-    },
-  });
+  } = useForm<PersonalRegisterFormData>();
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        first_name: user.first_name || "",
+        last_name: user.last_name || "",
+        email: user.email || "",
+        role: user.role || "",
+      });
+    }
+  }, [user, reset]);
 
   const onSubmit: SubmitHandler<PersonalRegisterFormData> = async (data) => {
     await mutateAsync(
       {
         phone_number: user?.phone_number,
+        role: user?.role,
         data: {
           ...data,
           role: user?.role,
@@ -66,9 +71,9 @@ export default function MyProfilePage(): JSX.Element {
     <div className=" text-default-700 p-8 flex flex-col md:flex-row gap-10 ">
       <div className="mb-6">
         <BreadcrumbsElement
-          item1="پروفایل"
-          item2="داشبورد"
-          panelHref="/admin/home"
+          item1="داشبورد"
+          item2="پروفایل"
+          panelHref={user!.role ==="admin" ? "/admin/dashboard":"/user/dashboard"}
         />
       </div>
       <form

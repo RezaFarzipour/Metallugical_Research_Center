@@ -70,12 +70,12 @@ const SideBar: FC<SideBarProps> = ({ onClose, navLinkData, user, path }) => {
         <p className="text-secondary-800 text-sm font-bold">
           {user ? user.first_name + " " + user.last_name : "نام و نام خانوادگی"}
         </p>
-        <div className="p-2 rounded-full border border-[#ddd] cursor-pointer">
-          <Link href={path}>
+        <Link href={path}>
+          <div className="p-2 rounded-full border border-[#ddd] cursor-pointer">
             {" "}
             <CiEdit size={17} />
-          </Link>
-        </div>
+          </div>
+        </Link>
       </div>
     </div>
   );
