@@ -39,7 +39,7 @@ interface CardContentProps extends Partial<ServiceCardData>, Partial<BlogType> {
   heightConter: string;
   view: boolean;
   styleForAdmin: boolean;
-  isMoreDetails?: string;
+  isMoreDetails?: "adminBlogs" | "adminServices" | "anyBlogs" | "anyServices";
   parsedTags?: string[];
 }
 
@@ -90,17 +90,22 @@ export const CardContent: React.FC<CardContentProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const isBlog = !!slug;
+  const getDetailsHref = (type?: string, id: number, slug?: string) => {
+    switch (type) {
+      case "adminBlogs":
+        return `/admin/blogs/${toEnglishNumbers(id)}/details`;
+      case "adminServices":
+        return `/admin/services/${id}/details`;
+      case "anyBlogs":
+        return `/blogs/${slug}/${id}`;
+      case "anyServices":
+        return `/services/${id}/details`;
+      default:
+        return "/";
+    }
+  };
 
-  // const MoreDetailsHref = isBlog
-  //   ? `/blogs/${slug}/${id}`
-  //   : isMoreDetails === "admin"
-  //   ? `/admin/services/${id}/details`
-  //   : `/services/${id}/details`;
-
-  const MoreDetailsHref = isMoreDetails
-    ? `/admin${isMoreDetails}/${toEnglishNumbers(id)}/details`
-    : `/services/${id}/details`;
+  const MoreDetailsHref = getDetailsHref(isMoreDetails!, id!, slug);
 
   const cardStyles = {
     box: cn(
