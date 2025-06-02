@@ -10,10 +10,8 @@ type PageProps = {
 
 export default async function Details({ params }: PageProps) {
   const { blogId } = params;
-
   const cookieStore = cookies();
   const options = setCookiesOnReq(cookieStore);
-
   const blogData = await getBlogById(blogId, options);
 
   return <BlogDetailsPage dataByID={blogData} />;
