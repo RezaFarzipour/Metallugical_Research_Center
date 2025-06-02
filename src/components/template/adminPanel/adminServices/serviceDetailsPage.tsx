@@ -115,7 +115,7 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
       <div className="mb-6">
         <BreadcrumbsElement
           item1="سرویس ها"
-          item2="سرویس"
+          item2=" مشخصات سرویس"
           panelHref="/admin/services"
         />
       </div>

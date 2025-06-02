@@ -2,7 +2,7 @@
 import { TiHomeOutline } from "react-icons/ti";
 import {
   contactInfoType,
-  DashboardMinicardProps,
+
   FAQItem,
   FormInputConfig,
   latestArticleType,
@@ -20,7 +20,8 @@ import { CiClock1 } from "react-icons/ci";
 import { LuUsers } from "react-icons/lu";
 import { PiDeviceTablet } from "react-icons/pi";
 import { RiBloggerLine } from "react-icons/ri";
-import { CiHome } from "react-icons/ci";
+import { RiHome3Line } from "react-icons/ri";
+
 import { FiShoppingCart } from "react-icons/fi";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { IconType } from "react-icons";
@@ -397,7 +398,7 @@ export const dropDownItems = (userRole: string): dropDownItemType[] => {
       id: 1,
       label: "حساب کاربری",
       path: userRole === "customer" ? "/user/dashboard" : "/admin/dashboard",
-      icon: CiHome,
+      icon: RiHome3Line,
     },
     {
       id: 2,

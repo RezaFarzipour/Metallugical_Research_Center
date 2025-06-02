@@ -9,7 +9,7 @@ export default function ContactUsLayout({
   return (
     <>
       <Layout>
-        = <HeaderImage breadcrumbItem1="خدمات" panelHref="/" />
+        <HeaderImage breadcrumbItem1="خدمات" panelHref="/" />
         <div className="mt-72">{children}</div>
       </Layout>
     </>

@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import http from "../httpService";
 
-export const getAllServiceAdmin = async (options) => {
+export const getAllServiceAdmin = async (options?: AxiosRequestConfig) => {
   const response = await http.get(`service/s/admin/`, options);
   return response.data;
 };
@@ -18,7 +18,7 @@ export const getServicesByIdAdmin = async (
   }
 };
 
-export const createNewService = async (data) => {
+export const createNewService = async (data: FormData) => {
   const response = await http.post(`service/s/admin/`, data);
   return response.data;
 };
@@ -57,7 +57,7 @@ export const getServicesImageById = async (
   }
 };
 
-export const createServiceImages = async (data) => {
+export const createServiceImages = async (data:FormData) => {
   const response = await http.post(`service/images/admin/`, data);
   return response.data;
 };
@@ -79,7 +79,13 @@ export const deleteServiceImageById = async ({ id }: { id: string }) => {
 };
 
 // API DateRange:
-export const createServiceDateRange = async (data) => {
+export const createServiceDateRange = async ({data}:{
+  data: {
+    reserved_from: string;
+    reserved_to: string;
+    service: string;
+  };
+}) => {
   const response = await http.post(`service/reserve-date/admin/`, data);
   return response.data;
 };
@@ -114,7 +120,7 @@ export const getAllReserveDate = async () => {
     console.log("error", error);
   }
 };
-export const getAllServiceCustomer = async (options) => {
+export const getAllServiceCustomer = async (options?: AxiosRequestConfig) => {
   const response = await http.get(`service/s/customer/`, options);
   return response.data;
 };
@@ -130,5 +136,3 @@ export const getServicesByIdCustomer = async (
     throw error;
   }
 };
-
-

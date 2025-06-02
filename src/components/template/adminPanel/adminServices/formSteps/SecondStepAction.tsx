@@ -17,6 +17,8 @@ import AdminDateRangePicker from "@/components/module/customeDataPicker/AdminDat
 import TitleStructure from "@/components/element/TitleStructure";
 import { BtnLoader } from "@/components/element/Loader";
 import { useSeCondStepAction } from "../hooks/useSecondStepAction";
+import { serviceDataEditType } from "@/types";
+
 
 interface ServiceImage {
   id: string | number;
@@ -24,7 +26,8 @@ interface ServiceImage {
 }
 interface ServicesActionProps {
   filteredServiceImages?: ServiceImage[];
-  serviceId?: string | number;
+  serviceRangeDate: serviceDataEditType;
+  serviceId?: string | number | undefined;
   setStep?: (step: number) => void;
 }
 
