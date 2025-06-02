@@ -94,7 +94,9 @@ export default function UserEditPage({
           </div>
         </RadioGroup>
 
-        <Button type="submit">ثبت</Button>
+        <Button type="submit" fullWidth>
+          ثبت ویرایش
+        </Button>
       </form>
     </div>
   );

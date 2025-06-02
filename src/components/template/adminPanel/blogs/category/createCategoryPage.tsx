@@ -12,8 +12,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getBlogCategoryById } from "@/services/api/blogs";
 import { useEffect } from "react";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
-import { Button } from "@heroui/button";
 import { BtnLoader } from "@/components/element/Loader";
+import Button from "@/components/element/Button";
 
 const categorySchema = z.object({
   category_name: z.string().min(1, "نام دسته‌بندی باید پر شود"),
@@ -113,9 +113,6 @@ export default function CreateCategory() {
         />
       </div>
       <div className="p-6 max-w-xl mx-auto">
-        <h2 className="text-lg font-semibold mb-4">
-          {isEditMode ? "ویرایش دسته‌بندی" : "افزودن دسته‌بندی جدید"}
-        </h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className=" p-6 rounded-xl  space-y-5 bg-white shadow-md mt-10"
@@ -136,7 +133,7 @@ export default function CreateCategory() {
             dir="rtl"
             name="slug"
           />
-          <Button type="submit" className="w-full">
+          <Button type="submit" fullWidth>
             {isEditMode ? "ذخیره تغییرات" : "افزودن"}
           </Button>
         </form>

@@ -13,13 +13,13 @@ import AdminStage3 from "@/components/template/reservation/formSteps/AdminStage3
 import AdminStage4 from "@/components/template/reservation/formSteps/AdminStage4";
 import CustomerStage3 from "@/components/template/reservation/formSteps/CustomerStage3";
 import http from "@/services/httpService";
-import Stage1 from "./reserveAction/CustomerStage1";
 import { getAllServiceCustomer } from "@/services/api/service";
 import { BtnLoader } from "@/components/element/Loader";
 import WaitingStage from "@/components/template/reservation/formSteps/WaitingStage";
-import AdminStage2 from "./reserveAction/AdminStage2";
 import FinalStage from "@/components/template/reservation/formSteps/FinalStage";
 import { ServiceDetailsType } from "@/types";
+import AdminStage2 from "./formSteps/AdminStage2";
+import Stage1 from "./formSteps/CustomerStage1";
 const ReservationTemplate = () => {
   const searchParams = useSearchParams();
   const reserveId = searchParams.get("reserve-id");
