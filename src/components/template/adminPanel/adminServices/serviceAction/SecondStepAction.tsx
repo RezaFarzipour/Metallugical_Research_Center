@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@heroui/button";
@@ -17,6 +17,7 @@ import AdminDateRangePicker from "@/components/module/customeDataPicker/AdminDat
 import TitleStructure from "@/components/element/TitleStructure";
 import { useSeCondStepAction } from "./useSecondStepAction";
 import { BtnLoader } from "@/components/element/Loader";
+import { serviceDataEditType } from "@/types";
 
 interface ServiceImage {
   id: string | number;
@@ -24,7 +25,8 @@ interface ServiceImage {
 }
 interface ServicesActionProps {
   filteredServiceImages?: ServiceImage[];
-  serviceId?: string | number;
+  serviceRangeDate: serviceDataEditType;
+  serviceId?: string | number | undefined;
   setStep?: (step: number) => void;
 }
 

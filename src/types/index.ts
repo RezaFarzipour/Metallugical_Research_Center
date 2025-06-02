@@ -68,13 +68,13 @@ export interface UserProfileResponse {
   };
 }
 
-export interface serviceDataEditType {
+export type serviceDataEditType= {
   id: number;
   service_name: string;
   description: string;
   price: number;
   cover_image: string;
-}
+}[]
 
 export type AllUsersType = {
   username: string;

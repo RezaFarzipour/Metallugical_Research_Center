@@ -16,7 +16,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import BlurModal from "@/components/element/BlurModal";
 
 type stage1Props = {
-  allServices: serviceDataEditType[];
+  allServices: serviceDataEditType;
   isAllServicesPending: boolean;
 };
 
