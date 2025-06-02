@@ -166,3 +166,31 @@ export interface Reserve {
   is_payment_verified: boolean;
   is_finished: boolean;
 }
+
+
+//blog details type
+
+interface BlogContent {
+  id: string;
+  index: number;
+  class_name: string;
+  content: string;
+  is_multiline?: boolean;
+}
+
+interface BlogImage {
+  id: string;
+  image: string;
+  blog: string;
+}
+
+export interface BlogData {
+  id: string;
+  title: string;
+  slug: string;
+  cover_image: string;
+  tags: string[]; // مثل: ['["safe","stafe"]']
+  category_list: string[]; // مثل: ['["68332b9691f173ce1584e0f9"]']
+  "blog-content": BlogContent[];
+  "blog-image": BlogImage[];
+}
