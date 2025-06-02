@@ -114,7 +114,7 @@ export const getAllReserveDate = async () => {
     console.log("error", error);
   }
 };
-export const getAllServiceCustomer = async (options) => {
+export const getAllServiceCustomer = async (options?: AxiosRequestConfig) => {
   const response = await http.get(`service/s/customer/`, options);
   return response.data;
 };
@@ -130,5 +130,3 @@ export const getServicesByIdCustomer = async (
     throw error;
   }
 };
-
-
