@@ -21,8 +21,8 @@ interface ServiceImage {
   service: number;
 }
 interface ReserveDate {
-  start_date: string;
-  end_date: string;
+  reserved_from: string; // مثلاً "2025-04-26"
+  reserved_to: string;
 }
 interface ServiceData {
   id: number;

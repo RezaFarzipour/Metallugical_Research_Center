@@ -43,7 +43,7 @@ export const formatDateRangesToPersian2 = (date: string): string => {
 
 
 export function getDayPart() {
-  const getTimeOfDay = (hour) => {
+  const getTimeOfDay = (hour:number) => {
     if (hour >= 5 && hour < 12) {
       return "صبح";
     } else if (hour >= 12 && hour < 17) {
