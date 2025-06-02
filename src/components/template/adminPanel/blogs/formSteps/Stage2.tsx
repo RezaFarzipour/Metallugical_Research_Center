@@ -145,7 +145,7 @@ const Stage2 = () => {
           </Button>
         </div>
 
-        <div className="flex flex-col gap-6 mt-6">
+        <div className="flex flex-col gap-6 ">
           {items
             .filter((item) => item.type === "text")
             .map((item) => (
