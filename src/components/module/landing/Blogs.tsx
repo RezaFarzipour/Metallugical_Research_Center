@@ -46,9 +46,11 @@ const Blogs = ({ AllBlogs }: BlogsPropsType) => {
           </motion.div>
         ))}
       </div>
-      <Button variant="primary" type="submit" path="/blogs">
-        مشاهده همه بلاگ ها ...
-      </Button>
+      <div className="mt-8">
+        <Button variant="primary" type="submit" path="/blogs">
+          مشاهده همه بلاگ ها ...
+        </Button>
+      </div>
     </div>
   );
 };

@@ -50,9 +50,11 @@ const Services = ({ initialData }: LandingPageProps) => {
           </motion.div>
         ))}
       </div>
-      <Button variant="primary" type="submit" path="/services">
-        مشاهده همه خدمات ...
-      </Button>
+      <div className="mt-8">
+        <Button variant="primary" type="submit" path="/services">
+          مشاهده همه خدمات ...
+        </Button>
+      </div>
     </motion.div>
   );
 };

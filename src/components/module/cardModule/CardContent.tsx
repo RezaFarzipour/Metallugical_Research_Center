@@ -61,10 +61,15 @@ const CardContentBox: React.FC<{
   width: string;
   height: string;
   className: string;
-}> = ({ children, width, height, className }) => (
+  style?: React.CSSProperties;
+}> = ({ children, width, height, className, style }) => (
   <div
     className={cn(className, "flex-col [&>div]:text-secondary-700")}
-    style={{ width, height }}
+    style={{
+      ...style,
+      ...(width ? { width } : {}),
+      ...(height ? { height } : {}),
+    }}
   >
     {children}
   </div>
@@ -111,16 +116,17 @@ export const CardContent: React.FC<CardContentProps> = ({
     box: cn(
       "bg-gray-50 p-4 rounded-lg shadow-lg flex gap-1",
       view
-        ? `absolute left-1/2 -translate-x-1/2 bottom-[-${bottomOffset}px] group-hover:translate-y-[-10px] transition-transform duration-300 ease-out`
+        ? "absolute left-1/2 -translate-x-1/2 group-hover:translate-y-[-10px] transition-transform duration-300 ease-out"
         : "w-full"
     ),
+    style: view ? { bottom: `-${bottomOffset}px` } : {},
   };
-
   return (
     <CardContentBox
       width={view ? widthConter : "100%"}
       height={view ? heightConter : "auto"}
       className={cardStyles.box}
+      style={cardStyles.style}
     >
       {parsedTags && parsedTags.length > 0 && (
         <InfoRow icon={<TiTags className="text-xl" />}>
@@ -174,7 +180,7 @@ export const CardContent: React.FC<CardContentProps> = ({
         </InfoRow>
       )}
 
-      <div className="mt-auto absolute left-0 bottom-0">
+      <div className="mt-auto  absolute left-0 bottom-0">
         <Link href={MoreDetailsHref}>
           <Button
             className={`data-[hover]:bg-transparent data-[hover]:text-secondary-500 ${
