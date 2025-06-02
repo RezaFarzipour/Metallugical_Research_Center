@@ -5,7 +5,10 @@ const BlogDetailsPage = ({ dataByID }) => {
 
   return (
     <div className="max-w-screen-lg min-h-screen flex justify-center items-center  mx-auto">
-      <div dangerouslySetInnerHTML={{ __html: contentRender }} />
+      <div
+        className="blogUl__disc blogUl__decimal"
+        dangerouslySetInnerHTML={{ __html: contentRender }}
+      />
     </div>
   );
 };

@@ -22,6 +22,7 @@ import {
   undoButtons,
 } from "./toolbarButtons";
 import ImageResize from "tiptap-extension-resize-image";
+import { CgEnter } from "react-icons/cg";
 
 // 📌 نوع props برای TextEditor
 export type ToolbarButton = {
@@ -58,7 +59,7 @@ const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(
         Color,
         ImageResize,
         Image.configure({
-          inline: true, // اجازه می‌دهد تصاویر به صورت inline رندر شوند
+          inline: false, // اجازه می‌دهد تصاویر به صورت inline رندر شوند
           allowBase64: true, // پشتیبانی از data URLs
           HTMLAttributes: {
             class: "mx-auto block pt-8",
@@ -104,6 +105,7 @@ const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(
               .run();
           }
         };
+
         reader.readAsDataURL(file);
       };
       input.click();
@@ -119,7 +121,13 @@ const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(
     };
     const headingBtn = [...headingButtons(editor)];
     const allBtn = [
+      {
+        title: "پاراگراف جدید",
+        icon: <CgEnter />,
+        action: () => editor.chain().focus().insertContent("<p><br></p>").run(),
+      },
       ...baseButtons(editor, pickColor, addImage),
+
       ...alignmentButtons(editor),
       ...listButtons(editor),
       ...blockquoteAndHr(editor),

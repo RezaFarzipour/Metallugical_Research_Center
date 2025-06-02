@@ -46,6 +46,14 @@ body {
 
 /* List styles */
 
+.blogUl__disc li {
+  list-style-type: disc;
+  margin-right: 20px;
+}
+.blogUl__decimal li {
+  list-style-type: decimal;
+  margin-right: 20px;
+}
 .tiptap :first-child {
   margin-top: 5px;
 }
@@ -108,6 +116,7 @@ body {
   max-width: 100%;
   height: auto;
 }
+
 .br-custome blockquote,
 .tiptap blockquote {
   border-right: 3px solid #accde5;

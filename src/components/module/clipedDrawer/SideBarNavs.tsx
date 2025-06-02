@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import clsx from "clsx";
 import { NavLinkItem, sidebarchildren } from "@/types";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
+import { cn } from "@/utils/cn";
 
 interface SideBarNavsProps {
   onClose?: () => void;
@@ -32,7 +32,7 @@ export default function SideBarNavs({
             <li key={nav.id}>
               <button
                 onClick={() => handleDropdownToggle(nav.id)}
-                className={clsx(
+                className={cn(
                   "flex items-center justify-between w-full gap-x-2 rounded-lg text-secondary-800 hover:text-secondary-500 transition-all duration-200 py-3 px-4 text-lg",
                   isActive &&
                     "bg-secondary-400 !font-bold text-white hover:text-white"
@@ -46,7 +46,7 @@ export default function SideBarNavs({
               </button>
 
               <div
-                className={clsx(
+                className={cn(
                   "overflow-hidden transition-all duration-300 ease-in-out",
                   isDropdownOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                 )}
@@ -59,8 +59,8 @@ export default function SideBarNavs({
                         <Link
                           href={child.to}
                           onClick={onClose}
-                          className={clsx(
-                            "flex items-center rounded-lg text-secondary-800 hover:text-secondary-500 transition-all duration-200 py-2 px-3 text-sm",
+                          className={cn(
+                            "flex items-center rounded-lg text-secondary-800 hover:text-secondary-500 transition-all duration-200 py-2 text-sm w-full pr-6",
                             isChildActive &&
                               "bg-secondary-300 !font-bold text-white hover:text-white"
                           )}
@@ -81,7 +81,7 @@ export default function SideBarNavs({
             <Link
               href={nav.to}
               onClick={onClose}
-              className={clsx(
+              className={cn(
                 "flex items-center gap-x-2 rounded-lg text-secondary-800 hover:text-secondary-500 transition-all duration-200 py-3 px-4 text-lg",
                 isActive &&
                   "bg-secondary-400 !font-bold text-white hover:text-white"
