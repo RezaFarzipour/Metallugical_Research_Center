@@ -26,6 +26,7 @@ const CardModule = <T extends CardData>({
   heightConter,
   view = true,
   styleForAdmin,
+  bottomOffset,
 }: Props<T>) => {
   const [hoveredId, setHoveredId] = useState<number | string | null>(null);
 
@@ -94,6 +95,7 @@ const CardModule = <T extends CardData>({
                 heightConter={heightConter}
                 view={view}
                 styleForAdmin={styleForAdmin}
+                bottomOffset={bottomOffset}
               />
             </Card>
           </div>

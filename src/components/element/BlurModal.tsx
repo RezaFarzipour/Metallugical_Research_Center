@@ -8,10 +8,8 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-
 } from "@heroui/react";
 import clsx from "clsx";
-import { BtnLoader } from "./Loader";
 import { cn } from "@/utils/cn";
 
 // تعریف نوع props
@@ -23,7 +21,7 @@ interface BlurModalProps {
   onConfirm?: () => void;
   heightProp: "sm" | "md" | "lg" | "full";
   icon?: ReactNode;
-  isPatching?:boolean,
+  isPatching?: boolean;
   disabled?: boolean;
 }
 
@@ -37,8 +35,6 @@ export default function BlurModal({
   isPatching,
   disabled,
 }: BlurModalProps) {
-
-
   const heightClass = {
     sm: "h-64",
     md: "h-96",
@@ -48,8 +44,6 @@ export default function BlurModal({
 
   return (
     <>
-  
-
       <Modal
         isOpen={isOpen}
         onClose={onClose}

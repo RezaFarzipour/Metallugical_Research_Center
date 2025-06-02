@@ -50,18 +50,18 @@ export default function BlogPage({
               <TitleStructure size="1rem">دسته بندی ها </TitleStructure>
             </h3>
             <div className="sticky top-8">
-            <ul className="space-y-2 text-sm text-gray-700">
-              {data.map((cat: initialDataType) => (
-                <li key={cat.id}>
-                  <Link
-                    href={`/blogs/category/${cat.slug}?id=${cat.id}`}
-                    className="block px-3 py-2 rounded hover:bg-blue-500 hover:text-white transition cursor-pointer"
-                  >
-                    {cat.category_name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+              <ul className="space-y-2 text-sm text-gray-700">
+                {data.map((cat: initialDataType) => (
+                  <li key={cat.id}>
+                    <Link
+                      href={`/blogs/category/${cat.slug}?id=${cat.id}`}
+                      className="block px-3 py-2 rounded hover:bg-blue-500 hover:text-white transition cursor-pointer"
+                    >
+                      {cat.category_name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </aside>
@@ -69,7 +69,7 @@ export default function BlogPage({
         {/* Blog Grid */}
         <main className="lg:col-span-3 w-full ">
           <h3 className="text-xl ">
-            <TitleStructure  size="1rem">وبلاگ </TitleStructure>
+            <TitleStructure size="1rem">وبلاگ </TitleStructure>
           </h3>
 
           <div className="flex my-10 flex-col gap-12 lg:gap-5 lg:flex-row justify-center w-full items-center">
@@ -102,8 +102,9 @@ export default function BlogPage({
                     isDate={false}
                     data={sortedItems}
                     widthConter="100%"
-                    heightImg="250px"
-                    heightConter="200px"
+                    heightImg="200px"
+                    heightConter="150px"
+                    bottomOffset="130"
                     styleForAdmin={false}
                     view={view}
                   />

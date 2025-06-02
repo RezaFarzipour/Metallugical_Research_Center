@@ -18,6 +18,7 @@ import { serviceDataEditType } from "@/types";
 import { useCreateService } from "./useCreateService";
 import { useEditService } from "./useEditService";
 import { BtnLoader } from "@/components/element/Loader";
+import PrimaryButton from "@/components/element/Button";
 
 interface ServicesActionProps {
   serviceDataEdit?: Partial<serviceDataEditType>;
@@ -177,15 +178,9 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
           </div>
         )}
 
-        <div>
-          {isCreating || isEditing ? (
-            <BtnLoader />
-          ) : (
-            <Button type="submit" className="w-full">
-              تایید
-            </Button>
-          )}
-        </div>
+        <PrimaryButton type="submit" disabled={isCreating || isEditing}>
+          {isCreating || isEditing ? <BtnLoader /> : "تایید"}
+        </PrimaryButton>
       </form>
     </div>
   );
