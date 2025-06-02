@@ -1,5 +1,4 @@
-
-import BlogDetailsPage from "@/components/template/weblog/blogDetailsPage";
+import BlogDetailsPage from "@/components/template/blogs/blogDetailsPage";
 import { getBlogByIdAny } from "@/services/api/blogs";
 import setCookiesOnReq from "@/utils/auth/setCookieOnReq";
 import { cookies } from "next/headers";
