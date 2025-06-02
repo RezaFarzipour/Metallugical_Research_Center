@@ -12,7 +12,7 @@ export default function ContactUsLayout({
         ={" "}
         <HeaderImage
           
-          breadcrumbItem1="حدمات"
+          breadcrumbItem1="خدمات"
           panelHref="/"
         />
         <div className="mt-72">{children}</div>
