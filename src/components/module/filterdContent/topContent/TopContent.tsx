@@ -4,7 +4,6 @@ import { useTableStore } from "@/store/useTableSlice";
 import { Button } from "@heroui/button";
 import { FaPlus } from "react-icons/fa";
 import ViewToggle from "./ViewToggle";
-import Link from "next/link";
 import { toPersianNumbers } from "@/utils/formatter/toPersianNumbers";
 import SearchField from "@/components/element/SearchField";
 import TableFilters from "./TableFilters";

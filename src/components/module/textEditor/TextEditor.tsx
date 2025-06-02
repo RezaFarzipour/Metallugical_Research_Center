@@ -39,7 +39,7 @@ export interface TextEditorRef {
   getHtml: () => string;
 }
 const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(
-  ({ html, setHtml, onSave }, ref) => {
+  ({ html }, ref) => {
     const editor = useEditor({
       content: html,
       extensions: [

@@ -30,7 +30,7 @@ export default function AdminDateRangePicker({
       const minDate = dates[0].toDate(); // تاریخ شروع به میلادی
       const maxDate = dates[1].toDate(); // تاریخ پایان به میلادی
 
-      console.log("Gregorian Dates:", minDate, maxDate);
+ 
 
       // تبدیل تاریخ‌ها به شمسی برای نمایش
       const persianMinDate = convertToPersianDate(minDate);
