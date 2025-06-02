@@ -43,6 +43,7 @@ const Services = ({ initialData }: LandingPageProps) => {
               heightImg="300px"
               heightConter="200px"
               bottomOffset="160"
+              isMoreDetails="anyServices"
               styleForAdmin={false}
               view
             />

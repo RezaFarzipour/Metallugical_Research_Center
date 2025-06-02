@@ -1,7 +1,7 @@
 "use client";
 import { useBlogFormStore } from "@/store/useBlogFormStore";
-import Stage1 from "./blogAction/Stage1";
-import Stage2 from "./blogAction/Stage2";
+import Stage1 from "./formSteps/Stage1";
+import Stage2 from "./formSteps/Stage2";
 
 export default function BlogFormStepper() {
   const { step, setStep } = useBlogFormStore();

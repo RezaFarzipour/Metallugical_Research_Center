@@ -11,8 +11,8 @@ import CardModule from "@/components/module/cardModule/CardModule";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import ModalModule from "@/components/element/ModalModule";
 import Empty from "@/components/element/Empty";
-import { useAdminServicesDataAction } from "./serviceAction/useAdminServicesDataAction";
 import { BtnLoader } from "@/components/element/Loader";
+import { useAdminServicesDataAction } from "./hooks/useAdminServicesDataAction";
 
 export const AdminServicesPage: React.FC = ({}) => {
   const {
@@ -80,7 +80,7 @@ export const AdminServicesPage: React.FC = ({}) => {
               <CardModule
                 data={sortedItems}
                 isDate={false}
-                isMoreDetails="/services"
+                isMoreDetails="adminServices"
                 widthConter="100%"
                 heightImg="250px"
                 heightConter="200px"

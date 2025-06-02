@@ -4,9 +4,9 @@ import { reservationDataType, ServiceDetailsType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { paymentVerified } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
-import { useCancelReserve } from "@/components/template/reservation/reserveAction/useCancelReserve";
+import { useCancelReserve } from "@/components/template/reservation/hooks/useCancelReserve";
 import { useRouter } from "next/navigation";
-import { useRejectReserve } from "@/components/template/reservation/reserveAction/useRejectReserve";
+import { useRejectReserve } from "@/components/template/reservation/hooks/useRejectReserve";
 import { Button } from "@heroui/button";
 import { BtnLoader } from "@/components/element/Loader";
 import ReserveInfo from "@/components/module/ReserveInfo";
@@ -38,7 +38,7 @@ const AdminStage3 = ({
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [ admin_description,setAdminDescription] = useState("");
+  const [admin_description, setAdminDescription] = useState("");
   const queryClient = useQueryClient();
   const { cancelReserve, isCanceling } = useCancelReserve();
   const router = useRouter();
@@ -50,21 +50,18 @@ const AdminStage3 = ({
     await queryClient.invalidateQueries({ queryKey: ["get-stage", reserveId] });
   };
 
-
-
-  const rejectHandler =()=>{
+  const rejectHandler = () => {
     setIsModalOpen(true);
-   
   };
 
   const handleConfirm = async () => {
     rejectReservePaymentImage({
       reserveId,
       is_payment_verified: false,
-      admin_description
+      admin_description,
     });
     setIsModalOpen(false);
-  }
+  };
 
   if (isError) {
     showToast("خطا در دریافت اطلاعات", "error");
@@ -95,13 +92,13 @@ const AdminStage3 = ({
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         // isPatching={isPatching}
-        title="توضیحات عدم تایید"  
+        title="توضیحات عدم تایید"
         heightProp="sm"
         bodyContent={
-        <Input
-        onChange={(e) => setAdminDescription(e.target.value)}
-        placeholder="توضیحات"
-        />
+          <Input
+            onChange={(e) => setAdminDescription(e.target.value)}
+            placeholder="توضیحات"
+          />
         }
         onConfirm={handleConfirm}
         // disabled={isConfirmDisabled}

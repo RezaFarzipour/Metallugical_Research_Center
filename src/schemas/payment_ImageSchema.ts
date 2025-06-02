@@ -3,7 +3,7 @@ import { z } from "zod";
 // Regex برای تایید کاراکترهای فارسی
 
 export const paymentImageSchema = z.object({
-   
+
 
     payment_image: z
         .union([

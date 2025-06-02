@@ -2,7 +2,7 @@
 
 import { BtnLoader } from "@/components/element/Loader";
 import ReserveInfo from "@/components/module/ReserveInfo";
-import { useCancelReserve } from "@/components/template/reservation/reserveAction/useCancelReserve";
+import { useCancelReserve } from "@/components/template/reservation/hooks/useCancelReserve";
 import { reservationDataType, ServiceDetailsType } from "@/types";
 import { Button } from "@heroui/button";
 import { useRouter } from "next/navigation";

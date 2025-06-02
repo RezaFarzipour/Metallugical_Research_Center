@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
@@ -11,9 +11,9 @@ import {
   toEnglishNumbers,
   toPersianNumbersWithComma,
 } from "@/utils/formatter/toPersianNumbers";
-import { useDeleteService } from "./serviceAction/useDeleteService";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
 import { Button } from "@heroui/button";
+import { useDeleteService } from "./hooks/useDeleteService";
 
 interface ServiceImage {
   id: number;
@@ -23,7 +23,6 @@ interface ServiceImage {
 interface ReserveDate {
   start_date: string;
   end_date: string;
-  // یا هر فیلد دیگه‌ای که داخل ReserveDate هست
 }
 interface ServiceData {
   id: number;
@@ -34,7 +33,6 @@ interface ServiceData {
   "service-images": ServiceImage[];
   "service-reserve_date"?: ReserveDate[];
 }
-
 interface ServiceDetailsPageProps {
   dataByID: ServiceData;
 }
@@ -42,53 +40,63 @@ interface ServiceDetailsPageProps {
 const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
   dataByID,
 }) => {
+  const router = useRouter();
+  const { deletService } = useDeleteService();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const {
+    id,
     service_name,
     description,
     price,
     cover_image,
-    "service-images": serviceImages,
+    "service-images": serviceImages = [],
+    "service-reserve_date": reserveDates = [],
   } = dataByID;
 
-  const dateRanges = formatDateRangesToPersian(
-    dataByID["service-reserve_date"] ?? []
+  const coverImageSrc = useMemo(
+    () =>
+      cover_image.startsWith("http")
+        ? cover_image
+        : `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${cover_image}`,
+    [cover_image]
   );
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { deletService } = useDeleteService();
-  const router = useRouter();
+  const galleryImages = useMemo(
+    () =>
+      serviceImages.map((img) =>
+        img.image.startsWith("http")
+          ? img.image
+          : `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${img.image}`
+      ),
+    [serviceImages]
+  );
 
-  const galleryImages =
-    serviceImages?.map((img) =>
-      img.image.startsWith("http")
-        ? img.image
-        : process.env.NEXT_PUBLIC_IMAGE_BASE_URL + img.image
-    ) || [];
-
-  const coverImageSrc = cover_image.startsWith("http")
-    ? cover_image
-    : process.env.NEXT_PUBLIC_IMAGE_BASE_URL + cover_image;
+  const dateRanges = useMemo(
+    () => formatDateRangesToPersian(reserveDates),
+    [reserveDates]
+  );
 
   const handleEdit = useCallback(() => {
-    router.push(`/admin/services/${dataByID.id}/edit`);
-  }, [router, dataByID.id]);
+    router.push(`/admin/services/${id}/edit`);
+  }, [id, router]);
 
   const handleDelete = useCallback(() => {
-    if (!dataByID.id) {
+    if (!id) {
       showToast("آیدی سرویس نامعتبر است", "error");
       return;
     }
     setIsModalOpen(true);
-  }, [dataByID.id]);
+  }, [id]);
 
   const handleDeleteService = useCallback(() => {
-    if (!dataByID.id) {
+    if (!id) {
       showToast("آیدی سرویس نامعتبر است", "error");
       return;
     }
 
     deletService(
-      { id: toEnglishNumbers(dataByID.id) },
+      { id: toEnglishNumbers(id) },
       {
         onSuccess: () => {
           showToast("سرویس با موفقیت حذف شد", "success");
@@ -100,7 +108,7 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
         },
       }
     );
-  }, [dataByID.id, deletService, router]);
+  }, [id, deletService, router]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -113,6 +121,7 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* اطلاعات سرویس */}
         <div className="flex flex-col space-y-6">
           <div className="flex items-center space-x-4 rtl:space-x-reverse">
             <div className="relative w-16 h-16">
@@ -126,24 +135,14 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
             <h2 className="text-2xl font-bold text-gray-800">{service_name}</h2>
           </div>
 
-          <div>
-            <h2 className="font-bold text-default-400">توضیحات</h2>
-            <p className="text-secondary-700 pr-2">{description} </p>
-          </div>
+          <ServiceInfo title="توضیحات" content={description} />
+          <ServiceInfo
+            title="قیمت محصول"
+            content={`${toPersianNumbersWithComma(price)} تومان`}
+          />
+          <ServiceInfo title="تاریخ‌های رزرو" content={dateRanges || "-"} />
 
-          <div>
-            <h2 className="font-bold text-default-400">قیمت محصول</h2>
-            <p className="text-secondary-700 pr-2">
-              {toPersianNumbersWithComma(price)}&nbsp;تومان
-            </p>
-          </div>
-
-          <div>
-            <h2 className="font-bold text-default-400">تاریخ های رزرو</h2>
-            <p className="text-secondary-700 pr-2">{dateRanges}</p>
-          </div>
-
-          {/* دکمه های ادیت و دیلیت با آیکون */}
+          {/* دکمه‌های عملیات */}
           <div className="flex space-x-4 rtl:space-x-reverse">
             <Button
               onPress={handleEdit}
@@ -162,10 +161,13 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
           </div>
         </div>
 
+        {/* گالری تصاویر */}
         <div className="w-full">
           <CarGallery images={galleryImages} />
         </div>
       </div>
+
+      {/* مدال تایید حذف */}
       {isModalOpen && (
         <ModalModule
           title="حذف سرویس"
@@ -175,11 +177,25 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
           onCancel={() => setIsModalOpen(false)}
           onConfirm={handleDeleteService}
         >
-          <p>آیا مطمئنی می‌خوای سرویس با آیدی {dataByID.id} رو حذف کنی؟</p>
+          <p>آیا مطمئنی می‌خوای سرویس با آیدی {id} رو حذف کنی؟</p>
         </ModalModule>
       )}
     </div>
   );
 };
+
+// کامپوننت اطلاعات تکراری
+const ServiceInfo = ({
+  title,
+  content,
+}: {
+  title: string;
+  content: string;
+}) => (
+  <div>
+    <h2 className="font-bold text-default-400">{title}</h2>
+    <p className="text-secondary-700 pr-2">{content}</p>
+  </div>
+);
 
 export default ServiceDetailsPage;

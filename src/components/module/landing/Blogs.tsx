@@ -39,6 +39,7 @@ const Blogs = ({ AllBlogs }: BlogsPropsType) => {
               heightImg="200px"
               heightConter="150px"
               bottomOffset="130"
+              isMoreDetails="anyBlogs"
               styleForAdmin={false}
               view
             />

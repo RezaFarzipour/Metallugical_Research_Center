@@ -2,7 +2,7 @@
 
 import FileInput from "@/components/element/FileInput";
 import { BtnLoader } from "@/components/element/Loader";
-import { useCancelReserve } from "@/components/template/reservation/reserveAction/useCancelReserve";
+import { useCancelReserve } from "@/components/template/reservation/hooks/useCancelReserve";
 import {
   PaymentFormData,
   paymentImageSchema,

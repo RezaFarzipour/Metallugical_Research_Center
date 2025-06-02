@@ -1,8 +1,8 @@
 import { BtnLoader } from "@/components/element/Loader";
 import RHFInput from "@/components/element/RHFInput";
 import ReserveInfo from "@/components/module/ReserveInfo";
-import { useCancelReserve } from "@/components/template/reservation/reserveAction/useCancelReserve";
-import { useRejectReserve } from "@/components/template/reservation/reserveAction/useRejectReserve";
+import { useCancelReserve } from "@/components/template/reservation/hooks/useCancelReserve";
+import { useRejectReserve } from "@/components/template/reservation/hooks/useRejectReserve";
 import {
   AdminReserveInputsFormData,
   AdminReserveInputsSchema,
@@ -15,7 +15,7 @@ import { Button } from "@heroui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React  from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 
 type AdminStage1Type = {
@@ -53,7 +53,6 @@ const AdminStage1 = ({
   //accept reserve by admin
 
   const accepthandler = async (data: AdminReserveInputsFormData) => {
-
     await acceptStage2(
       {
         reserveId,
@@ -92,8 +91,6 @@ const AdminStage1 = ({
       router.push("/services");
     });
   };
-
-
 
   if (isServiceLoading)
     return (

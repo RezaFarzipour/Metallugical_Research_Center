@@ -15,10 +15,10 @@ import { showToast } from "@/store/useToastSlice";
 import FileInput from "@/components/element/FileInput";
 import { imageUrlToFile } from "@/utils/formatter/fileFormatter";
 import { serviceDataEditType } from "@/types";
-import { useCreateService } from "./useCreateService";
-import { useEditService } from "./useEditService";
 import { BtnLoader } from "@/components/element/Loader";
 import PrimaryButton from "@/components/element/Button";
+import { useCreateService } from "../hooks/useCreateService";
+import { useEditService } from "../hooks/useEditService";
 
 interface ServicesActionProps {
   serviceDataEdit?: Partial<serviceDataEditType>;

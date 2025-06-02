@@ -9,7 +9,7 @@ import Link from "next/link";
 import Table from "@/components/element/Table";
 import ModalModule from "@/components/element/ModalModule";
 import { getAllCategoryAdmin } from "@/services/api/blogs";
-import { useDeleteBlogCategory } from "../useDeleteCategory";
+import { useDeleteBlogCategory } from "../hooks/useDeleteCategory";
 import { showToast } from "@/store/useToastSlice";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { FaPlus } from "react-icons/fa";

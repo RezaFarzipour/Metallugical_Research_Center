@@ -157,7 +157,7 @@ import { blogColumns } from "@/constants/tableData";
 import { showToast } from "@/store/useToastSlice";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_BLOGS } from "@/graphql/queries";
-import { useDeleteBlog } from "./useDeleteBlog";
+import { useDeleteBlog } from "../hooks/useDeleteBlog";
 
 export interface Blog {
   coverImage: string;

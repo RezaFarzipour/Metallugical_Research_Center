@@ -11,7 +11,7 @@ import CardModule from "@/components/module/cardModule/CardModule";
 import ModalModule from "@/components/element/ModalModule";
 import Empty from "@/components/element/Empty";
 import { BtnLoader } from "@/components/element/Loader";
-import { useAdminBlogDataAction } from "./blogAction/useAdminBlogDataAction";
+import { useAdminBlogDataAction } from "./hooks/useAdminBlogDataAction";
 
 export const BlogsPage: React.FC = () => {
   const {
@@ -78,7 +78,7 @@ export const BlogsPage: React.FC = () => {
               <CardModule
                 data={sortedItems}
                 isDate={false}
-                isMoreDetails="admin"
+                isMoreDetails="adminBlogs"
                 widthConter="100%"
                 heightImg="200px"
                 heightConter="150px"

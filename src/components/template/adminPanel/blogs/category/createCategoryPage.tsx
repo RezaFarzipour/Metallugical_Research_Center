@@ -4,8 +4,8 @@ import RHFInput from "@/components/element/RHFInput";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCreateCategory, useCreateService } from "../useCreate";
-import { useEditCategory, useEditService } from "../useEditCategory";
+import { useCreateCategory, useCreateService } from "../hooks/useCreate";
+import { useEditCategory, useEditService } from "../hooks/useEditCategory";
 import { showToast } from "@/store/useToastSlice";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
@@ -69,10 +69,13 @@ export default function CreateCategory() {
   const { editBlogCategory } = useEditCategory();
 
   const onSubmit = (formData: CategoryFormData) => {
-    
     if (isEditMode && editId) {
       editBlogCategory(
-        { id: editId, category_name:formData.category_name,slug:formData.slug},
+        {
+          id: editId,
+          category_name: formData.category_name,
+          slug: formData.slug,
+        },
         {
           onSuccess: () => {
             showToast("دسته‌بندی با موفقیت ویرایش شد", "success");

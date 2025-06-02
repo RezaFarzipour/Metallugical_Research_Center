@@ -1,4 +1,4 @@
-import Stage2 from "@/components/template/adminPanel/blogs/blogAction/Stage2";
+import Stage2 from "@/components/template/adminPanel/blogs/formSteps/Stage2";
 import React from "react";
 
 const page = () => {

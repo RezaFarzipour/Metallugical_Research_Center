@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@heroui/button";
@@ -15,8 +15,8 @@ import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
 import AdminDateRangePicker from "@/components/module/customeDataPicker/AdminDateRangePicker";
 import TitleStructure from "@/components/element/TitleStructure";
-import { useSeCondStepAction } from "./useSecondStepAction";
 import { BtnLoader } from "@/components/element/Loader";
+import { useSeCondStepAction } from "../hooks/useSecondStepAction";
 
 interface ServiceImage {
   id: string | number;

@@ -8,7 +8,7 @@ import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { Radio, RadioGroup } from "@heroui/react";
 import PersonalDetailsForm from "@/components/module/controller/PersonalDetailsForm";
 import { AllUsersType } from "@/types";
-import useUserService from "./useEditUser";
+import useUserService from "./hooks/useEditUser";
 import { showToast } from "@/store/useToastSlice";
 import { useRouter } from "next/navigation";
 
