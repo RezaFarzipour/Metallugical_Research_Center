@@ -12,16 +12,16 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { showToast } from "@/store/useToastSlice";
 import { editUserByPhoneNumber } from "@/services/api/user";
 import { BtnLoader } from "../element/Loader";
+import { useRouter } from "next/navigation";
 
 export default function MyProfilePage(): JSX.Element {
   const { data: user }: { data: User | undefined } = useGetUser();
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { isPending, mutateAsync } = useMutation({
     mutationKey: ["update-user"],
     mutationFn: editUserByPhoneNumber,
   });
-
-
 
   const {
     register,
@@ -30,19 +30,15 @@ export default function MyProfilePage(): JSX.Element {
     formState: { errors },
   } = useForm<PersonalRegisterFormData>({
     mode: "onTouched",
-   
-  
   });
-
-
 
   useEffect(() => {
     if (user) {
       reset({
-        first_name: user.first_name ,
-        last_name: user.last_name ,
-        email: user.email ,
-        role: user.role ,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+        role: user.role,
       });
     }
   }, [user, reset]);
@@ -68,7 +64,7 @@ export default function MyProfilePage(): JSX.Element {
           });
           showToast("اطلاعات کاربر با موفقیت ویرایش شد", "success");
 
-          reset();
+          router.push("/admin/dashboard");
         },
         onError: () => {
           showToast("ویرایش کاربر با خطا مواجه شد", "error");
