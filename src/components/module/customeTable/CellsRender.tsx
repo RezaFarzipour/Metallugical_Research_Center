@@ -51,10 +51,6 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
 }) => {
   const cellValue = data[columnKey as keyof User];
 
-
-
-
-
   switch (columnKey) {
     case "name":
       return (
@@ -126,26 +122,26 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
         </Tooltip>
       );
 
-      case "tags":
-  let tagsArray: string[] = [];
+    case "tags":
+      let tagsArray: string[] = [];
 
-  try {
-    if (Array.isArray(data.tags) && typeof data.tags[0] === "string") {
-      tagsArray = JSON.parse(data.tags[0]); // چون به صورت استرینگ داخل آرایه هست
-    }
-  } catch (err) {
-    console.error("Error parsing tags:", err);
-  }
+      try {
+        if (Array.isArray(data.tags) && typeof data.tags[0] === "string") {
+          tagsArray = JSON.parse(data.tags[0]); // چون به صورت استرینگ داخل آرایه هست
+        }
+      } catch (err) {
+        console.error("Error parsing tags:", err);
+      }
 
-  return (
-    <div className="flex gap-1 flex-wrap">
-      {tagsArray.map((tag, index) => (
-        <Chip key={index} size="sm" variant="flat" color="primary">
-          {tag}
-        </Chip>
-      ))}
-    </div>
-  );
+      return (
+        <div className="flex gap-1 flex-wrap">
+          {tagsArray.map((tag, index) => (
+            <Chip key={index} size="sm" variant="flat" color="primary">
+              {tag}
+            </Chip>
+          ))}
+        </div>
+      );
 
     case "actions":
       return (
