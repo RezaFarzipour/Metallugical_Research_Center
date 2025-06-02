@@ -21,23 +21,33 @@ export default function MyProfilePage(): JSX.Element {
     mutationFn: editUserByPhoneNumber,
   });
 
+
+
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<PersonalRegisterFormData>();
+  } = useForm<PersonalRegisterFormData>({
+    mode: "onTouched",
+   
+  
+  });
+
+
 
   useEffect(() => {
     if (user) {
       reset({
-        first_name: user.first_name || "",
-        last_name: user.last_name || "",
-        email: user.email || "",
-        role: user.role || "",
+        first_name: user.first_name ,
+        last_name: user.last_name ,
+        email: user.email ,
+        role: user.role ,
       });
     }
   }, [user, reset]);
+
+  if (!user) return <BtnLoader />;
 
   const onSubmit: SubmitHandler<PersonalRegisterFormData> = async (data) => {
     await mutateAsync(
@@ -73,7 +83,9 @@ export default function MyProfilePage(): JSX.Element {
         <BreadcrumbsElement
           item1="داشبورد"
           item2="پروفایل"
-          panelHref={user!.role ==="admin" ? "/admin/dashboard":"/user/dashboard"}
+          panelHref={
+            user?.role === "admin" ? "/admin/dashboard" : "/user/dashboard"
+          }
         />
       </div>
       <form
