@@ -86,27 +86,27 @@ export const CardContent: React.FC<CardContentProps> = ({
   styleForAdmin,
   dateRange,
   slug,
+  bottomOffset,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const isBlog = !!slug;
 
-  const MoreDetailsHref = isBlog
-    ? `/blogs/${slug}/${id}`
-    : isMoreDetails === "admin"
-    ? `/admin/services/${id}/details`
-    : `/services/${id}/details`;
-
-
-  // const MoreDetailsHref = isMoreDetails
-  //   ? `/admin${isMoreDetails}/${toEnglishNumbers(id)}/details`
+  // const MoreDetailsHref = isBlog
+  //   ? `/blogs/${slug}/${id}`
+  //   : isMoreDetails === "admin"
+  //   ? `/admin/services/${id}/details`
   //   : `/services/${id}/details`;
+
+  const MoreDetailsHref = isMoreDetails
+    ? `/admin${isMoreDetails}/${toEnglishNumbers(id)}/details`
+    : `/services/${id}/details`;
 
   const cardStyles = {
     box: cn(
       "bg-gray-50 p-4 rounded-lg shadow-lg flex gap-1",
       view
-        ? "absolute left-1/2 -translate-x-1/2 bottom-[-160px] group-hover:translate-y-[-10px] transition-transform duration-300 ease-out"
+        ? `absolute left-1/2 -translate-x-1/2 bottom-[-${bottomOffset}px] group-hover:translate-y-[-10px] transition-transform duration-300 ease-out`
         : "w-full"
     ),
   };
@@ -117,7 +117,7 @@ export const CardContent: React.FC<CardContentProps> = ({
       height={view ? heightConter : "auto"}
       className={cardStyles.box}
     >
-      {parsedTags &&parsedTags.length > 0 && (
+      {parsedTags && parsedTags.length > 0 && (
         <InfoRow icon={<TiTags className="text-xl" />}>
           {parsedTags?.map((tag: string, index: number) => (
             <span

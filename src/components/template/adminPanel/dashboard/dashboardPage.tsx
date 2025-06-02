@@ -1,12 +1,10 @@
 "use client";
 
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-
 import React from "react";
 import { CgArrowLeft } from "react-icons/cg";
 import { ReservesAdmincolumns } from "@/constants/tableData";
 import { useTableStore } from "@/store/useTableSlice";
-
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import { TbEyeDiscount } from "react-icons/tb";
@@ -39,12 +37,12 @@ const DashboardPage: React.FC = ({ cardsData }) => {
     <div className="grid grid-cols-1 gap-6">
       <div className="p-4 md:p-6">
         <TitleStructureDashboards mainTitle="داشبورد" />
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
           <Minicard {...cardsWithCounts.users} />
           <Minicard {...cardsWithCounts.orders} />
           <Minicard {...cardsWithCounts.products} />
           <Minicard {...cardsWithCounts.blogs} />
-        </div>{" "}
+        </div>
       </div>
 
       <div className=" p-4 md:p-6">

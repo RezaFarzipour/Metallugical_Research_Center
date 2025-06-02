@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import MiniCardModule from "@/components/module/MiniCardModule";
-import { getUserCards } from "@/constants/data";
 import { CgArrowLeft } from "react-icons/cg";
 import { useTableStore } from "@/store/useTableSlice";
 import FilteredContainer from "@/components/containers/FilteredContainer";

@@ -49,15 +49,15 @@ export default function CarGallery({ images }: CarGalleryProps) {
       </div>
 
       {/* تصاویر کوچک (Thumbnail) */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 overflow-x-auto overflow-y-hidden w-full  ">
         {imgs.map((img, index) => (
           <Image
             key={index}
             src={img}
             alt={`Thumbnail ${index}`}
-            width={80}
-            height={50}
-            className={`rounded-md cursor-pointer transition-all duration-200 hover:scale-110 ${
+            width={120}
+            height={60}
+            className={`rounded-md cursor-pointer transition-all duration-200 hover:scale-110 snap-start ${
               img === currentImage ? "ring-2 ring-blue-500" : ""
             }`}
             onClick={() => setCurrentImage(img)}

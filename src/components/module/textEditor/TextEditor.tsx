@@ -21,6 +21,7 @@ import {
   listButtons,
   undoButtons,
 } from "./toolbarButtons";
+import ImageResize from "tiptap-extension-resize-image";
 
 // 📌 نوع props برای TextEditor
 export type ToolbarButton = {
@@ -55,11 +56,12 @@ const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(
         Superscript,
         TextStyle,
         Color,
+        ImageResize,
         Image.configure({
           inline: true, // اجازه می‌دهد تصاویر به صورت inline رندر شوند
           allowBase64: true, // پشتیبانی از data URLs
           HTMLAttributes: {
-            class: "mx-auto block",
+            class: "mx-auto block pt-8",
           },
         }),
         TextAlign.configure({ types: ["heading", "paragraph"] }),
@@ -97,7 +99,7 @@ const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(
                 src: reader.result,
                 alt: "image",
                 title: "",
-                class: "mx-auto block",
+                class: "mx-auto block ",
               })
               .run();
           }
@@ -127,7 +129,7 @@ const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(
     return (
       <div className="p-4 bg-secondary-50 rounded-lg text-white">
         <div className="relative flex flex-wrap gap-3 mb-4 bg-secondary-700 p-3 rounded-md">
-          <div className=" p-3 rounded-lg mb-3 grid grid-cols-3 gap-2 w-2/3">
+          <div className=" p-3 rounded-lg mb-3 grid grid-cols-3 gap-2 w-5/5 pt-20 md:pt-1 md:w-2/3 ">
             {headingBtn.map(({ title, icon, action }, idx) => (
               <Button
                 key={idx}

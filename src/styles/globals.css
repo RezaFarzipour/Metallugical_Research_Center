@@ -104,7 +104,10 @@ body {
   margin: 1.5rem 0;
   padding: 0.75rem 1rem;
 }
-
+.ProseMirror img {
+  max-width: 100%;
+  height: auto;
+}
 .br-custome blockquote,
 .tiptap blockquote {
   border-right: 3px solid #accde5;

@@ -42,6 +42,7 @@ const Services = ({ initialData }: LandingPageProps) => {
               widthConter="100%"
               heightImg="300px"
               heightConter="200px"
+              bottomOffset="160"
               styleForAdmin={false}
               view
             />

@@ -1,4 +1,3 @@
-
 "use client";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
@@ -27,7 +26,7 @@ export const BlogsPage: React.FC = () => {
     secondActionClickHandler,
     isPending,
     router,
-    handleDeleteBlog
+    handleDeleteBlog,
   } = useAdminBlogDataAction();
 
   const { sortedItems } = useFilteredContainer(formDataBlogs);
@@ -81,8 +80,9 @@ export const BlogsPage: React.FC = () => {
                 isDate={false}
                 isMoreDetails="admin"
                 widthConter="100%"
-                heightImg="250px"
-                heightConter="200px"
+                heightImg="200px"
+                heightConter="150px"
+                bottomOffset="130"
                 view={view}
                 styleForAdmin={true}
               />

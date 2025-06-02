@@ -13,6 +13,7 @@ import {
 } from "@/utils/formatter/toPersianNumbers";
 import { useDeleteService } from "./serviceAction/useDeleteService";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
+import { Button } from "@heroui/button";
 
 interface ServiceImage {
   id: number;
@@ -125,36 +126,39 @@ const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
             <h2 className="text-2xl font-bold text-gray-800">{service_name}</h2>
           </div>
 
-          <p className="text-gray-600 leading-relaxed">{description}</p>
-
-          <div className="text-center">
-            <span className="text-2xl font-bold text-primary-600">
-              قیمت محصول: {toPersianNumbersWithComma(price)}
-            </span>
+          <div>
+            <h2 className="font-bold text-default-400">توضیحات</h2>
+            <p className="text-secondary-700 pr-2">{description} </p>
           </div>
 
-          {/*تاریخ باز */}
-          <div className="text-secondary-700">
-            <h2 className="font-bold">تاریخ های رزرو</h2>
-            {dateRanges}
+          <div>
+            <h2 className="font-bold text-default-400">قیمت محصول</h2>
+            <p className="text-secondary-700 pr-2">
+              {toPersianNumbersWithComma(price)}&nbsp;تومان
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-bold text-default-400">تاریخ های رزرو</h2>
+            <p className="text-secondary-700 pr-2">{dateRanges}</p>
           </div>
 
           {/* دکمه های ادیت و دیلیت با آیکون */}
           <div className="flex space-x-4 rtl:space-x-reverse">
-            <button
-              onClick={handleEdit}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            <Button
+              onPress={handleEdit}
+              className="flex items-center gap-2 px-4 py-2 text-white bg-gradient-to-r from-secondary-500 to-secondary-700 hover:bg-blue-700 transition"
             >
               <FiEdit size={20} />
               <span className="hidden sm:inline">ویرایش</span>
-            </button>
-            <button
-              onClick={handleDelete}
-              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+            </Button>
+            <Button
+              onPress={handleDelete}
+              className="flex items-center gap-2 px-4 py-2 text-white bg-gradient-to-r from-red-500 to-red-700 hover:bg-red-700 transition"
             >
               <FiTrash2 size={20} />
               <span className="hidden sm:inline">حذف</span>
-            </button>
+            </Button>
           </div>
         </div>
 

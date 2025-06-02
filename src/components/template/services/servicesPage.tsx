@@ -76,6 +76,7 @@ const Services = ({ initialData }: ServicesPageProps) => {
                   widthConter="100%"
                   heightImg="250px"
                   heightConter="200px"
+                  bottomOffset="160"
                   styleForAdmin={false}
                   view={view}
                 />
