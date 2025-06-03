@@ -17,12 +17,14 @@ const DeleteBtn: React.FC<DeleteBtnProps> = ({
   secondActionIcon: SecondIcon,
   secondActionClickHandler,
 }) => {
+
+  console.log("name,",data)
   return (
     <div>
       <Tooltip content={secondActionContent}>
         <span
           className="text-lg text-red-500 cursor-pointer hover:opacity-50"
-          onClick={() => secondActionClickHandler(data.id,data?.phone_number??"")}
+          onClick={() => secondActionClickHandler(data.id,data?.name,data?.phone_number??"")}
         >
           {SecondIcon ? <SecondIcon /> : secondActionContent}
         </span>

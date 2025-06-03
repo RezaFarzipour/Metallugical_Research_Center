@@ -17,7 +17,6 @@ export const BlogsPage: React.FC = () => {
   const {
     isModalOpen,
     setIsModalOpen,
-    selectedServiceId,
     view,
     formDataBlogs,
     visibleKeys,
@@ -25,12 +24,15 @@ export const BlogsPage: React.FC = () => {
     firstActionClickHandler,
     secondActionClickHandler,
     isPending,
+    selectedName,
     router,
     handleDeleteBlog,
   } = useAdminBlogDataAction();
 
   const { sortedItems } = useFilteredContainer(formDataBlogs);
   const isEmpty = !formDataBlogs || formDataBlogs.length === 0;
+
+
 
   return (
     <div className="grid grid-cols-1">
@@ -101,7 +103,7 @@ export const BlogsPage: React.FC = () => {
           onCancel={() => setIsModalOpen(false)}
           onConfirm={handleDeleteBlog}
         >
-          <p>آیا مطمئنی می‌خوای بلاگ با آیدی {selectedServiceId} رو حذف کنی؟</p>
+          <p>آیا مطمئنی می‌خوای بلاگ با عنوان {selectedName} رو حذف کنی؟</p>
         </ModalModule>
       )}
     </div>

@@ -143,8 +143,8 @@ export const getBlogCategoryByIdCustomer = async (id: string | undefined) => {
   }
 };
 
-export const deleteBlogById = async ({ id }: { id: string }) => {
-  console.log("id", id);
+export const deleteBlogById = async ({ id }: { id: string | number }) => {
+
   const response = await http.delete(`blog/b/admin/${id}/`);
   return response.data;
 };
