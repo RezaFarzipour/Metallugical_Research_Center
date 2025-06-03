@@ -229,7 +229,7 @@ const ReservationTemplate = () => {
 
   return (
     <div className="p-6">
-      <div className="mb-4 ">
+      <div className="mb-4 w-full md:max-w-2xl  mx-auto">
         <Stepper currentStep={activeStep} steperDetails={steperDetails} />
       </div>
 
