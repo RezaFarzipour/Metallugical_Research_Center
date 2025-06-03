@@ -41,7 +41,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
             <Stepper currentStep={currentStep} steperDetails={Authsteps} />
           </div>
         </div>
-        <div className="w-[90%] absolute top-16 left-1/2 transform -translate-x-1/2 lg:hidden">
+        <div className="w-[90%] absolute top-14  left-1/2 transform -translate-x-1/2 lg:hidden">
           <Stepper currentStep={currentStep} steperDetails={Authsteps} />
         </div>
       </div>

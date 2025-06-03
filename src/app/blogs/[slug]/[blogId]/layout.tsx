@@ -1,7 +1,7 @@
 import Layout from "@/components/containers/layout/Layout";
 
 
-export default function ContactUsLayout({
+export default function BlogDetailsLayout({
   children,
 }: {
   children: React.ReactNode;
