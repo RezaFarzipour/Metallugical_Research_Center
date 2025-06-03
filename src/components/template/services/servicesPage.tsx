@@ -72,6 +72,7 @@ const Services = ({ initialData }: ServicesPageProps) => {
               >
                 <CardModule
                   isDate={false}
+                  isMoreDetails="anyServices"
                   data={sortedItems}
                   widthConter="100%"
                   heightImg="250px"
