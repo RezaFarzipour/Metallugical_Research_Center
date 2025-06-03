@@ -16,6 +16,7 @@ import { useBlogFormStore } from "@/store/useBlogFormStore";
 import { useRouter } from "next/navigation";
 import { BtnLoader } from "@/components/element/Loader";
 import { showToast } from "@/store/useToastSlice";
+import { useApolloClient } from "@apollo/client";
 
 const Stage2 = () => {
   const { formData, setFormData } = useBlogFormStore();
@@ -28,7 +29,7 @@ const Stage2 = () => {
   const router = useRouter();
   const editorRef = useRef<TextEditorRef>(null);
   const editRef = useRef<TextEditorRef>(null);
-
+  const client = useApolloClient();
   const contentMutation = useMutation({
     mutationFn: (content: {
       content: string;
@@ -59,6 +60,10 @@ const Stage2 = () => {
           is_multiline: false,
         });
       }
+
+      await client.refetchQueries({
+        include: ["getAllBlogs"], 
+      });
       localStorage.clear();
       router.push("/admin/blogs");
       showToast("بلاگ با موفقیت ایجاد شد", "success");

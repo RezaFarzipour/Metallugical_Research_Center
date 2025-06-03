@@ -83,7 +83,6 @@ export const columns = [
 export const blogColumns = [
   { name: "#", uid: "_id" },
   { name: "عنوان", uid: "name" },
-  { name: "عکس ها", uid: "image" },
   { name: "اسلاگ ", uid: "slug" },
   { name: "تگ ها", uid: "tags" },
   { name: "عملیات", uid: "actions" },
