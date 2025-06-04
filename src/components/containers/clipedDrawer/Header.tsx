@@ -19,7 +19,6 @@ function Header({ data, isPending }: HeaderPropsType) {
   const fullName = data ? `${data.first_name} ${data.last_name}` : "";
   const { expiredReserveDates } = useExpiredReserveStore();
 
-
   return (
     <header
       className={`bg-secondary-0 ${isPending ? "bg-opacity-30 blur-md" : ""}`}
@@ -49,9 +48,9 @@ function Header({ data, isPending }: HeaderPropsType) {
         <div className="flex items-center gap-3 text-secondary-700">
           <Link href="/admin/warning">
             <Badge
-              color="danger"
+              color="warning"
               content={expiredReserveDates.length}
-              shape="rectangle"
+              shape="circle"
             >
               <IoNotificationsCircleOutline
                 className="fill-current"
