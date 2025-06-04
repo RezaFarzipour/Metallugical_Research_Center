@@ -51,7 +51,11 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
           />
         </aside>
         <div className="col-span-12 lg:col-span-9 xl:col-span-10 h-screen flex flex-col">
-          <Header data={userData} isPending={isPending || isLoading} />
+          <Header
+            data={userData}
+            isPending={isPending || isLoading}
+            warningBadge={true}
+          />
           <main className="bg-default-50 rounded-tr-xl p-4 md:p-6 lg:p-10 flex-1 overflow-y-auto">
             <div className="xl:max-w-screen-xl">{children}</div>
           </main>

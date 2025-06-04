@@ -13,9 +13,10 @@ import useExpiredReserveStore from "@/store/useExpiredReserveStore";
 type HeaderPropsType = {
   isPending: boolean;
   data: User;
+  warningBadge: boolean;
 };
 
-function Header({ data, isPending }: HeaderPropsType) {
+function Header({ data, isPending, warningBadge }: HeaderPropsType) {
   const fullName = data ? `${data.first_name} ${data.last_name}` : "";
   const { expiredReserveDates } = useExpiredReserveStore();
 
@@ -46,18 +47,20 @@ function Header({ data, isPending }: HeaderPropsType) {
         </div>
 
         <div className="flex items-center gap-3 text-secondary-700">
-          <Link href="/admin/warning">
-            <Badge
-              color="warning"
-              content={expiredReserveDates.length}
-              shape="circle"
-            >
-              <IoNotificationsCircleOutline
-                className="fill-current"
-                size={30}
-              />
-            </Badge>
-          </Link>
+          {warningBadge && (
+            <Link href="/admin/warning">
+              <Badge
+                color="warning"
+                content={expiredReserveDates.length}
+                shape="circle"
+              >
+                <IoNotificationsCircleOutline
+                  className="fill-current"
+                  size={30}
+                />
+              </Badge>
+            </Link>
+          )}
 
           <div className="flex items-center gap-x-3 text-secondary-600 font-bold">
             {today}
