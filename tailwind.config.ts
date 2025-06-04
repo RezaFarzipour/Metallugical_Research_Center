@@ -8,7 +8,7 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/constants/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@heroui/theme/dist/components/(accordion|breadcrumbs|button|card|divider|drawer|dropdown|image|input|input-otp|navbar|pagination|radio|select|table|ripple|spinner|modal|menu|popover|form|listbox|scroll-shadow|checkbox|spacer).js"
+    "./node_modules/@heroui/theme/dist/components/(accordion|badge|breadcrumbs|button|card|divider|drawer|dropdown|image|input|input-otp|navbar|pagination|radio|select|table|ripple|spinner|modal|menu|popover|form|listbox|scroll-shadow|checkbox|spacer).js"
   ],
   darkMode: 'class',
   theme: {
