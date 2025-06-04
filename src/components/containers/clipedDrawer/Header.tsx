@@ -39,7 +39,7 @@ function Header({ data, isPending }: HeaderPropsType) {
             </span>
           </div>
         </div>
-
+              
         <div className="flex items-center gap-x-3 text-secondary-600 font-bold">
           {today}
         </div>
