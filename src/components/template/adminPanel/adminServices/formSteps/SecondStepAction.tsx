@@ -19,7 +19,6 @@ import { BtnLoader } from "@/components/element/Loader";
 import { useSeCondStepAction } from "../hooks/useSecondStepAction";
 import { serviceDataEditType } from "@/types";
 
-
 interface ServiceImage {
   id: string | number;
   image: string;

@@ -86,6 +86,7 @@ export const createServiceDateRange = async ({data}:{
     service: string;
   };
 }) => {
+  console.log("dataaaaa",data)
   const response = await http.post(`service/reserve-date/admin/`, data);
   return response.data;
 };

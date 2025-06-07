@@ -96,7 +96,6 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
 
     try {
       const { id } = await createServiceReserve();
-
       await patchReserve({
         reserve_from: startDate,
         reserve_to: endDate,

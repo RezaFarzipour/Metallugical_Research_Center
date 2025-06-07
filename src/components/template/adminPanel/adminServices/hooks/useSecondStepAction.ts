@@ -34,6 +34,8 @@ export function useSeCondStepAction({
 }: UseSecondStepLogicProps) {
   const [existingImageUrls, setExistingImageUrls] = useState<string[]>([]);
   const [newImageUrls, setNewImageUrls] = useState<string[]>([]);
+  const [selectedRange, setSelectedRange] = useState<{ from: Date; to: Date } | null>(null);
+
 
   const { createServiceImage, isCreatingImage } = useCreateServiceImages();
   const { editServiceImage, isEditingImage } = useEditServiceImage();
@@ -100,23 +102,60 @@ export function useSeCondStepAction({
   };
 
   // ارسال تصاویر جدید
+  // const onSubmit = async (data: CreaateServiceImagesFormData) => {
+  //   if (!serviceIdNumber) {
+  //     showToast("شناسه سرویس موجود نیست.", "error");
+  //     return;
+  //   }
+
+  //   if (!data.images || data.images.length === 0) {
+  //     showToast("لطفا حداقل یک عکس انتخاب کنید", "error");
+  //     return;
+  //   }
+
+  //   try {
+  //     for (const file of data.images) {
+  //       const formData = new FormData();
+  //       formData.append("image", file);
+  //       formData.append("service", String(serviceIdNumber));
+
+  //       await createServiceImage(formData, {
+  //         onSuccess: () => {
+  //           showToast("عکس جدید با موفقیت اضافه شد", "success");
+  //         },
+  //         onError: () => {
+  //           showToast("خطا در اضافه کردن عکس", "error");
+  //         },
+  //       });
+  //     }
+
+  //     reset();
+  //     setNewImageUrls([]);
+  //     setStep?.(1);
+  //     router.push("/admin/services");
+  //   } catch {
+  //     showToast("خطا در ارسال عکس‌ها", "error");
+  //   }
+  // };
+
   const onSubmit = async (data: CreaateServiceImagesFormData) => {
     if (!serviceIdNumber) {
       showToast("شناسه سرویس موجود نیست.", "error");
       return;
     }
-
+  
     if (!data.images || data.images.length === 0) {
       showToast("لطفا حداقل یک عکس انتخاب کنید", "error");
       return;
     }
-
+  
     try {
+      // ارسال عکس‌ها
       for (const file of data.images) {
         const formData = new FormData();
         formData.append("image", file);
         formData.append("service", String(serviceIdNumber));
-
+  
         await createServiceImage(formData, {
           onSuccess: () => {
             showToast("عکس جدید با موفقیت اضافه شد", "success");
@@ -126,54 +165,61 @@ export function useSeCondStepAction({
           },
         });
       }
-
+  
+      // اگر بازه تاریخ انتخاب شده بود، آن را بفرست
+      if (selectedRange) {
+        const reservedFrom = selectedRange.from.toISOString().split("T")[0];
+        const reservedTo = selectedRange.to.toISOString().split("T")[0];
+        const dateData = {
+          reserved_from: reservedFrom,
+          reserved_to: reservedTo,
+          service: serviceIdNumber,
+        };
+  
+        const RangeId = serviceRangeDate?.["service-reserve_date"]?.[0]?.id;
+  
+        if (RangeId) {
+          await editServiceDateRange(
+            { id: String(RangeId), data: dateData },
+            {
+              onSuccess: () => {
+                showToast("بازه‌ی زمانی با موفقیت ویرایش شد", "success");
+              },
+              onError: () => {
+                showToast("خطا در ویرایش بازه زمانی", "error");
+              },
+            }
+          );
+        } else {
+          await createDateRange(
+            { data: dateData },
+            {
+              onSuccess: () => {
+                showToast("بازه زمانی با موفقیت اضافه شد", "success");
+              },
+              onError: () => {
+                showToast("خطا در ذخیره بازه زمانی", "error");
+              },
+            }
+          );
+        }
+      }
+  
       reset();
       setNewImageUrls([]);
       setStep?.(1);
       router.push("/admin/services");
+  
     } catch {
-      showToast("خطا در ارسال عکس‌ها", "error");
+      showToast("خطا در ارسال اطلاعات", "error");
     }
   };
+  
 
   const handleRangeSelect = (from: Date, to: Date) => {
-    if (!serviceIdNumber) {
-      showToast("شناسه سرویس موجود نیست.", "error");
-      return;
-    }
 
-    const reservedFrom = from.toISOString().split("T")[0]; // YYYY-MM-DD
-    const reservedTo = to.toISOString().split("T")[0];
-
-    const data = {
-      reserved_from: reservedFrom,
-      reserved_to: reservedTo,
-      service: serviceIdNumber,
-    };
-
-    const RangeId = serviceRangeDate?.[0]?.id;
-    if (RangeId) {
-      editServiceDateRange(
-        { id: String(RangeId), data },
-        {
-          onSuccess: () => {
-            showToast("بازه‌ی زمانی با موفقیت ویرایش شد", "success");
-          },
-          onError: () => {
-            showToast("خطا در ویرایش بازه زمانی", "error");
-          },
-        }
-      );
-    } else {
-      createDateRange(data, {
-        onSuccess: () => {
-          showToast("بازه زمانی با موفقیت اضافه شد", "success");
-        },
-        onError: () => {
-          showToast("خطا در ذخیره بازه زمانی", "error");
-        },
-      });
-    }
+    setSelectedRange({ from, to });
+    
   };
 
   return {
