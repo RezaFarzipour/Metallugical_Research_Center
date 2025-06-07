@@ -6,7 +6,7 @@ import TextEditor, {
 } from "@/components/module/textEditor/TextEditor";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { Button } from "@heroui/button";
-import { EditorItem } from "@/types";
+import { BlogData, EditorItem } from "@/types";
 import {
   createNewBlogContent,
   createNewBlogImageContent,
@@ -18,13 +18,16 @@ import { BtnLoader } from "@/components/element/Loader";
 import { showToast } from "@/store/useToastSlice";
 import { useApolloClient } from "@apollo/client";
 
-const Stage2 = () => {
+const Stage2 = ({ blogData }: { blogData?: BlogData }) => {
   const { formData, setFormData } = useBlogFormStore();
   const items = formData.items || [];
   const [editingItem, setEditingItem] = useState<EditorItem | null>(null);
   const [editingHtml, setEditingHtml] = useState("");
   const [isModalOpenCreateText, setIsModalOpenCreateText] = useState(false);
   const [isModalOpenEditText, setIsModalOpenEditText] = useState(false);
+
+console.log("blogData",blogData)
+  console.log("items",items)
 
   const router = useRouter();
   const editorRef = useRef<TextEditorRef>(null);

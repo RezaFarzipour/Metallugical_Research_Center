@@ -37,6 +37,9 @@ export function useEditBlog() {
         queryKey: ["getAll-blogsCategory"],
       });
     },
+    onError:(err)=>{
+      console.log("edit blog error",err)
+    }
 
   });
 

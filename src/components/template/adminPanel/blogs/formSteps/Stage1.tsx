@@ -21,15 +21,44 @@ import RHFTagInput from "@/components/element/RHFTagInput";
 import { BtnLoader } from "@/components/element/Loader";
 import PrimaryButton from "@/components/element/Button";
 import { Button } from "@heroui/button";
+import { BlogData } from "@/types";
+import { useEditBlog } from "../hooks/useEditCategory";
 
-export default function Stage1() {
-  const { setFormData, setStep } = useBlogFormStore();
+interface BlogesActionProps {
+  blogData?: Partial<BlogData>;
+  setStep:(step:number)=>void
+}
+
+const Stage1: React.FC<BlogesActionProps> = ({ blogData = {} ,setStep}) => {
+  const { setFormData } = useBlogFormStore();
   const [coverImageUrl, setCoverImageUrl] = useState<string | null>(null);
 
-  const { data = [], isPending } = useQuery({
+  const { editBlog } = useEditBlog();
+
+  const { data = [] } = useQuery({
     queryKey: ["getAll-blogsCategory"],
     queryFn: getAllCategoryAdmin,
   });
+
+  const { title, cover_image, category_list, tags, slug } = blogData;
+
+  //turn json category_list to Array
+  const parsedCategoryList: string[] = (() => {
+    try {
+      if (
+        Array.isArray(category_list) &&
+        typeof category_list[0] === "string"
+      ) {
+        return JSON.parse(category_list[0]);
+      }
+      return category_list|| [];
+    } catch (error) {
+      console.error("خطا در تبدیل category_list:", error);
+      return [];
+    }
+  })();
+
+
 
   // تبدیل داده‌ها به گزینه‌های قابل استفاده در RHFSelect
   const categoryOptions = data.map((category: any) => ({
@@ -37,24 +66,32 @@ export default function Stage1() {
     label: category.category_name,
   }));
 
+  console.log("ddd",data)
+
   const {
     register,
     handleSubmit,
     control,
+    reset,
     setValue,
     formState: { errors },
   } = useForm<BlogStageOneFormData>({
     resolver: zodResolver(blogStageOneSchema),
     mode: "onTouched",
     defaultValues: {
-      title: "",
+      title: title || "",
       cover_image: null,
-      category_list: [],
-      tags: [],
-      slug: "",
+      category_list: parsedCategoryList || [],
+      tags: tags || [],
+      slug: slug || "",
     },
   });
 
+  console.log("categ",(category_list))
+
+  const { id: editId } = blogData;
+
+  const isEditSession = Boolean(editId);
   const { isPendingBlog, createBlog } = useCreateBlog();
 
   // مدیریت URL.createObjectURL
@@ -68,7 +105,6 @@ export default function Stage1() {
 
   const onSubmit = (data: BlogStageOneFormData) => {
     const formData = new FormData();
-
     formData.append("title", data.title);
     formData.append("slug", data.slug);
     formData.append("category_list", JSON.stringify(data.category_list));
@@ -76,34 +112,49 @@ export default function Stage1() {
     if (data.cover_image instanceof File) {
       formData.append("cover_image", data.cover_image);
     }
-
-    createBlog(formData, {
-      onSuccess: (responseData) => {
-        // فرض بر این است که responseData همان شیٔی است که حاوی id است
-        showToast("بلاگ با موفقیت ساخته شد", "success");
-        const dataToSave = {
-          ...data,
-          cover_image: coverImageUrl,
-          id: responseData.id,
-        };
-        setFormData(dataToSave);
-        setStep(2);
-      },
-      onError: () => {
-        showToast("ساخت بلاگ با خطا مواجه شد", "error");
-      },
-    });
+    if (isEditSession && editId) {
+      editBlog(
+        { id: String(editId), data: formData },
+        {
+          onSuccess: () => {
+            showToast("سرویس با موفقیت ویرایش شد", "success");
+            setStep(2);
+            reset();
+          },
+          onError: () => {
+            showToast("ویرایش سرویس با خطا مواجه شد", "error");
+          },
+        }
+      );
+    } else {
+      createBlog(formData, {
+        onSuccess: (responseData) => {
+          // فرض بر این است که responseData همان شیٔی است که حاوی id است
+          showToast("بلاگ با موفقیت ساخته شد", "success");
+          const dataToSave = {
+            ...data,
+            cover_image: coverImageUrl,
+            id: responseData.id,
+          };
+          setFormData(dataToSave);
+          setStep(2);
+        },
+        onError: () => {
+          showToast("ساخت بلاگ با خطا مواجه شد", "error");
+        },
+      });
+    }
   };
 
   return (
     <div>
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <BreadcrumbsElement
           item1="بلاگ ها"
           item2="ساخت بلاگ"
           panelHref="/admin/blogs"
         />
-      </div>
+      </div> */}
       <div className="flex items-center justify-center text-default-700">
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -199,4 +250,6 @@ export default function Stage1() {
       </div>
     </div>
   );
-}
+};
+
+export default Stage1;

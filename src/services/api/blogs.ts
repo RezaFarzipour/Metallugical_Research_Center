@@ -110,6 +110,7 @@ export const editBlogById = async ({
   id: string;
   data: FormData;
 }) => {
+
   const response = await http.patch(`blog/b/admin/${id}/`, data);
   return response.data;
 };

@@ -4,7 +4,7 @@ import { showToast } from "@/store/useToastSlice";
 import { BlogData } from "@/types";
 import { Button } from "@heroui/button";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { useDeleteBlog } from "./hooks/useDeleteBlog";
 import { useApolloClient } from "@apollo/client";
@@ -56,6 +56,10 @@ const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
     setIsModalOpen(false);
   };
 
+  const handleEdit = useCallback(() => {
+    router.push(`/admin/blogs/${dataByID.id}/edit`);
+  }, [dataByID.id, router]);
+
   const BASE_URL =
     process.env.NEXT_PUBLIC_IMAGE_BASE_URL ?? "http://localhost:8000";
 
@@ -91,6 +95,7 @@ const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
   {/* دکمه‌ها */}
   <div className="flex gap-3 md:gap-4 flex-wrap justify-start md:justify-end">
     <Button
+    onPress={handleEdit}
       className="flex items-center gap-2 px-4 py-2 text-white bg-gradient-to-r from-secondary-500 to-secondary-700 hover:bg-secondary-800 transition"
     >
       <FiEdit size={20} />
