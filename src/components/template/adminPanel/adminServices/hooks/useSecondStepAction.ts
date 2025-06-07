@@ -101,42 +101,6 @@ export function useSeCondStepAction({
     }
   };
 
-  // ارسال تصاویر جدید
-  // const onSubmit = async (data: CreaateServiceImagesFormData) => {
-  //   if (!serviceIdNumber) {
-  //     showToast("شناسه سرویس موجود نیست.", "error");
-  //     return;
-  //   }
-
-  //   if (!data.images || data.images.length === 0) {
-  //     showToast("لطفا حداقل یک عکس انتخاب کنید", "error");
-  //     return;
-  //   }
-
-  //   try {
-  //     for (const file of data.images) {
-  //       const formData = new FormData();
-  //       formData.append("image", file);
-  //       formData.append("service", String(serviceIdNumber));
-
-  //       await createServiceImage(formData, {
-  //         onSuccess: () => {
-  //           showToast("عکس جدید با موفقیت اضافه شد", "success");
-  //         },
-  //         onError: () => {
-  //           showToast("خطا در اضافه کردن عکس", "error");
-  //         },
-  //       });
-  //     }
-
-  //     reset();
-  //     setNewImageUrls([]);
-  //     setStep?.(1);
-  //     router.push("/admin/services");
-  //   } catch {
-  //     showToast("خطا در ارسال عکس‌ها", "error");
-  //   }
-  // };
 
   const onSubmit = async (data: CreaateServiceImagesFormData) => {
     if (!serviceIdNumber) {
@@ -207,7 +171,6 @@ export function useSeCondStepAction({
   
       reset();
       setNewImageUrls([]);
-      setStep?.(1);
       router.push("/admin/services");
   
     } catch {

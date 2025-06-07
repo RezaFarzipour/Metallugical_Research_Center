@@ -77,6 +77,7 @@ const CardContentBox: React.FC<{
 
 export const CardContent: React.FC<CardContentProps> = ({
   id,
+  service_id,
   reserve_date,
   price,
   isMoreDetails,
@@ -110,8 +111,11 @@ export const CardContent: React.FC<CardContentProps> = ({
     }
   };
 
-  const MoreDetailsHref = getDetailsHref(isMoreDetails!, id!, slug);
-
+  const MoreDetailsHref = getDetailsHref(
+    isMoreDetails!,
+    service_id || id,
+    slug
+  );
   const cardStyles = {
     box: cn(
       "bg-gray-50 p-4 rounded-lg shadow-lg flex gap-1",

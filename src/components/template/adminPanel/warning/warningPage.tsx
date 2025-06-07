@@ -6,6 +6,7 @@ import useExpiredReserveStore from "@/store/useExpiredReserveStore";
 
 const WarningPage: React.FC = () => {
   const { expiredReserveDates } = useExpiredReserveStore();
+  console.log(expiredReserveDates, "expiredReserveDates");
 
   const isEmpty = !expiredReserveDates || expiredReserveDates.length === 0;
 
