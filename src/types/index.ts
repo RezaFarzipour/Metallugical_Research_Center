@@ -68,7 +68,7 @@ export interface UserProfileResponse {
   };
 }
 
-export type serviceDataEditType= {
+export type serviceDataEditType = {
   id: number;
   service_name: string;
   description: string;
@@ -193,4 +193,48 @@ export interface BlogData {
   category_list: string[]; // مثل: ['["68332b9691f173ce1584e0f9"]']
   "blog-content": BlogContent[];
   "blog-image": BlogImage[];
+}
+
+
+// تایپ برای تصاویر سرویس
+interface ServiceImage {
+  id: number;
+  image: string;
+  service: number;
+}
+
+// تایپ برای تاریخ‌های رزرو
+interface ServiceReserveDate {
+  id: number;
+  reserved_from: string;
+  reserved_to: string;
+  service: number;
+}
+
+// تایپ برای سرویس
+export interface Service {
+  id: number;
+  service_name: string;
+  description: string;
+  price: number;
+  cover_image: string;
+  'service-images': ServiceImage[];
+  'service-reserve_date': ServiceReserveDate[];
+}
+
+// تایپ برای آیتم‌های منقضی شده
+export interface ExpiredReserve {
+  id: number;
+  service_id: number;
+  service_name: string;
+  cover_image: string;
+  price: number;
+  description: string;
+
+}
+
+// تایپ برای استور Zustand
+export interface ExpiredReserveStore {
+  expiredReserveDates: ExpiredReserve[];
+  setExpiredReserveDates: (data: ExpiredReserve[]) => void;
 }

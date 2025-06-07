@@ -71,7 +71,6 @@ const ReservationTemplate = () => {
   }
 
   if (isPending) return <BtnLoader />;
-  console.log("stage", stage);
 
   // Define separate steps for Admin and Customer
   const adminSteps = [

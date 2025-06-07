@@ -10,6 +10,7 @@ interface EmptyProps {
   spanValue: string;
   hidden?: boolean; // اگر false باشه، دکمه مخفی میشه
   btn?: boolean;
+  pVisiable?: boolean;
 }
 
 const Empty = ({
@@ -18,6 +19,7 @@ const Empty = ({
   spanValue,
   hidden = true,
   btn = true,
+  pVisiable = true,
 }: EmptyProps) => {
   return (
     <div className="container xl:max-w-screen-xl px-4 flex justify-center items-center">
@@ -34,7 +36,11 @@ const Empty = ({
         <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-secondary-700">
           هنوز {spanValue} برای نمایش وجود ندارد!
         </h1>
-        <p className="text-xs sm:text-sm text-secondary-500">
+        <p
+          className={`${
+            !pVisiable ? "hidden" : "flex"
+          } text-xs sm:text-sm text-secondary-500`}
+        >
           به نظر می‌رسد که هنوز {spanValue} ثبت نکرده‌اید یا {spanValue} برای
           نمایش در دسترس نیست.
         </p>

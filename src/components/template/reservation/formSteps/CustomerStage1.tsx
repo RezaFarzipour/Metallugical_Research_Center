@@ -107,7 +107,7 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
   if (isAllServicesPending) return <BtnLoader />;
   const isConfirmDisabled = !startDate || !endDate;
   return (
-    <div className="w-full container rounded-xl h-auto bg-white p-4 [box-shadow:rgba(100,100,111,0.2)_0px_7px_29px_0px]">
+    <div className="w-full container rounded-xl h-auto bg-white p-4 ">
       <p className="font-bold text-md my-3">انتخاب سرویس</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
