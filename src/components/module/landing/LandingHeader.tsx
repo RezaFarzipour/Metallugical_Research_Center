@@ -4,7 +4,7 @@ import React from "react";
 const LandingHeader = () => {
   return (
     <section className=" relative w-full h-screen flex  justify-start overflow-hidden ">
-      <div className="relative w-[100%] max-w-[800px] h-[150vh] md:h-[2300px] perspective-custom mt-[-70%] md:mt-[-80%] mr-[-20%] md:mr-[-15%] lg:mr-[-10%] xl:mr-[-5%]">
+      <div className="relative w-[100%] max-w-[800px] h-[150vh] md:h-[2300px] 2xl:h-[2600px] perspective-custom mt-[-70%] md:mt-[-80%] mr-[-20%] md:mr-[-15%] lg:mr-[-10%] xl:mr-[-7%]">
         <div className="w-full h-full slider relative" />
       </div>
 
