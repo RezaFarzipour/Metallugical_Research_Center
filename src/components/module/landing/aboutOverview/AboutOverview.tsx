@@ -31,7 +31,6 @@ const AboutOverview: React.FC = () => {
       </div>
 
       {/* Right Side: Text */}
-
       <AboutText />
     </motion.div>
   );

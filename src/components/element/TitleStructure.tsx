@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { fadeInSlide } from "@/utils/motion";
-import { cn } from "@/utils/cn"; // فرض بر اینکه اینجا تابع cn هست
+import { cn } from "@/utils/cn";
 
 type Props = {
   children: React.ReactNode;

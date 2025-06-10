@@ -1,6 +1,5 @@
 import RHFInput from "@/components/element/RHFInput";
 import { BlogStageOneFormData } from "@/schemas/blogStageOneSchema";
-import { CreateServiceFormData } from "@/schemas/createServiceSchema";
 import React from "react";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
 
@@ -41,7 +40,7 @@ const BlogDetailsForm: React.FC<ServiceDetailsFormProps> = ({
         dir="rtl"
         name="slug"
       />
-       <RHFInput<BlogStageOneFormData>
+      <RHFInput<BlogStageOneFormData>
         register={register}
         errors={errors}
         label="اسلاک"

@@ -1,9 +1,7 @@
 "use client";
 import CarGallery from "@/components/module/ImageGallery";
-import Image from "next/image";
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import CustomeDateRangePicker from "../../module/customeDataPicker/CustomeCallender";
 import { useRouter } from "next/navigation";
 import { useGetUser } from "@/hooks/useAuth";
 import {
@@ -11,10 +9,6 @@ import {
   postReservedService,
 } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
-import { BtnLoader } from "../../element/Loader";
-import { Button } from "@heroui/button";
-import { cn } from "@/utils/cn";
-import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 import ServiceDetailRightSection from "@/components/module/serviceModule/ServiceDetailRightSection";
 import ServiceDetailLeftSection from "@/components/module/serviceModule/ServiceDetailLeftSection";
 
