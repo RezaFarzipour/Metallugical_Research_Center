@@ -9,8 +9,7 @@ export default function AboutUsLayout({
   return (
     <>
       <Layout>
-         <HeaderImage
-          
+         <HeaderImage          
           breadcrumbItem1=" درباره ما"
           panelHref="/"
         /> 
