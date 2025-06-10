@@ -15,7 +15,7 @@ export const NavBarRight = ({ isMenuOpen }: NavbarLeftProps) => (
     />
     <NavbarBrand>
       <Logo />
-      <NavbarContent className="hidden sm:flex gap-4 pr-6">
+      <NavbarContent className="hidden sm:flex gap-4 pr-12 lg:pr-6">
         {siteConfig.navItems.map((navLink) => {
           return (
             <li key={navLink.id}>
