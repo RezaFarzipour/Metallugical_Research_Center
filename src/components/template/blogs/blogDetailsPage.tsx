@@ -31,7 +31,7 @@ const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
         <div className="flex pt-5 items-center justify-center space-x-4 rtl:space-x-reverse">
           <div className="relative w-16 h-16">
             <Image
-              className="rounded-full object-cover"
+              className="rounded-md object-cover"
               alt={dataByID.cover_image}
               fill
               src={getValidImageSrc(dataByID.cover_image)}
@@ -48,7 +48,7 @@ const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
         </div>
       </div>
 
-      <div className="max-w-screen-xl my-20 px-6 py-12 shadow-[0_0_20px_rgba(55,124,251,0.1),0_0_40px_rgba(55,124,251,0.05)] min-h-screen flex justify-center items-center mx-auto">
+      <div className="max-w-screen-xl my-12 px-6 py-12 shadow-[0_0_20px_rgba(55,124,251,0.1),0_0_40px_rgba(55,124,251,0.021)] min-h-screen flex justify-center items-center mx-auto">
         <div
           className="blogUl__disc blogUl__decimal"
           dangerouslySetInnerHTML={{ __html: contentRender }}
