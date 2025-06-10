@@ -2,7 +2,6 @@
 import { TiHomeOutline } from "react-icons/ti";
 import {
   contactInfoType,
-
   FAQItem,
   FormInputConfig,
   latestArticleType,
@@ -26,6 +25,17 @@ import { FiShoppingCart } from "react-icons/fi";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { IconType } from "react-icons";
 import { GrAppsRounded } from "react-icons/gr";
+import {
+  FaHeartbeat,
+  FaCalendarCheck,
+  FaShieldAlt,
+  FaSmile,
+  FaVial,
+  FaFlask,
+  FaBaby,
+  FaDna,
+  FaUserMd,
+} from "react-icons/fa";
 
 // ... existing code ...
 export const userSidebarlinks: SidebarLink[] = [
@@ -160,15 +170,6 @@ export const Authsteps = [
   { id: 3, label: " ثبت اطلاعات" },
 ];
 
-// export const reserveStep = [
-//   { id: 1, label: "انتخاب سرویس" },
-//   { id: 2, label: "تایید ادمین" },
-
-//   { id: 3, label: "پرداخت" },
-//   { id: 4, label: "تایید پرداخت" },
-//   { id: 5, label: "تایید نهایی" },
-//   { id: 6, label: "اتمام رزرو" },
-// ];
 export const reserveStep = {
   admin: [
     { id: 1, label: "تایید رزرو سرویس" },
@@ -415,4 +416,71 @@ export const dropDownItems = (userRole: string): dropDownItemType[] => {
   ];
 };
 
-// TextEditor Data:
+// constants/aboutUsData.ts
+
+export type AboutUsItemType = {
+  icon: React.ElementType;
+  title: string;
+  desc: string;
+};
+
+export const services: AboutUsItemType[] = [
+  {
+    icon: FaFlask,
+    title: "تحلیل فازی (XRD)",
+    desc: "شناسایی فازهای بلوری مواد با دستگاه X-Ray Diffraction (XRD) Inel Equinox.",
+  },
+  {
+    icon: FaVial,
+    title: "تعیین اندازه ذرات (LPSA)",
+    desc: "آنالیز اندازه ذرات به کمک دستگاه Particle Size Analyzer با لیزر.",
+  },
+  {
+    icon: FaHeartbeat,
+    title: "سختی‌سنجی مواد",
+    desc: "انجام تست سختی Vickers و Brinell با دستگاه‌های دقیق آزمایشگاهی.",
+  },
+  {
+    icon: FaDna,
+    title: "میکروسکوپ نوری و الکترونی",
+    desc: "مشاهده ریزساختار مواد با استفاده از میکروسکوپ‌های نوری و الکترونی.",
+  },
+  {
+    icon: FaBaby,
+    title: "آزمون‌های حرارتی (TGA/DSC)",
+    desc: "بررسی واکنش‌های حرارتی مواد با دستگاه TGA-DSC.",
+  },
+  {
+    icon: FaUserMd,
+    title: "مشاوره تخصصی مواد",
+    desc: "ارائه مشاوره توسط اساتید و متخصصان در زمینه متالوژی و علوم مواد.",
+  },
+];
+
+export const whyUsItems: AboutUsItemType[] = [
+  {
+    icon: FaFlask,
+    title: "تجهیزات مدرن و دقیق",
+    desc: "ما با بهره‌گیری از دستگاه‌هایی مانند XRD، SEM، DSC و ...، اندازه‌گیری‌های دقیق مواد را امکان‌پذیر می‌کنیم.",
+  },
+  {
+    icon: FaVial,
+    title: "خدمات تخصصی برای تحقیق و صنعت",
+    desc: "هماهنگ با نیازهای پژوهشگران و واحدهای صنعتی، خدمات آزمایشگاهی سفارشی ارائه می‌دهیم.",
+  },
+  {
+    icon: FaCalendarCheck,
+    title: "نوبت‌دهی آسان و برنامه‌ریزی شده",
+    desc: "ثبت سفارش و برنامه‌ریزی زمان استفاده از دستگاه‌ها به صورت ساده و بدون تاخیر.",
+  },
+  {
+    icon: FaShieldAlt,
+    title: "استانداردهای بالای آزمایشگاهی",
+    desc: "کلیه تست‌ها طبق استانداردهای داخلی و بین‌المللی انجام می‌شوند.",
+  },
+  {
+    icon: FaSmile,
+    title: "کادر مجرب و حرفه‌ای",
+    desc: "همراهی با کارشناسان مجرب در زمینه مواد و متالوژی، تضمین کیفیت خدمات ما است.",
+  },
+];
