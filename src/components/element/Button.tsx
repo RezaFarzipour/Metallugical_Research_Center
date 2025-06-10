@@ -48,7 +48,7 @@ const Button = ({
       {...props}
       onClick={() => router && router.push(path)}
     >
-      <span className="relative z-10">{children}</span>
+      <span className="relative text-xs md:text-lg z-10">{children}</span>
     </button>
   );
 };
