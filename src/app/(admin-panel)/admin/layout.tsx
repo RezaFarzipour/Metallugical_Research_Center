@@ -7,9 +7,10 @@ import Header from "@/components/containers/clipedDrawer/Header";
 import SideBar from "@/components/containers/clipedDrawer/SideBar";
 import { adminSidebarlinks } from "@/constants/data";
 import { useGetUser } from "@/hooks/useAuth";
+import { Service } from "@/types";
 
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
-  const { data: servicesData, isLoading } = useQuery({
+  const { data: servicesData, isLoading } = useQuery<Service[]>({
     queryKey: ["getAll-services"],
     queryFn: getAllServiceAdmin,
     staleTime: 5 * 60 * 1000,
@@ -20,11 +21,16 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
   React.useEffect(() => {
     if (!servicesData || !Array.isArray(servicesData)) return;
 
-    const today = new Date();
-
     const expired = servicesData.flatMap((service) =>
       (service["service-reserve_date"] || [])
-        .filter((res) => new Date(res.reserved_to) < today)
+        .filter((res) => {
+          const fromDate = new Date(res.reserved_from);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0); // حذف ساعت برای دقت بیشتر
+
+          // اگر بازه‌ی رزرو با امروز هم‌پوشانی داشته باشه یا گذشته باشه
+          return fromDate < today;
+        })
         .map((res) => ({
           id: res.id,
           service_id: service.id,
