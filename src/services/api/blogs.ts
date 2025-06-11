@@ -16,22 +16,20 @@ export const deleteBlogCategory = async ({ id }: { id: string }) => {
 };
 
 export const editBlogCategoryById = async ({
-    id,
-    category_name,
-    slug
+  id,
+  category_name,
+  slug,
 }: {
-    id: string;
-    category_name: string,
-    slug: string
+  id: string;
+  category_name: string;
+  slug: string;
 }) => {
-    const response = await http.patch(`blog/category/admin/${id}/`, {
-        category_name,
-        slug
-    });
+  const response = await http.patch(`blog/category/admin/${id}/`, {
+    category_name,
+    slug,
+  });
 
-
-
-    return response.data;
+  return response.data;
 };
 
 export const getBlogCategoryById = async (
@@ -52,44 +50,37 @@ export const getAllBlogsAdmin = async (options) => {
 };
 
 export const getBlogContentById = async (
-    id: string,
-    options?: AxiosRequestConfig
+  id: string,
+  options?: AxiosRequestConfig
 ) => {
-    try {
-        const response = await http.get(`blog/content/admin/${id}/`, options);
-        return response.data;
-    } catch (error) {
-        console.log("error", error);
-    }
+  try {
+    const response = await http.get(`blog/content/admin/${id}/`, options);
+    return response.data;
+  } catch (error) {
+    console.log("error", error);
+  }
 };
 
-
-export const getBlogById = async (
-    id: string,
-    options?: AxiosRequestConfig
-) => {
-    try {
-        const response = await http.get(`blog/b/admin/${id}/`, options);
-        return response.data;
-    } catch (error) {
-        console.log("error", error);
-    }
+export const getBlogById = async (id: string, options?: AxiosRequestConfig) => {
+  try {
+    const response = await http.get(`blog/b/admin/${id}/`, options);
+    return response.data;
+  } catch (error) {
+    console.log("error", error);
+  }
 };
-
 
 export const getBlogByIdAny = async (
   id: string,
   options?: AxiosRequestConfig
 ) => {
   try {
-      const response = await http.get(`blog/b/any/${id}/`, options);
-      return response.data;
+    const response = await http.get(`blog/b/any/${id}/`, options);
+    return response.data;
   } catch (error) {
-      console.log("error", error);
+    console.log("error", error);
   }
 };
-
-
 
 export const getBlogCover = async () => {
   const response = await http.get(`blog/b/admin/`);
@@ -110,8 +101,24 @@ export const editBlogById = async ({
   id: string;
   data: FormData;
 }) => {
-
   const response = await http.patch(`blog/b/admin/${id}/`, data);
+  return response.data;
+};
+
+export const editBlogContentById = async ({
+  id,
+  data,
+}: {
+  id: string;
+  data: {
+    content: string;
+    blog: string | number;
+    index: number;
+    class_name: string;
+    is_multiline: boolean;
+  };
+}) => {
+  const response = await http.patch(`blog/content/admin/${id}/`, data);
   return response.data;
 };
 
@@ -145,7 +152,6 @@ export const getBlogCategoryByIdCustomer = async (id: string | undefined) => {
 };
 
 export const deleteBlogById = async ({ id }: { id: string | number }) => {
-
   const response = await http.delete(`blog/b/admin/${id}/`);
   return response.data;
 };

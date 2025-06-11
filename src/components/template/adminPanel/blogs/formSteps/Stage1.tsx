@@ -23,15 +23,26 @@ import PrimaryButton from "@/components/element/Button";
 import { Button } from "@heroui/button";
 import { BlogData } from "@/types";
 import { useEditBlog } from "../hooks/useEditCategory";
+import { imageUrlToFile } from "@/utils/formatter/fileFormatter";
 
 interface BlogesActionProps {
   blogData?: Partial<BlogData>;
-  setStep:(step:number)=>void
+  setStep: (step: number) => void;
 }
 
-const Stage1: React.FC<BlogesActionProps> = ({ blogData = {} ,setStep}) => {
+const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
+  const {
+    title,
+    cover_image: prevCoverImageUrl,
+    category_list,
+    tags,
+    slug,
+  } = blogData;
+
   const { setFormData } = useBlogFormStore();
-  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(null);
+  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(
+    prevCoverImageUrl || null
+  );
 
   const { editBlog } = useEditBlog();
 
@@ -40,33 +51,11 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {} ,setStep}) => {
     queryFn: getAllCategoryAdmin,
   });
 
-  const { title, cover_image, category_list, tags, slug } = blogData;
-
-  //turn json category_list to Array
-  const parsedCategoryList: string[] = (() => {
-    try {
-      if (
-        Array.isArray(category_list) &&
-        typeof category_list[0] === "string"
-      ) {
-        return JSON.parse(category_list[0]);
-      }
-      return category_list|| [];
-    } catch (error) {
-      console.error("خطا در تبدیل category_list:", error);
-      return [];
-    }
-  })();
-
-
-
   // تبدیل داده‌ها به گزینه‌های قابل استفاده در RHFSelect
   const categoryOptions = data.map((category: any) => ({
     value: category.id,
     label: category.category_name,
   }));
-
-  console.log("ddd",data)
 
   const {
     register,
@@ -81,42 +70,59 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {} ,setStep}) => {
     defaultValues: {
       title: title || "",
       cover_image: null,
-      category_list: parsedCategoryList || [],
+      category_list: category_list || [],
       tags: tags || [],
       slug: slug || "",
     },
   });
 
-  console.log("categ",(category_list))
-
   const { id: editId } = blogData;
-
   const isEditSession = Boolean(editId);
   const { isPendingBlog, createBlog } = useCreateBlog();
 
   // مدیریت URL.createObjectURL
+  // useEffect(() => {
+  //   return () => {
+  //     if (coverImageUrl) {
+  //       URL.revokeObjectURL(coverImageUrl);
+  //     }
+  //   };
+  // }, [coverImageUrl]);
+
+
   useEffect(() => {
-    return () => {
-      if (coverImageUrl) {
-        URL.revokeObjectURL(coverImageUrl);
+    if (prevCoverImageUrl && isEditSession) {
+      async function fetchImage() {
+        const file = await imageUrlToFile(prevCoverImageUrl);
+        setValue("cover_image", file);
+        setCoverImageUrl(URL.createObjectURL(file));
       }
-    };
-  }, [coverImageUrl]);
+      fetchImage();
+    }
+  }, [editId, prevCoverImageUrl, isEditSession, setValue]);
 
   const onSubmit = (data: BlogStageOneFormData) => {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("slug", data.slug);
-    formData.append("category_list", JSON.stringify(data.category_list));
+    formData.append("category_list", data.category_list);
     formData.append("tags", JSON.stringify(data.tags));
     if (data.cover_image instanceof File) {
       formData.append("cover_image", data.cover_image);
     }
+
     if (isEditSession && editId) {
       editBlog(
-        { id: String(editId), data: formData },
+        { id: editId, data: formData },
         {
-          onSuccess: () => {
+          onSuccess: (responseData) => {
+            console.log("Response after create:", responseData);
+            const dataToSave = {
+              ...data,
+              cover_image: coverImageUrl,
+              id: responseData.id,
+            };
+            setFormData(dataToSave);
             showToast("سرویس با موفقیت ویرایش شد", "success");
             setStep(2);
             reset();

@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BlurModal from "@/components/element/BlurModal";
 import TextEditor, {
   TextEditorRef,
@@ -17,17 +17,35 @@ import { useRouter } from "next/navigation";
 import { BtnLoader } from "@/components/element/Loader";
 import { showToast } from "@/store/useToastSlice";
 import { useApolloClient } from "@apollo/client";
+import { useEditBlogContent } from "../hooks/useEditCategory";
 
 const Stage2 = ({ blogData }: { blogData?: BlogData }) => {
   const { formData, setFormData } = useBlogFormStore();
   const items = formData.items || [];
+
   const [editingItem, setEditingItem] = useState<EditorItem | null>(null);
   const [editingHtml, setEditingHtml] = useState("");
   const [isModalOpenCreateText, setIsModalOpenCreateText] = useState(false);
   const [isModalOpenEditText, setIsModalOpenEditText] = useState(false);
+  const { editBlogContent } = useEditBlogContent();
 
-console.log("blogData",blogData)
-  console.log("items",items)
+  useEffect(() => {
+    if (
+      blogData &&
+      blogData["blog-content"] &&
+      Array.isArray(blogData["blog-content"]) &&
+      blogData["blog-content"].length > 0 &&
+      (!formData.items || formData.items.length === 0)
+    ) {
+      const contentItems = blogData["blog-content"].map((item: any) => ({
+        id: item.id || Math.random().toString(36).substr(2, 9),
+        type: "text",
+        content: item.content,
+      }));
+
+      setFormData({ ...formData, items: contentItems });
+    }
+  }, [blogData]);
 
   const router = useRouter();
   const editorRef = useRef<TextEditorRef>(null);
@@ -49,23 +67,42 @@ console.log("blogData",blogData)
     },
   });
 
+  //submit blog edit and create
   const handleSubmit = async () => {
     const textItems = items.filter((item) => item.type === "text");
+
     if (!formData.id) return;
 
     try {
       for (const textItem of textItems) {
-        await contentMutation.mutateAsync({
-          content: textItem.content,
-          blog: formData.id,
-          index: 0,
-          class_name: "skin-type",
-          is_multiline: false,
-        });
+        const isEditing = blogData?.["blog-content"]?.some(
+          (serverItem: any) => serverItem.id === textItem.id
+        );
+
+        if (isEditing) {
+          await editBlogContent({
+            id: textItem.id,
+            data: {
+              content: textItem.content,
+              blog: formData.id,
+              index: 0,
+              class_name: "skin-type",
+              is_multiline: false,
+            },
+          });
+        } else {
+          await contentMutation.mutateAsync({
+            content: textItem.content,
+            blog: formData.id,
+            index: 0,
+            class_name: "skin-type",
+            is_multiline: false,
+          });
+        }
       }
 
       await client.refetchQueries({
-        include: ["getAllBlogs"], 
+        include: ["getAllBlogs"],
       });
       localStorage.clear();
       router.push("/admin/blogs");

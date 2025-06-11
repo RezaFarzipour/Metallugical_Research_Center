@@ -45,7 +45,7 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
     getValues,
   } = useForm<CreaateServiceImagesFormData>({
     mode: "onTouched",
-    resolver: zodResolver(creaateServiceImagesSchema),
+    // resolver: zodResolver(creaateServiceImagesSchema),
     defaultValues: {
       images: [],
     },
