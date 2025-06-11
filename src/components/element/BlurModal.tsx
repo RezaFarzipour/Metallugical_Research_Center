@@ -32,7 +32,6 @@ export default function BlurModal({
   bodyContent,
   onConfirm,
   heightProp,
-  isPatching,
   disabled,
 }: BlurModalProps) {
   const heightClass = {

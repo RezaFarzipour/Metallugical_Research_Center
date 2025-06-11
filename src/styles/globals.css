@@ -26,7 +26,7 @@ body {
 }
 
 .slider {
-  background-image: url("../../public/images/preview.png");
+  background-image: url("../../public/images/hero.webp");
   background-size: 100%;
   transform: scaleX(0.85) scaleY(1) scaleZ(1) rotateX(3.5deg) rotateY(354deg)
     rotate(10deg) translateX(0) translateY(0) translateZ(0) skewX(0deg)

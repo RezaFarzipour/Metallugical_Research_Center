@@ -10,7 +10,7 @@ type ImageProps = {
   alt: string;
   width: number;
   height: number;
-  className?: string; // Optional class for additional styling
+  className?: string; 
 };
 
 const AboutImage: React.FC<ImageProps> = ({

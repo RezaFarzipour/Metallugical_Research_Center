@@ -118,7 +118,7 @@ export const CardContent: React.FC<CardContentProps> = ({
   );
   const cardStyles = {
     box: cn(
-      "bg-gray-50 p-4 rounded-lg shadow-lg flex gap-1",
+      "bg-gray-50 p-4 rounded-lg shadow-lg flex gap-2",
       view
         ? "absolute left-1/2 -translate-x-1/2 group-hover:translate-y-[-10px] transition-transform duration-300 ease-out"
         : "w-full"
@@ -132,6 +132,12 @@ export const CardContent: React.FC<CardContentProps> = ({
       className={cardStyles.box}
       style={cardStyles.style}
     >
+      <InfoRow icon={<MdOutlineSubtitles className="text-xl" />}>
+        <h3 className="text-lg font-bold text-gray-600">
+          {service_name || name || title}
+        </h3>
+      </InfoRow>
+
       {parsedTags && parsedTags.length > 0 && (
         <InfoRow icon={<TiTags className="text-xl" />}>
           {parsedTags.slice(0, 3).map((tag: string, index: number) => (
@@ -147,11 +153,6 @@ export const CardContent: React.FC<CardContentProps> = ({
           )}
         </InfoRow>
       )}
-      <InfoRow icon={<MdOutlineSubtitles className="text-xl" />}>
-        <h3 className="text-lg font-bold text-gray-600">
-          {service_name || name || title}
-        </h3>
-      </InfoRow>
 
       {price && (
         <InfoRow icon={<RiPriceTag3Line className="text-xl" />}>

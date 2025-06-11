@@ -19,7 +19,7 @@ const LandingPage = ({ initialData, AllBlogs }: LandingPageProps) => {
         <LandingHeader />
       </section>
       {/* About Section */}
-      <section className="w-full mt-40 mx-auto xl:max-w-screen-xl">
+      <section className="w-full mt-60 mx-auto xl:max-w-screen-xl">
         <AboutOverview />
       </section>
 

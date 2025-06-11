@@ -17,7 +17,7 @@ const Services = ({ initialData }: LandingPageProps) => {
 
   return (
     <motion.div
-      className="full-w flex flex-col items-center justify-center gap-5 py-16 lg:py-6"
+      className="full-w flex flex-col items-center justify-center gap-5 py-36 md:py-14 lg:py-4"
       variants={staggerContainer(0.2, 0.1)}
       initial="hidden"
       animate="show"
