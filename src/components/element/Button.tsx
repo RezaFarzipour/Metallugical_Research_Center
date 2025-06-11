@@ -17,9 +17,11 @@ const Button = ({
   fullWidth = false,
   type = "button",
   path,
+  disabled,
   ...props
 }: ButtonProps) => {
   const router = useRouter();
+
   const baseStyles =
     "relative inline-flex items-center justify-center px-6 py-2 overflow-hidden font-semibold transition-all duration-300 ease-in-out rounded-md shadow-lg group";
 
@@ -36,17 +38,23 @@ const Button = ({
       "text-white bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800",
   };
 
+  const disabledStyles =
+    "bg-gray-300 text-gray-600 cursor-not-allowed shadow-none hover:from-gray-300 hover:to-gray-300";
+
   return (
     <button
       className={cn(
         baseStyles,
-        variants[variant],
+        disabled ? disabledStyles : variants[variant],
         fullWidth && "w-full",
         className
       )}
       type={type}
+      disabled={disabled}
+      onClick={() => {
+        if (!disabled && path) router.push(path);
+      }}
       {...props}
-      onClick={() => router && router.push(path)}
     >
       <span className="relative z-10">{children}</span>
     </button>
