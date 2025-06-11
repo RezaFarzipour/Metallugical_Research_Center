@@ -27,7 +27,7 @@ export default function MyProfilePage(): JSX.Element {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<PersonalRegisterFormData>({
     mode: "onTouched",
   });
@@ -90,7 +90,12 @@ export default function MyProfilePage(): JSX.Element {
       >
         <PersonalDetailsForm register={register} errors={errors} />
 
-        <Button variant="primary" type="submit" fullWidth>
+        <Button
+          variant="primary"
+          type="submit"
+          fullWidth
+          disabled={!isDirty || isPending}
+        >
           {isPending ? <BtnLoader /> : "ویرایش"}
         </Button>
       </form>
