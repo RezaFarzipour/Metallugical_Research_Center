@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
@@ -7,11 +6,11 @@ import TopContent from "../module/filterdContent/topContent/TopContent";
 import BottomContent from "../module/filterdContent/BottomContent";
 
 export interface TableData {
-  id: number;
-  [key: string]: any; // ویژگی‌های مختلف برای جداول مختلف
+  id: number |string;
+  key?: string; 
 }
 interface PanelContainerProps<T extends TableData> {
-  datas: T[]; // می‌توانید اینجا نوع داده‌ها را به‌صورت عمومی بگذارید
+  datas: T[];
   INITIAL_VISIBLE_COLUMNS?: string[];
   quantity: string;
   topContents?: boolean;
@@ -20,6 +19,10 @@ interface PanelContainerProps<T extends TableData> {
   columnsDropDownBtn?: boolean;
   rolesDropDown: boolean;
   stausDropDown: boolean;
+  columns: {
+    name: string;
+    uid: string;
+  }[];
   paymentStautsDropDown?: boolean;
   viewContent?: boolean;
   children: React.ReactNode;
@@ -27,7 +30,7 @@ interface PanelContainerProps<T extends TableData> {
   btnClickHandler?: () => void;
 }
 
-export default function FilteredContainer({
+export default function FilteredContainer<T extends TableData>({
   datas,
   INITIAL_VISIBLE_COLUMNS,
   columns,
@@ -43,7 +46,7 @@ export default function FilteredContainer({
   children,
   btnClickHandler,
   viewContentSmSize,
-}: PanelContainerProps) {
+}: PanelContainerProps<T>) {
   const { page, setPage } = useTableStore();
 
   React.useEffect(() => {

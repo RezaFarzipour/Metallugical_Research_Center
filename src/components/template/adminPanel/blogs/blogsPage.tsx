@@ -13,6 +13,16 @@ import Empty from "@/components/element/Empty";
 import { BtnLoader } from "@/components/element/Loader";
 import { useAdminBlogDataAction } from "./hooks/useAdminBlogDataAction";
 
+type CleanBlog = {
+  _id: string;
+  id: string;
+  name: string;
+  image?: string;
+  actions: string;
+  slug: string;
+  tags: string[];
+};
+
 export const BlogsPage: React.FC = () => {
   const {
     isModalOpen,
@@ -38,7 +48,7 @@ export const BlogsPage: React.FC = () => {
     <div className="grid grid-cols-1">
       <div className=" p-4 md:p-6">
         <TitleStructureDashboards mainTitle="وبلاگ ها" />
-        <FilteredContainer
+        <FilteredContainer<CleanBlog>
           datas={formDataBlogs}
           INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={blogColumns}

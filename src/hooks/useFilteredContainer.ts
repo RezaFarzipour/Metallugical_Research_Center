@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useTableStore } from "@/store/useTableSlice";
 
 interface Data {
-    id: number;
+    id: number | string;
     name?: string;
     service_name?: string
     phone_number?: string;
