@@ -6,9 +6,11 @@ import Stage2 from "./formSteps/Stage2";
 export default function BlogFormStepper() {
   const { step, setStep } = useBlogFormStore();
 
+
+
   return (
     <>
-      {step === 1 && <Stage1 />}
+      {step === 1 && <Stage1  setStep={setStep}/>}
       {step === 2 && <Stage2 />}
     </>
   );

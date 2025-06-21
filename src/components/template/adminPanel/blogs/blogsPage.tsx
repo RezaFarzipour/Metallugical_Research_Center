@@ -14,13 +14,13 @@ import { BtnLoader } from "@/components/element/Loader";
 import { useAdminBlogDataAction } from "./hooks/useAdminBlogDataAction";
 
 type CleanBlog = {
-  _id: string;
   id: string;
   name: string;
   image?: string;
   actions: string;
   slug: string;
   tags: string[];
+  title?: string;      
 };
 
 export const BlogsPage: React.FC = () => {
@@ -41,6 +41,8 @@ export const BlogsPage: React.FC = () => {
 
   const { sortedItems } = useFilteredContainer(formDataBlogs);
   const isEmpty = !formDataBlogs || formDataBlogs.length === 0;
+
+
 
 
 
@@ -87,7 +89,7 @@ export const BlogsPage: React.FC = () => {
             />
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-28">
-              <CardModule
+              <CardModule<CleanBlog>
                 data={sortedItems}
                 isDate={false}
                 isMoreDetails="adminBlogs"

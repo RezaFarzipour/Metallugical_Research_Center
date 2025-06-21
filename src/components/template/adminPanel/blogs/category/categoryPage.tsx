@@ -14,6 +14,7 @@ import { showToast } from "@/store/useToastSlice";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { FaPlus } from "react-icons/fa";
 import { BtnLoader } from "@/components/element/Loader";
+import { blogDatafromServer } from "@/types";
 
 const CategoryBlog = () => {
   const queryClient = useQueryClient();
@@ -21,6 +22,8 @@ const CategoryBlog = () => {
     queryKey: ["getAll-blogsCategory"],
     queryFn: getAllCategoryAdmin,
   });
+
+
 
 
   const { deletBlogCategory } = useDeleteBlogCategory();
@@ -95,7 +98,7 @@ const CategoryBlog = () => {
               <th>عملیات</th>
             </Table.Header>
             <Table.Body>
-              {data.map((item, index) => (
+              {data.map((item:blogDatafromServer, index:number) => (
                 <Table.Row key={item.id}>
                   <td>{index + 1}</td>
                   <td>{item.category_name}</td>

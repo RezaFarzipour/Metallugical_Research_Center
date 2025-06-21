@@ -1,5 +1,5 @@
 "use client";
-import BreadcrumbsElement from "@/components/element/Breadcrumbs";
+
 import { BlogData } from "@/types";
 import React, { useState } from "react";
 import FirstStepAction from "./formSteps/Stage1";
@@ -7,7 +7,7 @@ import Stage2 from "./formSteps/Stage2";
 
 const EditBlogPage = ({ blogData }: { blogData: BlogData }) => {
   const [step, setStep] = useState(1);
-  console.log(blogData)
+
   return (
     <div>
       {/* <div className="mb-6">
