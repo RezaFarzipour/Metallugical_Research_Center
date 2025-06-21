@@ -1,11 +1,8 @@
+import { EditorItem } from '@/types'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-type EditorItem = {
-    id: string;
-    type: 'text' | 'image';
-    content: string;
-};
+
 type BlogFormState = {
     step: number
     formData: {

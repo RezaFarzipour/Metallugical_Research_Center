@@ -113,7 +113,7 @@ export type reservationDataType = {
 //services Type
 export interface EditorItem {
   id: string;
-  type: "text" | "image";
+  type: string;
   content: string;
 }
 
@@ -141,11 +141,11 @@ export type ServiceDetailsType = {
 };
 
 export type BlogType = {
-  coverImage: string;
-  id: number;
+  coverImage?: string;
+  id: number | string;
   slug: string;
   tags: string[];
-  title: string;
+  title?: string;
 };
 
 
@@ -189,8 +189,8 @@ export interface BlogData {
   title: string;
   slug: string;
   cover_image: string;
-  tags: string[]; // مثل: ['["safe","stafe"]']
-  category_list: string[]; // مثل: ['["68332b9691f173ce1584e0f9"]']
+  tags: string[]; 
+  category_list : string[];
   "blog-content": BlogContent[];
   "blog-image": BlogImage[];
 }
@@ -239,3 +239,11 @@ export interface ExpiredReserveStore {
   setExpiredReserveDates: (data: ExpiredReserve[]) => void;
 }
 
+
+
+export interface blogDatafromServer {
+  blogs: [];
+  category_name: string;
+  id: string;
+  slug: string;
+}
