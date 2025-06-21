@@ -4,6 +4,7 @@ import { useTableStore } from "@/store/useTableSlice";
 
 interface Data {
     id: number | string;
+    actions?: string;
     name?: string;
     service_name?: string
     phone_number?: string;
@@ -21,6 +22,7 @@ interface Data {
     slug?: string;
     tags?: string[];
     coverImage?: string;
+    image?: string;
 }
 
 export function useFilteredContainer(datas: Data[]) {

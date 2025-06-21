@@ -7,7 +7,7 @@ export function useDeleteBlogCategory() {
 
   const { isPending: isPendingDeleteCategory, mutateAsync: deletBlogCategory } = useMutation({
     mutationFn: deleteBlogCategory,
-    onSuccess: (data) => {
+    onSuccess: () => {
 
       queryClient.invalidateQueries({
         queryKey: ["getAll-blogsCategory"],
@@ -23,7 +23,7 @@ export function useDeleteBlog() {
 
   const { isPending: isPendingDeleteBlog, mutateAsync: deletBlogAsync } = useMutation({
     mutationFn: deleteBlog,
-    onSuccess: (data) => {
+    onSuccess: () => {
 
       queryClient.invalidateQueries({
         queryKey: ["getAll-blogsCategory"],

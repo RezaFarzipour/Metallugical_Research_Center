@@ -107,7 +107,7 @@ export const useAdminBlogDataAction = () => {
 
   //delete blog
   const secondActionClickHandler = useCallback(
-    (id: string | number, name?: string | undefined, phone_number?: string) => {
+    (id: string | number, name?: string | undefined) => {
       if (!id) {
         console.error("Invalid ID passed to secondActionClickHandler");
         showToast("آیدی سرویس نامعتبر است", "error");

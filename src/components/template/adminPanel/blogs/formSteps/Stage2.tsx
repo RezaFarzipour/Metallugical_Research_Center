@@ -109,6 +109,7 @@ const Stage2 = ({ blogData }: { blogData?: BlogData }) => {
       showToast("بلاگ با موفقیت ایجاد شد", "success");
     } catch (error) {
       showToast("خطایی رخ داده است", "error");
+      console.log(error)
     }
   };
 

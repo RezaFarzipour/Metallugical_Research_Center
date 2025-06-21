@@ -41,7 +41,7 @@ export function useEditBlog() {
     mutationFn: ({ id, data }: { id: string; data: FormData }) => {
       return editBlogById({ id, data });
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["getAll-blogsCategory"],
       });
@@ -74,7 +74,7 @@ export function useEditBlogContent() {
       }) => {
         return editBlogContentById({ id, data });
       },
-      onSuccess: async (data) => {
+      onSuccess: async () => {
         await client.refetchQueries({
           include: ["getAllBlogs"],
         });

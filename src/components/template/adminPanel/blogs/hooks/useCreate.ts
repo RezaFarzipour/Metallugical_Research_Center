@@ -24,7 +24,7 @@ export function useCreateBlog() {
     const { isPending: isPendingBlog, mutateAsync: createBlog } = useMutation({
         mutationFn: createNewBlog,
 
-        onSuccess: (data) => {
+        onSuccess: () => {
 
             queryClient.invalidateQueries({
                 queryKey: ["getAll-blogs"],
