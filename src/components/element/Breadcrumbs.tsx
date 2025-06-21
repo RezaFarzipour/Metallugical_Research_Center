@@ -20,7 +20,7 @@ type BreadcrumbsProps = {
 const BreadcrumbsElement = ({
   item1,
   item2,
-  color = "white",
+  color,
   panelHref
 }: BreadcrumbsProps) => {
   return (
