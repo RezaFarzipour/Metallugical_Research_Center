@@ -1,6 +1,6 @@
 import { Input } from "@heroui/react";
 import { useState } from "react";
-import { ControllerRenderProps, FieldError } from "react-hook-form";
+import { ControllerRenderProps, FieldError,Path  } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
 
 interface InputStyles {
@@ -35,20 +35,32 @@ const inputStyles: InputStyles = {
   errorMessage: ["mt-1", "text-sm", "text-red-500"],
 };
 
-interface TagInputProps {
-  field: ControllerRenderProps<{ tags: string[] }, "tags">;
+// interface TagInputProps {
+//   // field: ControllerRenderProps<{ tags: string[] }, "tags">;
+//   field: ControllerRenderProps<T, "tags">;
+//   error?: FieldError;
+//   label: string;
+// }
+
+
+interface TagInputProps<T extends Record<string, any>> {
+  field: ControllerRenderProps<T, Path<T>>; 
   error?: FieldError;
   label: string;
 }
 
-export default function RHFTagInput({ field, error, label }: TagInputProps) {
+export default function RHFTagInput<T extends Record<string, any>>({
+  field,
+  error,
+  label,
+}: TagInputProps<T>) {
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if ((e.key === "Enter" || e.key === ",") && inputValue.trim()) {
       e.preventDefault();
       const trimmedValue = inputValue.trim();
-      const currentTags = Array.isArray(field.value) ? field.value : [];
+      const currentTags = (field.value || []) as string[];
       if (!currentTags.includes(trimmedValue)) {
         field.onChange([...currentTags, trimmedValue]);
       }

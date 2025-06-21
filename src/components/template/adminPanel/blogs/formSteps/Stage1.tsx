@@ -11,7 +11,6 @@ import Image from "next/image";
 import { IoTrashBinOutline } from "react-icons/io5";
 import FileInput from "@/components/element/FileInput";
 import { useState, useEffect } from "react";
-import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { useBlogFormStore } from "@/store/useBlogFormStore";
 import { useCreateBlog } from "../hooks/useCreate";
 import { showToast } from "@/store/useToastSlice";
@@ -21,7 +20,7 @@ import RHFTagInput from "@/components/element/RHFTagInput";
 import { BtnLoader } from "@/components/element/Loader";
 import PrimaryButton from "@/components/element/Button";
 import { Button } from "@heroui/button";
-import { BlogData } from "@/types";
+import { BlogData, blogDatafromServer } from "@/types";
 import { useEditBlog } from "../hooks/useEditCategory";
 import { imageUrlToFile } from "@/utils/formatter/fileFormatter";
 
@@ -29,6 +28,8 @@ interface BlogesActionProps {
   blogData?: Partial<BlogData>;
   setStep: (step: number) => void;
 }
+
+
 
 const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
   const {
@@ -52,7 +53,7 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
   });
 
   // تبدیل داده‌ها به گزینه‌های قابل استفاده در RHFSelect
-  const categoryOptions = data.map((category: any) => ({
+  const categoryOptions = data.map((category: blogDatafromServer) => ({
     value: category.id,
     label: category.category_name,
   }));
@@ -89,7 +90,6 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
   //   };
   // }, [coverImageUrl]);
 
-
   useEffect(() => {
     if (prevCoverImageUrl && isEditSession) {
       async function fetchImage() {
@@ -105,7 +105,8 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("slug", data.slug);
-    formData.append("category_list", data.category_list);
+    // formData.append("category_list", data.category_list);
+    formData.append("category_list", data.category_list.join(","));
     formData.append("tags", JSON.stringify(data.tags));
     if (data.cover_image instanceof File) {
       formData.append("cover_image", data.cover_image);
@@ -190,7 +191,7 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
                 value && value.length > 0 ? true : "حداقل یک تگ وارد کنید",
             }}
             render={({ field, fieldState }) => (
-              <RHFTagInput
+              <RHFTagInput<BlogStageOneFormData>
                 field={field}
                 error={fieldState.error}
                 label="تگ‌ها"
@@ -212,6 +213,7 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
             control={control}
             render={({ field: { value, onChange, ...rest } }) => (
               <FileInput
+             
                 multiple={false}
                 label="انتخاب کاور بلاگ"
                 errors={errors}
