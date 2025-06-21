@@ -19,7 +19,7 @@ export function PageLoader({
       ariaLabel="hourglass-loading"
       wrapperStyle={{}}
       wrapperClass=""
-      color={color}
+      colors={[color, color]}
       visible={true}
     />
   );
