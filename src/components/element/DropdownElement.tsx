@@ -5,6 +5,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
+  SharedSelection,
 } from "@heroui/react";
 import { LuChevronDown } from "react-icons/lu";
 
@@ -17,7 +18,7 @@ export const DropdownElement: React.FC<{
   label: string;
   options: Option[];
   selectedKeys: string | Set<string>;
-  onSelectionChange: (keys: any) => void;
+  onSelectionChange: (keys: SharedSelection) => void;
 }> = ({ label, options, selectedKeys, onSelectionChange }) => (
   <Dropdown>
     <DropdownTrigger className="hidden sm:flex">
