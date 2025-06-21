@@ -5,7 +5,7 @@ import { Input } from "@heroui/react";
 interface FileInputProps {
   label: string;
   name: string;
-  value?: string;
+  value?: File | null | undefined;
   dir?: "rtl" | "ltr";
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isRequired?: boolean;
