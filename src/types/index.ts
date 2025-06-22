@@ -250,3 +250,18 @@ export interface blogDatafromServer {
   id: string;
   slug: string;
 }
+
+
+export interface BlogCategoryInput {
+  category_name: string;
+  slug: string;
+}
+
+
+export interface BlogContentInput {
+  content: string;
+  blog: string;
+  index: number;
+  class_name: string;
+  is_multiline: boolean;
+}

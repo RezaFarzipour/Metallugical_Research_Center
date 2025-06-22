@@ -61,6 +61,7 @@ const Stage2 = ({ blogData }: { blogData?: BlogData }) => {
     }) => createNewBlogContent(content),
   });
 
+  
   const imageMutation = useMutation({
     mutationFn: async (formData: FormData & { blog: string }) => {
       return createNewBlogImageContent(formData);

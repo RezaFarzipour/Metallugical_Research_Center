@@ -1,11 +1,13 @@
 import { AxiosRequestConfig } from "axios";
 import http from "../httpService";
+import { BlogCategoryInput, BlogContentInput } from "@/types";
+import { BlogStageOneFormData } from "@/schemas/blogStageOneSchema";
 
 export const getAllCategoryAdmin = async () => {
   const response = await http.get(`blog/category/admin/`);
   return response.data;
 };
-export const createNewBlogCategory = async (data) => {
+export const createNewBlogCategory = async (data:BlogCategoryInput) => {
   const response = await http.post(`blog/category/admin/`, data);
   return response.data;
 };
@@ -44,7 +46,7 @@ export const getBlogCategoryById = async (
   }
 };
 
-export const getAllBlogsAdmin = async (options) => {
+export const getAllBlogsAdmin = async (options:AxiosRequestConfig) => {
   const response = await http.get(`blog/b/any/`, options);
   return response.data;
 };
@@ -87,9 +89,9 @@ export const getBlogCover = async () => {
   return response.data;
 };
 
-export const createNewBlog = async (data) => {
+export const createNewBlog = async (data:BlogStageOneFormData) => {
   const response = await http.post(`blog/b/admin/`, data);
-  console.log(response.data);
+
 
   return response.data;
 };
@@ -127,12 +129,12 @@ export const deleteBlog = async ({ id }: { id: string }) => {
   return response.data;
 };
 
-export const createNewBlogContent = async (data) => {
+export const createNewBlogContent = async (data:BlogContentInput) => {
   const response = await http.post(`blog/content/admin/`, data);
   return response.data;
 };
 
-export const createNewBlogImageContent = async (data) => {
+export const createNewBlogImageContent = async (data:FormData) => {
   const response = await http.post(`blog/image/admin/`, data);
   return response.data;
 };
