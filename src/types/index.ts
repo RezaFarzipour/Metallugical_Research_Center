@@ -131,13 +131,16 @@ export type ServiceReserveDateType = {
 };
 
 export type ServiceDetailsType = {
-  id: number;
-  service_name: string;
-  description: string;
-  price: number;
-  cover_image: string;
-  "service-images": ServiceImageType[];
-  "service-reserve_date": ServiceReserveDateType[];
+  data:{
+    id: number;
+    service_name: string;
+    description: string;
+    price: number;
+    cover_image: string;
+    "service-images": ServiceImageType[];
+    "service-reserve_date": ServiceReserveDateType[];
+  }
+ 
 };
 
 export type BlogType = {

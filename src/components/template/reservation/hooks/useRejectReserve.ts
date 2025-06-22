@@ -40,6 +40,7 @@ export const useRejectReserve = () => {
         queryKey: ["get-stage", reserveId],
       });
     } catch (error) {
+      alert(error)
       showToast("خطا در عدم تایید رزرو", "error");
     }
   };

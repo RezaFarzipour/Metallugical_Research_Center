@@ -71,6 +71,7 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
       setModalService(data);
       setIsModalOpen(true);
     } catch (err) {
+      alert(err)
       showToast("خطا در دریافت اطلاعات سرویس", "error");
     }
   };
@@ -91,6 +92,7 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
       showToast("رزرو با موفقیت انجام شد", "success");
       queryClient.invalidateQueries({ queryKey: ["get-stage", reserveId] });
     } catch (e) {
+      alert(e)
       showToast("خطایی رخ داده است", "error");
     }
   };

@@ -1,5 +1,4 @@
 "use client";
-
 import FileInput from "@/components/element/FileInput";
 import { BtnLoader } from "@/components/element/Loader";
 import { useCancelReserve } from "@/components/template/reservation/hooks/useCancelReserve";
@@ -96,7 +95,7 @@ const CustomerStage3 = ({
             <Controller
               name="payment_image"
               control={control}
-              render={({ field: { value, onChange, ...rest } }) => (
+              render={({ field: { onChange, ...rest } }) => (
                 <>
                   {!receiptFile ? (
                     <FileInput
