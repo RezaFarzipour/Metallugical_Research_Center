@@ -10,7 +10,6 @@ import { useRejectReserve } from "@/components/template/reservation/hooks/useRej
 import { Button } from "@heroui/button";
 import { BtnLoader } from "@/components/element/Loader";
 import ReserveInfo from "@/components/module/ReserveInfo";
-import RHFInput from "@/components/element/RHFInput";
 import BlurModal from "@/components/element/BlurModal";
 import { Input } from "@heroui/react";
 

@@ -10,7 +10,6 @@ import {
 import { patchAcceptStage2 } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
 import { reservationDataType, ServiceDetailsType } from "@/types";
-import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 import { Button } from "@heroui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

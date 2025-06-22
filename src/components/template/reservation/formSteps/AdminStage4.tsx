@@ -73,7 +73,7 @@ const AdminStage4 = ({
             onPress={cancelHandler}
             className="bg-red-600 text-white px-4 py-2 "
           >
-            لغو رزرو
+            {isCanceling ? <BtnLoader /> : "کنسل کردن رزرو"}
           </Button>
         </div>
       </div>

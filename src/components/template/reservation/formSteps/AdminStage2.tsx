@@ -1,8 +1,5 @@
 "use client";
-
-import { useCancelReserve } from "@/components/template/reservation/hooks/useCancelReserve";
 import { reservationDataType, ServiceDetailsType } from "@/types";
-import { useRouter } from "next/navigation";
 import React from "react";
 import WaitingStage from "./WaitingStage";
 
@@ -19,23 +16,11 @@ const AdminStage2 = ({
   reservationData: reservationData,
   typographyContent,
 }: AdminStage2Props) => {
-  const { cancelReserve, isCanceling } = useCancelReserve();
-
-  const router = useRouter();
-
-  console.log("reservationData", reservationData);
-
-  //cancle reserve
-  const cancelHandler = () => {
-    cancelReserve(reserveId, () => {
-      router.push("/services");
-    });
-  };
-
   return (
     <>
       <div className="">
         <WaitingStage
+          reserveId={reserveId}
           typographyContent={typographyContent}
           serviceData={serviceData}
           reservationData={reservationData}
