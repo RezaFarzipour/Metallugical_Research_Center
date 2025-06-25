@@ -12,6 +12,7 @@ import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import useUserData from "./hooks/useUserData";
 import ModalModule from "@/components/element/ModalModule";
 import { BtnLoader } from "@/components/element/Loader";
+import { UserType } from "@/types";
 
 const UsersPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
@@ -29,7 +30,7 @@ const UsersPage: React.FC = () => {
     secondActionClickHandler,
   } = useUserData(visibleColumns, includeskey);
 
-  const { sortedItems } = useFilteredContainer(formDataSignedUp);
+  const { sortedItems } = useFilteredContainer<UserType>(formDataSignedUp);
 
   return (
     <div className="grid grid-cols-1">
