@@ -7,10 +7,10 @@ import Header from "@/components/containers/clipedDrawer/Header";
 import SideBar from "@/components/containers/clipedDrawer/SideBar";
 import { adminSidebarlinks } from "@/constants/data";
 import { useGetUser } from "@/hooks/useAuth";
-import { Service } from "@/types";
+import { ServiceData } from "@/types/serviceType";
 
 const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
-  const { data: servicesData, isLoading } = useQuery<Service[]>({
+  const { data: servicesData, isLoading } = useQuery<ServiceData[]>({
     queryKey: ["getAll-services"],
     queryFn: getAllServiceAdmin,
     staleTime: 5 * 60 * 1000,
