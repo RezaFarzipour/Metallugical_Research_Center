@@ -1,17 +1,19 @@
-"use client"
+"use client";
 import { adminCards } from '@/constants/data';
 import { ReservesAdmincolumns } from '@/constants/tableData';
 import useDataQueries from '@/hooks/useDataQueries';
+import { CardsData, RawReserveData, ReportData, ServiceData } from '@/types';
 import { findName, findServiceName } from '@/utils/findeName';
 import { formatDateRangesToPersian2 } from '@/utils/formatter/formatDateRangesToPersian';
 import { toPersianNumbers, toPersianNumbersWithComma } from '@/utils/formatter/toPersianNumbers';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-const useDashboardData = (visibleColumns: Set<string>, cardsData) => {
+const useDashboardData = (visibleColumns: Set<string>, cardsData: CardsData) => {
     const router = useRouter();
-    const [formData, setFormData] = useState({ reserveUp: [] });
+    const [formData, setFormData] = useState<{ reserveUp: ReportData[] }>({ reserveUp: [] });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
+    console.log(cardsData, "cardsData");
 
     const {
         dataUser,
@@ -21,35 +23,26 @@ const useDashboardData = (visibleColumns: Set<string>, cardsData) => {
         dataAllReserveCustomer,
         isLoadingReserve,
     } = useDataQueries();
-    const {
-        numberOfUsers,
-        numberOfServices,
-        numberOfReservations,
-        numberOfBlogs,
-    } = cardsData;
 
-    const groupReservesByKeys = (reserves) => {
+    // فرض می‌کنیم نوع داده‌های بازگشتی از useDataQueries
+    const typedDataAllServiceAdmin = dataAllServiceAdmin as ServiceData[] | undefined;
+    const typedDataAllReserveCustomer = dataAllReserveCustomer as { data: RawReserveData[] } | undefined;
+
+    const groupReservesByKeys = (reserves: RawReserveData[]): { reserveUp: ReportData[] } => {
         return reserves.reduce(
-            (acc, reserve, index) => {
-                const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"
-                    } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
+            (acc: { reserveUp: ReportData[] }, reserve: RawReserveData, index: number) => {
+                const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"} تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
-                const name = findName(dataUser ?? [], reserve.user);
-                const service_name = findServiceName(dataAllServiceAdmin ?? [], reserve.service);
-                const reserve_duration = `${toPersianNumbers(
-                    reserve.reserve_duration
-                )} ساعت`;
+                const name = findName(dataUser, reserve.user) || "نامشخص";
+                const service_name = findServiceName(typedDataAllServiceAdmin ?? [], reserve.service) || "نامشخص";
+                const reserve_duration = `${toPersianNumbers(reserve.reserve_duration)} ساعت`;
 
-                const status =
-                    reserve.is_canceled === true
-                        ? "لغو شده"
-                        : reserve.is_finished === true
-                            ? "تمام شده"
-                            : "در حال انتظار";
-                const payment_status =
-                    reserve.is_payment_verified === true
-                        ? "پرداخت شده"
-                        : "در انتظار پرداخت";
+                const status = reserve.is_canceled
+                    ? "لغو شده"
+                    : reserve.is_finished
+                        ? "تمام شده"
+                        : "در حال انتظار";
+                const payment_status = reserve.is_payment_verified ? "پرداخت شده" : "در انتظار پرداخت";
 
                 acc.reserveUp.push({
                     _id: toPersianNumbers(index + 1),
@@ -73,15 +66,14 @@ const useDashboardData = (visibleColumns: Set<string>, cardsData) => {
         );
     };
 
-
     useEffect(() => {
         if (
             !isLoadingUser &&
             !isLoadingService &&
             !isLoadingReserve &&
-            Array.isArray(dataAllReserveCustomer.data)
+            Array.isArray(typedDataAllReserveCustomer?.data)
         ) {
-            const grouped = groupReservesByKeys(dataAllReserveCustomer.data);
+            const grouped = groupReservesByKeys(typedDataAllReserveCustomer.data);
             setFormData(grouped);
 
             if (grouped.reserveUp.length > 0) {
@@ -89,26 +81,23 @@ const useDashboardData = (visibleColumns: Set<string>, cardsData) => {
             }
         }
     }, [
-        dataAllReserveCustomer,
-        dataAllServiceAdmin,
+        typedDataAllReserveCustomer,
+        typedDataAllServiceAdmin,
         isLoadingUser,
         isLoadingService,
         isLoadingReserve,
     ]);
 
-    const formDataReseves = Array.isArray(formData.reserveUp)
-        ? formData.reserveUp
-        : [];
+    const formDataReseves: ReportData[] = Array.isArray(formData.reserveUp) ? formData.reserveUp : [];
     console.log(formDataReseves, "formDataReseves");
 
     const slicedItems = formDataReseves.slice(-4);
+
     // محاسبه ستون‌های هدر
     const headerColumns = useMemo(() => {
         return visibleColumns.size === ReservesAdmincolumns.length
             ? ReservesAdmincolumns
-            : ReservesAdmincolumns.filter((column) =>
-                visibleColumns.has(column.uid)
-            );
+            : ReservesAdmincolumns.filter((column) => visibleColumns.has(column.uid));
     }, [visibleColumns]);
 
     const firstActionClickHandler = useCallback(
@@ -118,12 +107,11 @@ const useDashboardData = (visibleColumns: Set<string>, cardsData) => {
         [router]
     );
 
-
     const cardsWithCounts = {
-        users: { ...adminCards.users, count: numberOfUsers },
-        orders: { ...adminCards.orders, count: numberOfServices },
-        products: { ...adminCards.products, count: numberOfReservations },
-        blogs: { ...adminCards.blogs, count: numberOfBlogs },
+        users: { ...adminCards.users, count: cardsData.numberOfUsers },
+        orders: { ...adminCards.orders, count: cardsData.numberOfServices },
+        products: { ...adminCards.products, count: cardsData.numberOfReservations },
+        blogs: { ...adminCards.blogs, count: cardsData.numberOfBlogs },
     };
 
     return {
@@ -132,8 +120,9 @@ const useDashboardData = (visibleColumns: Set<string>, cardsData) => {
         headerColumns,
         firstActionClickHandler,
         isLoadingReserve,
-        slicedItems, cardsWithCounts
+        slicedItems,
+        cardsWithCounts,
     };
-}
+};
 
-export default useDashboardData
+export default useDashboardData;
