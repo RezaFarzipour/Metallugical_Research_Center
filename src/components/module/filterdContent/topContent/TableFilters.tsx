@@ -10,6 +10,12 @@ import {
 } from "@/constants/tableData";
 import { useTableStore } from "@/store/useTableSlice";
 
+// فرض بر تعریف نوع SharedSelection
+type SharedSelection =
+  | string
+  | Set<string>
+  | { anchorKey?: string; currentKey?: string };
+
 interface TableFiltersProps {
   rolesDropDown?: boolean;
   stausDropDown?: boolean;
@@ -55,7 +61,7 @@ export default function TableFilters({
     if (payment_status) {
       setPeymentStatusFilter(new Set(payment_status.split(",")));
     }
-  }, []);
+  }, [searchParams, setRolesFilter, setStatusFilter, setPeymentStatusFilter]);
 
   // آپدیت query string
   const updateQueryParam = (key: string, values: Set<string>) => {
@@ -70,19 +76,36 @@ export default function TableFilters({
     router.push(`?${params.toString()}`);
   };
 
-  const handleRoleChange = (keys: Set<string>) => {
-    setRolesFilter(keys);
-    updateQueryParam("roles", keys);
+  // تبدیل SharedSelection به Set<string>
+  const convertToSet = (keys: SharedSelection): Set<string> => {
+    if (typeof keys === "string") {
+      return new Set([keys]);
+    }
+    if (keys instanceof Set) {
+      return keys;
+    }
+    // مدیریت شیء { anchorKey, currentKey }
+    return new Set(keys.currentKey ? [keys.currentKey] : []);
   };
 
-  const handleStatusChange = (keys: Set<string>) => {
-    setStatusFilter(keys);
-    updateQueryParam("status", keys);
+  const handleRoleChange = (keys: SharedSelection) => {
+    const newKeys = convertToSet(keys);
+    setRolesFilter(newKeys);
+    updateQueryParam("roles", newKeys);
   };
-  const handlepaymentStatusChange = (keys: Set<string>) => {
-    setPeymentStatusFilter(keys);
-    updateQueryParam("payment_status", keys);
+
+  const handleStatusChange = (keys: SharedSelection) => {
+    const newKeys = convertToSet(keys);
+    setStatusFilter(newKeys);
+    updateQueryParam("status", newKeys);
   };
+
+  const handlePaymentStatusChange = (keys: SharedSelection) => {
+    const newKeys = convertToSet(keys);
+    setPeymentStatusFilter(newKeys);
+    updateQueryParam("payment_status", newKeys);
+  };
+
   return (
     <div className="flex gap-3">
       {rolesDropDown && (
@@ -103,10 +126,10 @@ export default function TableFilters({
       )}
       {paymentStautsDropDown && (
         <DropdownElement
-          label="وضعیت پرداخت ها"
+          label="وضعیت پرداخت‌ها"
           options={statusOptionsPayment}
           selectedKeys={peymentStatusFilter}
-          onSelectionChange={handlepaymentStatusChange}
+          onSelectionChange={handlePaymentStatusChange}
         />
       )}
 
@@ -115,7 +138,9 @@ export default function TableFilters({
           label="ستون‌ها"
           options={columns}
           selectedKeys={visibleColumns}
-          onSelectionChange={setVisibleColumns}
+          onSelectionChange={(keys: SharedSelection) =>
+            setVisibleColumns(convertToSet(keys))
+          }
         />
       )}
     </div>
