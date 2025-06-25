@@ -1,5 +1,5 @@
 import React from "react";
-import { reservationDataType, ServiceDetailsType } from "@/types";
+import { reservationDataType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { adminFinalApprove } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@heroui/button";
 import { BtnLoader } from "@/components/element/Loader";
 import ReserveInfo from "@/components/module/ReserveInfo";
+import { ServiceDetailsType } from "@/types/serviceType";
 
 type AdminStage4 = {
   serviceData: ServiceDetailsType | undefined;

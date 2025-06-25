@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { reservationDataType, ServiceDetailsType } from "@/types";
+import { reservationDataType } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { paymentVerified } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
@@ -12,6 +12,7 @@ import { BtnLoader } from "@/components/element/Loader";
 import ReserveInfo from "@/components/module/ReserveInfo";
 import BlurModal from "@/components/element/BlurModal";
 import { Input } from "@heroui/react";
+import { ServiceDetailsType } from "@/types/serviceType";
 
 type AdminStage3 = {
   serviceData: ServiceDetailsType | undefined;

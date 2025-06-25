@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import { reservationDataType, ServiceDetailsType } from "@/types";
+import { reservationDataType } from "@/types";
 import { FaCheck } from "react-icons/fa";
 import ReserveInfo from "@/components/module/ReserveInfo";
 import { Button } from "@heroui/button";
 import { useRouter } from "next/navigation";
+import { ServiceDetailsType } from "@/types/serviceType";
 
 type Stage6Props = {
   reservationData: reservationDataType;
