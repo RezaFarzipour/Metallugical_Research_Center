@@ -8,6 +8,7 @@ import { Servicecolumns } from "@/constants/tableData";
 import { showToast } from "@/store/useToastSlice";
 import { useDeleteService } from "./useDeleteService";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
+import { ServerServiceType } from "@/types/serviceType";
 
 type RawService = {
     id: string;
@@ -18,18 +19,8 @@ type RawService = {
     "service-reserve_date"?: { id: number; reserved_from: string; reserved_to: string; service: number }[];
 };
 
-type FilteredService = {
-    _id: string
-    id: string;
-    price: string;
-    name: string;
-    image?: string;
-    actions: string;
-    description: string; dateRange: string;
-};
-
 type GroupedServices = {
-    serviceUp: FilteredService[];
+    serviceUp: ServerServiceType[];
 };
 
 

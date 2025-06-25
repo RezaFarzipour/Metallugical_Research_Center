@@ -13,6 +13,7 @@ import ModalModule from "@/components/element/ModalModule";
 import Empty from "@/components/element/Empty";
 import { BtnLoader } from "@/components/element/Loader";
 import { useAdminServicesDataAction } from "./hooks/useAdminServicesDataAction";
+import { ServerServiceType } from "@/types/serviceType";
 
 export const AdminServicesPage: React.FC = ({}) => {
   const {
@@ -30,7 +31,9 @@ export const AdminServicesPage: React.FC = ({}) => {
     router,
   } = useAdminServicesDataAction();
 
-  const { sortedItems } = useFilteredContainer(formDataServices);
+  const { sortedItems } =
+    useFilteredContainer<ServerServiceType>(formDataServices);
+  console.log(formDataServices, "formDataServices");
 
   const isEmpty = !formDataServices || formDataServices.length === 0;
 

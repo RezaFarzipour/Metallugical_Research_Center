@@ -2,22 +2,18 @@
 
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@heroui/button";
 import FileInput from "@/components/element/FileInput";
 import Image from "next/image";
 import { IoTrashBinOutline } from "react-icons/io5";
-import {
-  CreaateServiceImagesFormData,
-  creaateServiceImagesSchema,
-} from "@/schemas/creaateServiceImagesSchema";
+import { CreaateServiceImagesFormData } from "@/schemas/creaateServiceImagesSchema";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
 import AdminDateRangePicker from "@/components/module/customeDataPicker/AdminDateRangePicker";
 import TitleStructure from "@/components/element/TitleStructure";
 import { BtnLoader } from "@/components/element/Loader";
 import { useSeCondStepAction } from "../hooks/useSecondStepAction";
-import { serviceDataEditType } from "@/types";
+import { serviceDataEditType } from "@/types/serviceType";
 
 interface ServiceImage {
   id: string | number;
@@ -25,7 +21,7 @@ interface ServiceImage {
 }
 interface ServicesActionProps {
   filteredServiceImages?: ServiceImage[];
-  serviceRangeDate: serviceDataEditType;
+  serviceRangeDate?: serviceDataEditType;
   serviceId?: string | number | undefined;
   setStep?: (step: number) => void;
 }
@@ -45,7 +41,6 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
     getValues,
   } = useForm<CreaateServiceImagesFormData>({
     mode: "onTouched",
-    // resolver: zodResolver(creaateServiceImagesSchema),
     defaultValues: {
       images: [],
     },
