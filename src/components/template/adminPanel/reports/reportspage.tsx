@@ -9,6 +9,7 @@ import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import { BtnLoader } from "@/components/element/Loader";
 import Empty from "@/components/element/Empty";
 import useReportsData from "./useReportsData";
+import { ReportData } from "@/types";
 
 const ReportsPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
@@ -19,7 +20,8 @@ const ReportsPage: React.FC = () => {
     isLoadingReserve,
     isEmpty,
   } = useReportsData(visibleColumns);
-  const { sortedItems } = useFilteredContainer(formDataReseves);
+  const { sortedItems } = useFilteredContainer<ReportData>(formDataReseves);
+  console.log(formDataReseves, "formDataReseves");
 
   return (
     <div className="grid grid-cols-1">
@@ -42,7 +44,7 @@ const ReportsPage: React.FC = () => {
           bottomContents={!!formDataReseves?.length}
         >
           {isLoadingReserve ? (
-            <div>
+            <div className="flex justify-center items-center mt-32">
               <BtnLoader color="#377cfb" />
             </div>
           ) : isEmpty ? (
