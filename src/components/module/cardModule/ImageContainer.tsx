@@ -31,7 +31,7 @@ export const ImageContainer: React.FC<ImageContainerProps> = ({
     <motion.div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="  w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 group-hover:rotate-2 "
+      className="  w-full h-[250px] object-cover transition-transform duration-300 ease-out group-hover:scale-105 group-hover:rotate-2 "
       initial="hidden"
     >
       {/* Main Image */}

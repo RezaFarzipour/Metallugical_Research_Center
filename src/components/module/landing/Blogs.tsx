@@ -36,7 +36,7 @@ const Blogs = ({ AllBlogs }: BlogsPropsType) => {
             <CardModule<BlogType>
               data={[item]}
               widthConter="100%"
-              heightImg="200px"
+              heightImg="250px"
               heightConter="150px"
               bottomOffset="130"
               isMoreDetails="anyBlogs"

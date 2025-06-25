@@ -40,7 +40,7 @@ const CardModule = <T extends CardData>({
     cardsBox: cn(
       "w-full max-w-[600px] mb-32 mt-8 col-span-12 sm:col-span-5 relative overflow-visible group"
     ),
-    cardsList: "w-full max-w-[800px] max-h-[250px] flex flex-col md:flex-row ",
+    cardsList: "w-full max-w-[800px] min-h-[220px] flex flex-col md:flex-row ",
   };
 
   let parsedTags: string[] = [];

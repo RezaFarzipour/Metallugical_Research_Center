@@ -47,7 +47,7 @@ const Services = ({ initialData }: ServicesPageProps) => {
         <div className="flex flex-col gap-12 lg:gap-5 lg:flex-row justify-center w-full items-center">
           <FilteredContainer
             datas={formDataServices}
-            quantity="سرویس ها"
+            quantity="خدمات ها"
             topContents={!!formDataServices?.length}
             viewContent={true}
             viewContentSmSize={true}
