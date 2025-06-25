@@ -11,31 +11,9 @@ import {
 import { showToast } from "@/store/useToastSlice";
 import ServiceDetailRightSection from "@/components/module/serviceModule/ServiceDetailRightSection";
 import ServiceDetailLeftSection from "@/components/module/serviceModule/ServiceDetailLeftSection";
+import { ServiceData } from "@/types/serviceType";
 
-interface ServiceImage {
-  id: number;
-  image: string;
-  service: number;
-}
-
-interface ServiceReserveDate {
-  id: string;
-  reserved_from: string;
-  reserved_to: string;
-  service: number;
-}
-
-interface ServiceDataType {
-  id: number;
-  service_name: string;
-  description: string;
-  price: number;
-  cover_image: string;
-  "service-images": ServiceImage[];
-  "service-reserve_date"?: ServiceReserveDate[];
-}
-
-const ServiceDetails = ({ serviceData }: { serviceData: ServiceDataType }) => {
+const ServiceDetails = ({ serviceData }: { serviceData: ServiceData }) => {
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
   const router = useRouter();

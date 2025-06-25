@@ -5,11 +5,12 @@ import AboutOverview from "../module/landing/aboutOverview/AboutOverview";
 import FaqAccordian from "../module/landing/FaqAccordian";
 import Blogs from "../module/landing/Blogs";
 import Services from "../module/landing/Services";
-import { BlogsType, ServiceDetailsType } from "@/types";
+import { BlogType, ServiceDetailsType } from "@/types";
+import { ServiceData } from "@/types/serviceType";
 
 type LandingPageProps = {
-  initialData: ServiceDetailsType[];
-  AllBlogs: BlogsType[];
+  initialData: ServiceData[];
+  AllBlogs: BlogType[];
 };
 const LandingPage = ({ initialData, AllBlogs }: LandingPageProps) => {
   return (

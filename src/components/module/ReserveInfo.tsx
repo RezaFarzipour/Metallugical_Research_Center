@@ -4,8 +4,9 @@ import React from "react";
 import Image from "next/image";
 import TitleStructure from "../element/TitleStructure";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
-import { reservationDataType, ServiceDetailsType } from "@/types";
+import { reservationDataType } from "@/types";
 import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
+import { ServiceDetailsType } from "@/types/serviceType";
 
 type ReserveInfoProps = {
   serviceData?: ServiceDetailsType | undefined;
