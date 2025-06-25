@@ -99,8 +99,8 @@ export default function BlogPage({
                   )}
                 >
                   <CardModule
-                    isDate={false}
                     data={sortedItems}
+                    isDate={false}
                     widthConter="100%"
                     heightImg="200px"
                     heightConter="150px"

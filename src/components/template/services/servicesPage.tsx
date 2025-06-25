@@ -7,11 +7,11 @@ import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import { getAllServiceCustomer } from "@/services/api/service";
 import { staggerContainer } from "@/utils/motion";
 import { cn } from "@/utils/cn";
-import { ServiceDetailsType } from "@/types";
 import TitleStructure from "@/components/element/TitleStructure";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import { BtnLoader } from "@/components/element/Loader";
 import CardModule from "@/components/module/cardModule/CardModule";
+import { ServiceDetailsType } from "@/types/serviceType";
 
 type ServicesPageProps = {
   initialData: ServiceDetailsType[];
@@ -51,9 +51,7 @@ const Services = ({ initialData }: ServicesPageProps) => {
             topContents={!!formDataServices?.length}
             viewContent={true}
             viewContentSmSize={true}
-            btn={false}
-            dropDownBtn={false}
-            roles={false}
+            columnsDropDownBtn={false}
             addBtn={false}
             rolesDropDown={false}
             stausDropDown={false}
