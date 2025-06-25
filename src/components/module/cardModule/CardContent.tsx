@@ -16,22 +16,17 @@ import { MdOutlineDescription, MdOutlineSubtitles } from "react-icons/md";
 import truncateText from "@/utils/formatter/truncateText";
 import { BlogType } from "@/types";
 import { TiTags } from "react-icons/ti";
-
-interface ReserveDate {
-  id: number;
-  reserved_from: string;
-  reserved_to: string;
-  service: number;
-}
+import { ServiceReserveDateType } from "@/types/serviceType";
 
 interface ServiceCardData {
-  id: number;
+  id: string | number | undefined;
   name: string;
   service_name?: string;
   description: string;
   price?: string;
-  reserve_date?: ReserveDate[];
+  reserve_date?: ServiceReserveDateType[];
   dateRange?: string;
+  bottomOffset?: string;
 }
 
 interface CardContentProps extends Partial<ServiceCardData>, Partial<BlogType> {
@@ -39,8 +34,9 @@ interface CardContentProps extends Partial<ServiceCardData>, Partial<BlogType> {
   heightConter: string;
   view: boolean;
   styleForAdmin: boolean;
-  isMoreDetails?: "adminBlogs" | "adminServices" | "anyBlogs" | "anyServices";
+  isMoreDetails?: string;
   parsedTags?: string[];
+  service_id: string | number | undefined;
 }
 
 const InfoRow = ({
@@ -96,14 +92,18 @@ export const CardContent: React.FC<CardContentProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const getDetailsHref = (type?: string, id: number, slug?: string) => {
+  const getDetailsHref = (
+    type?: string,
+    id: string | number = "",
+    slug?: string
+  ) => {
     switch (type) {
       case "adminBlogs":
-        return `/admin/blogs/${toEnglishNumbers(id)}/details`;
+        return `/admin/blogs/${toEnglishNumbers(String(id))}/details`;
       case "adminServices":
         return `/admin/services/${id}/details`;
       case "anyBlogs":
-        return `/blogs/${slug}/${id}`;
+        return `/blogs/${slug || "no-slug"}/${id}`;
       case "anyServices":
         return `/services/${id}/details`;
       default:
@@ -111,20 +111,23 @@ export const CardContent: React.FC<CardContentProps> = ({
     }
   };
 
-  const MoreDetailsHref = getDetailsHref(
-    isMoreDetails!,
-    service_id || id,
-    slug
-  );
+  // مدیریت id یا service_id
+  const resolvedId = service_id
+    ? Number(service_id) || id || "" // تبدیل service_id به عدد، اگر نامعتبر بود از id استفاده کن
+    : id || "";
+
+  const MoreDetailsHref = getDetailsHref(isMoreDetails, resolvedId, slug);
+
   const cardStyles = {
     box: cn(
       "bg-gray-50 p-4 rounded-lg shadow-lg flex gap-2",
       view
-        ? "absolute left-1/2 -translate-x-1/2 group-hover:translate-y-[-10px] transition-transform duration-300 ease-out"
+        ? "absolute left-1/2 -translate-x-1/2 group-hover:translate-y-[-10px] transition-all duration-300 ease-out"
         : "w-full"
     ),
-    style: view ? { bottom: `-${bottomOffset}px` } : {},
+    style: view ? { bottom: `-${bottomOffset || "80"}px` } : {},
   };
+
   return (
     <CardContentBox
       width={view ? widthConter : "100%"}
@@ -134,7 +137,7 @@ export const CardContent: React.FC<CardContentProps> = ({
     >
       <InfoRow icon={<MdOutlineSubtitles className="text-xl" />}>
         <h3 className="text-lg font-bold text-gray-600">
-          {service_name || name || title}
+          {service_name || name || title || "بدون عنوان"}
         </h3>
       </InfoRow>
 
@@ -149,7 +152,7 @@ export const CardContent: React.FC<CardContentProps> = ({
             </span>
           ))}
           {parsedTags.length > 3 && (
-            <span className="text-xs font-medium  py-0.5">...</span>
+            <span className="text-xs font-medium py-0.5 py-0.5">...</span>
           )}
         </InfoRow>
       )}
@@ -161,10 +164,11 @@ export const CardContent: React.FC<CardContentProps> = ({
           </p>
         </InfoRow>
       )}
+
       {description && (
         <InfoRow icon={<MdOutlineDescription className="text-xl mt-1" />}>
           <p className="text-sm text-gray-600 text-justify">
-            {truncateText(description || "", 20)}
+            {truncateText(description, 20)}
           </p>
         </InfoRow>
       )}
@@ -188,7 +192,7 @@ export const CardContent: React.FC<CardContentProps> = ({
         </InfoRow>
       )}
 
-      <div className="mt-auto  absolute left-0 bottom-0">
+      <div className="mt-auto absolute left-0 bottom-0">
         <Link href={MoreDetailsHref}>
           <Button
             className={`data-[hover]:bg-transparent data-[hover]:text-secondary-500 ${
