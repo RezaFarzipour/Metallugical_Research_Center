@@ -9,49 +9,43 @@ import {
 } from "@/utils/formatter/toPersianNumbers";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { RawReserveData, ReportData, ServiceData } from "@/types";
 
 const useDashboardData = (visibleColumns: Set<string>) => {
   const router = useRouter();
-  const [formData, setFormData] = useState({ reserveUp: [] });
+  const [formData, setFormData] = useState<{ reserveUp: ReportData[] }>({ reserveUp: [] });
   const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
-
 
   const {
     dataAllReserveCustomer,
     isLoadingReserve,
     dataAllServiceCustomer,
-    isLoadingServiceCustomer
+    isLoadingServiceCustomer,
   } = useDataQueries();
 
-  const groupReservesByKeys = (reserves) => {
+  // تایپ‌کستینگ برای داده‌های useDataQueries
+  const typedDataAllReserveCustomer = dataAllReserveCustomer as { data: RawReserveData[] } | undefined;
+  const typedDataAllServiceCustomer = dataAllServiceCustomer as ServiceData[] | undefined;
+
+  const groupReservesByKeys = (reserves: RawReserveData[]): { reserveUp: ReportData[] } => {
     return reserves.reduce(
-      (acc, reserve, index) => {
-        const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"
-          } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
+      (acc: { reserveUp: ReportData[] }, reserve: RawReserveData, index: number) => {
+        const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"} تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
-        const service_name = findServiceName(
-          dataAllServiceCustomer ?? [],
-          reserve.service
-        );
-        const reserve_duration = `${toPersianNumbers(
-          reserve.reserve_duration
-        )} ساعت`;
+        const service_name = findServiceName(typedDataAllServiceCustomer ?? [], reserve.service) || "نامشخص";
+        const reserve_duration = `${toPersianNumbers(reserve.reserve_duration)} ساعت`;
 
-        const status =
-          reserve.is_canceled === true
-            ? "لغو شده"
-            : reserve.is_finished === true
-              ? "تمام شده"
-              : "در حال انتظار";
-        const payment_status =
-          reserve.is_payment_verified === true
-            ? "پرداخت شده"
-            : "در انتظار پرداخت";
+        const status = reserve.is_canceled
+          ? "لغو شده"
+          : reserve.is_finished
+            ? "تمام شده"
+            : "در حال انتظار";
+        const payment_status = reserve.is_payment_verified ? "پرداخت شده" : "در انتظار پرداخت";
 
         acc.reserveUp.push({
           _id: toPersianNumbers(index + 1),
           id: reserve.id,
-          name: toPersianNumbers(reserve.user),
+          name: toPersianNumbers(reserve.user), // فرض می‌کنیم user یک شماره تلفن است
           service_name,
           price: toPersianNumbersWithComma(reserve.total_price),
           reserve_duration,
@@ -69,17 +63,15 @@ const useDashboardData = (visibleColumns: Set<string>) => {
     );
   };
 
-  const formDataReseves = Array.isArray(formData.reserveUp)
-    ? formData.reserveUp
-    : [];
+  const formDataReseves: ReportData[] = Array.isArray(formData.reserveUp) ? formData.reserveUp : [];
 
   useEffect(() => {
     if (
       !isLoadingServiceCustomer &&
       !isLoadingReserve &&
-      Array.isArray(dataAllReserveCustomer.data)
+      Array.isArray(typedDataAllReserveCustomer?.data)
     ) {
-      const grouped = groupReservesByKeys(dataAllReserveCustomer.data);
+      const grouped = groupReservesByKeys(typedDataAllReserveCustomer.data);
       setFormData(grouped);
 
       if (grouped.reserveUp.length > 0) {
@@ -87,12 +79,11 @@ const useDashboardData = (visibleColumns: Set<string>) => {
       }
     }
   }, [
-    dataAllReserveCustomer,
-    dataAllServiceCustomer,
+    typedDataAllReserveCustomer,
+    typedDataAllServiceCustomer,
     isLoadingServiceCustomer,
     isLoadingReserve,
   ]);
-
   // محاسبه ستون‌های هدر
   const headerColumns = useMemo(() => {
     return visibleColumns.size === ReservesCustomercolumns.length
@@ -114,13 +105,13 @@ const useDashboardData = (visibleColumns: Set<string>) => {
   const reserveLength = dataAllReserveCustomer?.data?.length;
 
   const activeReservations = dataAllReserveCustomer?.data?.filter(
-    (item) =>
+    (item: any) =>
       item.stage < 6 && !item.is_finished && !item.is_canceled
   );
   const activeReservationCount = activeReservations?.length;
   const cancelReservations = dataAllReserveCustomer?.data?.filter(
-    (item) =>
-      item.stage < 6 && !item.is_finished  && item.is_canceled
+    (item: any) =>
+      item.stage < 6 && !item.is_finished && item.is_canceled
   );
   const cancelReservationCount = cancelReservations?.length;
 
