@@ -72,45 +72,44 @@ const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
   return (
     <>
       <div className="w-full flex flex-col md:flex-row md:justify-between gap-6 p-4 shadow-lg">
-  {/* اطلاعات سرویس */}
-  <div className="flex flex-col space-y-6">
-    <div className="flex items-center gap-4">
-      <div className="relative w-16 h-16 shrink-0">
-        <Image
-          className="rounded-full object-cover"
-          alt={dataByID.cover_image}
-          fill
-          src={getValidImageSrc(dataByID.cover_image)}
-        />
+        {/* اطلاعات سرویس */}
+        <div className="flex flex-col space-y-6">
+          <div className="flex items-center gap-4">
+            <div className="relative w-16 h-16 shrink-0">
+              <Image
+                className="rounded-full object-cover"
+                alt={dataByID.cover_image}
+                fill
+                src={getValidImageSrc(dataByID.cover_image)}
+              />
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-default-400 break-words">
+              {dataByID.title}
+            </h2>
+          </div>
+
+          <ServiceInfo title="اسلاگ" content={dataByID.slug} />
+          <ServiceInfo title="تگ ها" content={tagsArray} />
+        </div>
+
+        {/* دکمه‌ها */}
+        <div className="flex gap-3 md:gap-4 flex-wrap justify-start md:justify-end">
+          <Button
+            onPress={handleEdit}
+            className="flex items-center gap-2 px-4 py-2 text-white bg-gradient-to-r from-secondary-500 to-secondary-700 hover:bg-secondary-800 transition"
+          >
+            <FiEdit size={20} />
+            <span className="hidden sm:inline">ویرایش</span>
+          </Button>
+          <Button
+            onPress={() => setIsModalOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 text-white bg-gradient-to-r from-red-500 to-red-700 hover:bg-red-800 transition"
+          >
+            <FiTrash2 size={20} />
+            <span className="hidden sm:inline">حذف</span>
+          </Button>
+        </div>
       </div>
-      <h2 className="text-xl sm:text-2xl font-bold text-default-400 break-words">
-        {dataByID.title}
-      </h2>
-    </div>
-
-    <ServiceInfo title="اسلاگ" content={dataByID.slug} />
-    <ServiceInfo title="تگ ها" content={tagsArray} />
-  </div>
-
-  {/* دکمه‌ها */}
-  <div className="flex gap-3 md:gap-4 flex-wrap justify-start md:justify-end">
-    <Button
-    onPress={handleEdit}
-      className="flex items-center gap-2 px-4 py-2 text-white bg-gradient-to-r from-secondary-500 to-secondary-700 hover:bg-secondary-800 transition"
-    >
-      <FiEdit size={20} />
-      <span className="hidden sm:inline">ویرایش</span>
-    </Button>
-    <Button
-      onPress={() => setIsModalOpen(true)}
-      className="flex items-center gap-2 px-4 py-2 text-white bg-gradient-to-r from-red-500 to-red-700 hover:bg-red-800 transition"
-    >
-      <FiTrash2 size={20} />
-      <span className="hidden sm:inline">حذف</span>
-    </Button>
-  </div>
-</div>
-
 
       {/* مودال حذف سرویس */}
       {isModalOpen && (

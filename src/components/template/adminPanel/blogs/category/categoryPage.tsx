@@ -23,9 +23,6 @@ const CategoryBlog = () => {
     queryFn: getAllCategoryAdmin,
   });
 
-
-
-
   const { deletBlogCategory } = useDeleteBlogCategory();
 
   // وضعیت مودال
@@ -98,7 +95,7 @@ const CategoryBlog = () => {
               <th>عملیات</th>
             </Table.Header>
             <Table.Body>
-              {data.map((item:blogDatafromServer, index:number) => (
+              {data.map((item: blogDatafromServer, index: number) => (
                 <Table.Row key={item.id}>
                   <td>{index + 1}</td>
                   <td>{item.category_name}</td>

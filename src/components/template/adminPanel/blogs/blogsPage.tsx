@@ -12,16 +12,7 @@ import ModalModule from "@/components/element/ModalModule";
 import Empty from "@/components/element/Empty";
 import { BtnLoader } from "@/components/element/Loader";
 import { useAdminBlogDataAction } from "./hooks/useAdminBlogDataAction";
-
-type CleanBlog = {
-  id: string;
-  name: string;
-  image?: string;
-  actions: string;
-  slug: string;
-  tags: string[];
-  title?: string;      
-};
+import { BlogType } from "@/types";
 
 export const BlogsPage: React.FC = () => {
   const {
@@ -39,18 +30,16 @@ export const BlogsPage: React.FC = () => {
     handleDeleteBlog,
   } = useAdminBlogDataAction();
 
-  const { sortedItems } = useFilteredContainer(formDataBlogs);
+  const { sortedItems } = useFilteredContainer<BlogType>(formDataBlogs);
   const isEmpty = !formDataBlogs || formDataBlogs.length === 0;
 
-
-
-
+  console.log(sortedItems, "sortedItems");
 
   return (
     <div className="grid grid-cols-1">
       <div className=" p-4 md:p-6">
         <TitleStructureDashboards mainTitle="وبلاگ ها" />
-        <FilteredContainer<CleanBlog>
+        <FilteredContainer
           datas={formDataBlogs}
           INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={blogColumns}
@@ -89,7 +78,7 @@ export const BlogsPage: React.FC = () => {
             />
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-28">
-              <CardModule<CleanBlog>
+              <CardModule
                 data={sortedItems}
                 isDate={false}
                 isMoreDetails="adminBlogs"
