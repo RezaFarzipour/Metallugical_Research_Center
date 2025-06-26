@@ -3,8 +3,14 @@
 import { usePathname } from "next/navigation";
 import Layout from "@/components/containers/layout/Layout";
 import HeaderImage from "@/components/module/HeaderImage";
-
-export default function ContactUsLayout({
+// export async function generateMetadata({ params }: Props) {
+//   const { categorySlug } = await params;
+//   return {
+//     title: `بلاگ‌های ${categorySlug}`,
+//     description: `بلاگ‌های مربوط به دسته‌بندی ${categorySlug}`,
+//   };
+// }
+export default function BlogLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,9 +27,8 @@ export default function ContactUsLayout({
 
   return (
     <Layout>
-      {/* banner section */}
-      <HeaderImage breadcrumbItem1="  بلاگ" panelHref="/" />
-      <div className="mt-72">{children}</div>
+      <HeaderImage breadcrumbItem1="بلاگ" panelHref="/" />
+      <main className="md:col-span-9 lg:col-span-10 ">{children}</main>
     </Layout>
   );
 }

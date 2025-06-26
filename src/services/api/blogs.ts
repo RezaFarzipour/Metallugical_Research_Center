@@ -7,7 +7,7 @@ export const getAllCategoryAdmin = async () => {
   const response = await http.get(`blog/category/admin/`);
   return response.data;
 };
-export const createNewBlogCategory = async (data:BlogCategoryInput) => {
+export const createNewBlogCategory = async (data: BlogCategoryInput) => {
   const response = await http.post(`blog/category/admin/`, data);
   return response.data;
 };
@@ -46,7 +46,7 @@ export const getBlogCategoryById = async (
   }
 };
 
-export const getAllBlogsAdmin = async (options:AxiosRequestConfig) => {
+export const getAllBlogsAdmin = async (options: AxiosRequestConfig) => {
   const response = await http.get(`blog/b/any/`, options);
   return response.data;
 };
@@ -89,7 +89,7 @@ export const getBlogCover = async () => {
   return response.data;
 };
 
-export const createNewBlog = async (data:BlogStageOneFormData) => {
+export const createNewBlog = async (data: BlogStageOneFormData) => {
   const response = await http.post(`blog/b/admin/`, data);
 
 
@@ -129,13 +129,23 @@ export const deleteBlog = async ({ id }: { id: string }) => {
   return response.data;
 };
 
-export const createNewBlogContent = async (data:BlogContentInput) => {
+export const createNewBlogContent = async (data: BlogContentInput) => {
   const response = await http.post(`blog/content/admin/`, data);
   return response.data;
 };
 
-export const createNewBlogImageContent = async (data:FormData) => {
+export const createNewBlogImageContent = async (data: FormData) => {
   const response = await http.post(`blog/image/admin/`, data);
+  return response.data;
+};
+
+export const getAllBlogss = async () => {
+  const response = await http.get("blog/b/any/");
+  return response.data;
+};
+export const getAllBlogs = async ({ categorySlug, queries, id }: { categorySlug: string; queries: string; id?: string }) => {
+  const url = `blog/b/any?categorySlug=${categorySlug}${id ? `&id=${id}` : ""}&${queries}`;
+  const response = await http.get(url);
   return response.data;
 };
 
@@ -152,7 +162,6 @@ export const getBlogCategoryByIdCustomer = async (id: string | undefined) => {
     console.log("err", err);
   }
 };
-
 export const deleteBlogById = async ({ id }: { id: string | number }) => {
   const response = await http.delete(`blog/b/admin/${id}/`);
   return response.data;
