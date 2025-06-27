@@ -185,7 +185,12 @@ export interface BlogContentInput {
   is_multiline: boolean;
 }
 
-
+export type Category = {
+  blogs: any[]; // یا BlogType[] اگر تایپ دقیق بلاگ‌ها رو داری
+  category_name: string;
+  id: string;
+  slug: string;
+};
 //ExpiredReserve:
 export interface ExpiredReserveItem {
   id: number;

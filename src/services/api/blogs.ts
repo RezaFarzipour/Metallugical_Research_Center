@@ -143,8 +143,15 @@ export const getAllBlogss = async () => {
   const response = await http.get("blog/b/any/");
   return response.data;
 };
-export const getAllBlogs = async ({ categorySlug, queries, id }: { categorySlug: string; queries: string; id?: string }) => {
-  const url = `blog/b/any?categorySlug=${categorySlug}${id ? `&id=${id}` : ""}&${queries}`;
+export const getAllBlogs = async ({
+  categorySlug,
+  queries,
+}: {
+  categorySlug: string;
+  queries: string;
+}) => {
+  const url = `blog/b/any/?categorySlug=${categorySlug}${queries ? `&${queries}` : ""}`;
+  
   const response = await http.get(url);
   return response.data;
 };

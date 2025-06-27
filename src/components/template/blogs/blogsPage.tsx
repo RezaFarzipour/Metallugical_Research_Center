@@ -4,8 +4,10 @@ import { BtnLoader } from "@/components/element/Loader";
 import TitleStructure from "@/components/element/TitleStructure";
 import CardModule from "@/components/module/cardModule/CardModule";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
+import { getAllBlogss } from "@/services/api/blogs";
 import { BlogType } from "@/types";
 import { cn } from "@/utils/cn";
+import { useQuery } from "@tanstack/react-query";
 
 type BlogPageType = {
   AllBlogs: BlogType[];
@@ -24,10 +26,10 @@ export default function BlogPage({
   // const { data } = useQuery({
   //   queryKey: ["getAll-category"],
   //   queryFn: getAllBlogss,
-  //   initialData,
   //   staleTime: 1000 * 60 * 5,
   //   refetchOnWindowFocus: true,
   // });
+
   // console.log(data, "data");
   // console.log(AllBlogs, "AllBlogs");
 

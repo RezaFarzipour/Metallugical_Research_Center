@@ -1,43 +1,51 @@
+import Empty from "@/components/element/Empty";
 import BlogPage from "@/components/template/blogs/blogsPage";
-import { getAllBlogs } from "@/services/api/blogs";
-import queryString from "query-string";
+import { getAllBlogsCategory } from "@/services/api/blogs";
+import { BlogData, Category } from "@/types";
 
 type Props = {
   params: Promise<{ categorySlug: string }>;
   searchParams: Promise<{ id?: string }>;
 };
 
-export default async function CategoryPage({ params, searchParams }: Props) {
+export default async function CategoryPage({ params }: Props) {
   const { categorySlug } = await params;
-  const resolvedSearchParams = await searchParams;
-  const queries = queryString.stringify(resolvedSearchParams);
 
-  console.log("Category Slug:", categorySlug);
-  console.log("Search Params:", resolvedSearchParams);
+  // دریافت دسته‌ها
+  const categories = await getAllBlogsCategory();
 
-  const blogs = await getAllBlogs({
-    categorySlug,
-    queries,
-    id: resolvedSearchParams.id,
-  });
+  // پیدا کردن دسته مورد نظر بر اساس slug
+  const category = categories.find(
+    (cat: Category) =>
+      String(cat.slug).trim().toLowerCase() ===
+      String(categorySlug).trim().toLowerCase()
+  );
+
+  // اگر دسته پیدا نشد یا بلاگ ندارد آرایه خالی انتخاب شود
+  const blogsInCategory = category?.blogs || [];
+
+  // تبدیل بلاگ‌ها به فرمت مناسب
+  const mappedBlogs = blogsInCategory.map((blog: BlogData) => ({
+    id: blog.id,
+    title: blog.title,
+    slug: blog.slug,
+    coverImage: blog.cover_image?.replace("http://localhost:8000/", "") || "",
+    tags: blog.tags?.[0] || "[]",
+  }));
 
   return (
     <div>
-      {blogs?.length === 0 ? (
-        <p className="text-lg text-secondary-600">
-          پستی در این دسته‌بندی یافت نشد
+      {mappedBlogs.length === 0 ? (
+        <p className="text-lg text-secondary-600 flex justify-center items-center h-full">
+          <Empty
+            btnHref="/admin/services/create"
+            spanValue="بلاگی"
+            btn={false}
+          />{" "}
         </p>
       ) : (
-        <BlogPage AllBlogs={blogs} loading={false} />
+        <BlogPage AllBlogs={mappedBlogs} loading={false} />
       )}
     </div>
   );
-}
-
-export async function generateMetadata({ params }: Props) {
-  const { categorySlug } = await params;
-  return {
-    title: `بلاگ‌های ${categorySlug}`,
-    description: `بلاگ‌های مربوط به دسته‌بندی ${categorySlug}`,
-  };
 }

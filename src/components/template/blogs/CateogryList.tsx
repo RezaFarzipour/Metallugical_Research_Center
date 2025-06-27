@@ -1,6 +1,7 @@
 "use client";
 import TitleStructure from "@/components/element/TitleStructure";
 import { getAllBlogsCategory } from "@/services/api/blogs";
+import { Category } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
@@ -26,10 +27,10 @@ function CategoryList() {
           >
             همه
           </Link>
-          {data?.map((category) => (
-            <li key={category._id}>
+          {data?.map((category: Category) => (
+            <li key={category.id}>
               <Link
-                href={`/blogs/category/${category.slug}`} // اصلاح مسیر
+                href={`/blogs/category/${category.slug}`}
                 className="block px-3 py-2 rounded-lg bg-default-50 hover:bg-secondary-400 hover:text-white transition cursor-pointer font-semibold text-default-400"
               >
                 {category.category_name}
