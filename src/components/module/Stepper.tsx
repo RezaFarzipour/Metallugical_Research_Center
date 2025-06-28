@@ -36,7 +36,7 @@ const Stepper = ({ currentStep, steperDetails }: StepperType) => {
         <div className="flex justify-between items-center gap-4 mt-2 ">
           {steperDetails.map((step) => (
             <div key={step.id} className="w-16 text-center ">
-              <p className="text-xs sm:text-sm text-secondary-100 font-bold text-nowrap text-ellipsis">
+              <p className="text-xs sm:text-sm text-secondary-400 lg:text-default-200 font-bold text-nowrap text-ellipsis">
                 {step.label}
               </p>
             </div>
