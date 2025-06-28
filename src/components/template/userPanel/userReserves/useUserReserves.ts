@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import {
   toPersianNumbers,
   toPersianNumbersWithComma,
@@ -10,11 +10,17 @@ import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesTo
 import { findServiceName } from "@/utils/findeName";
 import { ReservesCustomercolumns } from "@/constants/tableData";
 import useDataQueries from "@/hooks/useDataQueries";
+import { RawReserveData, ReportData, ServiceData } from "@/types";
 
+// تعریف نوع برای پاسخ postReservedService
+interface ReserveResponse {
+  id: string;
+}
 const useReserveData = (visibleColumns: Set<string>) => {
   const router = useRouter();
-  const [formData, setFormData] = useState({ reserveUp: [] });
+  const [formData, setFormData] = useState<{ reserveUp: ReportData[] }>({ reserveUp: [] });
   const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
+
   const {
     dataAllReserveCustomer,
     isLoadingReserve,
@@ -22,36 +28,29 @@ const useReserveData = (visibleColumns: Set<string>) => {
     isLoadingServiceCustomer,
   } = useDataQueries();
 
-  const groupReservesByKeys = (reserves) => {
+  // تایپ‌کستینگ برای داده‌های useDataQueries
+  const typedDataAllReserveCustomer = dataAllReserveCustomer as { data: RawReserveData[] } | undefined;
+  const typedDataAllServiceCustomer = dataAllServiceCustomer as ServiceData[] | undefined;
+
+  const groupReservesByKeys = (reserves: RawReserveData[]): { reserveUp: ReportData[] } => {
     return reserves.reduce(
-      (acc, reserve, index) => {
-        const dateRanges = `${
-          formatDateRangesToPersian2(reserve.reserve_from) || "?"
-        } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
+      (acc: { reserveUp: ReportData[] }, reserve: RawReserveData, index: number) => {
+        const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"} تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
-        const service_name = findServiceName(
-          dataAllServiceCustomer ?? [],
-          reserve.service
-        );
-        const reserve_duration = `${toPersianNumbers(
-          reserve.reserve_duration
-        )} ساعت`;
+        const service_name = findServiceName(typedDataAllServiceCustomer ?? [], reserve.service) || "نامشخص";
+        const reserve_duration = `${toPersianNumbers(reserve.reserve_duration)} ساعت`;
 
-        const status =
-          reserve.is_canceled === true
-            ? "لغو شده"
-            : reserve.is_finished === true
+        const status = reserve.is_canceled
+          ? "لغو شده"
+          : reserve.is_finished
             ? "تمام شده"
             : "در حال انتظار";
-        const payment_status =
-          reserve.is_payment_verified === true
-            ? "پرداخت شده"
-            : "در انتظار پرداخت";
+        const payment_status = reserve.is_payment_verified ? "پرداخت شده" : "در انتظار پرداخت";
 
         acc.reserveUp.push({
           _id: toPersianNumbers(index + 1),
           id: reserve.id,
-          name: toPersianNumbers(reserve.user),
+          name: toPersianNumbers(reserve.user), // فرض می‌کنیم user یک شماره تلفن است
           service_name,
           price: toPersianNumbersWithComma(reserve.total_price),
           reserve_duration,
@@ -69,16 +68,15 @@ const useReserveData = (visibleColumns: Set<string>) => {
     );
   };
 
-  const formDataReseves = Array.isArray(formData.reserveUp)
-    ? formData.reserveUp
-    : [];
+  const formDataReseves: ReportData[] = Array.isArray(formData.reserveUp) ? formData.reserveUp : [];
+
   useEffect(() => {
     if (
       !isLoadingServiceCustomer &&
       !isLoadingReserve &&
-      Array.isArray(dataAllReserveCustomer.data)
+      Array.isArray(typedDataAllReserveCustomer?.data)
     ) {
-      const grouped = groupReservesByKeys(dataAllReserveCustomer.data);
+      const grouped = groupReservesByKeys(typedDataAllReserveCustomer.data);
       setFormData(grouped);
 
       if (grouped.reserveUp.length > 0) {
@@ -86,8 +84,8 @@ const useReserveData = (visibleColumns: Set<string>) => {
       }
     }
   }, [
-    dataAllReserveCustomer,
-    dataAllServiceCustomer,
+    typedDataAllReserveCustomer,
+    typedDataAllServiceCustomer,
     isLoadingServiceCustomer,
     isLoadingReserve,
   ]);
@@ -96,9 +94,7 @@ const useReserveData = (visibleColumns: Set<string>) => {
   const headerColumns = useMemo(() => {
     return visibleColumns.size === ReservesCustomercolumns.length
       ? ReservesCustomercolumns
-      : ReservesCustomercolumns.filter((column) =>
-          visibleColumns.has(column.uid)
-        );
+      : ReservesCustomercolumns.filter((column) => visibleColumns.has(column.uid));
   }, [visibleColumns]);
 
   const firstActionClickHandler = useCallback(
@@ -107,23 +103,28 @@ const useReserveData = (visibleColumns: Set<string>) => {
     },
     [router]
   );
+
   const isEmpty = !formDataReseves || formDataReseves.length === 0;
 
-  //first post request when user click on continue button
-  const { mutateAsync: createServiceReserve, isPending: isCreating } =
-    useMutation({
-      mutationKey: ["post-reserve"],
-      mutationFn: postReservedService,
-    });
+  // درخواست POST برای رزرو سرویس
+  const { mutateAsync: createServiceReserve, isPending: isCreating } = useMutation<
+    ReserveResponse,
+    Error,
+    void
+  >({
+    mutationKey: ["post-reserve"],
+    mutationFn: postReservedService,
+  });
 
   const handleReserve = async () => {
     try {
-      const { id } = await createServiceReserve();
-      router.push(`/reservation?reserve-id=${id}`);
+      const response = await createServiceReserve();
+      router.push(`/reservation?reserve-id=${response.id}`);
     } catch (e) {
       console.log("err", e);
     }
   };
+
   return {
     formDataReseves,
     visibleKeys,
@@ -132,6 +133,7 @@ const useReserveData = (visibleColumns: Set<string>) => {
     handleReserve,
     isEmpty,
     isLoadingReserve,
+    isCreating,
   };
 };
 

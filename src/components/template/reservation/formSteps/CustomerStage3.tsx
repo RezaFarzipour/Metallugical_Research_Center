@@ -8,7 +8,7 @@ import {
 } from "@/schemas/payment_ImageSchema";
 import { sendReceipt } from "@/services/api/reserve";
 import { showToast } from "@/store/useToastSlice";
-import { reservationDataType, ServiceDetailsType } from "@/types";
+import { reservationDataType } from "@/types";
 import { Button } from "@heroui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import ReserveInfo from "@/components/module/ReserveInfo";
+import { ServiceDetailsType } from "@/types/serviceType";
 
 type CustomerStage3Props = {
   serviceData: ServiceDetailsType | undefined;

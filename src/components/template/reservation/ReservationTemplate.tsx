@@ -17,9 +17,9 @@ import { getAllServiceCustomer } from "@/services/api/service";
 import { BtnLoader } from "@/components/element/Loader";
 import WaitingStage from "@/components/template/reservation/formSteps/WaitingStage";
 import FinalStage from "@/components/template/reservation/formSteps/FinalStage";
-import { ServiceDetailsType } from "@/types";
 import AdminStage2 from "./formSteps/AdminStage2";
 import Stage1 from "./formSteps/CustomerStage1";
+import { ServiceDetailsType } from "@/types/serviceType";
 const ReservationTemplate = () => {
   const searchParams = useSearchParams();
   const reserveId = searchParams.get("reserve-id");

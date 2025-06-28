@@ -10,15 +10,14 @@ interface ImageContainerProps {
   view: boolean;
 }
 
-
-const BASE_URL = process.env.NEXT_PUBLIC_IMAGE_BASE_URL ?? "http://localhost:8000";
+const BASE_URL =
+  process.env.NEXT_PUBLIC_IMAGE_BASE_URL ?? "http://localhost:8000";
 
 const getValidImageSrc = (src: string | undefined): string => {
   if (!src) return "/fallback.jpg";
   if (src.startsWith("http") || src.startsWith("/")) return src;
   return `${BASE_URL}/${src}`;
 };
-
 
 export const ImageContainer: React.FC<ImageContainerProps> = ({
   image,
@@ -32,7 +31,7 @@ export const ImageContainer: React.FC<ImageContainerProps> = ({
     <motion.div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="  w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 group-hover:rotate-2 "
+      className="  w-full h-[250px] object-cover transition-transform duration-300 ease-out group-hover:scale-105 group-hover:rotate-2 "
       initial="hidden"
     >
       {/* Main Image */}

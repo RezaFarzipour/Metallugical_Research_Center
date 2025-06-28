@@ -2,30 +2,19 @@
 import { useMemo } from "react";
 import { useTableStore } from "@/store/useTableSlice";
 
-interface Data {
-    id: number | string;
-    actions?: string;
+// تعریف اینترفیس پایه برای TData
+interface BaseTableData {
+    id: string | number;
     name?: string;
-    service_name?: string
-    phone_number?: string;
-    email?: string;
-    role?: string;
-    status?: string;
-    payment_status?: string;
-    amount?: string;
-    date?: string;
+    service_name?: string;
     title?: string;
-    description?: string;
-    cover_image?: string;
-    author?: string;
-    articleTitle?: string;
-    slug?: string;
-    tags?: string[];
-    coverImage?: string;
-    image?: string;
+    payment_status?: string;
+    status?: string;
+    role?: string;
+    [key: string]: any; // برای انعطاف‌پذیری در پراپرتی‌های اضافی
 }
 
-export function useFilteredContainer(datas: Data[]) {
+export function useFilteredContainer<TData extends BaseTableData>(datas: TData[]) {
     const {
         filterValue,
         statusFilter,
@@ -36,45 +25,44 @@ export function useFilteredContainer(datas: Data[]) {
         page,
     } = useTableStore();
 
-    // محاسبه فیلترهای مختلف
-    const filteredItems = useMemo<Data[]>(() => {
-        let filteredUsers = [...datas];
+    // محاسبه آیتم‌های فیلترشده
+    const filteredItems = useMemo<TData[]>(() => {
+        let filteredItems = [...datas];
 
         const applyFilter = (
-            items: Data[],
+            items: TData[],
             filter: string | Set<string>,
-            key: keyof Data
+            key: keyof TData
         ) => {
-
             if (filter !== "all" && filter instanceof Set) {
-                return items.filter((item) => filter.has(item[key] as string));
+                return items.filter((item) => filter.has(String(item[key])));
             }
             return items;
         };
 
         if (filterValue) {
             const lowerCaseFilter = filterValue.toLowerCase();
-            filteredUsers = filteredUsers.filter((user) => {
-                const name = user.name?.toLowerCase() || "";
-                const service_name = user.service_name?.toLowerCase() || "";
-                const title = user.title?.toLowerCase() || "";
+            filteredItems = filteredItems.filter((item) => {
+                const name = String(item.name || "").toLowerCase();
+                const service_name = String(item.service_name || "").toLowerCase();
+                const title = String(item.title || "").toLowerCase();
 
                 return (
-                    name.includes(lowerCaseFilter) || service_name.includes(lowerCaseFilter) || title.includes(lowerCaseFilter)
+                    name.includes(lowerCaseFilter) ||
+                    service_name.includes(lowerCaseFilter) ||
+                    title.includes(lowerCaseFilter)
                 );
             });
         }
 
+        filteredItems = applyFilter(filteredItems, peymentStatusFilter, "payment_status");
+        filteredItems = applyFilter(filteredItems, statusFilter, "status");
+        filteredItems = applyFilter(filteredItems, rolesFilter, "role");
 
+        return filteredItems;
+    }, [datas, filterValue, statusFilter, peymentStatusFilter, rolesFilter]);
 
-        filteredUsers = applyFilter(filteredUsers, peymentStatusFilter, "payment_status");
-        filteredUsers = applyFilter(filteredUsers, statusFilter, "status");
-        filteredUsers = applyFilter(filteredUsers, rolesFilter, "role");
-
-        return filteredUsers;
-    }, [datas, filterValue, statusFilter, rolesFilter, peymentStatusFilter]);
-
-    // محاسبه تعداد صفحات و آیتم‌های قابل نمایش
+    // محاسبه صفحه‌بندی
     const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
     const paginatedItems = useMemo(() => {
@@ -83,12 +71,17 @@ export function useFilteredContainer(datas: Data[]) {
         return filteredItems.slice(start, end);
     }, [filteredItems, page, rowsPerPage]);
 
-    // مرتب‌سازی آیتم‌ها
+    // محاسبه آیتم‌های مرتب‌شده
     const sortedItems = useMemo(() => {
         return [...paginatedItems].sort((a, b) => {
-            const first = a[sortDescriptor.column as keyof Data];
-            const second = b[sortDescriptor.column as keyof Data];
-            const cmp = first && second && first < second ? -1 : first && second && first > second ? 1 : 0;
+            const first = a[sortDescriptor.column];
+            const second = b[sortDescriptor.column];
+            const cmp =
+                first && second && first < second
+                    ? -1
+                    : first && second && first > second
+                        ? 1
+                        : 0;
             return sortDescriptor.direction === "ascending" ? cmp : -cmp;
         });
     }, [paginatedItems, sortDescriptor]);

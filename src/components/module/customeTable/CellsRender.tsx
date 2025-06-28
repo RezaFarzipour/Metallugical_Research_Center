@@ -6,29 +6,13 @@ import Image from "next/image";
 import EditBtn from "./EditBtn";
 import DeleteBtn from "./DeleteBtn";
 import truncateText from "@/utils/formatter/truncateText";
+import { BlogType, ReportData, TableBase, UserType } from "@/types";
+import { ServerServiceType } from "@/types/serviceType";
+type TableData = ServerServiceType | BlogType | UserType | ReportData;
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-  status: string;
-  amount: string;
-  date: string;
-  title: string;
-  description: string;
-  admin_description: string;
-  image: string;
-  author: string;
-  articleTitle: string;
-  dateRange: string;
-  payment_status?: string;
-  tags: string[];
-}
-
-interface CellRendererProps {
-  data: User;
-  columnKey: keyof User | "actions";
+interface CellRendererProps<T extends TableData> {
+  data: T[];
+  columnKey: keyof TableBase | "actions";
   firstActionContent: string;
   firstActionIcon?: React.FC;
   secondActionContent: string;
@@ -49,7 +33,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
   secondActionClickHandler,
   image,
 }) => {
-  const cellValue = data[columnKey as keyof User];
+  const cellValue = data[columnKey as keyof TableBase];
 
   switch (columnKey) {
     case "name":
@@ -116,7 +100,6 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
               {cellValue || "توضیحاتی ثبت نشده"}
             </div>
           }
-  
         >
           <Chip size="md" className="cursor-pointer" variant="shadow">
             {cellValue

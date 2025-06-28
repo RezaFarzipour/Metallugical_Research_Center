@@ -14,25 +14,8 @@ import {
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
 import { Button } from "@heroui/button";
 import { useDeleteService } from "./hooks/useDeleteService";
+import { ServiceData } from "@/types/serviceType";
 
-interface ServiceImage {
-  id: number;
-  image: string;
-  service: number;
-}
-interface ReserveDate {
-  reserved_from: string; // مثلاً "2025-04-26"
-  reserved_to: string;
-}
-interface ServiceData {
-  id: number;
-  service_name: string;
-  description: string;
-  price: number;
-  cover_image: string;
-  "service-images": ServiceImage[];
-  "service-reserve_date"?: ReserveDate[];
-}
 interface ServiceDetailsPageProps {
   dataByID: ServiceData;
 }

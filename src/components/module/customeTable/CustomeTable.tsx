@@ -10,39 +10,31 @@ import {
   TableCell,
 } from "@heroui/react";
 import { CellRenderer } from "./CellsRender";
+import { ServerServiceType } from "@/types/serviceType";
+import { BlogType, ReportData, TableBase, UserType } from "@/types";
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-  status: string;
-  amount: string;
-  date: string;
-  title: string;
-  description: string;
-  image: string;
-  author: string;
-  articleTitle: string;
-}
+type TableData = ServerServiceType | BlogType | UserType | ReportData;
+
 interface Column {
   name: string;
   uid: string;
-  sortable?: boolean;
 }
-interface CustomeTableProps {
+interface CustomeTableProps<T extends TableData> {
   headerColumns: Column[];
   sortedItems: T[];
-  firstActionContent: string;
+  firstActionContent?: string;
   firstActionIcon?: React.FC;
-  secondActionContent: string;
+  secondActionContent?: string;
   secondActionIcon?: React.FC;
   firstActionClickHandler?: (id: number | string, phone_number: string) => void;
-  secondActionClickHandler?: (id: number | string, phone_number: string) => void;
+  secondActionClickHandler?: (
+    id: number | string,
+    phone_number: string
+  ) => void;
   image?: boolean;
 }
 
-export default function CustomeTable({
+export default function CustomeTable<T extends TableData>({
   headerColumns,
   sortedItems,
   firstActionContent,
@@ -52,7 +44,7 @@ export default function CustomeTable({
   firstActionClickHandler,
   secondActionClickHandler,
   image,
-}: CustomeTableProps) {
+}: CustomeTableProps<T>) {
   return (
     <Table
       isHeaderSticky
@@ -65,7 +57,6 @@ export default function CustomeTable({
           <TableColumn
             key={column.uid}
             align={column.uid === "actions" ? "center" : "start"}
-            allowsSorting={column.sortable}
           >
             {column.name}
           </TableColumn>
@@ -78,7 +69,7 @@ export default function CustomeTable({
               <TableCell>
                 <CellRenderer
                   data={item}
-                  columnKey={columnKey as keyof User | "actions"}
+                  columnKey={columnKey as keyof TableBase | "actions"}
                   firstActionContent={firstActionContent}
                   firstActionIcon={firstActionIcon}
                   secondActionContent={secondActionContent}

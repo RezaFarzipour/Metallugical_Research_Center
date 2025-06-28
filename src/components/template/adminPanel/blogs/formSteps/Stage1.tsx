@@ -29,8 +29,6 @@ interface BlogesActionProps {
   setStep: (step: number) => void;
 }
 
-
-
 const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
   const {
     title,
@@ -213,7 +211,6 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
             control={control}
             render={({ field: { value, onChange, ...rest } }) => (
               <FileInput
-             
                 multiple={false}
                 label="انتخاب کاور بلاگ"
                 errors={errors}

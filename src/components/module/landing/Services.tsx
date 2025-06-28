@@ -6,14 +6,15 @@ import TitleStructure from "@/components/element/TitleStructure";
 import { useVisibleCount } from "@/hooks/useVisibleCount";
 import { fadeInSlide, staggerContainer } from "@/utils/motion";
 import { motion } from "framer-motion";
-import { ServiceDetailsType } from "@/types";
 import Button from "@/components/element/Button";
+import { ServiceData } from "@/types/serviceType";
 
 type LandingPageProps = {
-  initialData: ServiceDetailsType[];
+  initialData: ServiceData[];
 };
 const Services = ({ initialData }: LandingPageProps) => {
   const visibleCount = useVisibleCount({ sm: 4, md: 4, lg: 6 });
+  console.log(initialData, "initialData");
 
   return (
     <motion.div
@@ -37,7 +38,7 @@ const Services = ({ initialData }: LandingPageProps) => {
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <CardModule<ServiceDetailsType>
+            <CardModule<ServiceData>
               data={[item]}
               widthConter="100%"
               heightImg="300px"

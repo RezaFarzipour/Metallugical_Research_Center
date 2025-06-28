@@ -4,7 +4,7 @@ import CardModule from "@/components/module/cardModule/CardModule";
 import Empty from "@/components/element/Empty";
 import useExpiredReserveStore from "@/store/useExpiredReserveStore";
 
-const WarningPage: React.FC = () => {
+const ExpiredReservePage: React.FC = () => {
   const { expiredReserveDates } = useExpiredReserveStore();
   console.log(expiredReserveDates, "expiredReserveDates");
 
@@ -42,4 +42,4 @@ const WarningPage: React.FC = () => {
   );
 };
 
-export default WarningPage;
+export default ExpiredReservePage;

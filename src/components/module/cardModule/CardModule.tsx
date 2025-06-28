@@ -3,9 +3,14 @@ import { Card } from "@heroui/react";
 import { ImageContainer } from "./ImageContainer";
 import { CardContent } from "./CardContent";
 import { cn } from "@/utils/cn";
-import type { ServiceDetailsType, BlogType } from "@/types";
+import { ServerServiceType, ServiceDetailsType } from "@/types/serviceType";
+import { BlogType, ExpiredReserveItem } from "@/types";
 
-type CardData = ServiceDetailsType | BlogType;
+type CardData =
+  | ServerServiceType
+  | BlogType
+  | ServiceDetailsType
+  | ExpiredReserveItem;
 
 type Props<T extends CardData> = {
   data: T[];
@@ -16,6 +21,7 @@ type Props<T extends CardData> = {
   heightConter: string;
   view?: boolean;
   styleForAdmin: boolean;
+  bottomOffset: string;
 };
 
 const CardModule = <T extends CardData>({
@@ -34,7 +40,7 @@ const CardModule = <T extends CardData>({
     cardsBox: cn(
       "w-full max-w-[600px] mb-32 mt-8 col-span-12 sm:col-span-5 relative overflow-visible group"
     ),
-    cardsList: "w-full max-w-[800px] max-h-[250px] flex flex-col md:flex-row ",
+    cardsList: "w-full max-w-[800px] min-h-[220px] flex flex-col md:flex-row ",
   };
 
   let parsedTags: string[] = [];
@@ -43,14 +49,8 @@ const CardModule = <T extends CardData>({
     <>
       {data.map((item) => {
         if ("tags" in item && item.tags) {
-          try {
-            const tagValue = Array.isArray(item.tags)
-              ? item.tags[0]
-              : item.tags;
-            parsedTags = JSON.parse(tagValue);
-          } catch (e) {
-            console.error("Invalid tags format:", item.tags);
-          }
+          const tagValue = Array.isArray(item.tags) ? item.tags[0] : item.tags;
+          parsedTags = JSON.parse(tagValue);
         }
         const image =
           "cover_image" in item
@@ -58,7 +58,7 @@ const CardModule = <T extends CardData>({
             : "coverImage" in item
             ? item.coverImage
             : "image" in item
-            ? item!.image
+            ? item?.image
             : undefined;
 
         return (

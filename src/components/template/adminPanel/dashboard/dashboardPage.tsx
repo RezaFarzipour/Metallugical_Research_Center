@@ -12,8 +12,13 @@ import useDashboardData from "./useDashboardData";
 import { BtnLoader } from "@/components/element/Loader";
 import Empty from "@/components/element/Empty";
 import Minicard from "@/components/element/Minicard";
+import { CardsData } from "@/types";
 
-const DashboardPage: React.FC = ({ cardsData }) => {
+interface DashboardPageProps {
+  cardsData: CardsData;
+}
+
+const DashboardPage: React.FC<DashboardPageProps> = ({ cardsData }) => {
   const { visibleColumns } = useTableStore();
   const {
     formDataReseves,

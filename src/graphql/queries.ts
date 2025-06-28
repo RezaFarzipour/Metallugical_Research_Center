@@ -13,3 +13,6 @@ export const GET_ALL_BLOGS = gql`
     }
   
 `;
+
+
+

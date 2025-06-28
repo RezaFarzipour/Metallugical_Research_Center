@@ -22,7 +22,7 @@ import {
   undoButtons,
 } from "./toolbarButtons";
 import ImageResize from "tiptap-extension-resize-image";
-import { CgEnter } from "react-icons/cg";
+import { AiOutlineEnter } from "react-icons/ai";
 
 // 📌 نوع props برای TextEditor
 export type ToolbarButton = {
@@ -123,7 +123,7 @@ const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(
     const allBtn = [
       {
         title: "پاراگراف جدید",
-        icon: <CgEnter />,
+        icon: <AiOutlineEnter size={18} color="#444" />,
         action: () => editor.chain().focus().insertContent("<p><br></p>").run(),
       },
       ...baseButtons(editor, pickColor, addImage),

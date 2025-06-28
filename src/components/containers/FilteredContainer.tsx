@@ -6,8 +6,8 @@ import TopContent from "../module/filterdContent/topContent/TopContent";
 import BottomContent from "../module/filterdContent/BottomContent";
 
 export interface TableData {
-  id: number |string;
-  key?: string; 
+  id: number | string;
+  key?: string;
 }
 interface PanelContainerProps<T extends TableData> {
   datas: T[];
@@ -19,7 +19,7 @@ interface PanelContainerProps<T extends TableData> {
   columnsDropDownBtn?: boolean;
   rolesDropDown: boolean;
   stausDropDown: boolean;
-  columns: {
+  columns?: {
     name: string;
     uid: string;
   }[];

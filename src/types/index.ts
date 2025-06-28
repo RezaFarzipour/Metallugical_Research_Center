@@ -68,13 +68,6 @@ export interface UserProfileResponse {
   };
 }
 
-export type serviceDataEditType = {
-  id: number;
-  service_name: string;
-  description: string;
-  price: number;
-  cover_image: string;
-}[]
 
 export type AllUsersType = {
   username: string;
@@ -86,16 +79,14 @@ export type AllUsersType = {
   role: "customer" | "admin";
 };
 
-// export type ServiceDetailsType = {
-//   data: {
-//     id: number;
-//     service_name: string;
-//     description: string;
-//     price: number;
-//     cover_image: string;
-//     reserve_duration: number
-//   };
-// };
+export type UserType = {
+  id: string | number;
+  name?: string;
+  email?: string;
+  phone_number?: string;
+  is_signup?: boolean;
+  actions?: string;
+};
 
 export type reservationDataType = {
   is_reservation_time_verified: boolean;
@@ -108,47 +99,6 @@ export type reservationDataType = {
   service?: string;
   payment_image: string;
   user: string;
-};
-
-//services Type
-export interface EditorItem {
-  id: string;
-  type: string;
-  content: string;
-}
-
-export type ServiceImageType = {
-  id: number;
-  image: string;
-  service: number;
-};
-
-export type ServiceReserveDateType = {
-  id: number;
-  reserved_from: string; // می‌تونی بزاری Date اگه قراره تبدیل بشه
-  reserved_to: string;
-  service: number;
-};
-
-export type ServiceDetailsType = {
-  data:{
-    id: number;
-    service_name: string;
-    description: string;
-    price: number;
-    cover_image: string;
-    "service-images": ServiceImageType[];
-    "service-reserve_date": ServiceReserveDateType[];
-  }
- 
-};
-
-export type BlogType = {
-  coverImage?: string;
-  id: number | string;
-  slug: string;
-  tags: string[];
-  title?: string;
 };
 
 
@@ -172,7 +122,6 @@ export interface Reserve {
 
 
 //blog details type
-
 interface BlogContent {
   id: string;
   index: number;
@@ -192,57 +141,27 @@ export interface BlogData {
   title: string;
   slug: string;
   cover_image: string;
-  tags: string[]; 
-  category_list : string[];
+  tags: string[];
+  category_list: string[];
   "blog-content": BlogContent[];
   "blog-image": BlogImage[];
 }
-
-
-// تایپ برای تصاویر سرویس
-interface ServiceImage {
-  id: number;
-  image: string;
-  service: number;
+export interface EditorItem {
+  id: string;
+  type: string;
+  content: string;
 }
 
-// تایپ برای تاریخ‌های رزرو
-interface ServiceReserveDate {
-  id: number;
-  reserved_from: string;
-  reserved_to: string;
-  service: number;
-}
-
-// تایپ برای سرویس
-export interface Service {
-  id: number;
-  service_name: string;
-  description: string;
-  price: number;
-  cover_image: string;
-  'service-images': ServiceImage[];
-  'service-reserve_date': ServiceReserveDate[];
-}
-
-// تایپ برای آیتم‌های منقضی شده
-export interface ExpiredReserve {
-  id: number;
-  service_id: number;
-  service_name: string;
-  cover_image: string;
-  price: number;
-  description: string;
-
-}
-
-// تایپ برای استور Zustand
-export interface ExpiredReserveStore {
-  expiredReserveDates: ExpiredReserve[];
-  setExpiredReserveDates: (data: ExpiredReserve[]) => void;
-}
-
-
+export type BlogType = {
+  id: string | number;
+  name?: string;
+  title?: string;
+  image?: string;
+  coverImage?: string;
+  slug?: string; // اختیاری برای رفع خطا
+  tags?: string[];
+  actions?: string;
+};
 
 export interface blogDatafromServer {
   blogs: [];
@@ -264,4 +183,101 @@ export interface BlogContentInput {
   index: number;
   class_name: string;
   is_multiline: boolean;
+}
+
+export type Category = {
+  blogs: any[]; // یا BlogType[] اگر تایپ دقیق بلاگ‌ها رو داری
+  category_name: string;
+  id: string;
+  slug: string;
+};
+//ExpiredReserve:
+export interface ExpiredReserveItem {
+  id: number;
+  serviceId: number;
+  service_id: number;
+  serviceName: string;
+  service_name: string;
+  coverImage: string;
+  cover_image: string;
+  price: number;
+  description: string;
+}
+// export interface ExpiredReserve {
+//   id: number;
+//   service_id: number;
+//   service_name: string;
+//   cover_image: string;
+//   price: number;
+//   description: string;
+
+// }
+// تایپ برای استور Zustand
+export interface ExpiredReserveStore {
+  expiredReserveDates: ExpiredReserveItem[];
+  setExpiredReserveDates: (data: ExpiredReserveItem[]) => void;
+}
+
+//customeTable
+export interface TableBase {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+  amount: string;
+  date: string;
+  title: string;
+  description: string;
+  admin_description: string;
+  image: string;
+  author: string;
+  articleTitle: string;
+  dateRange: string;
+  payment_status?: string;
+  tags: string[];
+}
+
+
+//Reports:
+export interface ReportData {
+  _id: string;
+  id: string;
+  name: string;
+  phone_number?: string;
+  service_name: string;
+  price: string;
+  reserve_duration: string;
+  dateRange: string;
+  admin_description: string;
+  stage: string;
+  status: string;
+  payment_status: string;
+  actions?: string;
+
+}
+
+export interface RawReserveData {
+  id: string;
+  user: string;
+  service: string;
+  reserve_from: string;
+  reserve_to: string;
+  reserve_duration: number;
+  total_price: number;
+  admin_description: string;
+  stage: number;
+  is_canceled: boolean;
+  is_finished: boolean;
+  is_payment_verified: boolean;
+}
+export interface ServiceData {
+  id: string;
+  service_name: string;
+}
+export interface CardsData {
+  numberOfUsers: number;
+  numberOfServices: number;
+  numberOfReservations: number;
+  numberOfBlogs: number;
 }

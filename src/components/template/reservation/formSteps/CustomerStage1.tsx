@@ -4,7 +4,6 @@ import { useGetUser } from "@/hooks/useAuth";
 import { patchReserveDetails } from "@/services/api/reserve";
 import { getServicesByIdCustomer } from "@/services/api/service";
 import { showToast } from "@/store/useToastSlice";
-import { serviceDataEditType } from "@/types";
 import { cn } from "@/utils/cn";
 import { Button } from "@heroui/button";
 import { useMutation } from "@tanstack/react-query";
@@ -14,6 +13,7 @@ import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import BlurModal from "@/components/element/BlurModal";
 import Stage1ModalBody from "./Stage1ModalBody";
+import { serviceDataEditType } from "@/types/serviceType";
 
 type stage1Props = {
   allServices: serviceDataEditType;

@@ -1,7 +1,8 @@
 "use client";
-import { reservationDataType, ServiceDetailsType } from "@/types";
+import { reservationDataType } from "@/types";
 import React from "react";
 import WaitingStage from "./WaitingStage";
+import { ServiceDetailsType } from "@/types/serviceType";
 
 type AdminStage2Props = {
   serviceData: ServiceDetailsType | undefined;

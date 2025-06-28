@@ -14,11 +14,13 @@ import ServiceDetailsForm from "@/components/module/controller/ServiceDetailsFor
 import { showToast } from "@/store/useToastSlice";
 import FileInput from "@/components/element/FileInput";
 import { imageUrlToFile } from "@/utils/formatter/fileFormatter";
-import { serviceDataEditType } from "@/types";
 import { BtnLoader } from "@/components/element/Loader";
 import PrimaryButton from "@/components/element/Button";
 import { useCreateService } from "../hooks/useCreateService";
 import { useEditService } from "../hooks/useEditService";
+import { serviceDataEditType } from "@/types/serviceType";
+
+// Define the service data edit type as a single object (not an array)
 
 interface ServicesActionProps {
   serviceDataEdit?: Partial<serviceDataEditType>;

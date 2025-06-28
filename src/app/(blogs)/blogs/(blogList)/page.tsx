@@ -1,6 +1,5 @@
 import createServerApolloClient from "@/lib/apollo-server-client";
 import { GET_ALL_BLOGS } from "@/graphql/queries";
-import { getAllBlogsCategory } from "@/services/api/blogs";
 import BlogPage from "@/components/template/blogs/blogsPage";
 
 export const metadata = {
@@ -19,10 +18,6 @@ async function BlogsPage() {
     fetchPolicy: "no-cache", //دیتارو cache نمیکنه و همیشه اخرین دیتارو میده
   });
 
-  const data = await getAllBlogsCategory();
-
-  return (
-    <BlogPage AllBlogs={AllBlogs.blogs} loading={loading} initialData={data} />
-  );
+  return <BlogPage AllBlogs={AllBlogs.blogs} loading={loading} />;
 }
 export default BlogsPage;

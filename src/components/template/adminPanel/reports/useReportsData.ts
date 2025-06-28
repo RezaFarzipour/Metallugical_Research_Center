@@ -1,12 +1,20 @@
-import { ReportsAdmincolumns } from '@/constants/tableData';
-import useAdminDataQueries from '@/hooks/useDataQueries';
-import { findName, findServiceName } from '@/utils/findeName';
-import { formatDateRangesToPersian2 } from '@/utils/formatter/formatDateRangesToPersian';
-import { toPersianNumbers, toPersianNumbersWithComma } from '@/utils/formatter/toPersianNumbers';
-import { useEffect, useMemo, useState } from 'react'
+import { ReportsAdmincolumns } from "@/constants/tableData";
+import useAdminDataQueries from "@/hooks/useDataQueries";
+import { RawReserveData, ReportData, ServiceData } from "@/types";
+import { findName, findServiceName } from "@/utils/findeName";
+import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
+import {
+    toPersianNumbers,
+    toPersianNumbersWithComma,
+} from "@/utils/formatter/toPersianNumbers";
+import { useEffect, useMemo, useState } from "react";
+
+
 
 const useReportsData = (visibleColumns: Set<string>) => {
-    const [formData, setFormData] = useState({ reserveUp: [] });
+    const [formData, setFormData] = useState<{ reserveUp: ReportData[] }>({
+        reserveUp: [],
+    });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
     const {
@@ -18,31 +26,42 @@ const useReportsData = (visibleColumns: Set<string>) => {
         isLoadingReserve,
     } = useAdminDataQueries();
 
-    const groupReservesByKeys = (reserves) => {
+    // فرض می‌کنیم نوع داده‌های بازگشتی از useAdminDataQueries
+    const typedDataAllServiceAdmin = dataAllServiceAdmin as
+        | ServiceData[]
+        | undefined;
+    const typedDataAllReserveCustomer = dataAllReserveCustomer as
+        | { data: RawReserveData[] }
+        | undefined;
+
+    const groupReservesByKeys = (
+        reserves: RawReserveData[]
+    ): { reserveUp: ReportData[] } => {
         return reserves.reduce(
-            (acc, reserve, index) => {
+            (
+                acc: { reserveUp: ReportData[] },
+                reserve: RawReserveData,
+                index: number
+            ) => {
                 const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"
                     } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
-                const name = findName(dataUser ?? [], reserve.user);
-                const service_name = findServiceName(
-                    dataAllServiceAdmin ?? [],
-                    reserve.service
-                );
+                const name = findName(dataUser, reserve.user) || "نامشخص";
+                const service_name =
+                    findServiceName(typedDataAllServiceAdmin ?? [], reserve.service) ||
+                    "نامشخص";
                 const reserve_duration = `${toPersianNumbers(
                     reserve.reserve_duration
                 )} ساعت`;
 
-                const status =
-                    reserve.is_canceled === true
-                        ? "لغو شده"
-                        : reserve.is_finished === true
-                            ? "تمام شده"
-                            : "در حال انتظار";
-                const payment_status =
-                    reserve.is_payment_verified === true
-                        ? "پرداخت شده"
-                        : "در انتظار پرداخت";
+                const status = reserve.is_canceled
+                    ? "لغو شده"
+                    : reserve.is_finished
+                        ? "تمام شده"
+                        : "در حال انتظار";
+                const payment_status = reserve.is_payment_verified
+                    ? "پرداخت شده"
+                    : "در انتظار پرداخت";
 
                 acc.reserveUp.push({
                     _id: toPersianNumbers(index + 1),
@@ -65,17 +84,18 @@ const useReportsData = (visibleColumns: Set<string>) => {
         );
     };
 
-    const formDataReseves = Array.isArray(formData.reserveUp)
+    const formDataReseves: ReportData[] = Array.isArray(formData.reserveUp)
         ? formData.reserveUp
         : [];
+
     useEffect(() => {
         if (
             !isLoadingUser &&
             !isLoadingService &&
             !isLoadingReserve &&
-            Array.isArray(dataAllReserveCustomer.data)
+            Array.isArray(typedDataAllReserveCustomer?.data)
         ) {
-            const grouped = groupReservesByKeys(dataAllReserveCustomer.data);
+            const grouped = groupReservesByKeys(typedDataAllReserveCustomer.data);
             setFormData(grouped);
 
             if (grouped.reserveUp.length > 0) {
@@ -83,8 +103,8 @@ const useReportsData = (visibleColumns: Set<string>) => {
             }
         }
     }, [
-        dataAllReserveCustomer,
-        dataAllServiceAdmin,
+        typedDataAllReserveCustomer,
+        typedDataAllServiceAdmin,
         isLoadingUser,
         isLoadingService,
         isLoadingReserve,
@@ -94,12 +114,11 @@ const useReportsData = (visibleColumns: Set<string>) => {
     const headerColumns = useMemo(() => {
         return visibleColumns.size === ReportsAdmincolumns.length
             ? ReportsAdmincolumns
-            : ReportsAdmincolumns.filter((column) =>
-                visibleColumns.has(column.uid)
-            );
+            : ReportsAdmincolumns.filter((column) => visibleColumns.has(column.uid));
     }, [visibleColumns]);
 
     const isEmpty = !formDataReseves || formDataReseves.length === 0;
+
     return {
         formDataReseves,
         visibleKeys,
@@ -107,6 +126,6 @@ const useReportsData = (visibleColumns: Set<string>) => {
         isLoadingReserve,
         isEmpty,
     };
-}
+};
 
-export default useReportsData
+export default useReportsData;

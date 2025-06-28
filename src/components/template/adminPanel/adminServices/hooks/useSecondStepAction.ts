@@ -11,7 +11,7 @@ import {
   useCreateServiceImages,
 } from "./useCreateService";
 import { useDeleteServiceImage } from "./useDeleteService";
-import { serviceDataEditType } from "@/types";
+import { serviceDataEditType } from "@/types/serviceType";
 
 interface UseSecondStepLogicProps {
   filteredServiceImages: Array<{
@@ -29,7 +29,6 @@ export function useSeCondStepAction({
   filteredServiceImages = [],
   serviceRangeDate,
   serviceId,
-  setStep,
   reset,
 }: UseSecondStepLogicProps) {
   const [existingImageUrls, setExistingImageUrls] = useState<string[]>([]);
