@@ -100,18 +100,18 @@ const CategoryBlog = () => {
                   <td>{index + 1}</td>
                   <td>{item.category_name}</td>
                   <td>{item.slug}</td>
-                  <td className=" flex justify-center items-center">
+                  <td className=" flex justify-center items-center ">
                     <Link href={`/admin/blogs/category/create?id=${item.id}`}>
                       <Button isIconOnly className="bg-transparent">
-                        <TbEyeDiscount />
+                        <TbEyeDiscount size={16} />
                       </Button>
                     </Link>
                     <Button
                       isIconOnly
-                      className="bg-transparent"
+                      className="bg-transparent p-0"
                       onPress={() => openModal(item.id)}
                     >
-                      <MdDeleteOutline color="red" />
+                      <MdDeleteOutline color="red" size={16} />
                     </Button>
                   </td>
                 </Table.Row>
