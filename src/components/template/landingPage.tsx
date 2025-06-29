@@ -5,7 +5,7 @@ import AboutOverview from "../module/landing/aboutOverview/AboutOverview";
 import FaqAccordian from "../module/landing/FaqAccordian";
 import Blogs from "../module/landing/Blogs";
 import Services from "../module/landing/Services";
-import { BlogType, ServiceDetailsType } from "@/types";
+import { BlogType } from "@/types";
 import { ServiceData } from "@/types/serviceType";
 
 type LandingPageProps = {

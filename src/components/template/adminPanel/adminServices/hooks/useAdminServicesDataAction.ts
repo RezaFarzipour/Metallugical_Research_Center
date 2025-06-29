@@ -126,7 +126,7 @@ export const useAdminServicesDataAction = () => {
 
         setIsModalOpen(false);
         setSelectedServiceId(null);
-    }, [selectedServiceId]);
+    }, [selectedServiceId, deletService]);
 
     return {
         isModalOpen,

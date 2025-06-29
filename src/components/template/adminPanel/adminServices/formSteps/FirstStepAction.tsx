@@ -145,15 +145,16 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
             <FileInput
               multiple={false}
               label="انتخاب کاور محصول"
+              {...rest}
+              value={value?.fileName}
               errors={errors}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              onChange={(event) => {
                 const file = event.target.files?.[0];
                 if (file) {
                   onChange(file);
                   setCoverImageUrl(URL.createObjectURL(file));
                 }
               }}
-              {...rest}
             />
           )}
         />
@@ -170,7 +171,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
               type="button"
               onPress={() => {
                 setCoverImageUrl(null);
-                setValue("cover_image", null);
+                setValue("cover_image", undefined);
               }}
               isIconOnly
               className="w-8 h-8 absolute left-1 top-2 bg-red-100"

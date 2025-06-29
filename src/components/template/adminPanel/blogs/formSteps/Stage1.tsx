@@ -214,6 +214,7 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
                 multiple={false}
                 label="انتخاب کاور بلاگ"
                 errors={errors}
+                value={value?.fileName}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const file = event.target.files?.[0];
                   if (file) {

@@ -7,7 +7,7 @@ export default function useDeleteUser() {
   const { isPending: isDeleting, mutateAsync: userDelete } = useMutation({
     mutationKey: ["delete-user"],
     mutationFn: deleteUser,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["getAll-users"],
       });

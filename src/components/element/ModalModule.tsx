@@ -31,7 +31,7 @@ const ModalModule: React.FC<ModalModuleProps> = ({
   return (
     <Modal isOpen={isOpen} onOpenChange={onCancel}>
       <ModalContent>
-        {(onClose) => (
+        {() => (
           <>
             <ModalHeader>{title}</ModalHeader>
             <ModalBody>{children}</ModalBody>

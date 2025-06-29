@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+const TextAreaModule = () => {
+  return <div>TextAreaModule</div>;
+};
 
-const TextAreaModule = (props: Props) => {
-  return (
-    <div>TextAreaModule</div>
-  )
-}
-
-export default TextAreaModule
+export default TextAreaModule;

@@ -23,7 +23,7 @@ export const Toast = () => {
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [open]);
+  }, [open, hideToast]);
 
   if (!open) return null;
 

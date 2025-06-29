@@ -15,7 +15,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
     null
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isDeleting, userDelete } = useDeleteUser();
+  const { userDelete } = useDeleteUser();
 
   const { data, isPending } = useQuery({
     queryKey: ["getAll-users"],
@@ -36,7 +36,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
         setVisibleKeys(keys);
       }
     }
-  }, [data]);
+  }, [data, includeskey]);
 
   function groupUsersBySignup(data: any[], keys: string[]) {
     return data.reduce(
@@ -123,7 +123,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
 
     setIsModalOpen(false);
     setSelectedServiceId(null);
-  }, [selectedServiceId]);
+  }, [selectedServiceId, userDelete]);
 
   return {
     formDataSignedUp,
