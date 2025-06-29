@@ -5,7 +5,6 @@ import { Input } from "@heroui/react";
 interface FileInputProps {
   label: string;
   name: string;
-  value?: File | null | undefined;
   dir?: "rtl" | "ltr";
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isRequired?: boolean;
@@ -14,11 +13,11 @@ interface FileInputProps {
   multiple: boolean;
   disabled?: boolean;
   accept?: string;
-  capture?: string;
+  capture?: boolean | "user" | "environment";
+  value: any;
 }
 function FileInput({
   label,
-  name,
   dir = "rtl",
   onChange,
   isRequired,
@@ -26,11 +25,13 @@ function FileInput({
   errors,
   multiple,
   disabled,
-  accept,
-  capture,
+  accept = "image/*",
+  capture = "environment",
+  name,
+  value,
   ...rest
 }: FileInputProps) {
-  const errorMessages = errors?.[name];
+  const errorMessages = errors?.[name] as { message?: string } | undefined;
   const hasError = !!(errors && errorMessages);
 
   return (
@@ -49,12 +50,13 @@ function FileInput({
           type="file"
           className="sr-only hidden"
           name={name}
+          value={value}
           dir={dir}
           onChange={onChange}
           required={isRequired}
           disabled={disabled}
-          accept="image/*"
-          capture="environment"
+          accept={accept}
+          capture={capture}
           {...rest}
         />
       </label>

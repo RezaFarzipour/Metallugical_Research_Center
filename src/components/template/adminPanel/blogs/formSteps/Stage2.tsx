@@ -45,7 +45,7 @@ const Stage2 = ({ blogData ,setStep}: { blogData?: BlogData ,  setStep: React.Di
 
       setFormData({ ...formData, items: contentItems });
     }
-  }, [blogData]);
+  }, [blogData, formData, setFormData]);
 
   const router = useRouter();
   const editorRef = useRef<TextEditorRef>(null);
@@ -61,7 +61,6 @@ const Stage2 = ({ blogData ,setStep}: { blogData?: BlogData ,  setStep: React.Di
     }) => createNewBlogContent(content),
   });
 
-  
   const imageMutation = useMutation({
     mutationFn: async (formData: FormData & { blog: string }) => {
       return createNewBlogImageContent(formData);
@@ -114,7 +113,7 @@ const Stage2 = ({ blogData ,setStep}: { blogData?: BlogData ,  setStep: React.Di
       showToast("بلاگ با موفقیت ایجاد شد", "success");
     } catch (error) {
       showToast("خطایی رخ داده است", "error");
-      console.log(error)
+      console.log(error);
     }
   };
 

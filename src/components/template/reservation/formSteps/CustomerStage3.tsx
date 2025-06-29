@@ -96,13 +96,14 @@ const CustomerStage3 = ({
             <Controller
               name="payment_image"
               control={control}
-              render={({ field: { onChange, ...rest } }) => (
+              render={({ field: { value, onChange, ...rest } }) => (
                 <>
                   {!receiptFile ? (
                     <FileInput
                       multiple={false}
                       label="فیش واریز"
                       errors={errors}
+                      value={value?.fileName}
                       onChange={(
                         event: React.ChangeEvent<HTMLInputElement>
                       ) => {

@@ -7,7 +7,7 @@ type Direction = "left" | "right" | "up" | "down";
 type AnimationType = "spring" | "tween" | "linear";
 
 // 1. imageReveal
-export const imageReveal = (delay: number = 0, width: number): Variants => {
+export const imageReveal = (): Variants => {
     return {
         hidden: {
             scaleX: 0,

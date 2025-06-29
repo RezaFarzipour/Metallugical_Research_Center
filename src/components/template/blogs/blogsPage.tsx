@@ -4,10 +4,9 @@ import { BtnLoader } from "@/components/element/Loader";
 import TitleStructure from "@/components/element/TitleStructure";
 import CardModule from "@/components/module/cardModule/CardModule";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
-import { getAllBlogss } from "@/services/api/blogs";
 import { BlogType } from "@/types";
 import { cn } from "@/utils/cn";
-import { useQuery } from "@tanstack/react-query";
+import CategoryList from "./CateogryList";
 
 type BlogPageType = {
   AllBlogs: BlogType[];
@@ -18,34 +17,27 @@ export default function BlogPage({
   AllBlogs,
   loading: isPending,
 }: BlogPageType) {
-  const formDataServices = Array.isArray(AllBlogs) ? AllBlogs : [];
-  const { sortedItems } = useFilteredContainer(formDataServices);
-
-  const view: boolean = true;
-
-  // const { data } = useQuery({
-  //   queryKey: ["getAll-category"],
-  //   queryFn: getAllBlogss,
-  //   staleTime: 1000 * 60 * 5,
-  //   refetchOnWindowFocus: true,
-  // });
-
-  // console.log(data, "data");
-  // console.log(AllBlogs, "AllBlogs");
+  const blogs = Array.isArray(AllBlogs) ? AllBlogs : [];
+  const { sortedItems } = useFilteredContainer(blogs);
 
   return (
-    <div className="p-4 md:p-10 w-full  min-h-screen ">
-      {/* Blog Grid */}
-      <main className="lg:col-span-3 w-full ">
-        <h3 className="text-xl ">
-          <TitleStructure size="1rem">وبلاگ </TitleStructure>
-        </h3>
+    <div className="p-4 md:p-10 w-full min-h-screen mt-96">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Sidebar - only on larger screens */}
+        <aside className="hidden md:block md:col-span-3 lg:col-span-2">
+          <CategoryList />
+        </aside>
 
-        <div className="flex my-10 flex-col gap-12 lg:gap-5 lg:flex-row justify-center w-full items-center">
+        {/* Main Content */}
+        <main className="md:col-span-9 lg:col-span-10">
+          <h3 className="text-xl mb-6">
+            <TitleStructure size="1rem">وبلاگ</TitleStructure>
+          </h3>
+
           <FilteredContainer
-            datas={formDataServices}
+            datas={blogs}
             quantity="وبلاگ ها"
-            topContents={!!formDataServices?.length}
+            topContents={!!blogs.length}
             viewContent={true}
             viewContentSmSize={false}
             btn={false}
@@ -54,19 +46,21 @@ export default function BlogPage({
             addBtn={false}
             rolesDropDown={false}
             stausDropDown={false}
-            bottomContents={!!formDataServices?.length}
+            bottomContents={!!blogs.length}
           >
             {isPending ? (
               <BtnLoader />
             ) : (
               <div
                 className={cn(
-                  "grid w-full gap-4  mb-12 gap-y-8",
-                  view
-                    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                    : "grid-cols-1 md:grid-cols-2"
+                  "grid gap-6",
+                  "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 pb-8"
                 )}
               >
+                {/* Category List - visible only on small screens */}
+                <div className="block md:hidden mt-9 ">
+                  <CategoryList />
+                </div>
                 <CardModule
                   data={sortedItems}
                   isDate={false}
@@ -76,13 +70,13 @@ export default function BlogPage({
                   bottomOffset="130"
                   isMoreDetails="anyBlogs"
                   styleForAdmin={false}
-                  view={view}
+                  view={true}
                 />
               </div>
             )}
           </FilteredContainer>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }

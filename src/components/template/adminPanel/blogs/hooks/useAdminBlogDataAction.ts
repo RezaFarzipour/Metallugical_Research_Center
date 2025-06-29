@@ -143,7 +143,7 @@ export const useAdminBlogDataAction = () => {
 
     setIsModalOpen(false);
     setSelectedServiceId(null);
-  }, [selectedServiceId]);
+  }, [selectedServiceId, deleteBLog, refetch]);
 
   return {
     isModalOpen,

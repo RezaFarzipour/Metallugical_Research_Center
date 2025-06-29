@@ -4,8 +4,8 @@ import { getAllBlogsCategory } from "@/services/api/blogs";
 import { BlogData, Category } from "@/types";
 
 type Props = {
-  params: Promise<{ categorySlug: string }>;
-  searchParams: Promise<{ id?: string }>;
+  params: { categorySlug: string };
+  searchParams: { id?: string };
 };
 
 export default async function CategoryPage({ params }: Props) {

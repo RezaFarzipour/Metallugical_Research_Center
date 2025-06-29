@@ -82,7 +82,7 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
       if (isEqual) return prevUrls; // اگه برابر بودند، state رو تغییر نده
       return memoizedImageUrls; // در غیر این صورت آپدیت کن
     });
-  }, [memoizedImageUrls]);
+  }, [memoizedImageUrls, setExistingImageUrls]);
 
   // حذف عکس جدید انتخاب شده از فرم و state
   const handleRemoveNewImage = (index: number) => {
@@ -179,6 +179,7 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
             <FileInput
               label="انتخاب عکس‌های جدید"
               multiple={true}
+              value={value?.fileName}
               errors={errors}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const files = event.target.files;

@@ -17,11 +17,11 @@ const navbarStyles = {
 const NavBar = () => {
   const setUser = useUserStore((state) => state.setUser);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const { data:user, isPending } = useGetUser();
+  const { data: user, isPending } = useGetUser();
 
   useEffect(() => {
     setUser(user || null);
-  }, [user]);
+  }, [user, setUser]);
 
   return (
     <Navbar
@@ -33,7 +33,7 @@ const NavBar = () => {
       )} bg-white/50`}
     >
       <NavBarRight isMenuOpen={isMenuOpen} />
-      <NavBarLeft  />
+      <NavBarLeft />
       <MobileMenu />
     </Navbar>
   );

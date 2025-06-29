@@ -10,7 +10,7 @@ type ImageProps = {
   alt: string;
   width: number;
   height: number;
-  className?: string; 
+  className?: string;
 };
 
 const AboutImage: React.FC<ImageProps> = ({
@@ -28,7 +28,7 @@ const AboutImage: React.FC<ImageProps> = ({
     if (isVisible) {
       controls.start(imageReveal(0, width).show);
     }
-  }, [controls, isVisible]);
+  }, [controls, isVisible, width]);
 
   return (
     <motion.div
