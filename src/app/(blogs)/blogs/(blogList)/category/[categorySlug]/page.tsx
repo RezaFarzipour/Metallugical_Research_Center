@@ -7,7 +7,13 @@ type Props = {
   params: { categorySlug: string };
   searchParams: { id?: string };
 };
-
+export async function generateMetadata({ params }: Props) {
+  const { categorySlug } = await params;
+  return {
+    title: `بلاگ‌های ${categorySlug}`,
+    description: `بلاگ‌های مربوط به دسته‌بندی ${categorySlug}`,
+  };
+}
 export default async function CategoryPage({ params }: Props) {
   const { categorySlug } = await params;
 

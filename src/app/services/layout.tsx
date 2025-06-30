@@ -1,5 +1,10 @@
 import Layout from "@/components/containers/layout/Layout";
 import HeaderImage from "@/components/module/HeaderImage";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: " خدمات ما",
+};
 
 export default function ContactUsLayout({
   children,

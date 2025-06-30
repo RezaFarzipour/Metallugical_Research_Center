@@ -2,8 +2,8 @@ export type SiteConfig = typeof siteConfig;
 import { FaTelegram, FaInstagram } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
 export const siteConfig = {
-  name: "مرکز تحقیقات متالورژی",
-  description: "مرکز تحقیقات متالورژی دانشگاه آزاد زنجان",
+  name: "مرکز تحقیقات متالورژی دانشگاه آزاد زنجان",
+  description: "تخصصی سرب و روی مرکز تحقیقات متالورژی دانشگاه آزاد زنجان",
   navItems: [
     {
       id: 1,
