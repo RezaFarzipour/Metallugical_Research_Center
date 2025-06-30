@@ -2,8 +2,8 @@ export type SiteConfig = typeof siteConfig;
 import { FaTelegram, FaInstagram } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
 export const siteConfig = {
-  name: "متالوژی ریسرچ سنتر",
-  description: "آزمایشگاه متالوژی ریسرچ سنتر",
+  name: "مرکز تحقیقات متالورژی",
+  description: "مرکز تحقیقات متالورژی دانشگاه آزاد زنجان",
   navItems: [
     {
       id: 1,
