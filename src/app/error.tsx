@@ -2,7 +2,13 @@
 
 import { Button } from "@heroui/button";
 
-function Error({ error, reset }) {
+type ErrorProps = {
+  error: Error & { digest?: string };
+  reset: () => void;
+};
+
+
+function Error({ error, reset }:ErrorProps) {
   const isDev = process.env.NODE_ENV === "development";
 
   return (
