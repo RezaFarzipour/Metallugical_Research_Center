@@ -1,17 +1,23 @@
-import Empty from "@/components/element/Empty";
 import BlogPage from "@/components/template/blogs/blogsPage";
 import { getAllBlogsCategory } from "@/services/api/blogs";
 import { BlogData, Category } from "@/types";
 
-
-export async function generateMetadata({ params }: {params:Promise<{categorySlug:string}>}) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ categorySlug: string }>;
+}) {
   const { categorySlug } = await params;
   return {
     title: `بلاگ‌های ${categorySlug}`,
     description: `بلاگ‌های مربوط به دسته‌بندی ${categorySlug}`,
   };
 }
-export default async function CategoryPage({ params }: {params:Promise<{categorySlug:string}>}) {
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{ categorySlug: string }>;
+}) {
   const { categorySlug } = await params;
 
   // دریافت دسته‌ها
@@ -38,17 +44,7 @@ export default async function CategoryPage({ params }: {params:Promise<{category
 
   return (
     <div>
-      {mappedBlogs.length === 0 ? (
-        <p className="text-lg text-secondary-600 flex justify-center items-center h-full">
-          <Empty
-            btnHref="/admin/services/create"
-            spanValue="بلاگی"
-            btn={false}
-          />{" "}
-        </p>
-      ) : (
-        <BlogPage AllBlogs={mappedBlogs} loading={false} />
-      )}
+      <BlogPage AllBlogs={mappedBlogs} loading={false} />
     </div>
   );
 }

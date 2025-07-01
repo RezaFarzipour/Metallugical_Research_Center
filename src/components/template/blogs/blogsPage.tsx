@@ -7,6 +7,7 @@ import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import { BlogType } from "@/types";
 import { cn } from "@/utils/cn";
 import CategoryList from "./CateogryList";
+import Empty from "@/components/element/Empty";
 
 type BlogPageType = {
   AllBlogs: BlogType[];
@@ -22,7 +23,7 @@ export default function BlogPage({
 
   return (
     <div className="p-4 md:p-10 w-full min-h-screen mt-96">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:py-8">
         {/* Sidebar - only on larger screens */}
         <aside className="hidden md:block md:col-span-3 lg:col-span-2">
           <CategoryList />
@@ -40,9 +41,7 @@ export default function BlogPage({
             topContents={!!blogs.length}
             viewContent={true}
             viewContentSmSize={false}
-            btn={false}
-            dropDownBtn={false}
-            roles={false}
+            columnsDropDownBtn={false}
             addBtn={false}
             rolesDropDown={false}
             stausDropDown={false}
@@ -50,6 +49,21 @@ export default function BlogPage({
           >
             {isPending ? (
               <BtnLoader />
+            ) : sortedItems.length === 0 ? (
+              <>
+                {/* Category List - visible only on small screens */}
+                <div className="block md:hidden mt-9">
+                  <CategoryList />
+                </div>
+
+                <div className="flex justify-center items-center pt-8">
+                  <Empty
+                    btnHref="/admin/services/create"
+                    spanValue="بلاگی"
+                    btn={false}
+                  />
+                </div>
+              </>
             ) : (
               <div
                 className={cn(
@@ -58,7 +72,7 @@ export default function BlogPage({
                 )}
               >
                 {/* Category List - visible only on small screens */}
-                <div className="block md:hidden mt-9 ">
+                <div className="block md:hidden mt-9">
                   <CategoryList />
                 </div>
                 <CardModule
