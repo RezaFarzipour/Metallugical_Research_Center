@@ -3,7 +3,11 @@ import { Card } from "@heroui/react";
 import { ImageContainer } from "./ImageContainer";
 import { CardContent } from "./CardContent";
 import { cn } from "@/utils/cn";
-import { ServerServiceType, ServiceDetailsType, ServiceReserveDateType } from "@/types/serviceType";
+import {
+  ServerServiceType,
+  ServiceDetailsType,
+  ServiceReserveDateType,
+} from "@/types/serviceType";
 import { BlogType, ExpiredReserveItem } from "@/types";
 
 type CardData =
@@ -40,18 +44,16 @@ const CardModule = <T extends CardData>({
     cardsBox: cn(
       "w-full max-w-[600px] mb-32 mt-8 col-span-12 sm:col-span-5 relative overflow-visible group"
     ),
-    cardsList: "w-full max-w-[800px] min-h-[220px] flex flex-col md:flex-row ",
+    cardsList: "w-full max-w-[800px] max-h-[220px] flex flex-col md:flex-row ",
   };
 
   let parsedTags: string[] = [];
-
 
   const getItemId = (item: CardData): string | number => {
     if ("id" in item && item.id !== undefined) return item.id;
     if ("data" in item && item.data?.id !== undefined) return item.data.id;
     return Math.random();
   };
-
 
   return (
     <>

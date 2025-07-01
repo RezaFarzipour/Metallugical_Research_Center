@@ -152,7 +152,7 @@ export const CardContent: React.FC<CardContentProps> = ({
             </span>
           ))}
           {parsedTags.length > 3 && (
-            <span className="text-xs font-medium py-0.5 py-0.5">...</span>
+            <span className="text-xs font-medium  py-0.5">...</span>
           )}
         </InfoRow>
       )}

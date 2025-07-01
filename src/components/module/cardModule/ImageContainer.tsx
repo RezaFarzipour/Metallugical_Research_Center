@@ -40,6 +40,7 @@ export const ImageContainer: React.FC<ImageContainerProps> = ({
         height={500}
         alt="Card example background"
         src={getValidImageSrc(image)}
+        className="h-full w-full"
       />
       {/* Shimmer effect on hover */}
       {isHovered && (
