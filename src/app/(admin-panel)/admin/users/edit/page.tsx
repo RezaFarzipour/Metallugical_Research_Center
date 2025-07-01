@@ -4,10 +4,8 @@ import setCookiesOnReq from "@/utils/auth/setCookieOnReq";
 import { cookies } from "next/headers";
 import React from "react";
 
-type userId = {
-  params: { userId: string };
-};
-const page = async ({ params }: userId) => {
+
+const page = async ({ params }: any) => {
   const phone_number = params.userId;
 
   const cookieStore = cookies();

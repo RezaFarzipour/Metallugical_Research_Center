@@ -4,11 +4,11 @@ import setCookiesOnReq from "@/utils/auth/setCookieOnReq";
 import { cookies } from "next/headers";
 import React from "react";
 
-type PageProps = {
-  params: { serviceId: string };
-};
-export default async function Details({ params }: PageProps) {
-  const { serviceId } = params;
+// type PageProps = {
+//   params: { serviceId: string };
+// };
+export default async function Details({ params }: {params:Promise<{serviceId:string}>}) {
+  const { serviceId } = await params;
 
   const cookieStore = cookies();
   const options = setCookiesOnReq(cookieStore);

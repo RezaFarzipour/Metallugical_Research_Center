@@ -3,12 +3,12 @@ import BlogPage from "@/components/template/blogs/blogsPage";
 import { getAllBlogsCategory } from "@/services/api/blogs";
 import { BlogData, Category } from "@/types";
 
-type Props = {
-  params: { categorySlug: string };
-  searchParams: { id?: string };
-};
+// type Props = {
+//   params: { categorySlug: string };
+//   searchParams: { id?: string };
+// };
 
-export default async function CategoryPage({ params }: Props) {
+export default async function CategoryPage({ params }: {params:Promise<{categorySlug:string}>}) {
   const { categorySlug } = await params;
 
   // دریافت دسته‌ها

@@ -4,15 +4,15 @@ import setCookiesOnReq from "@/utils/auth/setCookieOnReq";
 import { cookies } from "next/headers";
 import React from "react";
 
-type PageProps = {
-  params: {
-    blogId: string;
-    slug: string;
-  };
-};
+// type PageProps = {
+//   params: {
+//     blogId: string;
+//     slug: string;
+//   };
+// };
 
-export default async function Details({ params }: PageProps) {
-  const { blogId } = params;
+export default async function Details({ params }: {params:Promise<{blogId:string,slug:string}>}) {
+  const { blogId } = await params;
 
   const cookieStore = cookies();
   const options = setCookiesOnReq(cookieStore);
