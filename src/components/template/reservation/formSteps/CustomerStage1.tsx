@@ -46,9 +46,9 @@ interface ServiceDataType {
 const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
   const searchParams = useSearchParams();
   const reserveId = searchParams.get("reserve-id");
-  const [selectedServiceId, setSelectedServiceId] = useState<string| null | undefined>(
-    null
-  );
+  const [selectedServiceId, setSelectedServiceId] = useState<
+    string | null | undefined
+  >(null);
   const [modalService, setModalService] = useState<ServiceDataType | null>(
     null
   );
@@ -71,7 +71,7 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
       setModalService(data);
       setIsModalOpen(true);
     } catch (err) {
-      alert(err)
+      alert(err);
       showToast("خطا در دریافت اطلاعات سرویس", "error");
     }
   };
@@ -92,7 +92,7 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
       showToast("رزرو با موفقیت انجام شد", "success");
       queryClient.invalidateQueries({ queryKey: ["get-stage", reserveId] });
     } catch (e) {
-      alert(e)
+      alert(e);
       showToast("خطایی رخ داده است", "error");
     }
   };
@@ -126,8 +126,8 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
             >
               <div className="w-full h-48 relative rounded-xl overflow-hidden mb-4">
                 <Image
-                  src={service.cover_image ? service.cover_image : "" }
-                  alt={service.service_name ? service.service_name :""}
+                  src={service.cover_image ? service.cover_image : ""}
+                  alt={service.service_name ? service.service_name : ""}
                   fill
                   className="object-cover"
                 />
@@ -142,7 +142,7 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
                   قیمت: {service.price?.toLocaleString()} تومان
                 </p>
                 <Button
-                  className="bg-blue-500 text-white"
+                  className="text-white bg-gradient-to-r from-secondary-500 to-secondary-700 hover:from-secondary-600 hover:to-secondary-800"
                   onPress={() => handleReserveClick(service.id)}
                 >
                   رزرو

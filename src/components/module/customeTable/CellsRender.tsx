@@ -153,18 +153,20 @@ export const CellRenderer = <T extends TableData>({
             firstActionIcon={firstActionIcon}
             firstActionClickHandler={firstActionClickHandler ?? (() => {})}
           />
-          <DeleteBtn
-            data={
-              data as {
-                id: string | number;
-                name: string;
-                phone_number?: string;
+          {secondActionClickHandler && (
+            <DeleteBtn
+              data={
+                data as {
+                  id: string | number;
+                  name: string;
+                  phone_number?: string;
+                }
               }
-            }
-            secondActionContent={secondActionContent ?? "حذف"}
-            secondActionIcon={secondActionIcon}
-            secondActionClickHandler={secondActionClickHandler ?? (() => {})}
-          />
+              secondActionContent={secondActionContent ?? "حذف"}
+              secondActionIcon={secondActionIcon}
+              secondActionClickHandler={secondActionClickHandler}
+            />
+          )}
         </div>
       );
 
