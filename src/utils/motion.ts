@@ -29,15 +29,25 @@ export const imageReveal = (): Variants => {
 // 2. shimmerEffect
 export const shimmerEffect = (): Variants => {
     return {
-        initial: { x: "-100%" },
-        animate: { x: "100%" },
-        transition: {
-            duration: 1,
-            ease: "linear",
-            repeat: 0,
+        initial: {
+            x: "-100%",
+            transition: {
+                duration: 1,
+                ease: "linear",
+                repeat: 0,
+            },
+        },
+        animate: {
+            x: "100%",
+            transition: {
+                duration: 1,
+                ease: "linear",
+                repeat: 0,
+            },
         },
     };
 };
+
 
 // 3. fadeIn
 export const fadeIn = (
