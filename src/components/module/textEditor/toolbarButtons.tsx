@@ -142,7 +142,7 @@ export const headingButtons = (editor: Editor): EditorButton[] =>
       editor
         .chain()
         .focus()
-        .toggleHeading({ level: i + 1 })
+        .toggleHeading({ level: (i + 1) as 1 | 2 | 3 | 4 | 5 | 6 })
         .run(),
   }));
 

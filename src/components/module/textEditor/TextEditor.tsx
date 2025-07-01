@@ -45,7 +45,7 @@ const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(
       content: html,
       extensions: [
         StarterKit.configure({
-          history: true,
+          history: {},
           bulletList: { keepMarks: true, keepAttributes: false },
           orderedList: { keepMarks: true, keepAttributes: false },
           heading: {
@@ -100,7 +100,6 @@ const TextEditor = forwardRef<TextEditorRef, TextEditorProps>(
                 src: reader.result,
                 alt: "image",
                 title: "",
-                class: "mx-auto block ",
               })
               .run();
           }
