@@ -38,7 +38,7 @@ const Footer = () => {
     <div className="bg-default-50 w-full p-6 lg:p-10">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* دسترسی سریع */}
-        <div className="flex flex-col gap-4">
+        <div className="hidden md:flex flex-col gap-4">
           <p className="font-bold text-default-900 text-lg lg:text-xl">
             دسترسی سریع
           </p>
@@ -55,30 +55,30 @@ const Footer = () => {
 
         {/* راه‌های ارتباطی */}
         <div className="flex flex-col gap-4">
-          <p className="font-bold text-default-900 text-lg lg:text-xl">
+          <p className="font-bold text-default-900  text-sm md:text-xl">
             راه‌های ارتباطی
           </p>
-          <div className="flex items-center gap-3 text-default-600 hover:text-blue-500 transition-colors duration-300">
+          <div className="flex items-center gap-3 text-default-600 hover:text-blue-500 transition-colors duration-300 text-xs md:text-[14px]">
             <MdOutlineMail size={23} className="text-secondary-500" />
             آدرس ایمیل
           </div>
-          <div className="flex items-center gap-3 text-default-600 hover:text-blue-500 transition-colors duration-300">
-            <MdMyLocation size={23} className="text-secondary-500" />
+          <div className="flex items-center gap-3 text-default-600 hover:text-blue-500 transition-colors duration-300 text-xs md:text-[14px]">
+            <MdMyLocation size={20} className="text-secondary-500" />
             آدرس آزمایشگاه
           </div>
-          <div className="flex items-center gap-3 text-default-600 hover:text-blue-500 transition-colors duration-300">
-            <MdOutlineLocalPhone size={23} className="text-secondary-500" />
+          <div className="flex items-center gap-3 text-default-600 hover:text-blue-500 transition-colors duration-300 text-xs md:text-[14px]">
+            <MdOutlineLocalPhone size={20} className="text-secondary-500" />
             شماره تماس
           </div>
         </div>
 
         {/* توضیحات و شبکه‌های اجتماعی */}
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-3 font-bold text-secondary-500 text-lg lg:text-xl">
-            <AiFillExperiment size={30} className="text-secondary-600" />
+          <div className="flex items-center gap-3 font-bold text-secondary-500 text-sm md:text-xl">
+            <AiFillExperiment size={30} className="text-secondary-600 " />
             مرکز تحقیقات متالورژی دانشگاه آزاد زنجان
           </div>
-          <p className="text-default-600 text-sm lg:text-md leading-6">
+          <p className="text-default-600 text-xs md:text-[14px] leading-6">
             آزمایشگاه ما با بهره‌گیری از تجهیزات پیشرفته و تیم متخصص، خدمات
             تشخیصی دقیق و سریع ارائه می‌دهد. رضایت و سلامت مراجعین، اولویت اصلی
             ماست.
@@ -117,7 +117,7 @@ const Footer = () => {
 
       <Divider className="my-6" />
 
-      <div className="flex justify-end items-center gap-4 text-default-600 text-sm">
+      <div className="flex justify-end items-center gap-4 text-default-600 text-xs md:text-sm">
         <p>
           حقوق مادی و معنوی وب سایت متعلق به مرکز تحقیقات متالورژی دانشگاه آزاد
           زنجان می باشد. طراحی سامانه نوبت دهی متالورژی توسط آدلی کارا
