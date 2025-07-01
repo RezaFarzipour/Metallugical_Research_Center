@@ -20,7 +20,7 @@ export const sendUserProfile = async ({
   return response.data;
 };
 
-export const getAllUserAdmin = async (options) => {
+export const getAllUserAdmin = async (options:AxiosRequestConfig) => {
   const response = await http.get(`user/admin/`, options);
   return response.data;
 };

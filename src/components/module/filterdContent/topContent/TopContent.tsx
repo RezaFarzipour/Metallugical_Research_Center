@@ -10,7 +10,7 @@ import TableFilters from "./TableFilters";
 import { cn } from "@/utils/cn";
 
 interface TopContentProps {
-  columns: {
+  columns?: {
     name: string;
     uid: string;
     sortable?: boolean;

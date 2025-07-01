@@ -3,7 +3,7 @@ import { Card } from "@heroui/react";
 import { ImageContainer } from "./ImageContainer";
 import { CardContent } from "./CardContent";
 import { cn } from "@/utils/cn";
-import { ServerServiceType, ServiceDetailsType } from "@/types/serviceType";
+import { ServerServiceType, ServiceDetailsType, ServiceReserveDateType } from "@/types/serviceType";
 import { BlogType, ExpiredReserveItem } from "@/types";
 
 type CardData =
@@ -45,6 +45,14 @@ const CardModule = <T extends CardData>({
 
   let parsedTags: string[] = [];
 
+
+  const getItemId = (item: CardData): string | number => {
+    if ("id" in item && item.id !== undefined) return item.id;
+    if ("data" in item && item.data?.id !== undefined) return item.data.id;
+    return Math.random();
+  };
+
+
   return (
     <>
       {data.map((item) => {
@@ -63,7 +71,7 @@ const CardModule = <T extends CardData>({
 
         return (
           <div
-            key={item.id}
+            key={getItemId(item)}
             className={cn(
               "flex justify-center items-center ",
               view ? "min-h-[18rem]" : "min-h-[18rem]"
@@ -75,9 +83,9 @@ const CardModule = <T extends CardData>({
             >
               <ImageContainer
                 image={image}
-                isHovered={hoveredId === item.id}
+                isHovered={hoveredId === getItemId(item)}
                 setIsHovered={(isHovered) =>
-                  setHoveredId(isHovered ? item.id : null)
+                  setHoveredId(isHovered ? getItemId(item) : null)
                 }
                 view={view}
               />
@@ -87,7 +95,7 @@ const CardModule = <T extends CardData>({
                 {...item}
                 reserve_date={
                   "service-reserve_date" in item
-                    ? item["service-reserve_date"]
+                    ? (item["service-reserve_date"] as ServiceReserveDateType[])
                     : undefined
                 }
                 isMoreDetails={isMoreDetails}

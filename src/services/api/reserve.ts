@@ -1,6 +1,7 @@
+import { AxiosRequestConfig } from "axios";
 import http from "../httpService";
 
-export const getAllReserve = async (options) => {
+export const getAllReserve = async (options: AxiosRequestConfig) => {
   try {
     const response = await http.get(`/reserve`, options);
     console.log(response, "response.data");

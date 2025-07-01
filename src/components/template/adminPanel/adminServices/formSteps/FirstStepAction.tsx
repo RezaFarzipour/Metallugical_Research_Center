@@ -43,7 +43,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
     cover_image: prevCoverImageUrl,
   } = serviceDataEdit;
 
-  const [coverImageUrl, setCoverImageUrl] = useState<string | null>(
+  const [coverImageUrl, setCoverImageUrl] = useState(
     prevCoverImageUrl || null
   );
 
@@ -81,12 +81,15 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
     if (prevCoverImageUrl && isEditSession) {
       async function fetchImage() {
         const file = await imageUrlToFile(prevCoverImageUrl);
-        setValue("cover_image", file);
-        setCoverImageUrl(URL.createObjectURL(file));
+        if (file) {
+          setValue("cover_image", file);
+          setCoverImageUrl(URL.createObjectURL(file));
+        }
       }
       fetchImage();
     }
   }, [editId, prevCoverImageUrl, isEditSession, setValue]);
+  
 
   const onSubmit = async (data: CreateServiceFormData) => {
     const formData = new FormData();

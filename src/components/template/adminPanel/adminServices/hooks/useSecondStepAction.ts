@@ -147,8 +147,12 @@ export function useSeCondStepAction({
         const RangeId = serviceRangeDate?.["service-reserve_date"]?.[0]?.id;
 
         if (RangeId) {
+          const formData = new FormData();
+          formData.append("reserved_from", dateData.reserved_from);
+          formData.append("reserved_to", dateData.reserved_to);
+          formData.append("service", String(dateData.service));
           await editServiceDateRange(
-            { id: String(RangeId), data: dateData },
+            { id: String(RangeId), data: formData  },
             {
               onSuccess: () => {
                 showToast("بازه‌ی زمانی با موفقیت ویرایش شد", "success");
@@ -159,8 +163,14 @@ export function useSeCondStepAction({
             }
           );
         } else {
+
+          const formData = new FormData();
+          formData.append("reserved_from", dateData.reserved_from);
+          formData.append("reserved_to", dateData.reserved_to);
+          formData.append("service", String(dateData.service));
           await createDateRange(
-            { data: dateData },
+            
+            { data: formData  },
             {
               onSuccess: () => {
                 showToast("بازه زمانی با موفقیت اضافه شد", "success");

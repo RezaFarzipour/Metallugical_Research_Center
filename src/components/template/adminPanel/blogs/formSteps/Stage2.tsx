@@ -19,7 +19,7 @@ import { showToast } from "@/store/useToastSlice";
 import { useApolloClient } from "@apollo/client";
 import { useEditBlogContent } from "../hooks/useEditCategory";
 
-const Stage2 = ({ blogData ,setStep}: { blogData?: BlogData ,  setStep: React.Dispatch<React.SetStateAction<number>>;}) => {
+const Stage2 = ({ blogData ,setStep}: { blogData?: BlogData ,  setStep?:(step: number) => void;}) => {
   const { formData, setFormData } = useBlogFormStore();
   const items = formData.items || [];
 
@@ -99,7 +99,7 @@ const Stage2 = ({ blogData ,setStep}: { blogData?: BlogData ,  setStep: React.Di
             class_name: "skin-type",
             is_multiline: false,
           });
-          setStep(1)
+          setStep?.(1)
         }
       }
 

@@ -23,8 +23,8 @@ interface ServiceCardData {
   name: string;
   service_name?: string;
   description: string;
-  price?: string;
-  reserve_date?: ServiceReserveDateType[];
+  price?: string | number;
+  reserve_date?: ServiceReserveDateType[] ;
   dateRange?: string;
   bottomOffset?: string;
 }
@@ -36,7 +36,7 @@ interface CardContentProps extends Partial<ServiceCardData>, Partial<BlogType> {
   styleForAdmin: boolean;
   isMoreDetails?: string;
   parsedTags?: string[];
-  service_id: string | number | undefined;
+  service_id?: string | number | undefined;
 }
 
 const InfoRow = ({

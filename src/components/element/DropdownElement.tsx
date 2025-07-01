@@ -16,7 +16,7 @@ interface Option {
 
 export const DropdownElement: React.FC<{
   label: string;
-  options: Option[];
+  options?: Option[];
   selectedKeys: string | Set<string>;
   onSelectionChange: (keys: SharedSelection) => void;
 }> = ({ label, options, selectedKeys, onSelectionChange }) => (
@@ -37,11 +37,11 @@ export const DropdownElement: React.FC<{
       selectedKeys={selectedKeys}
       selectionMode="multiple"
     >
-      {options.map((option) => (
+      {options ?options.map((option) => (
         <DropdownItem key={option.uid} className="capitalize">
           {option.name}
         </DropdownItem>
-      ))}
+      )) : null}
     </DropdownMenu>
   </Dropdown>
 );

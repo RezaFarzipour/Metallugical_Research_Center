@@ -16,7 +16,7 @@ import Stage1ModalBody from "./Stage1ModalBody";
 import { serviceDataEditType } from "@/types/serviceType";
 
 type stage1Props = {
-  allServices: serviceDataEditType;
+  allServices: serviceDataEditType[];
   isAllServicesPending: boolean;
 };
 
@@ -46,7 +46,7 @@ interface ServiceDataType {
 const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
   const searchParams = useSearchParams();
   const reserveId = searchParams.get("reserve-id");
-  const [selectedServiceId, setSelectedServiceId] = useState<number | null>(
+  const [selectedServiceId, setSelectedServiceId] = useState<string| null | undefined>(
     null
   );
   const [modalService, setModalService] = useState<ServiceDataType | null>(
@@ -64,7 +64,7 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
 
   const { data: userData } = useGetUser();
 
-  const handleReserveClick = async (serviceId: number) => {
+  const handleReserveClick = async (serviceId: string | undefined) => {
     try {
       const data = await getServicesByIdCustomer(String(serviceId));
       setSelectedServiceId(serviceId);
@@ -126,8 +126,8 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
             >
               <div className="w-full h-48 relative rounded-xl overflow-hidden mb-4">
                 <Image
-                  src={service.cover_image}
-                  alt={service.service_name}
+                  src={service.cover_image ? service.cover_image : "" }
+                  alt={service.service_name ? service.service_name :""}
                   fill
                   className="object-cover"
                 />
@@ -139,7 +139,7 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
               </p>
               <div className="flex w-full justify-between p-2 items-center">
                 <p className="text-blue-600 font-semibold">
-                  قیمت: {service.price.toLocaleString()} تومان
+                  قیمت: {service.price?.toLocaleString()} تومان
                 </p>
                 <Button
                   className="bg-blue-500 text-white"

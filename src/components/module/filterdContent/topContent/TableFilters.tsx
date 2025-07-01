@@ -21,7 +21,7 @@ interface TableFiltersProps {
   stausDropDown?: boolean;
   paymentStautsDropDown?: boolean;
   columnsDropDownBtn?: boolean;
-  columns: { name: string; uid: string }[];
+  columns?: { name: string; uid: string }[];
 }
 
 export default function TableFilters({

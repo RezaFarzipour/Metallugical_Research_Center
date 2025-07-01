@@ -26,7 +26,7 @@ const AboutImage: React.FC<ImageProps> = ({
 
   useEffect(() => {
     if (isVisible) {
-      controls.start(imageReveal(0, width).show);
+      controls.start(imageReveal().show);
     }
   }, [controls, isVisible, width]);
 
@@ -36,7 +36,7 @@ const AboutImage: React.FC<ImageProps> = ({
       className={` overflow-hidden transition-all duration-300 ${className}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      variants={imageReveal(0, width)}
+      variants={imageReveal()}
       initial="hidden"
       animate={controls}
     >

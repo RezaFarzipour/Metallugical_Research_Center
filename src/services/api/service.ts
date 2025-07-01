@@ -57,7 +57,7 @@ export const getServicesImageById = async (
   }
 };
 
-export const createServiceImages = async (data:FormData) => {
+export const createServiceImages = async (data: FormData) => {
   const response = await http.post(`service/images/admin/`, data);
   return response.data;
 };
@@ -79,14 +79,7 @@ export const deleteServiceImageById = async ({ id }: { id: string }) => {
 };
 
 // API DateRange:
-export const createServiceDateRange = async ({data}:{
-  data: {
-    reserved_from: string;
-    reserved_to: string;
-    service: string;
-  };
-}) => {
-  console.log("dataaaaa",data)
+export const createServiceDateRange = async ({ data }: { data: FormData }) => {
   const response = await http.post(`service/reserve-date/admin/`, data);
   return response.data;
 };

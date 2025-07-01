@@ -89,7 +89,7 @@ export const getBlogCover = async () => {
   return response.data;
 };
 
-export const createNewBlog = async (data: BlogStageOneFormData) => {
+export const createNewBlog = async (data: FormData) => {
   const response = await http.post(`blog/b/admin/`, data);
 
 

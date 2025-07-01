@@ -4,14 +4,13 @@ import {
   contactInfoType,
   FAQItem,
   FormInputConfig,
-  latestArticleType,
+
   NavLinkItem,
-  SidebarLink,
+
 } from "@/types";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlinePhone } from "react-icons/md";
 import { CiMail } from "react-icons/ci";
-import { OrderTypes } from "@/components/containers/FilteredContainer";
 import { TbReportSearch, TbWallet } from "react-icons/tb";
 import { PiDeviceTabletSpeakerLight } from "react-icons/pi";
 import { IoDocumentTextOutline } from "react-icons/io5";
@@ -38,7 +37,7 @@ import {
 } from "react-icons/fa";
 
 // ... existing code ...
-export const userSidebarlinks: SidebarLink[] = [
+export const userSidebarlinks = [
   {
     id: 0,
     title: "داشبورد",
@@ -107,7 +106,7 @@ export const adminSidebarlinks: NavLinkItem[] = [
 ];
 
 // ... existing code ...
-export const LatestArticles: latestArticleType[] = [
+export const LatestArticles= [
   {
     id: 1,
     image: "/images/blog1-img1.png",
@@ -207,7 +206,7 @@ export const contactusinformation: contactInfoType[] = [
   },
 ];
 
-export const TableInfo: OrderTypes[] = [
+export const TableInfo= [
   {
     description: "خرید لپ‌تاپ",
     amount: "45,000,000 تومان",

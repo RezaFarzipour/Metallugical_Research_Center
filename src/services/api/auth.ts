@@ -38,7 +38,7 @@ export const checkOtp = async (
     );
     return { response };
   } catch (error) {
-    return { error };
+   return {error: error as AxiosError}
   }
 };
 

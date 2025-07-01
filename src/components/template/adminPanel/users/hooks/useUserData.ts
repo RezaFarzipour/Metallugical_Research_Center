@@ -8,8 +8,16 @@ import { useRouter } from "next/navigation";
 import { showToast } from "@/store/useToastSlice";
 import useDeleteUser from "./useDeleteUser";
 
+type GroupedUsers = {
+  signedUp: any[];
+  notSignedUp: any[];
+};
+
 const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<GroupedUsers>({
+    signedUp: [],
+    notSignedUp: [],
+  });
   const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
     null

@@ -26,7 +26,7 @@ import { imageUrlToFile } from "@/utils/formatter/fileFormatter";
 
 interface BlogesActionProps {
   blogData?: Partial<BlogData>;
-  setStep: (step: number) => void;
+  setStep?: (step: number) => void;
 }
 
 const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
@@ -92,8 +92,11 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
     if (prevCoverImageUrl && isEditSession) {
       async function fetchImage() {
         const file = await imageUrlToFile(prevCoverImageUrl);
-        setValue("cover_image", file);
-        setCoverImageUrl(URL.createObjectURL(file));
+        if(file){
+          setValue("cover_image", file);
+          setCoverImageUrl(URL.createObjectURL(file));
+        }
+
       }
       fetchImage();
     }
@@ -123,7 +126,8 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
             };
             setFormData(dataToSave);
             showToast("سرویس با موفقیت ویرایش شد", "success");
-            setStep(2);
+
+            setStep?.(2);
             reset();
           },
           onError: () => {
@@ -142,7 +146,7 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
             id: responseData.id,
           };
           setFormData(dataToSave);
-          setStep(2);
+          setStep?.(2);
         },
         onError: () => {
           showToast("ساخت بلاگ با خطا مواجه شد", "error");

@@ -66,7 +66,7 @@ function RHFSelect<T extends FieldValues>({
                 }}
               >
                 {options.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
+                  <SelectItem key={option.value} >
                     {option.label}
                   </SelectItem>
                 ))}

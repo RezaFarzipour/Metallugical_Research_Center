@@ -29,7 +29,7 @@ export const useAdminServicesDataAction = () => {
     const { view, visibleColumns } = useTableStore();
     const [formData, setFormData] = useState<GroupedServices>({ serviceUp: [] });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
-    const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
+    const [selectedServiceId, setSelectedServiceId] = useState<string | null| number>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { deletService } = useDeleteService();

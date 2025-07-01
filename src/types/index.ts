@@ -193,15 +193,15 @@ export type Category = {
 };
 //ExpiredReserve:
 export interface ExpiredReserveItem {
-  id: number;
-  serviceId: number;
-  service_id: number;
-  serviceName: string;
-  service_name: string;
-  coverImage: string;
-  cover_image: string;
-  price: number;
-  description: string;
+  id?: number;
+  serviceId?: number;
+  service_id?: number;
+  serviceName?: string;
+  service_name?: string;
+  coverImage?: string;
+  cover_image?: string;
+  price?: number;
+  description?: string;
 }
 // export interface ExpiredReserve {
 //   id: number;
