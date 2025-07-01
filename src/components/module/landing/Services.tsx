@@ -41,7 +41,7 @@ const Services = ({ initialData }: LandingPageProps) => {
             <CardModule<ServiceData>
               data={[item]}
               widthConter="100%"
-              heightImg="300px"
+              heightImg="250px"
               heightConter="200px"
               bottomOffset="160"
               isMoreDetails="anyServices"
