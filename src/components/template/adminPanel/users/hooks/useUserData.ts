@@ -44,7 +44,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
         setVisibleKeys(keys);
       }
     }
-  }, [data, includeskey]);
+  }, [data]);
 
   function groupUsersBySignup(data: any[], keys: string[]) {
     return data.reduce(
