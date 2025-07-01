@@ -11,7 +11,7 @@ import ApolloProviderWrapper from "@/providers/ApolloProviderWrapper";
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   icons: {
@@ -33,8 +33,8 @@ export default function RootLayout({
           fontIRANYekan.variable
         )}
       >
-         <ApolloProviderWrapper>
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ApolloProviderWrapper>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
         </ApolloProviderWrapper>
         <Toast />
       </body>

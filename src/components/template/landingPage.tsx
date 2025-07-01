@@ -7,6 +7,7 @@ import Blogs from "../module/landing/Blogs";
 import Services from "../module/landing/Services";
 import { BlogType } from "@/types";
 import { ServiceData } from "@/types/serviceType";
+import BackToUpBtn from "../element/BackToUpBtn";
 
 type LandingPageProps = {
   initialData: ServiceData[];
@@ -35,6 +36,9 @@ const LandingPage = ({ initialData, AllBlogs }: LandingPageProps) => {
       {/* Blog Section */}
       <section className="w-full my-40">
         <Blogs AllBlogs={AllBlogs} />
+      </section>
+      <section>
+        <BackToUpBtn />
       </section>
     </main>
   );

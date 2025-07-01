@@ -10,16 +10,14 @@ const Landing = async () => {
   const data = await getAllServiceCustomer();
 
   //getting data server-side with react-query
-  const { data :AllBlogs} = await client.query({
+  const { data: AllBlogs } = await client.query({
     query: GET_ALL_BLOGS,
     fetchPolicy: "no-cache", //دیتارو cache نمیکنه و همیشه اخرین دیتارو میده
   });
 
-
-  console.log("AllBlogs",AllBlogs)
   return (
     <div>
-      <LandingPage initialData={data} AllBlogs={AllBlogs.blogs}/>
+      <LandingPage initialData={data} AllBlogs={AllBlogs.blogs} />
     </div>
   );
 };

@@ -23,7 +23,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         <div className="bg-transparent  flex  lg:block items-center justify-center min-h-screen lg:min-h-fit lg:absolute lg:top-28 2xl:top-40 lg:right-48 xl:right-48 2xl:right-96  z-10 w-full p-4">
           <div className="bg-white/30 backdrop-sepia-0 rounded-lg shadow-lg p-4 sm:p-6 w-full max-w-md">
             <h2 className="text-2xl sm:text-3xl font-bold py-4 text-center text-gray-800">
-              آزمایشگاه
+              متالورژی
             </h2>
             <div>{children}</div>
           </div>

@@ -3,11 +3,14 @@ import BlogPage from "@/components/template/blogs/blogsPage";
 import { getAllBlogsCategory } from "@/services/api/blogs";
 import { BlogData, Category } from "@/types";
 
-// type Props = {
-//   params: { categorySlug: string };
-//   searchParams: { id?: string };
-// };
 
+export async function generateMetadata({ params }: {params:Promise<{categorySlug:string}>}) {
+  const { categorySlug } = await params;
+  return {
+    title: `بلاگ‌های ${categorySlug}`,
+    description: `بلاگ‌های مربوط به دسته‌بندی ${categorySlug}`,
+  };
+}
 export default async function CategoryPage({ params }: {params:Promise<{categorySlug:string}>}) {
   const { categorySlug } = await params;
 

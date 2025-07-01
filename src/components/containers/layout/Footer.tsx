@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   MdOutlineMail,
@@ -5,11 +6,15 @@ import {
   MdOutlineLocalPhone,
 } from "react-icons/md";
 import { AiFillExperiment } from "react-icons/ai";
-import { FaTelegram, FaInstagram } from "react-icons/fa";
-import { IoLogoWhatsapp } from "react-icons/io";
 import { Divider } from "@heroui/divider";
 import Link from "next/link";
-
+import {
+  FaTelegram,
+  FaInstagram,
+  FaWhatsapp,
+  FaTelegramPlane,
+} from "react-icons/fa";
+import { Tooltip } from "@heroui/react";
 type aboutLinkType = {
   name: string;
   link: string;
@@ -21,111 +26,101 @@ const aboutlinks: aboutLinkType[] = [
   { name: "وبلاگ و اخبار", link: "/blogs" },
   { name: "ارتباط با ما", link: "/contactus" },
 ];
-
-const socialmedias: React.ElementType[] = [
-  FaTelegram,
-  IoLogoWhatsapp,
-  FaInstagram,
+const socialMedias = [
+  { name: "اینستاگرام", icon: FaInstagram, color: "#E1306C", link: "#" },
+  { name: "تلگرام", icon: FaTelegram, color: "#0088cc", link: "#" },
+  { name: "واتساپ", icon: FaWhatsapp, color: "#25D366", link: "#" },
+  { name: "ایتا", icon: FaTelegramPlane, color: "orange", link: "#" },
 ];
 
 const Footer = () => {
   return (
-    <div className="bg-default-50 w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch text-center lg:text-right p-6 lg:p-10 gap-10 lg:gap-12 md:gap-8">
+    <div className="bg-default-50 w-full p-6 lg:p-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* دسترسی سریع */}
-        <div className="flex gap-4 flex-col md:items-center lg:items-start text-center md:text-right min-h-[200px]">
-        <div className="flex flex-col gap-4 items-start text-center md:text-left min-h-[200px]">
+        <div className="flex flex-col gap-4">
           <p className="font-bold text-default-900 text-lg lg:text-xl">
             دسترسی سریع
           </p>
-          {aboutlinks.map((link: aboutLinkType) => (
+          {aboutlinks.map((link) => (
             <Link
-              href={link.link}
               key={link.name}
-              className="flex gap-3 items-center text-default-600 text-md transition-all duration-300 hover:text-blue-500 hover:-translate-x-2"
+              href={link.link}
+              className="text-default-600 hover:text-blue-500 transition-all duration-300"
             >
               {link.name}
             </Link>
           ))}
         </div>
-        </div>
 
         {/* راه‌های ارتباطی */}
-        <div className="flex gap-4 flex-col md:items-center lg:items-start text-center md:text-right min-h-[200px]">
-        <div className="flex gap-4 flex-col items-start text-center md:text-right min-h-[200px]">
+        <div className="flex flex-col gap-4">
           <p className="font-bold text-default-900 text-lg lg:text-xl">
             راه‌های ارتباطی
           </p>
-          <p className="flex gap-3 items-start text-default-600 text-md transition-colors duration-300 hover:text-blue-500">
-            <MdOutlineMail className="text-secondary-500" size={23} />
+          <div className="flex items-center gap-3 text-default-600 hover:text-blue-500 transition-colors duration-300">
+            <MdOutlineMail size={23} className="text-secondary-500" />
             آدرس ایمیل
-          </p>
-          <p className="flex gap-3 items-center text-default-600 text-md transition-colors duration-300 hover:text-blue-500">
-            <MdMyLocation className="text-secondary-500" size={23} />
+          </div>
+          <div className="flex items-center gap-3 text-default-600 hover:text-blue-500 transition-colors duration-300">
+            <MdMyLocation size={23} className="text-secondary-500" />
             آدرس آزمایشگاه
-          </p>
-          <p className="flex gap-3 items-center text-default-600 text-md transition-colors duration-300 hover:text-blue-500">
-            <MdOutlineLocalPhone className="text-secondary-500" size={23} />
+          </div>
+          <div className="flex items-center gap-3 text-default-600 hover:text-blue-500 transition-colors duration-300">
+            <MdOutlineLocalPhone size={23} className="text-secondary-500" />
             شماره تماس
-          </p>
-        </div>
-        </div>
-
-        {/* توضیحات */}
-        <div className="lg:ml-8 flex flex-col gap-4 items-start text-center lg:max-w-md min-h-[200px] lg:items-center">
-          <p className="flex gap-3 items-center font-bold text-secondary-500 text-lg lg:text-xl">
-            <AiFillExperiment className="text-secondary-600" size={30} />
-            نام آزمایشگاه
-          </p>
-          <p className="text-default-600 text-sm lg:text-md leading-6">
-            آزمایشگاه ما با بهره‌گیری از تجهیزات پیشرفته و تیم متخصص، خدمات
-            تشخیصی دقیق و سریع ارائه می‌دهد. رضایت و سلامت مراجعین، اولویت اصلی
-            ماست. ما همواره در تلاشیم تا تجربه‌ای مطمئن و حرفه‌ای برای شما فراهم
-            کنیم. با ما، آزمایش‌ها تنها یک نتیجه نیستند؛ قدمی به‌سوی اطمینان
-            هستند.
-          </p>
-
-          {/* شبکه‌های اجتماعی */}
-          <div className="hidden lg:flex justify-center items-center gap-4">
-            {socialmedias.map((Icon, index) => (
-              <div
-                key={index}
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-secondary-100 transition-all duration-300 hover:bg-secondary-600 group cursor-pointer"
-              >
-                <Icon
-                  className="text-secondary-500 transition-all duration-300 group-hover:text-white"
-                  size={20}
-                />
-              </div>
-            ))}
           </div>
         </div>
 
-        {/* شبکه‌های اجتماعی در موبایل و تبلت */}
-        <div className="flex justify-center items-center gap-4 lg:hidden">
-          {socialmedias.map((Icon, index) => (
-            <div
-              key={index}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-secondary-100 transition-all duration-300 hover:bg-[#4A43DD] group cursor-pointer"
-            >
-              <Icon
-                className="text-[#4A43DD] transition-all duration-300 group-hover:text-white"
-                size={20}
-              />
+        {/* توضیحات و شبکه‌های اجتماعی */}
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-3 font-bold text-secondary-500 text-lg lg:text-xl">
+            <AiFillExperiment size={30} className="text-secondary-600" />
+            مرکز تحقیقات متالورژی دانشگاه آزاد زنجان
+          </div>
+          <p className="text-default-600 text-sm lg:text-md leading-6">
+            آزمایشگاه ما با بهره‌گیری از تجهیزات پیشرفته و تیم متخصص، خدمات
+            تشخیصی دقیق و سریع ارائه می‌دهد. رضایت و سلامت مراجعین، اولویت اصلی
+            ماست.
+          </p>
+
+          <div className="flex justify-center lg:justify-start gap-4">
+            <div className="py-6">
+              <div className="flex justify-center gap-4 lg:gap-8 w-full">
+                {socialMedias.map((media) => (
+                  <Tooltip key={media.name} content={media.name}>
+                    <a
+                      href={media.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative inline-block w-10 h-10 overflow-hidden group"
+                    >
+                      {/* آیکون خاکستری (اولیه) */}
+                      <media.icon
+                        size={32}
+                        className="text-gray-300 absolute top-0 left-0 group-hover:-top-full transition-all duration-500"
+                      />
+                      {/* آیکون رنگی (هاور) */}
+                      <media.icon
+                        size={32}
+                        style={{ color: media.color }}
+                        className="absolute top-full left-0 opacity-0 group-hover:top-0 group-hover:opacity-100 transition-all duration-500"
+                      />
+                    </a>
+                  </Tooltip>
+                ))}
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
 
-      <Divider className="my-4" />
+      <Divider className="my-6" />
 
-      {/* کپی‌رایت */}
-      <div className="w-full flex justify-around gap-4 items-center text-center py-3">
-        <p className="flex gap-3 items-center text-default-600 text-md">
-          کپی‌رایت
-        </p>
-        <p className="flex gap-3 items-center text-default-600 text-md">
-          ساخته شده توسط آدلی کارا
+      <div className="flex justify-end items-center gap-4 text-default-600 text-sm">
+        <p>
+          حقوق مادی و معنوی وب سایت متعلق به مرکز تحقیقات متالورژی دانشگاه آزاد
+          زنجان می باشد. طراحی سامانه نوبت دهی متالورژی توسط آدلی کارا
         </p>
       </div>
     </div>

@@ -1,12 +1,9 @@
 import Layout from "@/components/containers/layout/Layout";
 import HeaderImage from "@/components/module/HeaderImage";
-// export async function generateMetadata({ params }: Props) {
-//   const { categorySlug } = await params;
-//   return {
-//     title: `بلاگ‌های ${categorySlug}`,
-//     description: `بلاگ‌های مربوط به دسته‌بندی ${categorySlug}`,
-//   };
-// }
+
+export const metadata = {
+  title: "بلاگ ها",
+};
 export default function BlogListLayout({
   children,
 }: {

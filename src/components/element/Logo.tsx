@@ -9,7 +9,7 @@ const Logo = () => {
         <Image src="/images/icon.png" alt="logo" width={28} height={28} />
         <div className="flex flex-col gap-0 pr-1 pt-1 text-secondary-600">
           <p className="font-bold text-inherit leading-none text-lg tracking-wider">
-            آزمایشگاه
+            متالورژی
           </p>
           <p className=" text-[9px] leading-3 pr-1">دانشگاه آزاد زنجان</p>
         </div>
