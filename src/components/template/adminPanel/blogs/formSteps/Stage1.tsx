@@ -92,11 +92,10 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
     if (prevCoverImageUrl && isEditSession) {
       async function fetchImage() {
         const file = await imageUrlToFile(prevCoverImageUrl);
-        if(file){
+        if (file) {
           setValue("cover_image", file);
           setCoverImageUrl(URL.createObjectURL(file));
         }
-
       }
       fetchImage();
     }
@@ -213,12 +212,13 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
           <Controller
             name="cover_image"
             control={control}
-            render={({ field: { value, onChange, ...rest } }) => (
+            render={({ field: { name, onChange, ref } }) => (
               <FileInput
                 multiple={false}
                 label="انتخاب کاور بلاگ"
                 errors={errors}
-                value={value?.fileName}
+                name={name}
+                inputRef={ref}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const file = event.target.files?.[0];
                   if (file) {
@@ -226,7 +226,6 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
                     setCoverImageUrl(URL.createObjectURL(file));
                   }
                 }}
-                {...rest}
               />
             )}
           />

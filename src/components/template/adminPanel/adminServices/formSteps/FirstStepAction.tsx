@@ -43,9 +43,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
     cover_image: prevCoverImageUrl,
   } = serviceDataEdit;
 
-  const [coverImageUrl, setCoverImageUrl] = useState(
-    prevCoverImageUrl || null
-  );
+  const [coverImageUrl, setCoverImageUrl] = useState(prevCoverImageUrl || null);
 
   const { createService, isCreating } = useCreateService();
   const { editService, isEditing } = useEditService();
@@ -89,7 +87,6 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
       fetchImage();
     }
   }, [editId, prevCoverImageUrl, isEditSession, setValue]);
-  
 
   const onSubmit = async (data: CreateServiceFormData) => {
     const formData = new FormData();
@@ -144,13 +141,10 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
         <Controller
           name="cover_image"
           control={control}
-          render={({ field: { value, onChange, ...rest } }) => (
+          render={({ field: { name, onChange, ref } }) => (
             <FileInput
-              multiple={false}
-              label="انتخاب کاور محصول"
-              {...rest}
-              value={value?.fileName}
-              errors={errors}
+              name={name}
+              inputRef={ref}
               onChange={(event) => {
                 const file = event.target.files?.[0];
                 if (file) {
@@ -158,6 +152,9 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
                   setCoverImageUrl(URL.createObjectURL(file));
                 }
               }}
+              multiple={false}
+              label="انتخاب کاور محصول"
+              errors={errors}
             />
           )}
         />

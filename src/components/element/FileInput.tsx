@@ -6,6 +6,7 @@ interface FileInputProps {
   label: string;
   name: string;
   dir?: "rtl" | "ltr";
+  inputRef?: React.Ref<HTMLInputElement>;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isRequired?: boolean;
   className?: string;
@@ -14,8 +15,8 @@ interface FileInputProps {
   disabled?: boolean;
   accept?: string;
   capture?: boolean | "user" | "environment";
-  value: any;
 }
+
 function FileInput({
   label,
   dir = "rtl",
@@ -28,7 +29,6 @@ function FileInput({
   accept = "image/*",
   capture = "environment",
   name,
-  value,
   ...rest
 }: FileInputProps) {
   const errorMessages = errors?.[name] as { message?: string } | undefined;
@@ -50,7 +50,6 @@ function FileInput({
           type="file"
           className="sr-only hidden"
           name={name}
-          value={value}
           dir={dir}
           onChange={onChange}
           required={isRequired}

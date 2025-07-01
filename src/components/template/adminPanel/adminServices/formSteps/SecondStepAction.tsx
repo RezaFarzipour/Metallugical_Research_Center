@@ -175,11 +175,12 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
         <Controller
           name="images"
           control={control}
-          render={({ field: { value, onChange, ...rest } }) => (
+          render={({ field: { name, onChange, ref } }) => (
             <FileInput
               label="انتخاب عکس‌های جدید"
               multiple={true}
-              value={value?.fileName}
+              name={name}
+              inputRef={ref}
               errors={errors}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const files = event.target.files;
@@ -197,7 +198,6 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
                   setNewImageUrls((prev) => [...prev, ...newUrls]);
                 }
               }}
-              {...rest}
             />
           )}
         />

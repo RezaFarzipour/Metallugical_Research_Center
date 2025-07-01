@@ -96,14 +96,15 @@ const CustomerStage3 = ({
             <Controller
               name="payment_image"
               control={control}
-              render={({ field: { value, onChange, ...rest } }) => (
+              render={({ field: { name, onChange, ref } }) => (
                 <>
                   {!receiptFile ? (
                     <FileInput
                       multiple={false}
                       label="فیش واریز"
                       errors={errors}
-                      value={value?.fileName}
+                      name={name}
+                      inputRef={ref}
                       onChange={(
                         event: React.ChangeEvent<HTMLInputElement>
                       ) => {
@@ -115,7 +116,6 @@ const CustomerStage3 = ({
                       }}
                       accept="image/*"
                       capture="environment"
-                      {...rest}
                     />
                   ) : (
                     <div className="relative w-64 h-40 border rounded-md overflow-hidden group mt-2">
