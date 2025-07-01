@@ -8,21 +8,25 @@ import DeleteBtn from "./DeleteBtn";
 import truncateText from "@/utils/formatter/truncateText";
 import { BlogType, ReportData, TableBase, UserType } from "@/types";
 import { ServerServiceType } from "@/types/serviceType";
+
 type TableData = ServerServiceType | BlogType | UserType | ReportData;
 
 interface CellRendererProps<T extends TableData> {
-  data: T[];
+  data: T;
   columnKey: keyof TableBase | "actions";
-  firstActionContent: string;
+  firstActionContent?: string;
   firstActionIcon?: React.FC;
-  secondActionContent: string;
+  secondActionContent?: string;
   secondActionIcon?: React.FC;
-  firstActionClickHandler: (id: number | string, phone_number: string) => void;
-  secondActionClickHandler: (id: number | string, phone_number: string) => void;
+  firstActionClickHandler?: (id: number | string, phone_number: string) => void;
+  secondActionClickHandler?: (
+    id: number | string,
+    phone_number: string
+  ) => void;
   image?: boolean;
 }
 
-export const CellRenderer: React.FC<CellRendererProps> = ({
+export const CellRenderer = <T extends TableData>({
   data,
   columnKey,
   firstActionContent,
@@ -32,8 +36,8 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
   firstActionClickHandler,
   secondActionClickHandler,
   image,
-}) => {
-  const cellValue = data[columnKey as keyof TableBase];
+}: CellRendererProps<T>): React.ReactElement => {
+  const cellValue = (data as Record<string, any>)[columnKey];
 
   switch (columnKey) {
     case "name":
@@ -42,13 +46,13 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
           <div className="flex items-center gap-2">
             {image && (
               <Image
-                src={data.image || `/images/user.png`}
-                alt={data.name}
+                src={(data as any).image || `/images/user.png`}
+                alt={(data as any).name}
                 width={50}
                 height={50}
               />
             )}
-            <span className="text-nowrap">{data.name}</span>
+            <span className="text-nowrap">{(data as any).name}</span>
           </div>
         </div>
       );
@@ -57,19 +61,8 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
       return (
         <Chip
           className="capitalize"
-          color={statusColorMap[data.status as keyof typeof statusColorMap]}
-          size="sm"
-          variant="flat"
-        >
-          {cellValue}
-        </Chip>
-      );
-    case "payment_status":
-      return (
-        <Chip
-          className="capitalize"
           color={
-            statusColorMap[data.payment_status as keyof typeof statusColorMap]
+            statusColorMap[(data as any).status as keyof typeof statusColorMap]
           }
           size="sm"
           variant="flat"
@@ -77,11 +70,30 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
           {cellValue}
         </Chip>
       );
+
+    case "payment_status":
+      return (
+        <Chip
+          className="capitalize"
+          color={
+            statusColorMap[
+              (data as any).payment_status as keyof typeof statusColorMap
+            ]
+          }
+          size="sm"
+          variant="flat"
+        >
+          {cellValue}
+        </Chip>
+      );
+
     case "role":
       return (
         <Chip
           className="capitalize"
-          color={statusColorMap[data.role as keyof typeof statusColorMap]}
+          color={
+            statusColorMap[(data as any).role as keyof typeof statusColorMap]
+          }
           size="sm"
           variant="flat"
         >
@@ -111,10 +123,12 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
 
     case "tags":
       let tagsArray: string[] = [];
-
       try {
-        if (Array.isArray(data.tags) && typeof data.tags[0] === "string") {
-          tagsArray = JSON.parse(data.tags[0]); // چون به صورت استرینگ داخل آرایه هست
+        if (
+          Array.isArray((data as any).tags) &&
+          typeof (data as any).tags[0] === "string"
+        ) {
+          tagsArray = JSON.parse((data as any).tags[0]);
         }
       } catch (err) {
         console.error("Error parsing tags:", err);
@@ -135,18 +149,25 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
         <div className="flex justify-center gap-2">
           <EditBtn
             data={data}
-            firstActionContent={firstActionContent}
+            firstActionContent={firstActionContent ?? "ویرایش"}
             firstActionIcon={firstActionIcon}
-            firstActionClickHandler={firstActionClickHandler}
+            firstActionClickHandler={firstActionClickHandler ?? (() => {})}
           />
           <DeleteBtn
-            data={data}
-            secondActionContent={secondActionContent}
+            data={
+              data as {
+                id: string | number;
+                name: string;
+                phone_number?: string;
+              }
+            }
+            secondActionContent={secondActionContent ?? "حذف"}
             secondActionIcon={secondActionIcon}
-            secondActionClickHandler={secondActionClickHandler}
+            secondActionClickHandler={secondActionClickHandler ?? (() => {})}
           />
         </div>
       );
+
     default:
       return <span className="text-nowrap">{cellValue}</span>;
   }
