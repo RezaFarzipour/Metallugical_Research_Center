@@ -31,7 +31,6 @@ const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
 
   const ConfirmDeleteBlog = async () => {
     if (!dataByID.id) {
-      console.error("ID for deletion is undefined or null");
       showToast("آیدی سرویس نامعتبر است", "error");
       return;
     }

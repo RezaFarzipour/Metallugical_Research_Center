@@ -15,26 +15,11 @@ export default function AdminDateRangePicker({
     null,
   ]);
 
-  // تابع تبدیل تاریخ میلادی به شمسی
-  const convertToPersianDate = (date: Date): string => {
-    return new DateObject({
-      date,
-      calendar: persian,
-      locale: persian_fa,
-    }).format("YYYY/MM/DD");
-  };
-
   const handleRangeChange = (dates: any) => {
     setRange(dates);
     if (dates[0] && dates[1]) {
       const minDate = dates[0].toDate(); // تاریخ شروع به میلادی
       const maxDate = dates[1].toDate(); // تاریخ پایان به میلادی
-
-      // تبدیل تاریخ‌ها به شمسی برای نمایش
-      const persianMinDate = convertToPersianDate(minDate);
-      const persianMaxDate = convertToPersianDate(maxDate);
-
-      console.log("Persian Dates:", persianMinDate, persianMaxDate);
 
       // ارسال تاریخ‌های میلادی به سرور
       onRangeSelect(minDate, maxDate);

@@ -19,7 +19,13 @@ import { showToast } from "@/store/useToastSlice";
 import { useApolloClient } from "@apollo/client";
 import { useEditBlogContent } from "../hooks/useEditCategory";
 
-const Stage2 = ({ blogData ,setStep}: { blogData?: BlogData ,  setStep?:(step: number) => void;}) => {
+const Stage2 = ({
+  blogData,
+  setStep,
+}: {
+  blogData?: BlogData;
+  setStep?: (step: number) => void;
+}) => {
   const { formData, setFormData } = useBlogFormStore();
   const items = formData.items || [];
 
@@ -89,7 +95,6 @@ const Stage2 = ({ blogData ,setStep}: { blogData?: BlogData ,  setStep?:(step: n
               class_name: "skin-type",
               is_multiline: false,
             },
-        
           });
         } else {
           await contentMutation.mutateAsync({
@@ -99,7 +104,7 @@ const Stage2 = ({ blogData ,setStep}: { blogData?: BlogData ,  setStep?:(step: n
             class_name: "skin-type",
             is_multiline: false,
           });
-          setStep?.(1)
+          setStep?.(1);
         }
       }
 
@@ -107,8 +112,7 @@ const Stage2 = ({ blogData ,setStep}: { blogData?: BlogData ,  setStep?:(step: n
         include: ["getAllBlogs"],
       });
       localStorage.clear();
-  
-      
+
       router.push("/admin/blogs");
       showToast("بلاگ با موفقیت ایجاد شد", "success");
     } catch (error) {

@@ -35,8 +35,6 @@ export const BlogsPage: React.FC = () => {
   const { sortedItems } = useFilteredContainer<BlogType>(formDataBlogs, page);
   const isEmpty = !formDataBlogs || formDataBlogs.length === 0;
 
-  console.log(sortedItems, "sortedItems");
-
   return (
     <div className="grid grid-cols-1">
       <div className=" p-4 md:p-6">

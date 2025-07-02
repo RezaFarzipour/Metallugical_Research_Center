@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import { Pagination } from "@heroui/react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";

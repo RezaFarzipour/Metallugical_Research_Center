@@ -4,17 +4,15 @@ import setCookiesOnReq from "@/utils/auth/setCookieOnReq";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
-// type PageProps = {
-//   params: { blogId: string };
-// };
-
-export default async function Page({ params }: {params:Promise<{blogId:string}>}) {
-
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ blogId: string }>;
+}) {
   const { blogId } = await params;
   const cookieStore = cookies();
   const options = setCookiesOnReq(cookieStore);
   const blogData = await getBlogById(blogId, options);
-
 
   if (!blogData) {
     notFound();
@@ -22,10 +20,7 @@ export default async function Page({ params }: {params:Promise<{blogId:string}>}
 
   return (
     <div>
-      <EditBlogPage
-        blogData={blogData}
-
-      />
+      <EditBlogPage blogData={blogData} />
     </div>
   );
 }

@@ -1,11 +1,19 @@
+"use client";
+import { BtnLoader } from "@/components/element/Loader";
 import UsersPage from "@/components/template/adminPanel/users/usersPage";
-import React from "react";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
-    <div>
+    <Suspense
+      fallback={
+        <div>
+          <BtnLoader />
+        </div>
+      }
+    >
       <UsersPage />
-    </div>
+    </Suspense>
   );
 };
 

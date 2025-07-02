@@ -1,7 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import http from "../httpService";
 import { BlogCategoryInput, BlogContentInput } from "@/types";
-import { BlogStageOneFormData } from "@/schemas/blogStageOneSchema";
 
 export const getAllCategoryAdmin = async () => {
   const response = await http.get(`blog/category/admin/`);
@@ -151,7 +150,7 @@ export const getAllBlogs = async ({
   queries: string;
 }) => {
   const url = `blog/b/any/?categorySlug=${categorySlug}${queries ? `&${queries}` : ""}`;
-  
+
   const response = await http.get(url);
   return response.data;
 };

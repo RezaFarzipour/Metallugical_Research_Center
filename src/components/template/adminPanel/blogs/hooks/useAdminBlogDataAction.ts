@@ -109,7 +109,6 @@ export const useAdminBlogDataAction = () => {
   const secondActionClickHandler = useCallback(
     (id: string | number, name?: string | undefined) => {
       if (!id) {
-        console.error("Invalid ID passed to secondActionClickHandler");
         showToast("آیدی سرویس نامعتبر است", "error");
         return;
       }
@@ -123,7 +122,6 @@ export const useAdminBlogDataAction = () => {
   // تایید حذف سرویس
   const handleDeleteBlog = useCallback(() => {
     if (!selectedServiceId) {
-      console.error("ID for deletion is undefined or null");
       showToast("آیدی سرویس نامعتبر است", "error");
       return;
     }
@@ -152,7 +150,6 @@ export const useAdminBlogDataAction = () => {
     formDataBlogs,
     visibleKeys,
     headerColumns,
-    name,
     isPending,
     firstActionClickHandler,
     secondActionClickHandler,

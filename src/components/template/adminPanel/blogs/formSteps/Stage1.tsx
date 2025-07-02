@@ -117,7 +117,6 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
         { id: editId, data: formData },
         {
           onSuccess: (responseData) => {
-            console.log("Response after create:", responseData);
             const dataToSave = {
               ...data,
               cover_image: coverImageUrl,

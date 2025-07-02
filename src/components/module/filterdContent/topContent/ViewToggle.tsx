@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import { AiFillAppstore } from "react-icons/ai";
 import { GoListUnordered } from "react-icons/go";

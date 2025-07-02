@@ -1,12 +1,18 @@
-
+import { BtnLoader } from "@/components/element/Loader";
 import { AdminServicesPage } from "@/components/template/adminPanel/adminServices/adminServicesPage";
-import React from "react";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
-    <div>
+    <Suspense
+      fallback={
+        <div>
+          <BtnLoader />
+        </div>
+      }
+    >
       <AdminServicesPage />
-    </div>
+    </Suspense>
   );
 };
 

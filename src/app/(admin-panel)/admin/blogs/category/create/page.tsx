@@ -1,12 +1,20 @@
-import CreateCategory from "@/components/template/adminPanel/blogs/category/createCategoryPage";
+"use client";
 
-import React from "react";
+import { BtnLoader } from "@/components/element/Loader";
+import CreateCategory from "@/components/template/adminPanel/blogs/category/createCategoryPage";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
-    <div>
+    <Suspense
+      fallback={
+        <div>
+          <BtnLoader />
+        </div>
+      }
+    >
       <CreateCategory />
-    </div>
+    </Suspense>
   );
 };
 

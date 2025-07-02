@@ -22,8 +22,7 @@ export function useEditCategory() {
       }) => {
         return editBlogCategoryById({ id, category_name, slug });
       },
-      onSuccess: (data) => {
-        console.log(data, "data");
+      onSuccess: () => {
 
         queryClient.invalidateQueries({
           queryKey: ["getAll-blogsCategory"],

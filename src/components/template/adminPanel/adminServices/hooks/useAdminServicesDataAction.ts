@@ -98,7 +98,6 @@ export const useAdminServicesDataAction = () => {
     // باز کردن مودال حذف
     const secondActionClickHandler = useCallback((id: string | number) => {
         if (!id) {
-            console.error("Invalid ID passed to secondActionClickHandler");
             showToast("آیدی سرویس نامعتبر است", "error");
             return;
         }
@@ -110,7 +109,6 @@ export const useAdminServicesDataAction = () => {
     // تایید حذف سرویس
     const handleDeleteService = useCallback(() => {
         if (!selectedServiceId) {
-            console.error("ID for deletion is undefined or null");
             showToast("آیدی سرویس نامعتبر است", "error");
             return;
         }

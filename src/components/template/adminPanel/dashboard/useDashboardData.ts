@@ -13,7 +13,6 @@ const useDashboardData = (visibleColumns: Set<string>, cardsData: CardsData) => 
     const router = useRouter();
     const [formData, setFormData] = useState<{ reserveUp: ReportData[] }>({ reserveUp: [] });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
-    console.log(cardsData, "cardsData");
 
     const {
         dataUser,
@@ -89,7 +88,6 @@ const useDashboardData = (visibleColumns: Set<string>, cardsData: CardsData) => 
     ]);
 
     const formDataReseves: ReportData[] = Array.isArray(formData.reserveUp) ? formData.reserveUp : [];
-    console.log(formDataReseves, "formDataReseves");
 
     const slicedItems = formDataReseves.slice(-4);
 

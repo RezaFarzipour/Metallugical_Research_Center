@@ -1,3 +1,5 @@
+"use client";
+
 import CategoryBlog from "@/components/template/adminPanel/blogs/category/categoryPage";
 import React from "react";
 

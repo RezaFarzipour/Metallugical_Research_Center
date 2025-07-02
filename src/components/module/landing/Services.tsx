@@ -14,7 +14,6 @@ type LandingPageProps = {
 };
 const Services = ({ initialData }: LandingPageProps) => {
   const visibleCount = useVisibleCount({ sm: 4, md: 4, lg: 6 });
-  console.log(initialData, "initialData");
 
   return (
     <motion.div

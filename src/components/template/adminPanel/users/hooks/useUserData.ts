@@ -23,9 +23,9 @@ type GroupedUsers = {
   notSignedUp: SimplifiedUser[];
 };
 
-type userDataType ={
-  email:string,first_name:string,is_signup:boolean,last_name:string,phone_number:string,role:string,username:string
-}[] 
+type userDataType = {
+  email: string, first_name: string, is_signup: boolean, last_name: string, phone_number: string, role: string, username: string
+}[]
 
 const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
   const [formData, setFormData] = useState<GroupedUsers>({
@@ -49,7 +49,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
   useEffect(() => {
     if (Array.isArray(data)) {
       const result = groupUsersBySignup(data, includeskey);
- 
+
       setFormData(result);
 
       if (result.signedUp.length > 0) {
@@ -64,11 +64,11 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
   function groupUsersBySignup(data: userDataType, keys: string[]): GroupedUsers {
     return data.reduce<GroupedUsers>((acc, user, index) => {
       const name = `${user.first_name} ${user.last_name}`.trim();
-  
+
       const filtered = Object.fromEntries(
         Object.entries(user).filter(([key]) => keys.includes(key))
       );
-  
+
       const simplified: SimplifiedUser = {
         ...filtered,
         id: toPersianNumbers(index + 1),
@@ -79,13 +79,13 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
         actions: "action",
         email: user.email,
       };
-  
+
       if (user.is_signup) {
         acc.signedUp.push(simplified);
       } else {
         acc.notSignedUp.push(simplified);
       }
-  
+
       return acc;
     }, { signedUp: [], notSignedUp: [] });
   }
@@ -111,7 +111,6 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
   const secondActionClickHandler = useCallback(
     (id: string | number, phone_number: string) => {
       if (!id) {
-        console.error("Invalid ID passed to secondActionClickHandler");
         showToast("آیدی سرویس نامعتبر است", "error");
         return;
       }
@@ -125,7 +124,6 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
   // تایید حذف سرویس
   const handleDeleteService = useCallback(() => {
     if (!selectedServiceId) {
-      console.error("ID for deletion is undefined or null");
       showToast("آیدی سرویس نامعتبر است", "error");
       return;
     }
