@@ -2,7 +2,7 @@
 
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { Usercolumns } from "@/constants/tableData";
-import React from "react";
+import React, { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
 import { useTableStore } from "@/store/useTableSlice";
@@ -16,6 +16,8 @@ import { UserType } from "@/types";
 
 const UsersPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
+  const [page, setPage] = useState<number>(1);
+
   const includeskey = ["email", "phone_number", "role"];
   const {
     handleDeleteService,
@@ -30,7 +32,10 @@ const UsersPage: React.FC = () => {
     secondActionClickHandler,
   } = useUserData(visibleColumns, includeskey);
 
-  const { sortedItems } = useFilteredContainer<UserType>(formDataSignedUp);
+  const { sortedItems } = useFilteredContainer<UserType>(
+    formDataSignedUp,
+    page
+  );
 
   return (
     <div className="grid grid-cols-1">
@@ -50,6 +55,8 @@ const UsersPage: React.FC = () => {
           rolesDropDown={true}
           stausDropDown={false}
           bottomContents={true}
+          page={page}
+          setPage={setPage}
         >
           {isPending ? (
             <div>

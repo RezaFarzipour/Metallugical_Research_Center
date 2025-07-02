@@ -1,8 +1,6 @@
-
 import { useMemo } from "react";
 import { useTableStore } from "@/store/useTableSlice";
 
-// تعریف اینترفیس پایه برای TData
 interface BaseTableData {
     id: string | number;
     name?: string;
@@ -11,10 +9,18 @@ interface BaseTableData {
     payment_status?: string;
     status?: string;
     role?: string;
-    [key: string]: any; // برای انعطاف‌پذیری در پراپرتی‌های اضافی
+    [key: string]: any;
 }
 
-export function useFilteredContainer<TData extends BaseTableData>(datas: TData[]) {
+export function useFilteredContainer<TData extends BaseTableData>(
+    datas: TData[],
+    page: number
+): {
+    filteredItems: TData[];
+    paginatedItems: TData[];
+    sortedItems: TData[];
+    pages: number;
+} {
     const {
         filterValue,
         statusFilter,
@@ -22,12 +28,10 @@ export function useFilteredContainer<TData extends BaseTableData>(datas: TData[]
         rolesFilter,
         rowsPerPage,
         sortDescriptor,
-        page,
     } = useTableStore();
 
-    // محاسبه آیتم‌های فیلترشده
-    const filteredItems = useMemo<TData[]>(() => {
-        let filteredItems = [...datas];
+    const filteredItems = useMemo(() => {
+        let filtered = [...datas];
 
         const applyFilter = (
             items: TData[],
@@ -42,11 +46,10 @@ export function useFilteredContainer<TData extends BaseTableData>(datas: TData[]
 
         if (filterValue) {
             const lowerCaseFilter = filterValue.toLowerCase();
-            filteredItems = filteredItems.filter((item) => {
+            filtered = filtered.filter((item) => {
                 const name = String(item.name || "").toLowerCase();
                 const service_name = String(item.service_name || "").toLowerCase();
                 const title = String(item.title || "").toLowerCase();
-
                 return (
                     name.includes(lowerCaseFilter) ||
                     service_name.includes(lowerCaseFilter) ||
@@ -55,14 +58,13 @@ export function useFilteredContainer<TData extends BaseTableData>(datas: TData[]
             });
         }
 
-        filteredItems = applyFilter(filteredItems, peymentStatusFilter, "payment_status");
-        filteredItems = applyFilter(filteredItems, statusFilter, "status");
-        filteredItems = applyFilter(filteredItems, rolesFilter, "role");
+        filtered = applyFilter(filtered, peymentStatusFilter, "payment_status");
+        filtered = applyFilter(filtered, statusFilter, "status");
+        filtered = applyFilter(filtered, rolesFilter, "role");
 
-        return filteredItems;
+        return filtered;
     }, [datas, filterValue, statusFilter, peymentStatusFilter, rolesFilter]);
 
-    // محاسبه صفحه‌بندی
     const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
     const paginatedItems = useMemo(() => {
@@ -71,7 +73,6 @@ export function useFilteredContainer<TData extends BaseTableData>(datas: TData[]
         return filteredItems.slice(start, end);
     }, [filteredItems, page, rowsPerPage]);
 
-    // محاسبه آیتم‌های مرتب‌شده
     const sortedItems = useMemo(() => {
         return [...paginatedItems].sort((a, b) => {
             const first = a[sortDescriptor.column];

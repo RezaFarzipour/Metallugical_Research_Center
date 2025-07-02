@@ -1,7 +1,7 @@
 "use client";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { ReservesCustomercolumns } from "@/constants/tableData";
-import React from "react";
+import React, { useState } from "react";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
@@ -13,6 +13,8 @@ import useReserveData from "@/components/template/userPanel/userReserves/useUser
 
 const ReservesPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
+  const [page, setPage] = useState<number>(1);
+
   const {
     formDataReseves,
     visibleKeys,
@@ -22,7 +24,7 @@ const ReservesPage: React.FC = () => {
     isEmpty,
     isLoadingReserve,
   } = useReserveData(visibleColumns);
-  const { sortedItems } = useFilteredContainer(formDataReseves);
+  const { sortedItems } = useFilteredContainer(formDataReseves, page);
 
   return (
     <div className="grid grid-cols-1">
@@ -43,6 +45,8 @@ const ReservesPage: React.FC = () => {
           rolesDropDown={false}
           stausDropDown={true}
           bottomContents={!!formDataReseves?.length}
+          page={page}
+          setPage={setPage}
         >
           {isLoadingReserve ? (
             <div>

@@ -8,6 +8,7 @@ import { BlogType } from "@/types";
 import { cn } from "@/utils/cn";
 import CategoryList from "./CateogryList";
 import Empty from "@/components/element/Empty";
+import { useState } from "react";
 
 type BlogPageType = {
   AllBlogs: BlogType[];
@@ -19,7 +20,9 @@ export default function BlogPage({
   loading: isPending,
 }: BlogPageType) {
   const blogs = Array.isArray(AllBlogs) ? AllBlogs : [];
-  const { sortedItems } = useFilteredContainer(blogs);
+  const [page, setPage] = useState<number>(1);
+
+  const { sortedItems } = useFilteredContainer(blogs, page);
 
   return (
     <div className="p-4 md:p-10 w-full min-h-screen mt-96">
@@ -46,6 +49,8 @@ export default function BlogPage({
             rolesDropDown={false}
             stausDropDown={false}
             bottomContents={!!blogs.length}
+            page={page}
+            setPage={setPage}
           >
             {isPending ? (
               <BtnLoader />

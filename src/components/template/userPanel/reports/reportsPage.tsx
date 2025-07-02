@@ -1,7 +1,7 @@
 "use client";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { ReportsCustomercolumns } from "@/constants/tableData";
-import React from "react";
+import React, { useState } from "react";
 import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
@@ -12,6 +12,7 @@ import useReportsData from "./useReportsData";
 
 const ReportsPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
+  const [page, setPage] = useState<number>(1);
 
   const {
     formDataReseves,
@@ -21,7 +22,7 @@ const ReportsPage: React.FC = () => {
     isEmpty,
   } = useReportsData(visibleColumns);
 
-  const { sortedItems } = useFilteredContainer(formDataReseves);
+  const { sortedItems } = useFilteredContainer(formDataReseves, page);
 
   return (
     <div className="grid grid-cols-1">
@@ -42,6 +43,8 @@ const ReportsPage: React.FC = () => {
           stausDropDown={true}
           paymentStautsDropDown={true}
           bottomContents={!!formDataReseves?.length}
+          page={page}
+          setPage={setPage}
         >
           {isLoadingReserve ? (
             <div>

@@ -28,6 +28,8 @@ interface PanelContainerProps<T extends TableData> {
   children: React.ReactNode;
   viewContentSmSize?: boolean;
   btnClickHandler?: () => void;
+  page: number;
+  setPage: (page: number) => void;
 }
 
 export default function FilteredContainer<T extends TableData>({
@@ -46,8 +48,10 @@ export default function FilteredContainer<T extends TableData>({
   children,
   btnClickHandler,
   viewContentSmSize,
+  page,
+  setPage,
 }: PanelContainerProps<T>) {
-  const { page, setPage } = useTableStore();
+  // const { page, setPage } = useTableStore();
 
   React.useEffect(() => {
     useTableStore.setState({
@@ -56,7 +60,7 @@ export default function FilteredContainer<T extends TableData>({
   }, [INITIAL_VISIBLE_COLUMNS]);
   const userData = datas || [];
 
-  const { pages } = useFilteredContainer(userData);
+  const { pages } = useFilteredContainer(userData, page);
   return (
     <div>
       {topContents && (

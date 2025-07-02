@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { Servicecolumns } from "@/constants/tableData";
@@ -16,6 +16,8 @@ import { useAdminServicesDataAction } from "./hooks/useAdminServicesDataAction";
 import { ServerServiceType } from "@/types/serviceType";
 
 export const AdminServicesPage: React.FC = ({}) => {
+  const [page, setPage] = useState<number>(1);
+
   const {
     isModalOpen,
     setIsModalOpen,
@@ -31,9 +33,10 @@ export const AdminServicesPage: React.FC = ({}) => {
     router,
   } = useAdminServicesDataAction();
 
-  const { sortedItems } =
-    useFilteredContainer<ServerServiceType>(formDataServices);
-  console.log(formDataServices, "formDataServices");
+  const { sortedItems } = useFilteredContainer<ServerServiceType>(
+    formDataServices,
+    page
+  );
 
   const isEmpty = !formDataServices || formDataServices.length === 0;
 
@@ -55,6 +58,8 @@ export const AdminServicesPage: React.FC = ({}) => {
           addBtn={true}
           btnClickHandler={() => router.push("/admin/services/create")}
           bottomContents={!!formDataServices?.length}
+          page={page}
+          setPage={setPage}
         >
           {isPending ? (
             <div>

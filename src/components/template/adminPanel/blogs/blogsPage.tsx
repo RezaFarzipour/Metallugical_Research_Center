@@ -4,7 +4,7 @@ import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { blogColumns } from "@/constants/tableData";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
-import React from "react";
+import React, { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
 import CardModule from "@/components/module/cardModule/CardModule";
@@ -15,6 +15,8 @@ import { useAdminBlogDataAction } from "./hooks/useAdminBlogDataAction";
 import { BlogType } from "@/types";
 
 export const BlogsPage: React.FC = () => {
+  const [page, setPage] = useState<number>(1);
+
   const {
     isModalOpen,
     setIsModalOpen,
@@ -30,7 +32,7 @@ export const BlogsPage: React.FC = () => {
     handleDeleteBlog,
   } = useAdminBlogDataAction();
 
-  const { sortedItems } = useFilteredContainer<BlogType>(formDataBlogs);
+  const { sortedItems } = useFilteredContainer<BlogType>(formDataBlogs, page);
   const isEmpty = !formDataBlogs || formDataBlogs.length === 0;
 
   console.log(sortedItems, "sortedItems");
@@ -53,6 +55,8 @@ export const BlogsPage: React.FC = () => {
           rolesDropDown={false}
           stausDropDown={false}
           bottomContents={!!formDataBlogs?.length}
+          page={page}
+          setPage={setPage}
         >
           {isPending ? (
             <div>

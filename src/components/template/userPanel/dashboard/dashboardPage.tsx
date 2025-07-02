@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { CgArrowLeft } from "react-icons/cg";
 import { useTableStore } from "@/store/useTableSlice";
@@ -13,6 +13,8 @@ import useDashboardData from "./useDashboardData";
 import Minicard from "@/components/element/Minicard";
 const DashboardPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
+  const [page, setPage] = useState<number>(1);
+
   const {
     formDataReseves,
     visibleKeys,
@@ -53,6 +55,8 @@ const DashboardPage: React.FC = () => {
           columnsDropDownBtn={true}
           rolesDropDown={false}
           stausDropDown={true}
+          page={page}
+          setPage={setPage}
         >
           {isLoadingReserve ? (
             <div>

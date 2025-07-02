@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { useTableStore } from "@/store/useTableSlice";
@@ -25,7 +25,9 @@ const Services = ({ initialData }: ServicesPageProps) => {
     refetchOnWindowFocus: true, // 👈 فعال‌سازی رفرش تب
   });
   const formDataServices = Array.isArray(data) ? data : [];
-  const { sortedItems } = useFilteredContainer(formDataServices);
+  const [page, setPage] = useState<number>(1);
+
+  const { sortedItems } = useFilteredContainer(formDataServices, page);
 
   return (
     <motion.section
@@ -56,6 +58,8 @@ const Services = ({ initialData }: ServicesPageProps) => {
             rolesDropDown={false}
             stausDropDown={false}
             bottomContents={!!formDataServices?.length}
+            page={page}
+            setPage={setPage}
           >
             {isPending ? (
               <BtnLoader />

@@ -1,7 +1,7 @@
 "use client";
 
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import React from "react";
+import React, { useState } from "react";
 import { CgArrowLeft } from "react-icons/cg";
 import { ReservesAdmincolumns } from "@/constants/tableData";
 import { useTableStore } from "@/store/useTableSlice";
@@ -20,6 +20,8 @@ interface DashboardPageProps {
 
 const DashboardPage: React.FC<DashboardPageProps> = ({ cardsData }) => {
   const { visibleColumns } = useTableStore();
+  const [page, setPage] = useState<number>(1);
+
   const {
     formDataReseves,
     visibleKeys,
@@ -72,6 +74,8 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ cardsData }) => {
           stausDropDown={false}
           paymentStautsDropDown={true}
           bottomContents={false}
+          page={page}
+          setPage={setPage}
         >
           <CustomeTable
             headerColumns={headerColumns}
