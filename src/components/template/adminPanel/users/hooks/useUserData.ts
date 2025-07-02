@@ -8,10 +8,24 @@ import { useRouter } from "next/navigation";
 import { showToast } from "@/store/useToastSlice";
 import useDeleteUser from "./useDeleteUser";
 
-type GroupedUsers = {
-  signedUp: any[];
-  notSignedUp: any[];
+type SimplifiedUser = {
+  id: string;
+  role: string;
+  name: string;
+  phone_number: string;
+  is_signup: boolean;
+  actions: string;
+  email: string;
 };
+
+type GroupedUsers = {
+  signedUp: SimplifiedUser[];
+  notSignedUp: SimplifiedUser[];
+};
+
+type userDataType ={
+  email:string,first_name:string,is_signup:boolean,last_name:string,phone_number:string,role:string,username:string
+}[] 
 
 const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
   const [formData, setFormData] = useState<GroupedUsers>({
@@ -25,7 +39,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { userDelete } = useDeleteUser();
 
-  const { data, isPending } = useQuery({
+  const { data, isPending } = useQuery<userDataType>({
     queryKey: ["getAll-users"],
     queryFn: getAllUserAdmin,
   });
@@ -35,6 +49,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
   useEffect(() => {
     if (Array.isArray(data)) {
       const result = groupUsersBySignup(data, includeskey);
+ 
       setFormData(result);
 
       if (result.signedUp.length > 0) {
@@ -46,35 +61,33 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
     }
   }, [data]);
 
-  function groupUsersBySignup(data: any[], keys: string[]) {
-    return data.reduce(
-      (acc, user, index) => {
-        const name = `${user.first_name} ${user.last_name}`.trim();
-
-        const filtered = Object.fromEntries(
-          Object.entries(user).filter(([key]) => keys.includes(key))
-        );
-
-        const simplified = {
-          ...filtered,
-          id: toPersianNumbers(index + 1),
-          role: translateRole(user.role),
-          name,
-          phone_number: user.phone_number,
-          is_signup: !!user.is_signup,
-          actions: "action",
-        };
-
-        if (user.is_signup) {
-          acc.signedUp.push(simplified);
-        } else {
-          acc.notSignedUp.push(simplified);
-        }
-
-        return acc;
-      },
-      { signedUp: [], notSignedUp: [] }
-    );
+  function groupUsersBySignup(data: userDataType, keys: string[]): GroupedUsers {
+    return data.reduce<GroupedUsers>((acc, user, index) => {
+      const name = `${user.first_name} ${user.last_name}`.trim();
+  
+      const filtered = Object.fromEntries(
+        Object.entries(user).filter(([key]) => keys.includes(key))
+      );
+  
+      const simplified: SimplifiedUser = {
+        ...filtered,
+        id: toPersianNumbers(index + 1),
+        role: translateRole(user.role),
+        name,
+        phone_number: user.phone_number,
+        is_signup: !!user.is_signup,
+        actions: "action",
+        email: user.email,
+      };
+  
+      if (user.is_signup) {
+        acc.signedUp.push(simplified);
+      } else {
+        acc.notSignedUp.push(simplified);
+      }
+  
+      return acc;
+    }, { signedUp: [], notSignedUp: [] });
   }
 
   const headerColumns = useMemo(() => {
