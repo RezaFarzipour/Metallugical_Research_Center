@@ -12,7 +12,7 @@ type ServiceDetailLeftSectionProps = {
   isPatching: boolean;
   handleConfirm: () => void;
   rangeHandler: (reserved_from: Date, reserved_to: Date) => void;
-  reserved_from: string | undefined ;
+  reserved_from: string | undefined;
   reserved_to: string | undefined;
 };
 
@@ -41,7 +41,9 @@ const ServiceDetailLeftSection = ({
           <p className="text-green-600 text-xs pt-6">
             ( این قیمت پیش‌فرض است و در حین رزرو ممکن است توسط ادمین تغییر کند)
           </p>
-
+          <p className="text-green-600 text-xs pt-6">
+            (اگر فقط یک تاریخ را انتخاب می‌کنید، باید دوبار کلیک کنید)
+          </p>
           <div className="w-full h-[2px] mt-6 bg-gray-300" />
           <p className="mt-5 text-sm">
             قیمت نهایی پس از مرحله‌ی دوم رزرو در توضیحات ادمین مشخص می‌شود
@@ -66,7 +68,7 @@ const ServiceDetailLeftSection = ({
       </div>
 
       {/* تقویم */}
-      
+
       <div className="w-full lg:w-1/3 flex justify-center items-center">
         <CustomeDateRangePicker
           onRangeSelect={rangeHandler}
