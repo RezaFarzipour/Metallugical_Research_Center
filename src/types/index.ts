@@ -141,7 +141,7 @@ export interface BlogData {
   title: string;
   slug: string;
   cover_image: string;
-  tags: string[];
+  tags: string[] | string;
   category_list: string[];
   "blog-content": BlogContent[];
   "blog-image": BlogImage[];

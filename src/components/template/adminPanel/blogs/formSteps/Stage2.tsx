@@ -111,8 +111,8 @@ const Stage2 = ({
       await client.refetchQueries({
         include: ["getAllBlogs"],
       });
-      localStorage.clear();
-
+      useBlogFormStore.getState().resetForm();
+      useBlogFormStore.persist.clearStorage();
       router.push("/admin/blogs");
       showToast("بلاگ با موفقیت ایجاد شد", "success");
     } catch (error) {
