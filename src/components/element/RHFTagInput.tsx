@@ -1,6 +1,6 @@
 import { Input } from "@heroui/react";
 import { useState } from "react";
-import { ControllerRenderProps, FieldError,Path  } from "react-hook-form";
+import { ControllerRenderProps, FieldError, Path } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
 
 interface InputStyles {
@@ -35,16 +35,8 @@ const inputStyles: InputStyles = {
   errorMessage: ["mt-1", "text-sm", "text-red-500"],
 };
 
-// interface TagInputProps {
-//   // field: ControllerRenderProps<{ tags: string[] }, "tags">;
-//   field: ControllerRenderProps<T, "tags">;
-//   error?: FieldError;
-//   label: string;
-// }
-
-
 interface TagInputProps<T extends Record<string, any>> {
-  field: ControllerRenderProps<T, Path<T>>; 
+  field: ControllerRenderProps<T, Path<T>>;
   error?: FieldError;
   label: string;
 }
@@ -75,6 +67,10 @@ export default function RHFTagInput<T extends Record<string, any>>({
       )
     );
   };
+
+  const tagsArray: string[] = Array.isArray(field.value) ? field.value : [];
+
+  console.log(tagsArray);
 
   return (
     <div className={inputStyles.wrapper}>

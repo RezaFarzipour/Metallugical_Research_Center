@@ -23,6 +23,7 @@ import { Button } from "@heroui/button";
 import { BlogData, blogDatafromServer } from "@/types";
 import { useEditBlog } from "../hooks/useEditCategory";
 import { imageUrlToFile } from "@/utils/formatter/fileFormatter";
+import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 
 interface BlogesActionProps {
   blogData?: Partial<BlogData>;
@@ -70,7 +71,14 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
       title: title || "",
       cover_image: null,
       category_list: category_list || [],
-      tags: tags || [],
+      tags:
+        typeof tags === "string"
+          ? tags.split(",").map((tag: any) => tag.trim())
+          : Array.isArray(tags) &&
+            typeof tags[0] === "string" &&
+            tags[0].startsWith("[")
+          ? JSON.parse(tags[0])
+          : tags,
       slug: slug || "",
     },
   });
@@ -78,15 +86,6 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
   const { id: editId } = blogData;
   const isEditSession = Boolean(editId);
   const { isPendingBlog, createBlog } = useCreateBlog();
-
-  // مدیریت URL.createObjectURL
-  // useEffect(() => {
-  //   return () => {
-  //     if (coverImageUrl) {
-  //       URL.revokeObjectURL(coverImageUrl);
-  //     }
-  //   };
-  // }, [coverImageUrl]);
 
   useEffect(() => {
     if (prevCoverImageUrl && isEditSession) {
@@ -105,7 +104,6 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("slug", data.slug);
-    // formData.append("category_list", data.category_list);
     formData.append("category_list", data.category_list.join(","));
     formData.append("tags", JSON.stringify(data.tags));
     if (data.cover_image instanceof File) {
@@ -137,13 +135,14 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
       createBlog(formData, {
         onSuccess: (responseData) => {
           // فرض بر این است که responseData همان شیٔی است که حاوی id است
-          showToast("بلاگ با موفقیت ساخته شد", "success");
           const dataToSave = {
             ...data,
             cover_image: coverImageUrl,
             id: responseData.id,
           };
           setFormData(dataToSave);
+          showToast("بلاگ با موفقیت ساخته شد", "success");
+
           setStep?.(2);
         },
         onError: () => {
@@ -155,13 +154,13 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
 
   return (
     <div>
-      {/* <div className="mb-6">
+      <div className="mb-6">
         <BreadcrumbsElement
           item1="بلاگ ها"
           item2="ساخت بلاگ"
           panelHref="/admin/blogs"
         />
-      </div> */}
+      </div>
       <div className="flex items-center justify-center text-default-700">
         <form
           onSubmit={handleSubmit(onSubmit)}
