@@ -47,7 +47,7 @@ function Header({ data, isPending, warningBadge }: HeaderPropsType) {
         </div>
 
         <div className="flex items-center gap-3 text-secondary-700">
-          {warningBadge && (
+          {warningBadge && expiredReserveDates.length > 0 && (
             <Link href="/admin/expiredReserve">
               <Badge
                 color="warning"
