@@ -88,7 +88,7 @@ const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
           </div>
 
           <ServiceInfo title="اسلاگ" content={dataByID.slug} />
-          <ServiceInfo title="تگ ها" content={tagsArray} />
+          <ServiceInfo title="تگ ها" content={tagsArray.join(", ")} />
         </div>
 
         {/* دکمه‌ها */}

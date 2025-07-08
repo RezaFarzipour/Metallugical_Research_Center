@@ -42,9 +42,7 @@ const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
           </h2>
         </div>
         <div className="flex items-center gap-4">
-       
-
-          <ServiceInfo title="تگ ها" content={tagsArray} />
+          <ServiceInfo title="تگ ها" content={tagsArray.join(", ")} />
         </div>
       </div>
 
