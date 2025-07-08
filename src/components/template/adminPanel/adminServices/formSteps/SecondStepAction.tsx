@@ -131,7 +131,6 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
                 >
                   <MdDeleteOutline />
                 </label>
-                {/* <Button isIconOnly></Button> */}
               </div>
             ))}
             {newImageUrls.map((url, index) => (
@@ -166,6 +165,7 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
         onSubmit={handleSubmit(onSubmit)}
         className=" flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"
       >
+        {/* data Range Comps */}
         <TitleStructure>اضافه کردن تاریخ رزرو دستگاه</TitleStructure>
         <div>
           <AdminDateRangePicker onRangeSelect={handleRangeSelect} />

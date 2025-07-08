@@ -21,10 +21,12 @@ export default function AdminDateRangePicker({
       const minDate = dates[0].toDate(); // تاریخ شروع به میلادی
       const maxDate = dates[1].toDate(); // تاریخ پایان به میلادی
 
-      // ارسال تاریخ‌های میلادی به سرور
       onRangeSelect(minDate, maxDate);
     }
   };
+
+  // تاریخ امروز به شمسی
+  const today = new DateObject({ calendar: persian });
 
   return (
     <DatePicker
@@ -36,6 +38,7 @@ export default function AdminDateRangePicker({
       locale={persian_fa}
       calendarPosition="bottom-left"
       placeholder="بازه تاریخ را انتخاب کنید"
+      minDate={today} // این خط تاریخ‌های قبل از امروز رو غیرفعال می‌کنه
     />
   );
 }
