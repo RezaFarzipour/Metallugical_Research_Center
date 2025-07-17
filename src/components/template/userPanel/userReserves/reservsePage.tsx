@@ -29,13 +29,13 @@ const ReservesPage: React.FC = () => {
   return (
     <div className="grid grid-cols-1">
       <div className=" p-4 md:p-6">
-        <TitleStructureDashboards mainTitle="گزارش ها" />
+        <TitleStructureDashboards mainTitle="رزرو ها" />
 
         <FilteredContainer
           datas={formDataReseves}
           INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={ReservesCustomercolumns}
-          quantity="گزارش ها"
+          quantity="رزرو ها"
           topContents={!!formDataReseves?.length}
           viewContent={false}
           viewContentSmSize={false}
@@ -53,7 +53,12 @@ const ReservesPage: React.FC = () => {
               <BtnLoader color="#377cfb" />
             </div>
           ) : isEmpty ? (
-            <Empty spanValue="رزروی" btn={false} />
+            <Empty
+              spanValue="رزروی"
+              btn={true}
+              btnValue="رزرو جدید"
+              btnOnClick={handleReserve}
+            />
           ) : (
             <CustomeTable
               headerColumns={headerColumns}
