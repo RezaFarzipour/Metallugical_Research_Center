@@ -14,6 +14,10 @@ type Stage6Props = {
 
 const FinalStage = ({ reservationData, serviceData }: Stage6Props) => {
   const router = useRouter();
+ // const imageURL = `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${reservationData.payment_image}`;
+  // console.log("reserveinfo", reservationData);
+  // console.log("serviceinfo", serviceData);
+
   return (
     <div className="p-4 h-auto flex-col  flex justify-center items-center ">
       <div className="p-4 rounded-full bg-[#DCFCE7]">
@@ -34,6 +38,17 @@ const FinalStage = ({ reservationData, serviceData }: Stage6Props) => {
       >
         ادامه
       </Button>
+
+      {/* <Button
+        as="a"
+        href={imageURL}
+        download
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-blue-600 text-white px-4 py-2 mt-4"
+      >
+        دانلود عکس پرداخت
+      </Button> */}
     </div>
   );
 };
