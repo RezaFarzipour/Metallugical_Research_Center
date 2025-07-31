@@ -40,6 +40,7 @@ const ReservesPage: React.FC = () => {
           viewContent={false}
           viewContentSmSize={false}
           addBtn={true}
+          addBtnContent="رزور جدید"
           btnClickHandler={handleReserve}
           columnsDropDownBtn={true}
           rolesDropDown={false}

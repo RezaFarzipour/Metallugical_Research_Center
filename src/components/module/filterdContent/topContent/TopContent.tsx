@@ -22,6 +22,7 @@ interface TopContentProps {
   paymentStautsDropDown?: boolean;
   columnsDropDownBtn?: boolean;
   addBtn?: React.ReactNode;
+  addBtnContent?: string;
   viewContent?: boolean;
   viewContentSmSize?: boolean;
   btnClickHandler?: () => void;
@@ -35,6 +36,7 @@ export default function TopContent({
   stausDropDown,
   paymentStautsDropDown,
   addBtn,
+  addBtnContent = "افزودن",
   columnsDropDownBtn,
   viewContent,
   viewContentSmSize,
@@ -76,7 +78,7 @@ export default function TopContent({
               className="bg-secondary-500 text-white"
               endContent={<FaPlus />}
             >
-              افزودن
+              {addBtnContent}
             </Button>
           )}
         </div>

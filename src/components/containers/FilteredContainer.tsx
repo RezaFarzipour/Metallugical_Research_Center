@@ -16,6 +16,7 @@ interface PanelContainerProps<T extends TableData> {
   topContents?: boolean;
   bottomContents?: boolean;
   addBtn?: boolean;
+  addBtnContent?: string;
   columnsDropDownBtn?: boolean;
   rolesDropDown: boolean;
   stausDropDown: boolean;
@@ -40,6 +41,7 @@ export default function FilteredContainer<T extends TableData>({
   topContents,
   bottomContents,
   addBtn,
+  addBtnContent,
   columnsDropDownBtn,
   rolesDropDown,
   stausDropDown,
@@ -69,6 +71,7 @@ export default function FilteredContainer<T extends TableData>({
           usersLength={userData.length}
           quantity={quantity}
           addBtn={addBtn}
+          addBtnContent={addBtnContent}
           btnClickHandler={btnClickHandler}
           columnsDropDownBtn={columnsDropDownBtn}
           rolesDropDown={rolesDropDown}
