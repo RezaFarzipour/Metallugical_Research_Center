@@ -25,14 +25,14 @@ type GroupedServices = {
 
 
 
-export const useAdminServicesDataAction = () => {
+export const useAdminCoursesDataAction = () => {
     const { view, visibleColumns } = useTableStore();
     const [formData, setFormData] = useState<GroupedServices>({ serviceUp: [] });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
     const [selectedServiceId, setSelectedServiceId] = useState<string | null| number>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     const { deletService } = useDeleteService();
+
 
     const router = useRouter();
 
@@ -65,7 +65,6 @@ export const useAdminServicesDataAction = () => {
         queryFn: getAllServiceAdmin,
         staleTime: 5 * 60 * 1000, // 5 دقیقه کش
     });
-
 
 
     // گروه‌بندی داده‌ها هنگام تغییر data

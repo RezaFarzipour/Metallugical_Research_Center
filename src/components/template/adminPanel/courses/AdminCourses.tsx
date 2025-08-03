@@ -12,10 +12,10 @@ import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import ModalModule from "@/components/element/ModalModule";
 import Empty from "@/components/element/Empty";
 import { BtnLoader } from "@/components/element/Loader";
-import { useAdminServicesDataAction } from "./hooks/useAdminServicesDataAction";
+import { useAdminCoursesDataAction } from "../adminServices/hooks/useAdminCourseData";
 import { ServerServiceType } from "@/types/serviceType";
 
-export const AdminServicesPage: React.FC = ({}) => {
+export const AdminCourses: React.FC = ({}) => {
   const [page, setPage] = useState<number>(1);
 
   const {
@@ -31,26 +31,24 @@ export const AdminServicesPage: React.FC = ({}) => {
     secondActionClickHandler,
     handleDeleteService,
     router,
-  } = useAdminServicesDataAction();
+  } = useAdminCoursesDataAction();
 
   const { sortedItems } = useFilteredContainer<ServerServiceType>(
     formDataServices,
     page
   );
 
-
-
   const isEmpty = !formDataServices || formDataServices.length === 0;
 
   return (
     <div className="grid grid-cols-1">
       <div className="p-4 md:p-6">
-        <TitleStructureDashboards mainTitle="سرویس ها" />
+        <TitleStructureDashboards mainTitle="دوره ها" />
         <FilteredContainer
           datas={formDataServices}
           INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={Servicecolumns}
-          quantity="سرویس ها "
+          quantity="دوره ها "
           topContents={!!formDataServices?.length}
           viewContent={true}
           viewContentSmSize={true}

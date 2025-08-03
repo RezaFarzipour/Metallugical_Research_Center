@@ -3,6 +3,7 @@ import http from "../httpService";
 
 export const getAllServiceAdmin = async (options?: AxiosRequestConfig) => {
   const response = await http.get(`service/s/admin/`, options);
+  console.log("data2222",response.data)
   return response.data;
 };
 
