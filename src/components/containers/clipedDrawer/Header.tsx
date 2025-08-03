@@ -9,6 +9,7 @@ import { getDayPart, today } from "@/utils/formatter/formatDateRangesToPersian";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import Link from "next/link";
 import useExpiredReserveStore from "@/store/useExpiredReserveStore";
+import { toPersianNumbers } from "@/utils/formatter/toPersianNumbers";
 
 type HeaderPropsType = {
   isPending: boolean;
@@ -51,8 +52,9 @@ function Header({ data, isPending, warningBadge }: HeaderPropsType) {
             <Link href="/admin/expiredReserve">
               <Badge
                 color="warning"
-                content={expiredReserveDates.length}
+                content={toPersianNumbers(expiredReserveDates.length)}
                 shape="circle"
+                style={{ color: "#444" }}
               >
                 <IoNotificationsCircleOutline
                   className="fill-current"
