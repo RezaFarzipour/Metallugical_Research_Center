@@ -16,7 +16,7 @@ import { ServiceDetailsType } from "@/types/serviceType";
 type ServicesPageProps = {
   initialData: ServiceDetailsType[];
 };
-const Services = ({ initialData }: ServicesPageProps) => {
+const Courses = ({ initialData }: ServicesPageProps) => {
   const { view } = useTableStore();
   const { data, isPending } = useQuery({
     queryKey: ["getAll-servicesCustomer"],
@@ -24,8 +24,8 @@ const Services = ({ initialData }: ServicesPageProps) => {
     initialData, // 👈 داده اولیه از SSR
     refetchOnWindowFocus: true, // 👈 فعال‌سازی رفرش تب
   });
-  const services =data.filter((service:any) => !service.is_package);
-  const formDataServices = Array.isArray(services) ? services : [];
+  const courses = data.filter((course:any) => course.is_package);
+  const formDataServices = Array.isArray(courses) ? courses : [];
   const [page, setPage] = useState<number>(1);
 
   const { sortedItems } = useFilteredContainer(formDataServices, page);
@@ -44,13 +44,13 @@ const Services = ({ initialData }: ServicesPageProps) => {
 
       <div className="flex flex-col items-center justify-center gap-5 w-full py-16">
         <h3 className="text-xl">
-          <TitleStructure size="1rem">خدمات ما</TitleStructure>
+          <TitleStructure size="1rem">دوره ها</TitleStructure>
         </h3>
 
         <div className="flex flex-col gap-12 lg:gap-5 lg:flex-row justify-center w-full items-center">
           <FilteredContainer
             datas={formDataServices}
-            quantity="خدمات ها"
+            quantity="دور ها"
             topContents={!!formDataServices?.length}
             viewContent={true}
             viewContentSmSize={true}
@@ -75,7 +75,7 @@ const Services = ({ initialData }: ServicesPageProps) => {
               >
                 <CardModule
                   isDate={false}
-                  isMoreDetails="anyServices"
+                  isMoreDetails="anyCourses"
                   data={sortedItems}
                   widthConter="100%"
                   heightImg="250px"
@@ -93,4 +93,4 @@ const Services = ({ initialData }: ServicesPageProps) => {
   );
 };
 
-export default Services;
+export default Courses;

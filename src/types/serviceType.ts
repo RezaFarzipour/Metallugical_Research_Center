@@ -40,6 +40,7 @@ export type ServiceDetailsType = {
     description: string;
     price: number;
     cover_image: string;
+    is_package:boolean;
     "service-images": ServiceImageType[];
     "service-reserve_date": ServiceReserveDateType[];
   }

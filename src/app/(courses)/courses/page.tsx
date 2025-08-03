@@ -1,12 +1,12 @@
 import { BtnLoader } from "@/components/element/Loader";
-import Services from "@/components/template/services/servicesPage";
+import Courses from "@/components/template/courses/CoursesPage";
 import { getAllServiceCustomer } from "@/services/api/service";
 import { Suspense } from "react";
 
-async function ServicesPage() {
+async function CoursesPage() {
   const data = await getAllServiceCustomer();
 
-  const services =data.filter((service:any) => !service.is_package);
+  const courses = data.filter((course:any) => course.is_package);
 
   return (
     <Suspense
@@ -16,8 +16,8 @@ async function ServicesPage() {
         </div>
       }
     >
-      <Services initialData={services} />;{" "}
+      <Courses initialData={courses} />;{" "}
     </Suspense>
   );
 }
-export default ServicesPage;
+export default CoursesPage;
