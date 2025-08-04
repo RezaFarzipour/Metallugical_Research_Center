@@ -25,7 +25,9 @@ const useReportsData = (visibleColumns: Set<string>) => {
 
     const groupReservesByKeys = (reserves: RawReserveData[]): { reserveUp: ReportData[] } => {
         return reserves.reduce(
-            (acc: { reserveUp: ReportData[] }, reserve: RawReserveData, index: number) => {
+            (acc: { reserveUp: ReportData[] }, reserve: RawReserveData,) => {
+                if (!reserve.is_canceled && !reserve.is_finished) return acc;
+
                 const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"} تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
                 const service_name = findServiceName(typedDataAllServiceCustomer ?? [], reserve.service) || "نامشخص";
@@ -33,15 +35,14 @@ const useReportsData = (visibleColumns: Set<string>) => {
 
                 const status = reserve.is_canceled
                     ? "لغو شده"
-                    : reserve.is_finished
-                        ? "تمام شده"
-                        : "در حال انتظار";
+                    : "تمام شده";
+
                 const payment_status = reserve.is_payment_verified ? "پرداخت شده" : "در انتظار پرداخت";
 
                 acc.reserveUp.push({
-                    _id: toPersianNumbers(index + 1),
+                    _id: toPersianNumbers(acc.reserveUp.length + 1),
                     id: reserve.id,
-                    name: toPersianNumbers(reserve.user), // فرض می‌کنیم user یک شماره تلفن است
+                    name: toPersianNumbers(reserve.user),
                     service_name,
                     price: toPersianNumbersWithComma(reserve.total_price),
                     reserve_duration,
@@ -51,7 +52,6 @@ const useReportsData = (visibleColumns: Set<string>) => {
                     status,
                     payment_status,
                     actions: reserve.id.toString(),
-
                 });
 
                 return acc;
@@ -59,6 +59,7 @@ const useReportsData = (visibleColumns: Set<string>) => {
             { reserveUp: [] }
         );
     };
+
 
     const formDataReseves: ReportData[] = Array.isArray(formData.reserveUp) ? formData.reserveUp : [];
 
