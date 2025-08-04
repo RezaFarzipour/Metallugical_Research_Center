@@ -6,14 +6,14 @@ import { getServicesByIdCustomer } from "@/services/api/service";
 import { showToast } from "@/store/useToastSlice";
 import { cn } from "@/utils/cn";
 import { Button } from "@heroui/button";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import BlurModal from "@/components/element/BlurModal";
 import Stage1ModalBody from "./Stage1ModalBody";
 import { serviceDataEditType } from "@/types/serviceType";
+import { Select, SelectItem } from "@heroui/react";
 
 type stage1Props = {
   allServices: serviceDataEditType[];
@@ -39,6 +39,7 @@ interface ServiceDataType {
   description: string;
   price: number;
   cover_image: string;
+  is_package: boolean;
   "service-images": ServiceImage[];
   "service-reserve_date"?: ServiceReserveDate[];
 }
@@ -55,6 +56,10 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
+  const [filterType, setFilterType] = useState<"package" | "service">(
+    "service"
+  );
+
   const queryClient = useQueryClient();
 
   const { mutateAsync: patchReserve, isPending: isPatching } = useMutation({
@@ -97,7 +102,6 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
     }
   };
 
-  // handle reserve range
   const { reserved_from, reserved_to } =
     modalService?.["service-reserve_date"]?.[0] || {};
 
@@ -106,14 +110,42 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
     setEndDate(reserved_to.toISOString().split("T")[0]);
   };
 
+  const filteredServices = Array.isArray(allServices)
+    ? allServices.filter((service) => {
+        if (filterType === "package") return service.is_package === true;
+        if (filterType === "service") return service.is_package === false;
+        return true;
+      })
+    : [];
+  console.log(filteredServices, "filteredServices");
+
   if (isAllServicesPending) return <BtnLoader />;
   const isConfirmDisabled = !startDate || !endDate;
+
   return (
     <div className="w-full container rounded-xl h-auto bg-white p-4 ">
       <p className="font-bold text-md my-3">انتخاب سرویس</p>
 
+      {/* Select Box */}
+      <div className="mb-6 w-full max-w-xs">
+        <Select
+          label="نوع فیلتر"
+          placeholder="انتخاب نوع"
+          selectedKeys={new Set([filterType])}
+          onSelectionChange={(key) => {
+            const value = typeof key === "string" ? key : Array.from(key)[0];
+            setFilterType(value as "package" | "service");
+            console.log("انتخاب شد:", value);
+          }}
+          className="max-w-xs"
+        >
+          <SelectItem key="package">دوره‌ها</SelectItem>
+          <SelectItem key="service">دستگاه ها</SelectItem>
+        </Select>
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {allServices.map((service) => {
+        {filteredServices.map((service) => {
           const isSelected = selectedServiceId === service.id;
 
           return (
@@ -126,8 +158,8 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
             >
               <div className="w-full h-48 relative rounded-xl overflow-hidden mb-4">
                 <Image
-                  src={service.cover_image ? service.cover_image : ""}
-                  alt={service.service_name ? service.service_name : ""}
+                  src={service.cover_image || ""}
+                  alt={service.service_name || ""}
                   fill
                   className="object-cover"
                 />
@@ -137,6 +169,7 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
               <p className="text-sm text-gray-600 mb-2">
                 {service.description}
               </p>
+
               <div className="flex w-full justify-between p-2 items-center">
                 <p className="text-blue-600 font-semibold">
                   قیمت: {service.price?.toLocaleString()} تومان
@@ -153,7 +186,7 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
         })}
       </div>
 
-      {/* Modal Section */}
+      {/* Modal */}
       <BlurModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -162,14 +195,12 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
         heightProp="lg"
         bodyContent={
           modalService ? (
-            <>
-              <Stage1ModalBody
-                reserved_from={reserved_from}
-                reserved_to={reserved_to}
-                rangeHandler={rangeHandler}
-                serviceData={modalService}
-              />
-            </>
+            <Stage1ModalBody
+              reserved_from={reserved_from}
+              reserved_to={reserved_to}
+              rangeHandler={rangeHandler}
+              serviceData={modalService}
+            />
           ) : (
             <BtnLoader />
           )
