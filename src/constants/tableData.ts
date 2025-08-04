@@ -80,7 +80,9 @@ export const ReportsCustomercolumns = [
   { name: " وضعیت پرداخت", uid: "payment_status" },
   { name: "وضعیت", uid: "status" },
   { name: "توضیحات", uid: "admin_description" },
-  { name: "مرحله", uid: "stage" },
+  { name: "مرحله", uid: "stage" }, 
+  { name: "عملیات", uid: "actions" },
+
 ];
 
 export const columns = [

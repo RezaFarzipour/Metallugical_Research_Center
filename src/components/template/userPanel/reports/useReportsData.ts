@@ -3,12 +3,14 @@ import useDataQueries from '@/hooks/useDataQueries';
 import { findServiceName } from '@/utils/findeName';
 import { formatDateRangesToPersian2 } from '@/utils/formatter/formatDateRangesToPersian';
 import { toPersianNumbers, toPersianNumbersWithComma } from '@/utils/formatter/toPersianNumbers';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { RawReserveData, ReportData, ServiceData } from '@/types';
+import { useRouter } from 'next/navigation';
 
 const useReportsData = (visibleColumns: Set<string>) => {
     const [formData, setFormData] = useState<{ reserveUp: ReportData[] }>({ reserveUp: [] });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
+    const router = useRouter();
 
     const {
         dataAllReserveCustomer,
@@ -48,6 +50,8 @@ const useReportsData = (visibleColumns: Set<string>) => {
                     stage: toPersianNumbers(reserve.stage),
                     status,
                     payment_status,
+                    actions: reserve.id.toString(),
+
                 });
 
                 return acc;
@@ -77,7 +81,12 @@ const useReportsData = (visibleColumns: Set<string>) => {
         isLoadingServiceCustomer,
         isLoadingReserve,
     ]);
-
+    const firstActionClickHandler = useCallback(
+        (id: string | number) => {
+            router.push(`/reservation?reserve-id=${id}`);
+        },
+        [router]
+    );
     // محاسبه ستون‌های هدر
     const headerColumns = useMemo(() => {
         return visibleColumns.size === ReportsCustomercolumns.length
@@ -93,6 +102,7 @@ const useReportsData = (visibleColumns: Set<string>) => {
         visibleKeys,
         headerColumns,
         isEmpty,
+        firstActionClickHandler
     };
 };
 
