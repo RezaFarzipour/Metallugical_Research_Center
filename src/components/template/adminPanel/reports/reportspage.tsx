@@ -10,6 +10,7 @@ import { BtnLoader } from "@/components/element/Loader";
 import Empty from "@/components/element/Empty";
 import useReportsData from "./useReportsData";
 import { ReportData } from "@/types";
+import { TbEyeDiscount } from "react-icons/tb";
 
 const ReportsPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
@@ -21,6 +22,7 @@ const ReportsPage: React.FC = () => {
     headerColumns,
     isLoadingReserve,
     isEmpty,
+    firstActionClickHandler,
   } = useReportsData(visibleColumns);
   const { sortedItems } = useFilteredContainer<ReportData>(
     formDataReseves,
@@ -59,6 +61,9 @@ const ReportsPage: React.FC = () => {
             <CustomeTable
               headerColumns={headerColumns}
               sortedItems={sortedItems}
+              firstActionContent="جزئیات"
+              firstActionIcon={TbEyeDiscount}
+              firstActionClickHandler={firstActionClickHandler}
               image={false}
             />
           )}

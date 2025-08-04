@@ -7,7 +7,8 @@ import {
     toPersianNumbers,
     toPersianNumbersWithComma,
 } from "@/utils/formatter/toPersianNumbers";
-import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 
 
@@ -16,6 +17,7 @@ const useReportsData = (visibleColumns: Set<string>) => {
         reserveUp: [],
     });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
+    const router = useRouter();
 
     const {
         dataUser,
@@ -76,6 +78,8 @@ const useReportsData = (visibleColumns: Set<string>) => {
                     stage: toPersianNumbers(reserve.stage),
                     status,
                     payment_status,
+                    actions: reserve.id.toString(),
+
                 });
 
                 return acc;
@@ -109,7 +113,12 @@ const useReportsData = (visibleColumns: Set<string>) => {
         isLoadingService,
         isLoadingReserve,
     ]);
-
+    const firstActionClickHandler = useCallback(
+        (id: string | number) => {
+            router.push(`/reservation?reserve-id=${id}`);
+        },
+        [router]
+    );
     // محاسبه ستون‌های هدر
     const headerColumns = useMemo(() => {
         return visibleColumns.size === ReportsAdmincolumns.length
@@ -125,6 +134,7 @@ const useReportsData = (visibleColumns: Set<string>) => {
         headerColumns,
         isLoadingReserve,
         isEmpty,
+        firstActionClickHandler
     };
 };
 
