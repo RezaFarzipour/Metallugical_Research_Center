@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import  { Calendar, DateObject } from "react-multi-date-picker";
+import { Calendar, DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 
@@ -12,7 +12,7 @@ interface ReserveDate {
 
 interface CustomeDateRangePickerProps {
   reserveData: ReserveDate;
-  onRangeSelect: (minDate: Date, maxDate: Date) => void;
+  onRangeSelect?: (minDate: Date, maxDate: Date) => void;
 }
 
 export default function CustomeDateRangePicker({
@@ -36,12 +36,10 @@ export default function CustomeDateRangePicker({
     locale: persian_fa,
   });
 
-
-
   const handleRangeChange = (dates: any) => {
     setRange(dates);
     if (dates[0] && dates[1]) {
-      onRangeSelect(dates[0].toDate(), dates[1].toDate());
+      onRangeSelect?.(dates[0].toDate(), dates[1].toDate());
     }
   };
 
@@ -50,7 +48,7 @@ export default function CustomeDateRangePicker({
   return (
     <div style={{ padding: "1rem" }}>
       {/* <h3 className="mb-4">انتخاب بازه‌ی زمانی در محدوده انتخاب‌شده</h3> */}
-      <Calendar 
+      <Calendar
         value={range}
         onChange={handleRangeChange}
         range
