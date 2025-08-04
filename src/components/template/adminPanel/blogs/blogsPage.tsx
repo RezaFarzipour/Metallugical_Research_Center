@@ -13,6 +13,7 @@ import Empty from "@/components/element/Empty";
 import { BtnLoader } from "@/components/element/Loader";
 import { useAdminBlogDataAction } from "./hooks/useAdminBlogDataAction";
 import { BlogType } from "@/types";
+import { useBlogFormStore } from "@/store/useBlogFormStore";
 
 export const BlogsPage: React.FC = () => {
   const [page, setPage] = useState<number>(1);
@@ -48,7 +49,11 @@ export const BlogsPage: React.FC = () => {
           viewContent={true}
           viewContentSmSize={true}
           addBtn={true}
-          btnClickHandler={() => router.push("/admin/blogs/create")}
+          btnClickHandler={() => {
+            router.push("/admin/blogs/create");
+            useBlogFormStore.getState().resetForm();
+            useBlogFormStore.persist.clearStorage();
+          }}
           columnsDropDownBtn={true}
           rolesDropDown={false}
           stausDropDown={false}
