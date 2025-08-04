@@ -43,30 +43,30 @@ const useReportsData = (visibleColumns: Set<string>) => {
             (
                 acc: { reserveUp: ReportData[] },
                 reserve: RawReserveData,
-                index: number
             ) => {
-                const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"
-                    } تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
+                const isCancelled = reserve.is_canceled;
+                const isFinished = reserve.is_finished;
 
+                // فقط لغو شده یا تمام شده‌ها را بگیر
+                if (!isCancelled && !isFinished) {
+                    return acc;
+                }
+
+                const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"} تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
                 const name = findName(dataUser, reserve.user) || "نامشخص";
-                const service_name =
-                    findServiceName(typedDataAllServiceAdmin ?? [], reserve.service) ||
-                    "نامشخص";
-                const reserve_duration = `${toPersianNumbers(
-                    reserve.reserve_duration
-                )} ساعت`;
+                const service_name = findServiceName(typedDataAllServiceAdmin ?? [], reserve.service) || "نامشخص";
+                const reserve_duration = `${toPersianNumbers(reserve.reserve_duration)} ساعت`;
 
-                const status = reserve.is_canceled
+                const status = isCancelled
                     ? "لغو شده"
-                    : reserve.is_finished
+                    : isFinished
                         ? "تمام شده"
                         : "در حال انتظار";
-                const payment_status = reserve.is_payment_verified
-                    ? "پرداخت شده"
-                    : "در انتظار پرداخت";
+
+                const payment_status = reserve.is_payment_verified ? "پرداخت شده" : "در انتظار پرداخت";
 
                 acc.reserveUp.push({
-                    _id: toPersianNumbers(index + 1),
+                    _id: toPersianNumbers(acc.reserveUp.length + 1),
                     id: reserve.id,
                     name,
                     phone_number: toPersianNumbers(reserve.user),
@@ -79,7 +79,6 @@ const useReportsData = (visibleColumns: Set<string>) => {
                     status,
                     payment_status,
                     actions: reserve.id.toString(),
-
                 });
 
                 return acc;
