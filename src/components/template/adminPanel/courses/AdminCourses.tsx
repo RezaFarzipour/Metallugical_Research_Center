@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
-import { Servicecolumns } from "@/constants/tableData";
+import { Coursecolumns } from "@/constants/tableData";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
@@ -12,8 +12,8 @@ import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import ModalModule from "@/components/element/ModalModule";
 import Empty from "@/components/element/Empty";
 import { BtnLoader } from "@/components/element/Loader";
-import { useAdminCoursesDataAction } from "../adminServices/hooks/useAdminCourseData";
 import { ServerServiceType } from "@/types/serviceType";
+import { useAdminCoursesDataAction } from "./hooks/useAdminCourseData";
 
 export const AdminCourses: React.FC = ({}) => {
   const [page, setPage] = useState<number>(1);
@@ -21,43 +21,43 @@ export const AdminCourses: React.FC = ({}) => {
   const {
     isModalOpen,
     setIsModalOpen,
-    selectedServiceId,
+    selectedCourseId,
     view,
-    formDataServices,
+    formDataCourses,
     visibleKeys,
     headerColumns,
     isPending,
     firstActionClickHandler,
     secondActionClickHandler,
-    handleDeleteService,
+    handleDeleteCourse,
     router,
   } = useAdminCoursesDataAction();
 
   const { sortedItems } = useFilteredContainer<ServerServiceType>(
-    formDataServices,
+    formDataCourses,
     page
   );
 
-  const isEmpty = !formDataServices || formDataServices.length === 0;
+  const isEmpty = !formDataCourses || formDataCourses.length === 0;
 
   return (
     <div className="grid grid-cols-1">
       <div className="p-4 md:p-6">
         <TitleStructureDashboards mainTitle="دوره ها" />
         <FilteredContainer
-          datas={formDataServices}
+          datas={formDataCourses}
           INITIAL_VISIBLE_COLUMNS={visibleKeys}
-          columns={Servicecolumns}
+          columns={Coursecolumns}
           quantity="دوره ها "
-          topContents={!!formDataServices?.length}
+          topContents={!!formDataCourses?.length}
           viewContent={true}
           viewContentSmSize={true}
           columnsDropDownBtn={true}
           rolesDropDown={false}
           stausDropDown={false}
           addBtn={true}
-          btnClickHandler={() => router.push("/admin/services/create")}
-          bottomContents={!!formDataServices?.length}
+          btnClickHandler={() => router.push("/admin/courses/create")}
+          bottomContents={!!formDataCourses?.length}
           page={page}
           setPage={setPage}
         >
@@ -67,9 +67,9 @@ export const AdminCourses: React.FC = ({}) => {
             </div>
           ) : isEmpty ? (
             <Empty
-              btnValue="افزودن سرویس"
+              btnValue="افزودن دوره آموزشی"
               btnHref="/admin/services/create"
-              spanValue="سرویسی"
+              spanValue="دوره آموزشیی"
             />
           ) : !view ? (
             <CustomeTable
@@ -101,18 +101,19 @@ export const AdminCourses: React.FC = ({}) => {
         </FilteredContainer>
       </div>
 
-      {/* مودال حذف سرویس */}
+      {/* مودال حذف دوره آموزشی */}
       {isModalOpen && (
         <ModalModule
-          title="حذف سرویس"
+          title="حذف دوره آموزشی"
           confirmText="تایید حذف"
           cancelText="انصراف"
           isOpen={isModalOpen}
           onCancel={() => setIsModalOpen(false)}
-          onConfirm={handleDeleteService}
+          onConfirm={handleDeleteCourse}
         >
           <p>
-            آیا مطمئنی می‌خوای سرویس با آیدی {selectedServiceId} رو حذف کنی؟
+            آیا مطمئنی می‌خوای دوره آموزشی با آیدی {selectedCourseId} رو حذف
+            کنی؟
           </p>
         </ModalModule>
       )}

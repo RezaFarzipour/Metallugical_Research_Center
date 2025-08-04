@@ -1,0 +1,51 @@
+"use client";
+import React, { useMemo, useState } from "react";
+import BreadcrumbsElement from "@/components/element/Breadcrumbs";
+import FirstStepAction from "./formSteps/FirstStepAction";
+import SecondStepAction from "./formSteps/SecondStepAction";
+import { serviceDataEditType } from "@/types/serviceType";
+
+interface ServiceImageType {
+  id: string | number;
+  image: string;
+}
+interface EditServicePageProps {
+  serviceDataEdit: serviceDataEditType;
+  filteredServiceImages: ServiceImageType[];
+}
+
+const EditcoursePage: React.FC<EditServicePageProps> = ({
+  serviceDataEdit,
+  filteredServiceImages,
+}) => {
+  const [step, setStep] = useState(1);
+
+  const memoizedFilteredServiceImages = useMemo(
+    () => filteredServiceImages,
+    [filteredServiceImages]
+  );
+  return (
+    <div>
+      <div className="mb-6">
+        <BreadcrumbsElement
+          item1="دوره آموزشی ها"
+          item2="ویرایش دوره آموزشی"
+          panelHref="/admin/services"
+        />
+      </div>
+
+      {step === 1 && (
+        <FirstStepAction serviceDataEdit={serviceDataEdit} setStep={setStep} />
+      )}
+
+      {step === 2 && (
+        <SecondStepAction
+          filteredServiceImages={memoizedFilteredServiceImages}
+          serviceRangeDate={serviceDataEdit}
+        />
+      )}
+    </div>
+  );
+};
+
+export default EditcoursePage;

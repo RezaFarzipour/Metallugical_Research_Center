@@ -16,6 +16,15 @@ export const Servicecolumns = [
   { name: "عملیات", uid: "actions" },
 ];
 
+export const Coursecolumns = [
+  { name: "#", uid: "_id" },
+  { name: "نام دوره", uid: "name" },
+  { name: "توضیحات", uid: "description" },
+  { name: "قیمت", uid: "price" },
+  { name: "تاریخ باز", uid: "dateRange" },
+  { name: "عملیات", uid: "actions" },
+];
+
 export const ReservesAdmincolumns = [
   { name: "#", uid: "_id" },
   { name: "نام کاربر", uid: "name" },

@@ -4,11 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllServiceAdmin } from "@/services/api/service";
 import { useTableStore } from "@/store/useTableSlice";
 import { toEnglishNumbers, toPersianNumbers, toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
-import { Servicecolumns } from "@/constants/tableData";
+import { Coursecolumns } from "@/constants/tableData";
 import { showToast } from "@/store/useToastSlice";
-import { useDeleteService } from "./useDeleteService";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
 import { ServerServiceType } from "@/types/serviceType";
+import { useDeleteCourse } from "./useDeleteCource";
 
 type RawService = {
     id: string;
@@ -17,6 +17,7 @@ type RawService = {
     price: number;
     cover_image?: string;
     "service-reserve_date"?: { id: number; reserved_from: string; reserved_to: string; service: number }[];
+    is_package?: boolean
 };
 
 type GroupedServices = {
@@ -29,9 +30,9 @@ export const useAdminCoursesDataAction = () => {
     const { view, visibleColumns } = useTableStore();
     const [formData, setFormData] = useState<GroupedServices>({ serviceUp: [] });
     const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
-    const [selectedServiceId, setSelectedServiceId] = useState<string | null| number>(null);
+    const [selectedCourseId, setSelectedCourseId] = useState<string | null | number>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { deletService } = useDeleteService();
+    const { deletService } = useDeleteCourse();
 
 
     const router = useRouter();
@@ -70,7 +71,10 @@ export const useAdminCoursesDataAction = () => {
     // گروه‌بندی داده‌ها هنگام تغییر data
     useEffect(() => {
         if (Array.isArray(data)) {
-            const grouped = groupServicesByKeys(data);
+            // فقط سرویس‌هایی که پکیج هستند رو نگه می‌داره
+            const onlyPackages = data.filter(course => course.is_package === true);
+
+            const grouped = groupServicesByKeys(onlyPackages);
             setFormData(grouped);
 
             if (grouped.serviceUp.length > 0) {
@@ -78,14 +82,15 @@ export const useAdminCoursesDataAction = () => {
             }
         }
     }, [data]);
-    // آرایه‌ی سرویس‌ها برای دسترسی راحت‌تر
-    const formDataServices = Array.isArray(formData.serviceUp) ? formData.serviceUp : [];
+
+    // آرایه‌ی دوره آموزشی‌ها برای دسترسی راحت‌تر
+    const formDataCourses = Array.isArray(formData.serviceUp) ? formData.serviceUp : [];
 
     // انتخاب ستون‌های قابل مشاهده با useMemo بهینه شده
     const headerColumns = useMemo(() => {
-        return visibleColumns.size === Servicecolumns.length
-            ? Servicecolumns
-            : Servicecolumns.filter((column) => visibleColumns.has(column.uid));
+        return visibleColumns.size === Coursecolumns.length
+            ? Coursecolumns
+            : Coursecolumns.filter((column) => visibleColumns.has(column.uid));
     }, [visibleColumns]);
 
     // اکشن کلیک اول: رفتن به صفحه ویرایش
@@ -99,49 +104,49 @@ export const useAdminCoursesDataAction = () => {
     // باز کردن مودال حذف
     const secondActionClickHandler = useCallback((id: string | number) => {
         if (!id) {
-            showToast("آیدی سرویس نامعتبر است", "error");
+            showToast("آیدی دوره آموزشی نامعتبر است", "error");
             return;
         }
 
-        setSelectedServiceId(id);
+        setSelectedCourseId(id);
         setIsModalOpen(true);
     }, []);
 
-    // تایید حذف سرویس
-    const handleDeleteService = useCallback(() => {
-        if (!selectedServiceId) {
-            showToast("آیدی سرویس نامعتبر است", "error");
+    // تایید حذف دوره آموزشی
+    const handleDeleteCourse = useCallback(() => {
+        if (!selectedCourseId) {
+            showToast("آیدی دوره آموزشی نامعتبر است", "error");
             return;
         }
 
-        deletService({ id: toEnglishNumbers(selectedServiceId) }, {
+        deletService({ id: toEnglishNumbers(selectedCourseId) }, {
             onSuccess: () => {
-                showToast("سرویس با موفقیت حذف شد", "success");
+                showToast("دوره آموزشی با موفقیت حذف شد", "success");
             },
             onError: () => {
-                showToast("حذف سرویس با خطا مواجه شد", "error");
+                showToast("حذف دوره آموزشی با خطا مواجه شد", "error");
             },
         });
 
         setIsModalOpen(false);
-        setSelectedServiceId(null);
-    }, [selectedServiceId, deletService]);
+        setSelectedCourseId(null);
+    }, [selectedCourseId, deletService]);
 
     return {
         isModalOpen,
         setIsModalOpen,
-        selectedServiceId,
+        selectedCourseId,
         view,
         visibleColumns,
         formData,
-        formDataServices,
+        formDataCourses,
         visibleKeys,
         headerColumns,
         isPending,
         isError,
         firstActionClickHandler,
         secondActionClickHandler,
-        handleDeleteService,
+        handleDeleteCourse,
         router
     };
 };
