@@ -1,11 +1,9 @@
-import ServiceDetails from "@/components/template/services/serviceDetailsPage";
 import { getServicesByIdCustomer } from "@/services/api/service";
 import setCookiesOnReq from "@/utils/auth/setCookieOnReq";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import React from "react";
-
-
+import CourseDetailsPage from "@/components/template/courses/courseDetailsPage";
 
 // export async function generateMetadata({
 //   params,
@@ -21,14 +19,16 @@ import React from "react";
 //   };
 // }
 
-export default async function Details({ params }: {params:Promise<{courseId:string}>}) {
+export default async function Details({
+  params,
+}: {
+  params: Promise<{ courseId: string }>;
+}) {
   const { courseId } = await params;
-
-
 
   const cookieStore = cookies();
   const options = setCookiesOnReq(cookieStore);
 
   const serviceData = await getServicesByIdCustomer(courseId, options);
-  return <ServiceDetails serviceData={serviceData} />;
+  return <CourseDetailsPage serviceData={serviceData} />;
 }

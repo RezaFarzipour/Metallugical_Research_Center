@@ -9,6 +9,7 @@ import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import { BtnLoader } from "@/components/element/Loader";
 import Empty from "@/components/element/Empty";
 import useReportsData from "./useReportsData";
+import { TbEyeDiscount } from "react-icons/tb";
 
 const ReportsPage: React.FC = () => {
   const { visibleColumns } = useTableStore();
@@ -20,6 +21,7 @@ const ReportsPage: React.FC = () => {
     visibleKeys,
     headerColumns,
     isEmpty,
+    firstActionClickHandler,
   } = useReportsData(visibleColumns);
 
   const { sortedItems } = useFilteredContainer(formDataReseves, page);
@@ -56,6 +58,9 @@ const ReportsPage: React.FC = () => {
             <CustomeTable
               headerColumns={headerColumns}
               sortedItems={sortedItems}
+              firstActionContent="جزئیات"
+              firstActionIcon={TbEyeDiscount}
+              firstActionClickHandler={firstActionClickHandler}
               image={false}
             />
           )}

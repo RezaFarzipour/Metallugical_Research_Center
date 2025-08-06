@@ -13,16 +13,16 @@ import {
 } from "@/utils/formatter/toPersianNumbers";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
 import { Button } from "@heroui/button";
-import { useDeleteService } from "./hooks/useDeleteService";
 import { ServiceData } from "@/types/serviceType";
+import { useDeleteCourse } from "./hooks/useDeleteCource";
 
 interface ServiceDetailsPageProps {
   dataByID: ServiceData;
 }
 
-const courseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
+const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
   const router = useRouter();
-  const { deletService } = useDeleteService();
+  const { deletService } = useDeleteCourse();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
@@ -64,7 +64,7 @@ const courseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
 
   const handleDelete = useCallback(() => {
     if (!id) {
-      showToast("آیدی سرویس نامعتبر است", "error");
+      showToast("آیدی دوره آموزشی نامعتبر است", "error");
       return;
     }
     setIsModalOpen(true);
@@ -72,7 +72,7 @@ const courseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
 
   const handleDeleteService = useCallback(() => {
     if (!id) {
-      showToast("آیدی سرویس نامعتبر است", "error");
+      showToast("آیدی دوره آموزشی نامعتبر است", "error");
       return;
     }
 
@@ -80,12 +80,12 @@ const courseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
       { id: toEnglishNumbers(id) },
       {
         onSuccess: () => {
-          showToast("سرویس با موفقیت حذف شد", "success");
+          showToast("دوره آموزشی با موفقیت حذف شد", "success");
           setIsModalOpen(false);
           router.push("/admin/services");
         },
         onError: () => {
-          showToast("حذف سرویس با خطا مواجه شد", "error");
+          showToast("حذف دوره آموزشی با خطا مواجه شد", "error");
         },
       }
     );
@@ -95,14 +95,14 @@ const courseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
         <BreadcrumbsElement
-          item1="سرویس ها"
-          item2=" مشخصات سرویس"
+          item1="دوره آموزشی ها"
+          item2=" مشخصات دوره آموزشی"
           panelHref="/admin/services"
         />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* اطلاعات سرویس */}
+        {/* اطلاعات دوره آموزشی */}
         <div className="flex flex-col space-y-6">
           <div className="flex items-center space-x-4 rtl:space-x-reverse">
             <div className="relative w-16 h-16">
@@ -151,14 +151,14 @@ const courseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
       {/* مدال تایید حذف */}
       {isModalOpen && (
         <ModalModule
-          title="حذف سرویس"
+          title="حذف دوره آموزشی"
           confirmText="تایید حذف"
           cancelText="انصراف"
           isOpen={isModalOpen}
           onCancel={() => setIsModalOpen(false)}
           onConfirm={handleDeleteService}
         >
-          <p>آیا مطمئنی می‌خوای سرویس با آیدی {id} رو حذف کنی؟</p>
+          <p>آیا مطمئنی می‌خوای دوره آموزشی با آیدی {id} رو حذف کنی؟</p>
         </ModalModule>
       )}
     </div>
@@ -179,4 +179,4 @@ const ServiceInfo = ({
   </div>
 );
 
-export default courseDetailsPage;
+export default CourseDetailsPage;

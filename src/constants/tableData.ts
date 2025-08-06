@@ -16,6 +16,15 @@ export const Servicecolumns = [
   { name: "عملیات", uid: "actions" },
 ];
 
+export const Coursecolumns = [
+  { name: "#", uid: "_id" },
+  { name: "نام دوره", uid: "name" },
+  { name: "توضیحات", uid: "description" },
+  { name: "قیمت", uid: "price" },
+  { name: "تاریخ باز", uid: "dateRange" },
+  { name: "عملیات", uid: "actions" },
+];
+
 export const ReservesAdmincolumns = [
   { name: "#", uid: "_id" },
   { name: "نام کاربر", uid: "name" },
@@ -30,6 +39,23 @@ export const ReservesAdmincolumns = [
   { name: "توضیحات", uid: "admin_description" },
   { name: "عملیات", uid: "actions" },
 ];
+
+export const ReportsAdmincolumns = [
+  { name: "#", uid: "_id" },
+  { name: "نام کاربر", uid: "name" },
+  { name: "شماره همراه", uid: "phone_number" },
+  { name: "نام سرویس", uid: "service_name" },
+  { name: "قیمت", uid: "price" },
+  { name: "مدت زمان رزرو", uid: "reserve_duration" },
+  { name: "تاریخ رزرو", uid: "dateRange" },
+  { name: "مرحله", uid: "stage" },
+  { name: " وضعیت پرداخت", uid: "payment_status" },
+  { name: "وضعیت", uid: "status" },
+  { name: "توضیحات", uid: "admin_description" },
+  { name: "عملیات", uid: "actions" },
+
+];
+
 export const ReservesCustomercolumns = [
   { name: "#", uid: "_id" },
   { name: "نام کاربر", uid: "name" },
@@ -43,19 +69,7 @@ export const ReservesCustomercolumns = [
   { name: "توضیحات", uid: "admin_description" },
   { name: "عملیات", uid: "actions" },
 ];
-export const ReportsAdmincolumns = [
-  { name: "#", uid: "_id" },
-  { name: "نام کاربر", uid: "name" },
-  { name: "شماره همراه", uid: "phone_number" },
-  { name: "نام سرویس", uid: "service_name" },
-  { name: "قیمت", uid: "price" },
-  { name: "مدت زمان رزرو", uid: "reserve_duration" },
-  { name: "تاریخ رزرو", uid: "dateRange" },
-  { name: "مرحله", uid: "stage" },
-  { name: " وضعیت پرداخت", uid: "payment_status" },
-  { name: "وضعیت", uid: "status" },
-  { name: "توضیحات", uid: "admin_description" },
-];
+
 export const ReportsCustomercolumns = [
   { name: "#", uid: "_id" },
   { name: "نام کاربر", uid: "name" },
@@ -66,7 +80,9 @@ export const ReportsCustomercolumns = [
   { name: " وضعیت پرداخت", uid: "payment_status" },
   { name: "وضعیت", uid: "status" },
   { name: "توضیحات", uid: "admin_description" },
-  { name: "مرحله", uid: "stage" },
+  { name: "مرحله", uid: "stage" }, 
+  { name: "عملیات", uid: "actions" },
+
 ];
 
 export const columns = [

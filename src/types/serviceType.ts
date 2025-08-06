@@ -17,7 +17,7 @@ export type ServiceImageType = {
 };
 
 export type ServiceReserveDateType = {
- 
+
   id: number;
   reserved_from: string; // می‌تونی بزاری Date اگه قراره تبدیل بشه
   reserved_to: string;
@@ -40,7 +40,7 @@ export type ServiceDetailsType = {
     description: string;
     price: number;
     cover_image: string;
-    is_package:boolean;
+    is_package: boolean;
     "service-images": ServiceImageType[];
     "service-reserve_date": ServiceReserveDateType[];
   }
@@ -54,4 +54,5 @@ export interface serviceDataEditType {
   price?: number | string;
   cover_image?: string;
   "service-reserve_date"?: ServiceReserveDateType[];
+  is_package?: boolean
 }

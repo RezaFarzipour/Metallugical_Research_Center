@@ -35,22 +35,22 @@ const useReserveData = (visibleColumns: Set<string>) => {
   const groupReservesByKeys = (reserves: RawReserveData[]): { reserveUp: ReportData[] } => {
     return reserves.reduce(
       (acc: { reserveUp: ReportData[] }, reserve: RawReserveData, index: number) => {
+        // فقط رزروهای "در حال انتظار" رو نگه‌دار
+        const isPending = !reserve.is_canceled && !reserve.is_finished;
+        if (!isPending) return acc;
+
         const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"} تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
         const service_name = findServiceName(typedDataAllServiceCustomer ?? [], reserve.service) || "نامشخص";
         const reserve_duration = `${toPersianNumbers(reserve.reserve_duration)} ساعت`;
 
-        const status = reserve.is_canceled
-          ? "لغو شده"
-          : reserve.is_finished
-            ? "تمام شده"
-            : "در حال انتظار";
+        const status = "در حال انتظار";
         const payment_status = reserve.is_payment_verified ? "پرداخت شده" : "در انتظار پرداخت";
 
         acc.reserveUp.push({
           _id: toPersianNumbers(index + 1),
           id: reserve.id,
-          name: toPersianNumbers(reserve.user), // فرض می‌کنیم user یک شماره تلفن است
+          name: toPersianNumbers(reserve.user), // فرض: شماره تلفن
           service_name,
           price: toPersianNumbersWithComma(reserve.total_price),
           reserve_duration,
@@ -67,6 +67,7 @@ const useReserveData = (visibleColumns: Set<string>) => {
       { reserveUp: [] }
     );
   };
+
 
   const formDataReseves: ReportData[] = Array.isArray(formData.reserveUp) ? formData.reserveUp : [];
 
