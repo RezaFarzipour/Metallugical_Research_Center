@@ -27,7 +27,7 @@ const ServiceDetailLeftSection = ({
   reserved_to,
 }: ServiceDetailLeftSectionProps) => {
   return (
-    <div className="bg-white shadow-md rounded-xl p-2 flex flex-col-reverse lg:flex-row gap-6 justify-around">
+    <div className="bg-white shadow-md rounded-xl p-4 flex flex-col lg:flex-row gap-6">
       {/* قیمت رزرو */}
       <div className=" p-4 rounded-lg w-full lg:w-1/2 flex flex-col justify-between">
         <div>
@@ -51,7 +51,7 @@ const ServiceDetailLeftSection = ({
           <div className="w-full h-[2px] mt-6 bg-gray-300" />
         </div>
 
-        <div className="flex w-full justify-center mt-5">
+        <div className=" hidden lg:flex w-full justify-center mt-5">
           <Button
             disabled={isConfirmDisabled}
             className={cn(
@@ -78,6 +78,21 @@ const ServiceDetailLeftSection = ({
           }}
         />
       </div>
+      <div className="flex lg:hidden w-full justify-center mt-5">
+          <Button
+            disabled={isConfirmDisabled}
+            className={cn(
+              "text-white px-4 py-2 w-full",
+              isConfirmDisabled
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-secondary-500 hover:bg-secondary-600"
+            )}
+            onPress={handleConfirm}
+          >
+            {isCreating || isPatching ? <BtnLoader /> : "انتخاب رزرو"}
+          </Button>
+        </div>
+      
     </div>
   );
 };

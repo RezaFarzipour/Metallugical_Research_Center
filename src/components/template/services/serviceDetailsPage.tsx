@@ -106,12 +106,12 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceData }) => {
           </p>
         </div>
 
-        <div className="flex justify-around mt-4 gap-8">
-          <div className="my-6 flex item-start">
+        <div className="flex flex-col lg:flex-row justify-around mt-4 gap-8">
+          <div className="my-6 w-full lg:w-1/2">
             <CarGallery images={galleryImages} />
           </div>
 
-          <div className="w-full lg:w-full pt-5 ">
+          <div className="w-full lg:w-1/2 pt-5">
             <ServiceDetailLeftSection
               price={price}
               handleConfirm={handleConfirm}

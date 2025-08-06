@@ -26,7 +26,7 @@ export default function CarGallery({ images }: CarGalleryProps) {
   return (
     <div className="flex flex-col items-center gap-4">
       {/* تصویر اصلی با دکمه‌های اسلایدر */}
-      <div className="relative w-[500px] h-[300px]">
+      <div className="relative w-full max-w-[500px] h-[300px]">
         <Image
           src={currentImage}
           alt="Service Image"
