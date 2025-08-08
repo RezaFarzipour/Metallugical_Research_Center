@@ -6,18 +6,20 @@ import { UseFormRegister, FieldErrors } from "react-hook-form";
 interface ServiceDetailsFormProps {
   register: UseFormRegister<CreateServiceFormData>;
   errors: FieldErrors<CreateServiceFormData>;
+  servicename:string
 }
 
 const ServiceDetailsForm: React.FC<ServiceDetailsFormProps> = ({
   register,
   errors,
+  servicename
 }) => {
   return (
     <div>
       <RHFInput<CreateServiceFormData>
         register={register}
         errors={errors}
-        label="نام سرویس"
+        label={servicename}
         type="text"
         dir="rtl"
         name="service_name"
