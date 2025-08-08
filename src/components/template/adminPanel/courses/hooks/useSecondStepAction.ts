@@ -1,12 +1,17 @@
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { showToast } from "@/store/useToastSlice";
 import { CreaateServiceImagesFormData } from "@/schemas/creaateServiceImagesSchema";
 
-
 import { serviceDataEditType } from "@/types/serviceType";
-import { useCreateCourseDateRange, useCreateCourseImages } from "./useCreateCource";
-import { useEditCourseDateRangeById, useEditCourseImage } from "./useEditCource";
+import {
+  useCreateCourseDateRange,
+  useCreateCourseImages,
+} from "./useCreateCource";
+import {
+  useEditCourseDateRangeById,
+  useEditCourseImage,
+} from "./useEditCource";
 import { useDeleteCourseImage } from "./useDeleteCource";
 
 interface UseSecondStepLogicProps {
@@ -96,6 +101,8 @@ export function useSeCondStepAction({
       showToast("خطا در حذف عکس", "error");
     }
   };
+  const pathname = usePathname();
+  const isCoursePath = pathname.includes("/admin/courses");
 
   const onSubmit = async (data: CreaateServiceImagesFormData) => {
     const isEditSession = Boolean(
@@ -108,7 +115,11 @@ export function useSeCondStepAction({
     }
 
     // فقط در حالت ساخت دوره آموزشی چک کنیم که عکس وجود داشته باشه
-    if (!isEditSession && (!data.images || data.images.length === 0)) {
+    if (
+      !isEditSession &&
+      !isCoursePath &&
+      (!data.images || data.images.length === 0)
+    ) {
       showToast("لطفا حداقل یک عکس انتخاب کنید", "error");
       return;
     }
@@ -147,6 +158,9 @@ export function useSeCondStepAction({
           formData.append("reserved_from", dateData.reserved_from);
           formData.append("reserved_to", dateData.reserved_to);
           formData.append("service", String(dateData.service));
+          if (isCoursePath) {
+            formData.append("is_package", "true");
+          }
           await editServiceDateRange(
             { id: String(RangeId), data: formData },
             {
@@ -159,13 +173,11 @@ export function useSeCondStepAction({
             }
           );
         } else {
-
           const formData = new FormData();
           formData.append("reserved_from", dateData.reserved_from);
           formData.append("reserved_to", dateData.reserved_to);
           formData.append("service", String(dateData.service));
           await createDateRange(
-
             { data: formData },
             {
               onSuccess: () => {
@@ -181,7 +193,7 @@ export function useSeCondStepAction({
 
       reset();
       setNewImageUrls([]);
-      router.push("/admin/services");
+      router.push(`/admin/${isCoursePath ? "courses" : " services"}`);
     } catch {
       showToast("خطا در ارسال اطلاعات", "error");
     }
