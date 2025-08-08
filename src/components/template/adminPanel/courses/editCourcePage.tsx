@@ -12,9 +12,11 @@ interface ServiceImageType {
 interface EditServicePageProps {
   serviceDataEdit: serviceDataEditType;
   filteredServiceImages: ServiceImageType[];
+  serviceId:string
 }
 
 const EditcoursePage: React.FC<EditServicePageProps> = ({
+  serviceId,
   serviceDataEdit,
   filteredServiceImages,
 }) => {
@@ -40,6 +42,7 @@ const EditcoursePage: React.FC<EditServicePageProps> = ({
 
       {step === 2 && (
         <SecondStepAction
+        serviceId={serviceId}
           filteredServiceImages={memoizedFilteredServiceImages}
           serviceRangeDate={serviceDataEdit}
         />
