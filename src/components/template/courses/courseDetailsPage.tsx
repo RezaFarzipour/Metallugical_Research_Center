@@ -12,12 +12,12 @@ import { showToast } from "@/store/useToastSlice";
 import ServiceDetailRightSection from "@/components/module/serviceModule/ServiceDetailRightSection";
 import ServiceDetailLeftSection from "@/components/module/serviceModule/ServiceDetailLeftSection";
 import { ServiceData } from "@/types/serviceType";
-
+import { usePathname } from "next/navigation";
 const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
   const router = useRouter();
-
+  const pathname = usePathname();
   const { reserved_from, reserved_to } =
     serviceData?.["service-reserve_date"]?.[0] || {};
 
@@ -90,6 +90,8 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
     return reserved_from < todayStr || reserved_to < todayStr;
   })();
 
+  const coursePath = pathname.includes("courses");
+
   return (
     <div className="flex flex-col items-center w-full p-4 md:p-16">
       <div className="w-full flex flex-col gap-6">
@@ -109,9 +111,11 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
         </div>
 
         <div className="flex justify-around mt-4 gap-8">
-          <div className="my-6 flex item-start">
-            <CarGallery images={galleryImages} />
-          </div>
+          {!coursePath ? (
+            <div className="my-6 flex item-start">
+              <CarGallery images={galleryImages} />
+            </div>
+          ) : null}
 
           <div className="w-full lg:w-full pt-5">
             <ServiceDetailLeftSection
