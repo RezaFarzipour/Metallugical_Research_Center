@@ -110,6 +110,8 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
     setEndDate(reserved_to.toISOString().split("T")[0]);
   };
 
+  const isPackage = filterType === "package";
+
   const filteredServices = Array.isArray(allServices)
     ? allServices.filter((service) => {
         if (filterType === "package") return service.is_package === true;
@@ -117,7 +119,8 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
         return true;
       })
     : [];
-  console.log(filteredServices, "filteredServices");
+
+
 
   if (isAllServicesPending) return <BtnLoader />;
   const isConfirmDisabled = !startDate || !endDate;
@@ -191,11 +194,13 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         isPatching={isPatching}
+      
         title="رزرو"
         heightProp="lg"
         bodyContent={
           modalService ? (
             <Stage1ModalBody
+            isPackage ={isPackage}
               reserved_from={reserved_from}
               reserved_to={reserved_to}
               rangeHandler={rangeHandler}
