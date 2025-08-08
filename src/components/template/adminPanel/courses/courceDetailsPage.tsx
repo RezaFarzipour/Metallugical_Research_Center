@@ -59,7 +59,7 @@ const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
   );
 
   const handleEdit = useCallback(() => {
-    router.push(`/admin/services/${id}/edit`);
+    router.push(`/admin/courses/${id}/edit`);
   }, [id, router]);
 
   const handleDelete = useCallback(() => {
@@ -142,10 +142,7 @@ const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
           </div>
         </div>
 
-        {/* گالری تصاویر */}
-        <div className="w-full">
-          <CarGallery images={galleryImages} />
-        </div>
+   
       </div>
 
       {/* مدال تایید حذف */}
