@@ -23,6 +23,7 @@ interface BlurModalProps {
   icon?: ReactNode;
   isPatching?: boolean;
   disabled?: boolean;
+
 }
 
 export default function BlurModal({
@@ -32,6 +33,7 @@ export default function BlurModal({
   bodyContent,
   onConfirm,
   heightProp,
+
   disabled,
 }: BlurModalProps) {
   const heightClass = {
