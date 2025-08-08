@@ -96,7 +96,7 @@ export const useAdminCoursesDataAction = () => {
     // اکشن کلیک اول: رفتن به صفحه ویرایش
     const firstActionClickHandler = useCallback(
         (id: string | number) => {
-            router.push(`/admin/services/${id}/details`);
+            router.push(`/admin/courses/${id}/details`);
         },
         [router]
     );

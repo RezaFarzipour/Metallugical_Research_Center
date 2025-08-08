@@ -20,6 +20,7 @@ import PrimaryButton from "@/components/element/Button";
 import { serviceDataEditType } from "@/types/serviceType";
 import { useEditCourse } from "../hooks/useEditCource";
 import { useCreateCourse } from "../hooks/useCreateCource";
+import { usePathname } from "next/navigation";
 
 // Define the service data edit type as a single object (not an array)
 
@@ -89,6 +90,9 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
     }
   }, [editId, prevCoverImageUrl, isEditSession, setValue]);
 
+  const pathname = usePathname();
+  const isCoursePath = pathname.includes("/admin/courses");
+
   const onSubmit = async (data: CreateServiceFormData) => {
     const formData = new FormData();
     formData.append("service_name", data.service_name);
@@ -98,11 +102,16 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
       formData.append("cover_image", data.cover_image);
     }
 
+    if (isCoursePath) {
+      formData.append("is_package", "true");
+    }
+
     if (isEditSession && editId) {
       editService(
         { id: String(editId), data: formData },
         {
           onSuccess: () => {
+     
             showToast("سرویس با موفقیت ویرایش شد", "success");
             setStep(2);
             reset();
@@ -137,7 +146,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"
       >
-        <ServiceDetailsForm register={register} errors={errors} />
+        <ServiceDetailsForm servicename="نام دوره" register={register} errors={errors} />
 
         <Controller
           name="cover_image"

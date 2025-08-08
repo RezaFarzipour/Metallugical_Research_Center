@@ -14,6 +14,7 @@ import TitleStructure from "@/components/element/TitleStructure";
 import { BtnLoader } from "@/components/element/Loader";
 import { useSeCondStepAction } from "../hooks/useSecondStepAction";
 import { serviceDataEditType } from "@/types/serviceType";
+import { usePathname } from "next/navigation";
 
 interface ServiceImage {
   id: string | number;
@@ -45,6 +46,8 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
       images: [],
     },
   });
+
+
 
   //customeHook:
   const {
@@ -92,73 +95,77 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
     const newImages = currentImages.filter((_, i) => i !== index);
     setValue("images", newImages);
   };
+  const pathname = usePathname();
+  const isCoursePath = pathname.includes("/admin/courses");
 
   return (
     <div className="text-default-700 p-8 flex flex-col md:flex-row gap-10 items-start">
       {/* تصاویر موجود با امکان ویرایش */}
-      <div className=" flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg">
-        <h2 className="text-lg font-bold">تصاویر موجود</h2>
-        {existingImageUrls.length > 0 || newImageUrls.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4 overflow-y-scroll max-h-40">
-            {existingImageUrls.map((url, index) => (
-              <div
-                key={`existing-${index}`}
-                className="relative aspect-[2/1] overflow-hidden rounded-md"
-              >
-                <Image
-                  fill
-                  alt={`uploaded-image-${index}`}
-                  src={url}
-                  className="object-cover object-center"
-                />
-                <label className="absolute left-1 top-1 bg-blue-500 text-white text-xs px-2 py-1 rounded cursor-pointer">
-                  <TbEyeDiscount />
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        handleEditImage(index, file);
-                      }
-                    }}
+      {!isCoursePath ? (
+        <div className=" flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg">
+          <h2 className="text-lg font-bold">تصاویر موجود</h2>
+          {existingImageUrls.length > 0 || newImageUrls.length > 0 ? (
+            <div className="grid grid-cols-2 gap-4 overflow-y-scroll max-h-40">
+              {existingImageUrls.map((url, index) => (
+                <div
+                  key={`existing-${index}`}
+                  className="relative aspect-[2/1] overflow-hidden rounded-md"
+                >
+                  <Image
+                    fill
+                    alt={`uploaded-image-${index}`}
+                    src={url}
+                    className="object-cover object-center"
                   />
-                </label>
-                <label
-                  onClick={() => handleDeleteImage(index)}
-                  className="absolute left-9 top-1 bg-red-500 text-white text-xs px-2 py-1 rounded cursor-pointer"
+                  <label className="absolute left-1 top-1 bg-blue-500 text-white text-xs px-2 py-1 rounded cursor-pointer">
+                    <TbEyeDiscount />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          handleEditImage(index, file);
+                        }
+                      }}
+                    />
+                  </label>
+                  <label
+                    onClick={() => handleDeleteImage(index)}
+                    className="absolute left-9 top-1 bg-red-500 text-white text-xs px-2 py-1 rounded cursor-pointer"
+                  >
+                    <MdDeleteOutline />
+                  </label>
+                </div>
+              ))}
+              {newImageUrls.map((url, index) => (
+                <div
+                  key={`new-${index}`}
+                  className="relative aspect-[2/1] overflow-hidden rounded-md"
                 >
-                  <MdDeleteOutline />
-                </label>
-              </div>
-            ))}
-            {newImageUrls.map((url, index) => (
-              <div
-                key={`new-${index}`}
-                className="relative aspect-[2/1] overflow-hidden rounded-md"
-              >
-                <Image
-                  fill
-                  alt={`new-uploaded-image-${index}`}
-                  src={url}
-                  className="object-cover object-center"
-                />
-                <Button
-                  type="button"
-                  onPress={() => handleRemoveNewImage(index)}
-                  isIconOnly
-                  className="w-8 h-8 absolute left-1 top-2 bg-red-100"
-                >
-                  <IoTrashBinOutline size={20} color="red" />
-                </Button>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>هیچ تصویری موجود نیست.</p>
-        )}
-      </div>
+                  <Image
+                    fill
+                    alt={`new-uploaded-image-${index}`}
+                    src={url}
+                    className="object-cover object-center"
+                  />
+                  <Button
+                    type="button"
+                    onPress={() => handleRemoveNewImage(index)}
+                    isIconOnly
+                    className="w-8 h-8 absolute left-1 top-2 bg-red-100"
+                  >
+                    <IoTrashBinOutline size={20} color="red" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>هیچ تصویری موجود نیست.</p>
+          )}
+        </div>
+      ) : null}
 
       {/* فرم اضافه کردن تصاویر جدید */}
       <form
@@ -170,37 +177,41 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
         <div>
           <AdminDateRangePicker onRangeSelect={handleRangeSelect} />
         </div>
-        <TitleStructure>اضافه کردن تصاویر جدید</TitleStructure>
+        {!isCoursePath ? (
+          <>
+            <TitleStructure>اضافه کردن تصاویر جدید</TitleStructure>
 
-        <Controller
-          name="images"
-          control={control}
-          render={({ field: { name, onChange, ref } }) => (
-            <FileInput
-              label="انتخاب عکس‌های جدید"
-              multiple={true}
-              name={name}
-              inputRef={ref}
-              errors={errors}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                const files = event.target.files;
-                if (files && files.length > 0) {
-                  const fileArray = Array.from(files).filter((file) =>
-                    file.type.startsWith("image/")
-                  );
-                  const currentImages = getValues("images") || [];
-                  const updatedImages = [...currentImages, ...fileArray];
-                  onChange(updatedImages);
+            <Controller
+              name="images"
+              control={control}
+              render={({ field: { name, onChange, ref } }) => (
+                <FileInput
+                  label="انتخاب عکس‌های جدید"
+                  multiple={true}
+                  name={name}
+                  inputRef={ref}
+                  errors={errors}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    const files = event.target.files;
+                    if (files && files.length > 0) {
+                      const fileArray = Array.from(files).filter((file) =>
+                        file.type.startsWith("image/")
+                      );
+                      const currentImages = getValues("images") || [];
+                      const updatedImages = [...currentImages, ...fileArray];
+                      onChange(updatedImages);
 
-                  const newUrls = fileArray.map((file) =>
-                    URL.createObjectURL(file)
-                  );
-                  setNewImageUrls((prev) => [...prev, ...newUrls]);
-                }
-              }}
+                      const newUrls = fileArray.map((file) =>
+                        URL.createObjectURL(file)
+                      );
+                      setNewImageUrls((prev) => [...prev, ...newUrls]);
+                    }
+                  }}
+                />
+              )}
             />
-          )}
-        />
+          </>
+        ) : null}
 
         <div>
           {isCreatingImage || isEditingImage ? (
