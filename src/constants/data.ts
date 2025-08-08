@@ -19,7 +19,8 @@ import { LuUsers } from "react-icons/lu";
 import { PiDeviceTablet } from "react-icons/pi";
 import { RiBloggerLine } from "react-icons/ri";
 import { RiHome3Line } from "react-icons/ri";
-import { SiCoursera } from "react-icons/si";
+import { AiOutlineFolder } from "react-icons/ai";
+
 
 import { FiShoppingCart } from "react-icons/fi";
 import { HiOutlineDocumentReport } from "react-icons/hi";
@@ -91,7 +92,7 @@ export const adminSidebarlinks: NavLinkItem[] = [
   {
     id: 3,
     title: "دوره ها",
-    icon: SiCoursera,
+    icon: AiOutlineFolder,
     to: "/admin/courses",
   },
   {
