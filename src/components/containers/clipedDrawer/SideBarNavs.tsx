@@ -38,7 +38,7 @@ export default function SideBarNavs({
                     "bg-secondary-400 !font-bold text-white hover:text-white"
                 )}
               >
-                <div className="flex items-center gap-x-2">
+                <div className="flex items-center gap-x-2 text-md 2xl:text-xl">
                   <nav.icon />
                   <span>{nav.title}</span>
                 </div>
@@ -60,7 +60,7 @@ export default function SideBarNavs({
                           href={child.to}
                           onClick={onClose}
                           className={cn(
-                            "flex items-center rounded-lg text-secondary-800 hover:text-secondary-500 transition-all duration-200 py-2 text-sm w-full pr-6",
+                            "flex items-center rounded-lg text-secondary-800 hover:text-secondary-500 transition-all duration-200 py-2 text-sm 2xl:text-md w-full pr-6 ",
                             isChildActive &&
                               "bg-secondary-300 !font-bold text-white hover:text-white"
                           )}
@@ -82,7 +82,7 @@ export default function SideBarNavs({
               href={nav.to}
               onClick={onClose}
               className={cn(
-                "flex items-center gap-x-2 rounded-lg text-secondary-800 hover:text-secondary-500 transition-all duration-200 py-3 px-4 text-lg",
+                "flex items-center gap-x-2 rounded-lg text-secondary-800 hover:text-secondary-500 transition-all duration-200 py-3 px-4 text-md 2xl:text-xl",
                 isActive &&
                   "bg-secondary-400 !font-bold text-white hover:text-white"
               )}
