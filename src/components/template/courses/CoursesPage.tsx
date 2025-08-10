@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { useTableStore } from "@/store/useTableSlice";
+import { useCoursesTableStore, useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import { getAllServiceCustomer } from "@/services/api/service";
 import { staggerContainer } from "@/utils/motion";
@@ -17,19 +17,34 @@ type ServicesPageProps = {
   initialData: ServiceDetailsType[];
 };
 const Courses = ({ initialData }: ServicesPageProps) => {
-  const { view } = useTableStore();
+  const view = useCoursesTableStore((state) => state.view);
   const { data, isPending } = useQuery({
     queryKey: ["getAll-servicesCustomer"],
     queryFn: getAllServiceCustomer,
-    initialData, // 👈 داده اولیه از SSR
-    refetchOnWindowFocus: true, // 👈 فعال‌سازی رفرش تب
+    initialData, //  داده اولیه از SSR
+    refetchOnWindowFocus: true, //  فعال‌سازی رفرش تب
   });
   const courses = data.filter((course: any) => course.is_package);
   const formDataServices = Array.isArray(courses) ? courses : [];
   const [page, setPage] = useState<number>(1);
 
-  const { sortedItems } = useFilteredContainer(formDataServices, page);
+  const {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  } = useCoursesTableStore();
 
+  const { sortedItems } = useFilteredContainer(courses, page, {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  });
   return (
     <motion.section
       variants={staggerContainer(0.5, 0.25)}
@@ -51,6 +66,7 @@ const Courses = ({ initialData }: ServicesPageProps) => {
           <FilteredContainer
             datas={formDataServices}
             quantity="دور ها"
+            tableStore={useCoursesTableStore}
             topContents={!!formDataServices?.length}
             viewContent={true}
             viewContentSmSize={true}

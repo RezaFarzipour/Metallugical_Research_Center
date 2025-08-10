@@ -86,7 +86,7 @@ export default function TopContent({
           )}
         </div>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center py-4">
         <span className="text-default-400 text-small">
           تعداد {quantity}: {toPersianNumbers(usersLength)}
         </span>

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { useTableStore } from "@/store/useTableSlice";
+import { useServicesTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import { getAllServiceCustomer } from "@/services/api/service";
 import { staggerContainer } from "@/utils/motion";
@@ -17,18 +17,35 @@ type ServicesPageProps = {
   initialData: ServiceDetailsType[];
 };
 const Services = ({ initialData }: ServicesPageProps) => {
-  const { view } = useTableStore();
+  const view = useServicesTableStore((state) => state.view);
+
   const { data, isPending } = useQuery({
     queryKey: ["getAll-servicesCustomer"],
     queryFn: getAllServiceCustomer,
-    initialData, // 👈 داده اولیه از SSR
-    refetchOnWindowFocus: true, // 👈 فعال‌سازی رفرش تب
+    initialData, //  داده اولیه از SSR
+    refetchOnWindowFocus: true, //  فعال‌سازی رفرش تب
   });
   const services = data.filter((service: any) => !service.is_package);
   const formDataServices = Array.isArray(services) ? services : [];
   const [page, setPage] = useState<number>(1);
 
-  const { sortedItems } = useFilteredContainer(formDataServices, page);
+  const {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  } = useServicesTableStore();
+
+  const { sortedItems } = useFilteredContainer(formDataServices, page, {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  });
 
   return (
     <motion.section
@@ -51,6 +68,7 @@ const Services = ({ initialData }: ServicesPageProps) => {
           <FilteredContainer
             datas={formDataServices}
             quantity="خدمات ها"
+            tableStore={useServicesTableStore}
             topContents={!!formDataServices?.length}
             viewContent={true}
             viewContentSmSize={true}

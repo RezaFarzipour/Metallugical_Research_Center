@@ -85,3 +85,5 @@ export const useUsersTableStore = createTableStore();
 export const useCoursesTableStore = createTableStore();
 export const useBlogsTableStore = createTableStore();
 export const useAdminServicesTableStore = createTableStore();
+export const useServicesTableStore = createTableStore();
+
