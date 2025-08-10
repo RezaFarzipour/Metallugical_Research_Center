@@ -24,7 +24,7 @@ const Courses = ({ initialData }: ServicesPageProps) => {
     initialData, // 👈 داده اولیه از SSR
     refetchOnWindowFocus: true, // 👈 فعال‌سازی رفرش تب
   });
-  const courses = data.filter((course:any) => course.is_package);
+  const courses = data.filter((course: any) => course.is_package);
   const formDataServices = Array.isArray(courses) ? courses : [];
   const [page, setPage] = useState<number>(1);
 

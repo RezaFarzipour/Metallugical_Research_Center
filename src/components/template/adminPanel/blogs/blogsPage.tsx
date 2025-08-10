@@ -14,6 +14,7 @@ import { BtnLoader } from "@/components/element/Loader";
 import { useAdminBlogDataAction } from "./hooks/useAdminBlogDataAction";
 import { BlogType } from "@/types";
 import { useBlogFormStore } from "@/store/useBlogFormStore";
+import { useBlogsTableStore } from "@/store/useTableSlice";
 
 export const BlogsPage: React.FC = () => {
   const [page, setPage] = useState<number>(1);
@@ -23,7 +24,6 @@ export const BlogsPage: React.FC = () => {
     setIsModalOpen,
     view,
     formDataBlogs,
-    visibleKeys,
     headerColumns,
     firstActionClickHandler,
     secondActionClickHandler,
@@ -33,7 +33,23 @@ export const BlogsPage: React.FC = () => {
     handleDeleteBlog,
   } = useAdminBlogDataAction();
 
-  const { sortedItems } = useFilteredContainer<BlogType>(formDataBlogs, page);
+  const {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  } = useBlogsTableStore();
+
+  const { sortedItems } = useFilteredContainer<BlogType>(formDataBlogs, page, {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  });
   const isEmpty = !formDataBlogs || formDataBlogs.length === 0;
 
   return (
@@ -42,8 +58,8 @@ export const BlogsPage: React.FC = () => {
         <TitleStructureDashboards mainTitle="وبلاگ ها" />
         <FilteredContainer
           datas={formDataBlogs}
-          INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={blogColumns}
+          tableStore={useBlogsTableStore}
           quantity="بلاگ ها"
           topContents={!!formDataBlogs?.length}
           viewContent={true}

@@ -14,17 +14,17 @@ import Empty from "@/components/element/Empty";
 import { BtnLoader } from "@/components/element/Loader";
 import { useAdminServicesDataAction } from "./hooks/useAdminServicesDataAction";
 import { ServerServiceType } from "@/types/serviceType";
+import { useAdminServicesTableStore } from "@/store/useTableSlice";
 
 export const AdminServicesPage: React.FC = ({}) => {
   const [page, setPage] = useState<number>(1);
+  const view = useAdminServicesTableStore((state) => state.view);
 
   const {
     isModalOpen,
     setIsModalOpen,
     selectedServiceId,
-    view,
     formDataServices,
-    visibleKeys,
     headerColumns,
     isPending,
     firstActionClickHandler,
@@ -33,12 +33,27 @@ export const AdminServicesPage: React.FC = ({}) => {
     router,
   } = useAdminServicesDataAction();
 
+  const {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  } = useAdminServicesTableStore();
+
   const { sortedItems } = useFilteredContainer<ServerServiceType>(
     formDataServices,
-    page
+    page,
+    {
+      filterValue,
+      statusFilter,
+      peymentStatusFilter,
+      rolesFilter,
+      rowsPerPage,
+      sortDescriptor,
+    }
   );
-
-
 
   const isEmpty = !formDataServices || formDataServices.length === 0;
 
@@ -48,7 +63,7 @@ export const AdminServicesPage: React.FC = ({}) => {
         <TitleStructureDashboards mainTitle="سرویس ها" />
         <FilteredContainer
           datas={formDataServices}
-          INITIAL_VISIBLE_COLUMNS={visibleKeys}
+          tableStore={useAdminServicesTableStore}
           columns={Servicecolumns}
           quantity="سرویس ها "
           topContents={!!formDataServices?.length}

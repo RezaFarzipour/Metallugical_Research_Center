@@ -1,4 +1,5 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+
+import { useEffect, useMemo, useCallback, useState } from "react";
 import {
     toPersianNumbers,
     toPersianNumbersWithComma,
@@ -9,7 +10,7 @@ import { findName, findServiceName } from "@/utils/findeName";
 import { ReservesAdmincolumns } from "@/constants/tableData";
 import { Reserve } from "@/types";
 import useDataQueries from "@/hooks/useDataQueries";
-
+import { useReservesTableStore } from "@/store/useTableSlice";
 
 interface FormattedReserve {
     _id: string;
@@ -31,10 +32,13 @@ interface GroupedReserves {
     reserveUp: FormattedReserve[];
 }
 
-const useReserveData = (visibleColumns: Set<string>) => {
+const useReserveData = () => {
     const router = useRouter();
     const [formData, setFormData] = useState<GroupedReserves>({ reserveUp: [] });
-    const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
+
+    // خواندن و تنظیم ستون‌ها از Zustand
+    const visibleColumns = useReservesTableStore((state) => state.visibleColumns);
+    const setVisibleColumns = useReservesTableStore((state) => state.setVisibleColumns);
 
     const {
         dataUser,
@@ -45,51 +49,46 @@ const useReserveData = (visibleColumns: Set<string>) => {
         isLoadingReserve,
     } = useDataQueries();
 
-    const groupReservesByKeys = (
-        reserves: Reserve[]
-    ): GroupedReserves => {
+    const groupReservesByKeys = (reserves: Reserve[]): GroupedReserves => {
         const filteredReserves = reserves.filter(
             (reserve) => !reserve.is_canceled && !reserve.is_finished
         );
 
-        return filteredReserves.reduce<GroupedReserves>(
-            (acc, reserve, index) => {
-                const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"} تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
+        return filteredReserves.reduce<GroupedReserves>((acc, reserve, index) => {
+            const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"} تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"
+                }`;
 
-                const name = findName(dataUser ?? [], reserve.user);
-                const service_name = findServiceName(dataAllServiceAdmin ?? [], reserve.service);
-                const reserve_duration = `${toPersianNumbers(reserve.reserve_duration)} ساعت`;
+            const name = findName(dataUser ?? [], reserve.user) || "نامشخص";
+            const service_name =
+                findServiceName(dataAllServiceAdmin ?? [], reserve.service) || "نامشخص";
+            const reserve_duration = `${toPersianNumbers(reserve.reserve_duration)} ساعت`;
 
-                const status = reserve.is_canceled
-                    ? "لغو شده"
-                    : reserve.is_finished
-                        ? "تمام شده"
-                        : "در حال انتظار";
+            const status = reserve.is_canceled
+                ? "لغو شده"
+                : reserve.is_finished
+                    ? "تمام شده"
+                    : "در حال انتظار";
 
-                const payment_status = reserve.is_payment_verified
-                    ? "پرداخت شده"
-                    : "در انتظار پرداخت";
+            const payment_status = reserve.is_payment_verified ? "پرداخت شده" : "در انتظار پرداخت";
 
-                acc.reserveUp.push({
-                    _id: toPersianNumbers(index + 1),
-                    id: reserve.id,
-                    name,
-                    phone_number: toPersianNumbers(reserve.user),
-                    service_name,
-                    price: toPersianNumbersWithComma(reserve.total_price),
-                    reserve_duration,
-                    actions: reserve.id.toString(),
-                    dateRange: dateRanges,
-                    admin_description: reserve.admin_description,
-                    stage: toPersianNumbers(reserve.stage),
-                    status,
-                    payment_status,
-                });
+            acc.reserveUp.push({
+                _id: toPersianNumbers(index + 1),
+                id: reserve.id,
+                name,
+                phone_number: toPersianNumbers(reserve.user),
+                service_name,
+                price: toPersianNumbersWithComma(reserve.total_price),
+                reserve_duration,
+                actions: reserve.id.toString(),
+                dateRange: dateRanges,
+                admin_description: reserve.admin_description,
+                stage: toPersianNumbers(reserve.stage),
+                status,
+                payment_status,
+            });
 
-                return acc;
-            },
-            { reserveUp: [] }
-        );
+            return acc;
+        }, { reserveUp: [] });
     };
 
     useEffect(() => {
@@ -103,7 +102,9 @@ const useReserveData = (visibleColumns: Set<string>) => {
             setFormData(grouped);
 
             if (grouped.reserveUp.length > 0) {
-                setVisibleKeys(Object.keys(grouped.reserveUp[0]));
+                // به جای setVisibleKeys محلی، مقدار ستون‌ها را در Zustand ست می‌کنیم
+                const keys = Object.keys(grouped.reserveUp[0]);
+                setVisibleColumns(new Set(keys));
             }
         }
     }, [
@@ -113,14 +114,14 @@ const useReserveData = (visibleColumns: Set<string>) => {
         isLoadingUser,
         isLoadingService,
         isLoadingReserve,
+        setVisibleColumns,
     ]);
 
+    // ستون‌هایی که باید نمایش داده شوند
     const headerColumns = useMemo(() => {
         return visibleColumns.size === ReservesAdmincolumns.length
             ? ReservesAdmincolumns
-            : ReservesAdmincolumns.filter((column) =>
-                visibleColumns.has(column.uid)
-            );
+            : ReservesAdmincolumns.filter((column) => visibleColumns.has(column.uid));
     }, [visibleColumns]);
 
     const firstActionClickHandler = useCallback(
@@ -138,7 +139,6 @@ const useReserveData = (visibleColumns: Set<string>) => {
 
     return {
         formDataReseves,
-        visibleKeys,
         headerColumns,
         firstActionClickHandler,
         isLoadingReserve,

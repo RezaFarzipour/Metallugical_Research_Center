@@ -6,10 +6,10 @@ import { toPersianNumbers, toPersianNumbersWithComma } from '@/utils/formatter/t
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { RawReserveData, ReportData, ServiceData } from '@/types';
 import { useRouter } from 'next/navigation';
+import { useReportsTableStore } from '@/store/useTableSlice';
 
-const useReportsData = (visibleColumns: Set<string>) => {
+const useReportsData = () => {
     const [formData, setFormData] = useState<{ reserveUp: ReportData[] }>({ reserveUp: [] });
-    const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
     const router = useRouter();
 
     const {
@@ -19,6 +19,8 @@ const useReportsData = (visibleColumns: Set<string>) => {
         isLoadingServiceCustomer,
     } = useDataQueries();
 
+    const visibleColumns = useReportsTableStore((state) => state.visibleColumns);
+    const setVisibleColumns = useReportsTableStore((state) => state.setVisibleColumns);
     // تایپ‌کستینگ برای داده‌های useDataQueries
     const typedDataAllReserveCustomer = dataAllReserveCustomer as { data: RawReserveData[] } | undefined;
     const typedDataAllServiceCustomer = dataAllServiceCustomer as ServiceData[] | undefined;
@@ -73,14 +75,15 @@ const useReportsData = (visibleColumns: Set<string>) => {
             setFormData(grouped);
 
             if (grouped.reserveUp.length > 0) {
-                setVisibleKeys(Object.keys(grouped.reserveUp[0]));
+                const keys = Object.keys(grouped.reserveUp[0]);
+                setVisibleColumns(new Set(keys));
             }
         }
     }, [
         typedDataAllReserveCustomer,
         typedDataAllServiceCustomer,
         isLoadingServiceCustomer,
-        isLoadingReserve,
+        isLoadingReserve, setVisibleColumns
     ]);
     const firstActionClickHandler = useCallback(
         (id: string | number) => {
@@ -100,7 +103,6 @@ const useReportsData = (visibleColumns: Set<string>) => {
     return {
         formDataReseves,
         isLoadingReserve,
-        visibleKeys,
         headerColumns,
         isEmpty,
         firstActionClickHandler

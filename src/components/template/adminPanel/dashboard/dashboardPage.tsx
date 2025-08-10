@@ -4,7 +4,6 @@ import TitleStructureDashboards from "@/components/element/TitleStructureDashboa
 import React, { useState } from "react";
 import { CgArrowLeft } from "react-icons/cg";
 import { ReservesAdmincolumns } from "@/constants/tableData";
-import { useTableStore } from "@/store/useTableSlice";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
 import { TbEyeDiscount } from "react-icons/tb";
@@ -13,24 +12,23 @@ import { BtnLoader } from "@/components/element/Loader";
 import Empty from "@/components/element/Empty";
 import Minicard from "@/components/element/Minicard";
 import { CardsData } from "@/types";
+import { useReportsTableStore } from "@/store/useTableSlice";
 
 interface DashboardPageProps {
   cardsData: CardsData;
 }
 
 const DashboardPage: React.FC<DashboardPageProps> = ({ cardsData }) => {
-  const { visibleColumns } = useTableStore();
   const [page, setPage] = useState<number>(1);
 
   const {
     formDataReseves,
-    visibleKeys,
     headerColumns,
     firstActionClickHandler,
     isLoadingReserve,
     slicedItems,
     cardsWithCounts,
-  } = useDashboardData(visibleColumns, cardsData);
+  } = useDashboardData(cardsData);
 
   if (isLoadingReserve)
     return (
@@ -62,8 +60,8 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ cardsData }) => {
 
         <FilteredContainer
           datas={formDataReseves}
-          INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={ReservesAdmincolumns}
+          tableStore={useReportsTableStore}
           quantity="رزرو ها"
           topContents={false}
           viewContent={false}

@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllUserAdmin } from "@/services/api/user";
@@ -7,6 +8,7 @@ import { Usercolumns } from "@/constants/tableData";
 import { useRouter } from "next/navigation";
 import { showToast } from "@/store/useToastSlice";
 import useDeleteUser from "./useDeleteUser";
+import { useUsersTableStore } from "@/store/useTableSlice";
 
 type SimplifiedUser = {
   id: string;
@@ -24,19 +26,23 @@ type GroupedUsers = {
 };
 
 type userDataType = {
-  email: string, first_name: string, is_signup: boolean, last_name: string, phone_number: string, role: string, username: string
-}[]
+  email: string;
+  first_name: string;
+  is_signup: boolean;
+  last_name: string;
+  phone_number: string;
+  role: string;
+  username: string;
+}[];
 
-const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
+const useUserData = (includeskey: string[]) => {
   const [formData, setFormData] = useState<GroupedUsers>({
     signedUp: [],
     notSignedUp: [],
   });
-  const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
-  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
-    null
-  );
+  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { userDelete } = useDeleteUser();
 
   const { data, isPending } = useQuery<userDataType>({
@@ -46,17 +52,18 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
 
   const router = useRouter();
 
+  // دریافت visibleColumns و setter از Zustand
+  const visibleColumns = useUsersTableStore((state) => state.visibleColumns);
+  const setVisibleColumns = useUsersTableStore((state) => state.setVisibleColumns);
+
   useEffect(() => {
     if (Array.isArray(data)) {
       const result = groupUsersBySignup(data, includeskey);
-
       setFormData(result);
 
       if (result.signedUp.length > 0) {
-        const keys = Object.keys(result.signedUp[0]).filter(
-          (key) => key !== "is_signup"
-        );
-        setVisibleKeys(keys);
+        const keys = Object.keys(result.signedUp[0]).filter((key) => key !== "is_signup");
+        setVisibleColumns(new Set(keys));
       }
     }
   }, [data]);
@@ -96,9 +103,7 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
       : Usercolumns.filter((column) => visibleColumns.has(column.uid));
   }, [visibleColumns]);
 
-  const formDataSignedUp = Array.isArray(formData.signedUp)
-    ? formData.signedUp
-    : [];
+  const formDataSignedUp = formData.signedUp ?? [];
 
   const firstActionClickHandler = useCallback(
     (id: string | number, phone_number: string) => {
@@ -107,21 +112,18 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
     [router]
   );
 
-  // باز کردن مودال حذف
   const secondActionClickHandler = useCallback(
     (id: string | number, phone_number: string) => {
       if (!id) {
         showToast("آیدی سرویس نامعتبر است", "error");
         return;
       }
-
       setSelectedServiceId(phone_number);
       setIsModalOpen(true);
     },
     []
   );
 
-  // تایید حذف سرویس
   const handleDeleteService = useCallback(() => {
     if (!selectedServiceId) {
       showToast("آیدی سرویس نامعتبر است", "error");
@@ -143,18 +145,18 @@ const useUserData = (visibleColumns: Set<string>, includeskey: string[]) => {
     setIsModalOpen(false);
     setSelectedServiceId(null);
   }, [selectedServiceId, userDelete]);
+  const isEmpty = !formDataSignedUp || formDataSignedUp.length === 0;
 
   return {
     formDataSignedUp,
     isPending,
-    visibleKeys,
     headerColumns,
     handleDeleteService,
     firstActionClickHandler,
     secondActionClickHandler,
     selectedServiceId,
     setIsModalOpen,
-    isModalOpen,
+    isModalOpen, isEmpty
   };
 };
 

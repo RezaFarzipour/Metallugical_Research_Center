@@ -4,14 +4,17 @@ import { IoIosSearch } from "react-icons/io";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useTableStore } from "@/store/useTableSlice";
+interface TopContentProps {
+  tableStore: typeof useTableStore;
+}
 
-export default function SearchField() {
+export default function SearchField({ tableStore }: TopContentProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
 
-  const { setFilterValue, setPage } = useTableStore();
+  const { setFilterValue, setPage } = tableStore();
 
   useEffect(() => {
     if (searchQuery) setFilterValue(searchQuery);

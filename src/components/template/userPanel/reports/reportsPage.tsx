@@ -2,7 +2,7 @@
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { ReportsCustomercolumns } from "@/constants/tableData";
 import React, { useState } from "react";
-import { useTableStore } from "@/store/useTableSlice";
+import { useReportsTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
@@ -12,19 +12,33 @@ import useReportsData from "./useReportsData";
 import { TbEyeDiscount } from "react-icons/tb";
 
 const ReportsPage: React.FC = () => {
-  const { visibleColumns } = useTableStore();
   const [page, setPage] = useState<number>(1);
 
   const {
     formDataReseves,
     isLoadingReserve,
-    visibleKeys,
     headerColumns,
     isEmpty,
     firstActionClickHandler,
-  } = useReportsData(visibleColumns);
+  } = useReportsData();
 
-  const { sortedItems } = useFilteredContainer(formDataReseves, page);
+  const {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  } = useReportsTableStore();
+
+  const { sortedItems } = useFilteredContainer(formDataReseves, page, {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  });
 
   return (
     <div className="grid grid-cols-1">
@@ -33,7 +47,7 @@ const ReportsPage: React.FC = () => {
 
         <FilteredContainer
           datas={formDataReseves}
-          INITIAL_VISIBLE_COLUMNS={visibleKeys}
+          tableStore={useReportsTableStore}
           columns={ReportsCustomercolumns}
           quantity="گزارش ها"
           topContents={!!formDataReseves?.length}
