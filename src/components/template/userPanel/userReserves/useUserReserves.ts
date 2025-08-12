@@ -11,15 +11,15 @@ import { findServiceName } from "@/utils/findeName";
 import { ReservesCustomercolumns } from "@/constants/tableData";
 import useDataQueries from "@/hooks/useDataQueries";
 import { RawReserveData, ReportData, ServiceData } from "@/types";
+import { useReservesTableStore } from "@/store/useTableSlice";
 
 // تعریف نوع برای پاسخ postReservedService
 interface ReserveResponse {
   id: string;
 }
-const useReserveData = (visibleColumns: Set<string>) => {
+const useReserveData = () => {
   const router = useRouter();
   const [formData, setFormData] = useState<{ reserveUp: ReportData[] }>({ reserveUp: [] });
-  const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
   const {
     dataAllReserveCustomer,
@@ -27,6 +27,10 @@ const useReserveData = (visibleColumns: Set<string>) => {
     dataAllServiceCustomer,
     isLoadingServiceCustomer,
   } = useDataQueries();
+
+  // خواندن و تنظیم ستون‌ها از Zustand
+  const visibleColumns = useReservesTableStore((state) => state.visibleColumns);
+  const setVisibleColumns = useReservesTableStore((state) => state.setVisibleColumns);
 
   // تایپ‌کستینگ برای داده‌های useDataQueries
   const typedDataAllReserveCustomer = dataAllReserveCustomer as { data: RawReserveData[] } | undefined;
@@ -79,16 +83,17 @@ const useReserveData = (visibleColumns: Set<string>) => {
     ) {
       const grouped = groupReservesByKeys(typedDataAllReserveCustomer.data);
       setFormData(grouped);
-
       if (grouped.reserveUp.length > 0) {
-        setVisibleKeys(Object.keys(grouped.reserveUp[0]));
+        // به جای setVisibleKeys محلی، مقدار ستون‌ها را در Zustand ست می‌کنیم
+        const keys = Object.keys(grouped.reserveUp[0]);
+        setVisibleColumns(new Set(keys));
       }
     }
   }, [
     typedDataAllReserveCustomer,
     typedDataAllServiceCustomer,
     isLoadingServiceCustomer,
-    isLoadingReserve,
+    isLoadingReserve, setVisibleColumns
   ]);
 
   // محاسبه ستون‌های هدر
@@ -128,7 +133,6 @@ const useReserveData = (visibleColumns: Set<string>) => {
 
   return {
     formDataReseves,
-    visibleKeys,
     headerColumns,
     firstActionClickHandler,
     handleReserve,

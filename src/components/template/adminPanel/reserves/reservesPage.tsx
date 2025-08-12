@@ -3,7 +3,6 @@
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { ReservesAdmincolumns } from "@/constants/tableData";
 import React, { useState } from "react";
-import { useTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
@@ -11,20 +10,36 @@ import { TbEyeDiscount } from "react-icons/tb";
 import { BtnLoader } from "@/components/element/Loader";
 import Empty from "@/components/element/Empty";
 import useReserveData from "./useReserveData";
+import { useReservesTableStore } from "@/store/useTableSlice";
 
 const ReservesPage: React.FC = () => {
-  const { visibleColumns } = useTableStore();
   const [page, setPage] = useState<number>(1);
 
   const {
     formDataReseves,
-    visibleKeys,
     headerColumns,
     firstActionClickHandler,
     isLoadingReserve,
     isEmpty,
-  } = useReserveData(visibleColumns);
-  const { sortedItems } = useFilteredContainer(formDataReseves, page);
+  } = useReserveData();
+
+  const {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  } = useReservesTableStore();
+
+  const { sortedItems } = useFilteredContainer(formDataReseves, page, {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  });
 
   return (
     <div className="grid grid-cols-1">
@@ -33,9 +48,9 @@ const ReservesPage: React.FC = () => {
 
         <FilteredContainer
           datas={formDataReseves}
-          INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={ReservesAdmincolumns}
           quantity="رزرو ها"
+          tableStore={useReservesTableStore}
           topContents={!!formDataReseves?.length}
           viewContent={false}
           viewContentSmSize={false}

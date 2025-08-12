@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { useTableStore } from "@/store/useTableSlice";
+import { useBlogsTableStore } from "@/store/useTableSlice";
 import { toPersianNumbers } from "@/utils/formatter/toPersianNumbers";
 import { blogColumns } from "@/constants/tableData";
 import { showToast } from "@/store/useToastSlice";
@@ -35,9 +35,7 @@ type GroupedServices = {
 };
 
 export const useAdminBlogDataAction = () => {
-  const { view, visibleColumns } = useTableStore();
   const [formData, setFormData] = useState<GroupedServices>({ blogUp: [] });
-  const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
   const [selectedServiceId, setSelectedServiceId] = useState<
     string | null | number
   >(null);
@@ -45,6 +43,11 @@ export const useAdminBlogDataAction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { deleteBLog } = useDeleteBlog();
+
+  // گرفتن مقدارها از Zustand به صورت مستقیم
+  const visibleColumns = useBlogsTableStore((state) => state.visibleColumns);
+  const setVisibleColumns = useBlogsTableStore((state) => state.setVisibleColumns);
+  const view = useBlogsTableStore((state) => state.view);
 
   const router = useRouter();
   // تابع گروه‌بندی داده‌ها بیرون از هوک تعریف شده و با useCallback استفاده می‌شود
@@ -82,11 +85,14 @@ export const useAdminBlogDataAction = () => {
 
       setFormData(grouped);
 
+
       if (grouped.blogUp.length > 0) {
-        setVisibleKeys(Object.keys(grouped.blogUp[0]));
+        // ستون‌ها را به zustand منتقل کن
+        const keys = Object.keys(grouped.blogUp[0]);
+        setVisibleColumns(new Set(keys));
       }
     }
-  }, [data]);
+  }, [data, setVisibleColumns]);
   // آرایه‌ی سرویس‌ها برای دسترسی راحت‌تر
   const formDataBlogs = Array.isArray(formData.blogUp) ? formData.blogUp : [];
 
@@ -148,7 +154,6 @@ export const useAdminBlogDataAction = () => {
     setIsModalOpen,
     view,
     formDataBlogs,
-    visibleKeys,
     headerColumns,
     isPending,
     firstActionClickHandler,

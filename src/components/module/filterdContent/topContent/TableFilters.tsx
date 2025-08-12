@@ -22,6 +22,7 @@ interface TableFiltersProps {
   paymentStautsDropDown?: boolean;
   columnsDropDownBtn?: boolean;
   columns?: { name: string; uid: string }[];
+  tableStore: typeof useTableStore;
 }
 
 export default function TableFilters({
@@ -30,6 +31,7 @@ export default function TableFilters({
   paymentStautsDropDown,
   columnsDropDownBtn,
   columns,
+  tableStore,
 }: TableFiltersProps) {
   const {
     visibleColumns,
@@ -40,7 +42,7 @@ export default function TableFilters({
     setRolesFilter,
     setStatusFilter,
     setPeymentStatusFilter,
-  } = useTableStore();
+  } = tableStore();
 
   const searchParams = useSearchParams();
   const router = useRouter();

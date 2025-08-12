@@ -5,7 +5,6 @@ import { Usercolumns } from "@/constants/tableData";
 import React, { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEyeDiscount } from "react-icons/tb";
-import { useTableStore } from "@/store/useTableSlice";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
@@ -13,9 +12,10 @@ import useUserData from "./hooks/useUserData";
 import ModalModule from "@/components/element/ModalModule";
 import { BtnLoader } from "@/components/element/Loader";
 import { UserType } from "@/types";
+import { useUsersTableStore } from "@/store/useTableSlice";
+import Empty from "@/components/element/Empty";
 
 const UsersPage: React.FC = () => {
-  const { visibleColumns } = useTableStore();
   const [page, setPage] = useState<number>(1);
 
   const includeskey = ["email", "phone_number", "role"];
@@ -26,15 +26,32 @@ const UsersPage: React.FC = () => {
     isModalOpen,
     formDataSignedUp,
     isPending,
-    visibleKeys,
     headerColumns,
     firstActionClickHandler,
     secondActionClickHandler,
-  } = useUserData(visibleColumns, includeskey);
+    isEmpty,
+  } = useUserData(includeskey);
+
+  const {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  } = useUsersTableStore();
 
   const { sortedItems } = useFilteredContainer<UserType>(
     formDataSignedUp,
-    page
+    page,
+    {
+      filterValue,
+      statusFilter,
+      peymentStatusFilter,
+      rolesFilter,
+      rowsPerPage,
+      sortDescriptor,
+    }
   );
 
   return (
@@ -42,27 +59,29 @@ const UsersPage: React.FC = () => {
       <div className=" p-4 md:p-6">
         <TitleStructureDashboards mainTitle="کاربران" />
 
-        <FilteredContainer
-          datas={formDataSignedUp}
-          INITIAL_VISIBLE_COLUMNS={visibleKeys}
-          columns={Usercolumns}
-          quantity="کاربران"
-          topContents={true}
-          viewContent={false}
-          viewContentSmSize={false}
-          addBtn={false}
-          columnsDropDownBtn={true}
-          rolesDropDown={true}
-          stausDropDown={false}
-          bottomContents={true}
-          page={page}
-          setPage={setPage}
-        >
-          {isPending ? (
-            <div>
-              <BtnLoader color="#377cfb" />
-            </div>
-          ) : (
+        {isPending ? (
+          <div className="flex justify-center items-center mt-32">
+            <BtnLoader color="#377cfb" />
+          </div>
+        ) : isEmpty ? (
+          <Empty spanValue="کاربری" btn={false} />
+        ) : (
+          <FilteredContainer
+            datas={formDataSignedUp}
+            columns={Usercolumns}
+            quantity="کاربران"
+            tableStore={useUsersTableStore}
+            topContents={true}
+            viewContent={false}
+            viewContentSmSize={false}
+            addBtn={false}
+            columnsDropDownBtn={true}
+            rolesDropDown={true}
+            stausDropDown={false}
+            bottomContents={true}
+            page={page}
+            setPage={setPage}
+          >
             <CustomeTable
               headerColumns={headerColumns}
               sortedItems={sortedItems}
@@ -74,8 +93,8 @@ const UsersPage: React.FC = () => {
               secondActionClickHandler={secondActionClickHandler}
               image={true}
             />
-          )}
-        </FilteredContainer>
+          </FilteredContainer>
+        )}
       </div>
 
       {isModalOpen && (

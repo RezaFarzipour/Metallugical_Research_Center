@@ -14,6 +14,7 @@ import Empty from "@/components/element/Empty";
 import { BtnLoader } from "@/components/element/Loader";
 import { ServerServiceType } from "@/types/serviceType";
 import { useAdminCoursesDataAction } from "./hooks/useAdminCourseData";
+import { useCoursesTableStore } from "@/store/useTableSlice";
 
 export const AdminCourses: React.FC = ({}) => {
   const [page, setPage] = useState<number>(1);
@@ -24,7 +25,6 @@ export const AdminCourses: React.FC = ({}) => {
     selectedCourseId,
     view,
     formDataCourses,
-    visibleKeys,
     headerColumns,
     isPending,
     firstActionClickHandler,
@@ -32,10 +32,26 @@ export const AdminCourses: React.FC = ({}) => {
     handleDeleteCourse,
     router,
   } = useAdminCoursesDataAction();
+  const {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  } = useCoursesTableStore();
 
   const { sortedItems } = useFilteredContainer<ServerServiceType>(
     formDataCourses,
-    page
+    page,
+    {
+      filterValue,
+      statusFilter,
+      peymentStatusFilter,
+      rolesFilter,
+      rowsPerPage,
+      sortDescriptor,
+    }
   );
 
   const isEmpty = !formDataCourses || formDataCourses.length === 0;
@@ -46,8 +62,8 @@ export const AdminCourses: React.FC = ({}) => {
         <TitleStructureDashboards mainTitle="دوره ها" />
         <FilteredContainer
           datas={formDataCourses}
-          INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={Coursecolumns}
+          tableStore={useCoursesTableStore}
           quantity="دوره ها "
           topContents={!!formDataCourses?.length}
           viewContent={true}

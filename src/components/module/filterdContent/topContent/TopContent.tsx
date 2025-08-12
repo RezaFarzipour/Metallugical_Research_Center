@@ -1,6 +1,5 @@
 "use client";
 import React, { useCallback } from "react";
-import { useTableStore } from "@/store/useTableSlice";
 import { Button } from "@heroui/button";
 import { FaPlus } from "react-icons/fa";
 import ViewToggle from "./ViewToggle";
@@ -8,6 +7,7 @@ import { toPersianNumbers } from "@/utils/formatter/toPersianNumbers";
 import SearchField from "@/components/element/SearchField";
 import TableFilters from "./TableFilters";
 import { cn } from "@/utils/cn";
+import { useTableStore } from "@/store/useTableSlice";
 
 interface TopContentProps {
   columns?: {
@@ -15,6 +15,7 @@ interface TopContentProps {
     uid: string;
     sortable?: boolean;
   }[];
+  tableStore: typeof useTableStore;
   usersLength: number;
   quantity: string;
   rolesDropDown?: boolean;
@@ -41,8 +42,9 @@ export default function TopContent({
   viewContent,
   viewContentSmSize,
   btnClickHandler,
+  tableStore,
 }: TopContentProps) {
-  const { view, setPage, setRowsPerPage, setView } = useTableStore();
+  const { view, setPage, setRowsPerPage, setView } = tableStore();
 
   // تغییر سایز صفحه
   const handleRowsPerPageChange = useCallback(
@@ -61,7 +63,7 @@ export default function TopContent({
             <ViewToggle view={view} setView={setView} />
           )}
         </div>
-        <SearchField />
+        <SearchField tableStore={tableStore} />
 
         <div className="flex gap-3">
           <TableFilters
@@ -70,6 +72,7 @@ export default function TopContent({
             paymentStautsDropDown={paymentStautsDropDown}
             columnsDropDownBtn={columnsDropDownBtn}
             columns={columns}
+            tableStore={tableStore}
           />
 
           {addBtn && (
@@ -83,7 +86,7 @@ export default function TopContent({
           )}
         </div>
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center py-4">
         <span className="text-default-400 text-small">
           تعداد {quantity}: {toPersianNumbers(usersLength)}
         </span>

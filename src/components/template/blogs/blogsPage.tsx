@@ -9,6 +9,7 @@ import { cn } from "@/utils/cn";
 import CategoryList from "./CateogryList";
 import Empty from "@/components/element/Empty";
 import { useState } from "react";
+import { useBlogsTableStore } from "@/store/useTableSlice";
 
 type BlogPageType = {
   AllBlogs: BlogType[];
@@ -22,7 +23,23 @@ export default function BlogPage({
   const blogs = Array.isArray(AllBlogs) ? AllBlogs : [];
   const [page, setPage] = useState<number>(1);
 
-  const { sortedItems } = useFilteredContainer(blogs, page);
+  const {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  } = useBlogsTableStore();
+
+  const { sortedItems } = useFilteredContainer(blogs, page, {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  });
 
   return (
     <div className="p-4 md:p-10 w-full min-h-screen mt-96">
@@ -42,6 +59,7 @@ export default function BlogPage({
             datas={blogs}
             quantity="وبلاگ ها"
             topContents={!!blogs.length}
+            tableStore={useBlogsTableStore}
             viewContent={true}
             viewContentSmSize={false}
             columnsDropDownBtn={false}

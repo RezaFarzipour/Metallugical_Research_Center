@@ -2,7 +2,7 @@
 import TitleStructureDashboards from "@/components/element/TitleStructureDashboards";
 import { ReportsAdmincolumns } from "@/constants/tableData";
 import React, { useState } from "react";
-import { useTableStore } from "@/store/useTableSlice";
+import { useReportsTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import CustomeTable from "@/components/module/customeTable/CustomeTable";
@@ -13,20 +13,35 @@ import { ReportData } from "@/types";
 import { TbEyeDiscount } from "react-icons/tb";
 
 const ReportsPage: React.FC = () => {
-  const { visibleColumns } = useTableStore();
   const [page, setPage] = useState<number>(1);
-
   const {
     formDataReseves,
-    visibleKeys,
     headerColumns,
     isLoadingReserve,
     isEmpty,
     firstActionClickHandler,
-  } = useReportsData(visibleColumns);
+  } = useReportsData();
+
+  const {
+    filterValue,
+    statusFilter,
+    peymentStatusFilter,
+    rolesFilter,
+    rowsPerPage,
+    sortDescriptor,
+  } = useReportsTableStore();
+
   const { sortedItems } = useFilteredContainer<ReportData>(
     formDataReseves,
-    page
+    page,
+    {
+      filterValue,
+      statusFilter,
+      peymentStatusFilter,
+      rolesFilter,
+      rowsPerPage,
+      sortDescriptor,
+    }
   );
 
   return (
@@ -36,9 +51,9 @@ const ReportsPage: React.FC = () => {
 
         <FilteredContainer
           datas={formDataReseves}
-          INITIAL_VISIBLE_COLUMNS={visibleKeys}
           columns={ReportsAdmincolumns}
           quantity="گزارش ها"
+          tableStore={useReportsTableStore}
           topContents={!!formDataReseves?.length}
           viewContent={false}
           viewContentSmSize={false}

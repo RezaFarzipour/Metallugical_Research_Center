@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import ModalModule from "@/components/element/ModalModule";
-import CarGallery from "@/components/module/ImageGallery";
 import { showToast } from "@/store/useToastSlice";
 import {
   toEnglishNumbers,
@@ -15,6 +14,7 @@ import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToP
 import { Button } from "@heroui/button";
 import { ServiceData } from "@/types/serviceType";
 import { useDeleteCourse } from "./hooks/useDeleteCource";
+// import CarGallery from "@/components/module/ImageGallery";
 
 interface ServiceDetailsPageProps {
   dataByID: ServiceData;
@@ -31,7 +31,7 @@ const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
     description,
     price,
     cover_image,
-    "service-images": serviceImages = [],
+    // "service-images": serviceImages = [],
     "service-reserve_date": reserveDates = [],
   } = dataByID;
 
@@ -43,15 +43,15 @@ const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
     [cover_image]
   );
 
-  const galleryImages = useMemo(
-    () =>
-      serviceImages.map((img) =>
-        img.image.startsWith("http")
-          ? img.image
-          : `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${img.image}`
-      ),
-    [serviceImages]
-  );
+  // const galleryImages = useMemo(
+  //   () =>
+  //     serviceImages.map((img) =>
+  //       img.image.startsWith("http")
+  //         ? img.image
+  //         : `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${img.image}`
+  //     ),
+  //   [serviceImages]
+  // );
 
   const dateRanges = useMemo(
     () => formatDateRangesToPersian(reserveDates),
@@ -141,8 +141,6 @@ const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
             </Button>
           </div>
         </div>
-
-   
       </div>
 
       {/* مدال تایید حذف */}
