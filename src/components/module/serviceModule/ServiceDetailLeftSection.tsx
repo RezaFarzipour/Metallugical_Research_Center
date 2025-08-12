@@ -32,11 +32,11 @@ const ServiceDetailLeftSection = ({
   reserved_to,
 }: ServiceDetailLeftSectionProps) => {
   return (
-    <div className="bg-white shadow-md rounded-xl p-4 flex flex-col lg:flex-row gap-6">
-      {/* قیمت رزرو */}
+    <div className="bg-white shadow-md rounded-xl p-4 flex flex-col lg:flex-row gap-16">
+      {/* بخش قیمت رزرو */}
       <div
         className={cn(
-          "p-4 rounded-lg w-full flex flex-col justify-between",
+          "p-4 rounded-lg w-full flex flex-col justify-between order-2 lg:order-1",
           !course && "lg:w-1/2"
         )}
       >
@@ -91,7 +91,8 @@ const ServiceDetailLeftSection = ({
           <div className="w-full h-[2px] mt-6 bg-gray-300" />
         </div>
 
-        <div className=" flex w-full justify-center mt-5">
+        {/* دکمه */}
+        <div className="flex w-full justify-center mt-5">
           <Button
             disabled={isConfirmDisabled}
             className={cn(
@@ -109,7 +110,7 @@ const ServiceDetailLeftSection = ({
 
       {/* تقویم */}
       {!course && (
-        <div className="w-full lg:w-1/3 flex justify-center items-center">
+        <div className="w-full lg:w-1/3 flex justify-center items-center order-1 lg:order-2">
           <CustomeDateRangePicker
             onRangeSelect={rangeHandler}
             reserveData={{
