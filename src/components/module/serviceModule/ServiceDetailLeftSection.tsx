@@ -5,10 +5,11 @@ import CustomeDateRangePicker from "../customeDataPicker/CustomeCallender";
 import { BtnLoader } from "@/components/element/Loader";
 import { cn } from "@/utils/cn";
 import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
+import { usePathname } from "next/navigation";
 
 type ServiceDetailLeftSectionProps = {
   price: number;
-  isConfirmDisabled: boolean;
+  isConfirmDisabled?: boolean;
   isCreating: boolean;
   isPatching: boolean;
   handleConfirm: () => void;
@@ -31,6 +32,8 @@ const ServiceDetailLeftSection = ({
   reserved_from,
   reserved_to,
 }: ServiceDetailLeftSectionProps) => {
+
+  const pathname =usePathname()
   return (
     <div className="bg-white shadow-md rounded-xl p-4 flex flex-col lg:flex-row gap-16">
       {/* بخش قیمت رزرو */}
@@ -94,7 +97,7 @@ const ServiceDetailLeftSection = ({
         {/* دکمه */}
         <div className="flex w-full justify-center mt-5">
           <Button
-            disabled={isConfirmDisabled}
+            disabled={pathname.includes("/courses") ? false : isConfirmDisabled}
             className={cn(
               "text-white px-4 py-2 w-full",
               isConfirmDisabled

@@ -14,12 +14,12 @@ import ServiceDetailLeftSection from "@/components/module/serviceModule/ServiceD
 import { ServiceData } from "@/types/serviceType";
 import { usePathname } from "next/navigation";
 const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
-  const [startDate, setStartDate] = useState<string | null>(null);
-  const [endDate, setEndDate] = useState<string | null>(null);
   const router = useRouter();
   const pathname = usePathname();
   const { reserved_from, reserved_to } =
     serviceData?.["service-reserve_date"]?.[0] || {};
+
+  
 
   const {
     id: serviceId,
@@ -69,8 +69,8 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
     try {
       const { id } = await createServiceReserve();
       await patchReserve({
-        reserve_from: startDate,
-        reserve_to: endDate,
+        reserve_from: "",
+        reserve_to: "",
         service: serviceId.toString(),
         reserveId: id,
       });
@@ -81,14 +81,7 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
     }
   };
 
-  const isConfirmDisabled = (() => {
-    if (!reserved_from || !reserved_to) return true;
 
-    const today = new Date();
-    const todayStr = today.toISOString().slice(0, 10); // مثلاً "2025-08-04"
-
-    return reserved_from < todayStr || reserved_to < todayStr;
-  })();
 
   const coursePath = pathname.includes("courses");
 
@@ -125,7 +118,7 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
               handleConfirm={handleConfirm}
               reserved_from={reserved_from}
               reserved_to={reserved_to}
-              isConfirmDisabled={isConfirmDisabled}
+        
               isCreating={isCreating}
               isPatching={isPatching}
             />
