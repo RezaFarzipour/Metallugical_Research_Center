@@ -5,10 +5,11 @@ import CustomeDateRangePicker from "../customeDataPicker/CustomeCallender";
 import { BtnLoader } from "@/components/element/Loader";
 import { cn } from "@/utils/cn";
 import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
+import { usePathname } from "next/navigation";
 
 type ServiceDetailLeftSectionProps = {
   price: number;
-  isConfirmDisabled: boolean;
+  isConfirmDisabled?: boolean;
   isCreating: boolean;
   isPatching: boolean;
   handleConfirm: () => void;
@@ -31,12 +32,14 @@ const ServiceDetailLeftSection = ({
   reserved_from,
   reserved_to,
 }: ServiceDetailLeftSectionProps) => {
+
+  const pathname =usePathname()
   return (
-    <div className="bg-white shadow-md rounded-xl p-4 flex flex-col lg:flex-row gap-6">
-      {/* قیمت رزرو */}
+    <div className="bg-white shadow-md rounded-xl p-4 flex flex-col lg:flex-row gap-16">
+      {/* بخش قیمت رزرو */}
       <div
         className={cn(
-          "p-4 rounded-lg w-full flex flex-col justify-between",
+          "p-4 rounded-lg w-full flex flex-col justify-between order-2 lg:order-1",
           !course && "lg:w-1/2"
         )}
       >
@@ -91,9 +94,10 @@ const ServiceDetailLeftSection = ({
           <div className="w-full h-[2px] mt-6 bg-gray-300" />
         </div>
 
-        <div className=" flex w-full justify-center mt-5">
+        {/* دکمه */}
+        <div className="flex w-full justify-center mt-5">
           <Button
-            disabled={isConfirmDisabled}
+            disabled={pathname.includes("/courses") ? false : isConfirmDisabled}
             className={cn(
               "text-white px-4 py-2 w-full",
               isConfirmDisabled
@@ -109,7 +113,7 @@ const ServiceDetailLeftSection = ({
 
       {/* تقویم */}
       {!course && (
-        <div className="w-full lg:w-1/3 flex justify-center items-center">
+        <div className="w-full lg:w-1/3 flex justify-center items-center order-1 lg:order-2">
           <CustomeDateRangePicker
             onRangeSelect={rangeHandler}
             reserveData={{
