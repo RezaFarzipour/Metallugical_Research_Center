@@ -18,7 +18,6 @@
 
   <h3 align="center"> Metallugical_Research_Center</h3>
 
-
 </div>
 
 ## 📋 <a name="table">Table of Contents</a>
@@ -26,8 +25,9 @@
 1. 🤖 [Introduction](#introduction)
 2. ⚙️ [Tech Stack](#tech-stack)
 3. 🔋 [Features](#features)
-4. 🕸️ [Code to Copy](#snippets)
-5. 🔗 [Assets](#links)
+4. 📂 [Project-structure](#project-structure)
+5. 🕸️ [Code to Copy](#snippets)
+6. 🔗 [Assets](#links)
 
 ## <a name="introduction">🤖 Introduction</a>
 
@@ -52,9 +52,9 @@ Built with Next.js for a robust user interface, TypeScript for type-safe develop
 
 👉 **Secure OTP Authentication** Seamless login and sign-up using phone numbers with OTP verification for enhanced security.
 
-👉 **Captivating Landing Page**  A visually appealing landing page designed to engage users with modern UI elements powered by Hero UI.
+👉 **Captivating Landing Page** A visually appealing landing page designed to engage users with modern UI elements powered by Hero UI.
 
-👉 **Admin Panel** 
+👉 **Admin Panel**
 Course & Blog Management: Add and manage educational courses and blogs (news and tutorials) using Tiptap for rich text editing.
 
 Interactive Reservation System: Manage metallurgy testing equipment reservations with a dynamic, ping-pong-style interaction for real-time coordination and availability updates.
@@ -63,13 +63,12 @@ Reporting: Generate detailed reports for operational insights.
 
 Service Management: Add and configure metallurgy services offered on the platform.
 
-👉 **User Panel** 
+👉 **User Panel**
 Interactive Reservation System: User-friendly interface for clients to reserve testing equipment with real-time, ping-pong-style coordination and updates.
 
 Reporting: Access personalized reports for reservation history and service usage.
 
-👉 **Responsive Design**  Fully optimized for mobile, tablet, and desktop devices, ensuring a consistent and seamless experience.
-
+👉 **Responsive Design** Fully optimized for mobile, tablet, and desktop devices, ensuring a consistent and seamless experience.
 
 and many more, including optimized performance, modular code architecture, and efficient data handling with GraphQL.
 
@@ -102,6 +101,60 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
+
+## <a name="Project-structure">📂 Project Structure</a>
+
+<details>
+
+````ts
+src_extracted/
+├── app/
+│   ├── actions/
+│   │   └── getCurrentUser.ts
+│   ├── api/
+│   │   ├── auth/
+│   │   │   └── [...nextauth]/
+│   │   │       └── route.ts
+│   │   └── register/
+│   │       └── route.ts
+│   ├── components/
+│   │   ├── Avatar.tsx
+│   │   ├── CategoryBox.tsx
+│   │   ├── Container.tsx
+│   │   ├── EmptyState.tsx
+│   │   ├── Heading.tsx
+│   │   ├── Modals/
+│   │   │   ├── LoginModal.tsx
+│   │   │   ├── Modal.tsx
+│   │   │   ├── RegisterModal.tsx
+│   │   │   └── index.ts
+│   │   ├── Navbar/
+│   │   │   ├── Categories.tsx
+│   │   │   ├── Logo.tsx
+│   │   │   ├── MenuItem.tsx
+│   │   │   ├── Navbar.tsx
+│   │   │   ├── Search.tsx
+│   │   │   └── UserMenu.tsx
+│   │   ├── inputs/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Heading.tsx
+│   │   │   └── Input.tsx
+│   │   └── providers/
+│   │       └── ToasterProvider.tsx
+│   ├── hooks/
+│   │   ├── useLoginModal.ts
+│   │   ├── useRegisterModal.ts
+│   │   └── useRentModal.ts
+│   ├── layout.tsx
+│   └── page.tsx
+├── libs/
+│   └── prisma.ts
+├── pages/
+│   └── api/
+│       └── example.ts
+├── styles/
+│   └── globals.css
+
 
 ## <a name="snippets">🕸️ Snippets</a>
 
@@ -218,7 +271,7 @@ export default {
     }),
   ],
 } satisfies Config;
-```
+````
 
 </details>
 
