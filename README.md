@@ -1,6 +1,6 @@
 <div align="center">
 
-![Metallurgy Animation](./public/images/readme/AwesomeScreenshot-8_16_2025,6_12_19PM.gif)
+![Metallurgy Animation](./public/images/readme/AwesomeScreenshot-8_16_20256_12_19PM-ezgif.com-video-to-gif-converter.gif)
 
 <div>
     <img src="https://img.shields.io/badge/-Next.js-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=000000" alt="nextjs" />
@@ -26,19 +26,36 @@
 1. 🤖 [Introduction](#introduction)
 2. ⚙️ [Tech Stack](#tech-stack)
 3. 🔋 [Features](#features)
-4. 📂 [Project-structure](#project-structure)
+4. 📂 [Project structure](#project-structure)
 5. 🕸️ [Code to Copy](#snippets)
 6. 🔗 [Assets](#links)
+
+## <a >🖼️ Images</a>
 
 <div align="center">
   <table>
     <tr>
-   <td><img src="./public/images/readme/landingabout.png.png" alt="Image 1" width="300"></td>
+   <td><img src="./public/images/readme/landingabout.png" alt="Image 1" width="300"></td>
    <td><img src="./public/images/readme/auth1.png"  alt="Image 2" width="300"></td>
     </tr>
     <tr>
       <td><img src="./public/images/readme/labcustomer2.png" alt="Image 3" width="300"></td>
      <td><img src="./public/images/readme/admindashboardnew.png" alt="Image 4" width="300"></td>
+    </tr>
+  </table>
+</div>
+
+## <a >🖼️ Service & Blogs & Courses</a>
+
+<div align="center">
+  <table>
+    <tr>
+   <td><img src="./public/images/readme/blogs.png" alt="Image 1" width="300"></td>
+   <td><img src="./public/images/readme/coursesection.png"  alt="Image 2" width="300"></td>
+    </tr>
+    <tr>
+      <td><img src="./public/images/readme/servicessection.png.png" alt="Image 3" width="300"></td>
+     <td><img src="./public/images/readme/servicedetails.png.png" alt="Image 4" width="300"></td>
     </tr>
   </table>
 </div>
@@ -116,7 +133,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
 
-## <a name="Project-structure">📂 Project Structure</a>
+## <a name="project-structure">📂 Project Structure</a>
 
 ```ts
 src_extracted/src/

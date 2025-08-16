@@ -1,6 +1,6 @@
 "use client";
 import CarGallery from "@/components/module/ImageGallery";
-import React, { useState } from "react";
+import React from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useGetUser } from "@/hooks/useAuth";
