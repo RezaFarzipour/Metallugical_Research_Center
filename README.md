@@ -104,59 +104,107 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 
 ## <a name="Project-structure">📂 Project Structure</a>
 
-
-
-````ts
-src_extracted/
+```ts
+src_extracted/src/
 ├── app/
-│   ├── actions/
-│   │   └── getCurrentUser.ts
-│   ├── api/
-│   │   ├── auth/
-│   │   │   └── [...nextauth]/
-│   │   │       └── route.ts
-│   │   └── register/
-│   │       └── route.ts
-│   ├── components/
-│   │   ├── Avatar.tsx
-│   │   ├── CategoryBox.tsx
-│   │   ├── Container.tsx
-│   │   ├── EmptyState.tsx
-│   │   ├── Heading.tsx
-│   │   ├── Modals/
-│   │   │   ├── LoginModal.tsx
-│   │   │   ├── Modal.tsx
-│   │   │   ├── RegisterModal.tsx
-│   │   │   └── index.ts
-│   │   ├── Navbar/
-│   │   │   ├── Categories.tsx
-│   │   │   ├── Logo.tsx
-│   │   │   ├── MenuItem.tsx
-│   │   │   ├── Navbar.tsx
-│   │   │   ├── Search.tsx
-│   │   │   └── UserMenu.tsx
-│   │   ├── inputs/
-│   │   │   ├── Button.tsx
-│   │   │   ├── Heading.tsx
-│   │   │   └── Input.tsx
-│   │   └── providers/
-│   │       └── ToasterProvider.tsx
-│   ├── hooks/
-│   │   ├── useLoginModal.ts
-│   │   ├── useRegisterModal.ts
-│   │   └── useRentModal.ts
-│   ├── layout.tsx
-│   └── page.tsx
-├── libs/
-│   └── prisma.ts
-├── pages/
-│   └── api/
-│       └── example.ts
-├── styles/
-│   └── globals.css
+│   ├── admin-panel/admin/
+│   │   ├── blogs/
+│   │   │   ├── [blogId]/{details,edit}/page.tsx
+│   │   │   ├── category/{create,page}.tsx
+│   │   │   ├── create/{stage1,stage2,page}.tsx
+│   │   │   └── page.tsx
+│   │   ├── courses/
+│   │   │   ├── [courseId]/{details,edit}/page.tsx
+│   │   │   ├── create/page.tsx
+│   │   │   └── page.tsx
+│   │   ├── {dashboard,expiredReserve,myProfile,reports,reservse}/page.tsx
+│   │   ├── services/
+│   │   │   ├── [serviceId]/{details,edit}/page.tsx
+│   │   │   ├── create/page.tsx
+│   │   │   └── page.tsx
+│   │   ├── users/
+│   │   │   ├── [userId]/edit/page.tsx
+│   │   │   ├── edit/page.tsx
+│   │   │   └── page.tsx
+│   │   └── layout.tsx
+│   ├── auth/
+│   │   ├── auth/page.tsx
+│   │   └── layout.tsx
+│   ├── blogs/
+│   │   ├── blogDetails/[slug]/[blogId]/{layout,page}.tsx
+│   │   ├── blogList/
+│   │   │   ├── category/[categorySlug]/page.tsx
+│   │   │   ├── {BlogsPageClient,layout,page}.tsx
+│   ├── courses/
+│   │   ├── [courseId]/details/page.tsx
+│   │   ├── {layout,page}.tsx
+│   ├── landing/{layout,page}.tsx
+│   ├── reservation/page.tsx
+│   ├── user-panel/user/
+│   │   ├── {dashboard,myorders,myProfile,myreservs,reports}/page.tsx
+│   │   └── layout.tsx
+│   ├── {aboutus,contactus}/
+│   │   ├── {layout,page}.tsx
+│   ├── services/
+│   │   ├── [serviceId]/details/page.tsx
+│   │   ├── {layout,page}.tsx
+│   ├── {error,not-found}.tsx
+│   └── favicon.ico
+├── components/
+│   ├── containers/
+│   │   ├── clipedDrawer/{Header,SideBar,SideBarNavs}.tsx
+│   │   ├── layout/{Footer,Layout,NavBar}.tsx
+│   │   └── FilteredContainer.tsx
+│   ├── element/
+│   │   ├── animations/{ArrowIconEndContent,BgAnimateShape}.tsx
+│   │   ├── {BackToUpBtn,BlurModal,Breadcrumbs,Button,DrawerElement,DropdownElement,Empty,FileInput,Loader,Logo,Minicard,ModalModule,OtpInput,RHFInput,RHFSelect,RHFTagInput,SearchField,Table,TextAreaModule,TitleStructure,TitleStructureDashboards,Toast}.tsx
+│   ├── module/
+│   │   ├── auth/{CheckOtpForm,PersonalRegister,SendOtpForm,useSigninFlow.ts}
+│   │   ├── cardModule/{CardContent,CardModule,ImageContainer,InfoItem}.tsx
+│   │   ├── contactUs/{ContactusInformation,MapModule}.tsx
+│   │   ├── controller/{BlogDetailForm,PersonalDetailsForm,ServiceDetailsForm}.tsx
+│   │   ├── customeDataPicker/{AdminDateRangePicker,CustomeCallender}.tsx
+│   │   ├── customeTable/{CellsRender,CustomeTable,DeleteBtn,EditBtn}.tsx
+│   │   ├── filterdContent/
+│   │   │   ├── topContent/{TableFilters,TopContent,ViewToggle}.tsx
+│   │   │   └── BottomContent.tsx
+│   │   ├── landing/
+│   │   │   ├── aboutOverview/{AboutImage,AboutOverview,AboutText}.tsx
+│   │   │   ├── {Blogs,FaqAccordian,LandingHeader,Services}.tsx
+│   │   ├── navBar/{MobileMenu,NavBarLeft,NavBarRight,NavDropDown,NavLink}.tsx
+│   │   ├── panelAction/blogAction/
+│   │   ├── serviceModule/{ServiceDetailLeftSection,ServiceDetailRightSection}.tsx
+│   │   ├── textEditor/{TextEditor,toolbarButtons}.tsx
+│   │   ├── {HeaderImage,ImageGallery,ReserveInfo,ServicesReserveModalBody,Stepper}.tsx
+│   └── template/
+│       ├── adminPanel/
+│       │   ├── adminServices/
+│       │   │   ├── formSteps/{FirstStepAction,SecondStepAction}.tsx
+│       │   │   ├── hooks/{useAdminServicesDataAction,useCreateService,useDeleteService,useEditService,useSecondStepAction}.ts
+│       │   │   ├── {adminServicesPage,createServicePage,editServicePage,serviceDetailsPage}.tsx
+│       │   ├── blogs/
+│       │   │   ├── category/{categoryPage,createCategoryPage}.tsx
+│       │   │   ├── formSteps/{Stage1,Stage2}.tsx
+│       │   │   ├── hooks/{useAdminBlogDataAction,useCreate,useDeleteBlog,useDeleteCategory,useEditCategory}.ts
+│       │   │   ├── {blogDetailsPage,BlogFormStepper,blogsPage,EditBlogPage}.tsx
+│       │   ├── courses/
+│       │   │   ├── formSteps/{FirstStepAction,SecondStepAction}.tsx
+│       │   │   ├── hooks/{useAdminCourseData,useCreateCource,useDeleteCource,useEditCource,useSecondStepAction}.ts
+│       │   │   ├── {AdminCourses,courceDetailsPage,createCourcePage,editCourcePage}.tsx
+│       │   ├── dashboard/
+│       │   │   ├── serverAction/data.ts
+│       │   │   ├── {dashboardPage,useDashboardData}.ts
+│       │   ├── expiredReserve/expiredReservePage.tsx
+│       │   ├── reports/{reportspage,useReportsData}.ts
+│       │   ├── reserves/{reservesPage,useReserveData}.ts
+│       │   ├── users/
+│       │   │   ├── hooks/{useDeleteUser,useEditUser,useUserData}.ts
+│       │   │   ├── {userEditPage,usersPage}.tsx
+│       ├── blogs/{blogDetailsPage,blogsPage,CateogryList}.tsx
+│       ├── courses/{courseDetailsPage,CoursesPage}.tsx
+│       ├── reservation/formSteps/{AdminStage1,AdminStage2,AdminStage3,AdminStage4,CustomerStage1,CustomerStage3,FinalStage}.tsx
 
-````
-
+```
 
 ## <a name="links">🔗 Assets</a>
 
