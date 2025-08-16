@@ -1,5 +1,6 @@
 <div align="center">
-  <img src="./public/readMe.png" alt="nextdotjs" />
+
+![Metallurgy Animation](./public/images/readme/AwesomeScreenshot-8_16_2025,6_12_19PM.gif)
 
 <div>
     <img src="https://img.shields.io/badge/-Next.js-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=000000" alt="nextjs" />
@@ -32,7 +33,7 @@
 <div align="center">
   <table>
     <tr>
-   <td><img src="./public/images/readme/lablandingnew.png" alt="Image 1" width="300"></td>
+   <td><img src="./public/images/readme/landingabout.png.png" alt="Image 1" width="300"></td>
    <td><img src="./public/images/readme/auth1.png"  alt="Image 2" width="300"></td>
     </tr>
     <tr>
