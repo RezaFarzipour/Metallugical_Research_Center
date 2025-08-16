@@ -29,6 +29,19 @@
 5. 🕸️ [Code to Copy](#snippets)
 6. 🔗 [Assets](#links)
 
+<div align="center">
+  <table>
+    <tr>
+   <td><img src="./public/images/readme/lablandingnew.png" alt="Image 1" width="300"></td>
+   <td><img src="./public/images/readme/auth1.png"  alt="Image 2" width="300"></td>
+    </tr>
+    <tr>
+      <td><img src="./public/images/readme/labcustomer2.png" alt="Image 3" width="300"></td>
+     <td><img src="./public/images/readme/admindashboardnew.png" alt="Image 4" width="300"></td>
+    </tr>
+  </table>
+</div>
+
 ## <a name="introduction">🤖 Introduction</a>
 
 Built with Next.js for a robust user interface, TypeScript for type-safe development, Hero UI for enhanced UI components, and styled with Tailwind CSS for a modern design, this web application powers a metallurgy platform with a captivating landing page, dual dashboards for admins and clients, and a secure phone-based login system using OTP verification. Users can seamlessly reserve testing equipment or enroll in educational courses, offering a tailored experience with specialized features for metallurgy professionals.
