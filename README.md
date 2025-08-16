@@ -50,9 +50,9 @@ Built with Next.js for a robust user interface, TypeScript for type-safe develop
 
 ## <a name="features">🔋 Features</a>
 
-👉 Secure OTP Authentication: Seamless login and sign-up using phone numbers with OTP verification for enhanced security.
-👉 Captivating Landing Page: A visually appealing landing page designed to engage users with modern UI elements powered by Hero UI.
-👉 Admin Panel:
+👉 **Secure OTP Authentication** Seamless login and sign-up using phone numbers with OTP verification for enhanced security.
+👉 **Captivating Landing Page**  A visually appealing landing page designed to engage users with modern UI elements powered by Hero UI.
+👉 **Admin Panel** 
 
 Course & Blog Management: Add and manage educational courses and blogs (news and tutorials) using Tiptap for rich text editing.
 
@@ -61,12 +61,12 @@ Interactive Reservation System: Manage metallurgy testing equipment reservations
 Reporting: Generate detailed reports for operational insights.
 
 Service Management: Add and configure metallurgy services offered on the platform.
-👉 User Panel:
+👉 **User Panel** 
 
 Interactive Reservation System: User-friendly interface for clients to reserve testing equipment with real-time, ping-pong-style coordination and updates.
 
 Reporting: Access personalized reports for reservation history and service usage.
-👉 Responsive Design: Fully optimized for mobile, tablet, and desktop devices, ensuring a consistent and seamless experience.
+👉 **Responsive Design**  Fully optimized for mobile, tablet, and desktop devices, ensuring a consistent and seamless experience.
 
 and many more, including optimized performance, modular code architecture, and efficient data handling with GraphQL.
 
