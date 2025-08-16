@@ -54,8 +54,8 @@
    <td><img src="./public/images/readme/coursesection.png"  alt="Image 2" width="300"></td>
     </tr>
     <tr>
-      <td><img src="./public/images/readme/servicessection.png.png" alt="Image 3" width="300"></td>
-     <td><img src="./public/images/readme/servicedetails.png.png" alt="Image 4" width="300"></td>
+      <td><img src="./public/images/readme/servicessection.png" alt="Image 3" width="300"></td>
+     <td><img src="./public/images/readme/servicedetails.png" alt="Image 4" width="300"></td>
     </tr>
   </table>
 </div>
