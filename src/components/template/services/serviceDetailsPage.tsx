@@ -12,11 +12,13 @@ import { showToast } from "@/store/useToastSlice";
 import ServiceDetailRightSection from "@/components/module/serviceModule/ServiceDetailRightSection";
 import ServiceDetailLeftSection from "@/components/module/serviceModule/ServiceDetailLeftSection";
 import { ServiceData } from "@/types/serviceType";
+import { useReservationSource } from "@/store/useReservationSource";
 
 const ServiceDetails = ({ serviceData }: { serviceData: ServiceData }) => {
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
   const router = useRouter();
+  const { setSource } = useReservationSource();
 
   // handle reserve range
   const { reserved_from, reserved_to } =
@@ -60,7 +62,7 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceData }) => {
       router.push("/auth");
       return;
     }
-
+    setSource("service");
     if (userData?.role === "admin") {
       showToast("لطفا به عنوان کاربر عادی وارد شوید", "error");
       return;

@@ -23,6 +23,7 @@ type AdminStage1Type = {
   servicedata: ServiceDetailsType | undefined;
   isServiceLoading: boolean;
   reservationData: reservationDataType;
+  source:"service"| "course"
 };
 
 const AdminStage1 = ({
@@ -30,6 +31,7 @@ const AdminStage1 = ({
   reserveId,
   servicedata,
   isServiceLoading,
+  source
 }: AdminStage1Type) => {
   const {
     register,
@@ -88,7 +90,7 @@ const AdminStage1 = ({
   //cancle reserve
   const cancelHandler = async () => {
     cancelReserve(reserveId, () => {
-      router.push("/services");
+      router.push(`${source ==="service" ? "/services":"/courses"}`);
     });
   };
 
@@ -111,7 +113,8 @@ const AdminStage1 = ({
             <RHFInput<AdminReserveInputsFormData>
               register={register}
               errors={errors}
-              label="مدت زمان اجاره(ساعت)"
+              // label="مدت زمان اجاره(ساعت)"
+               label={`${source ==="service" ?"مدت زمان اجاره(ساعت)" :"مدت زمان دوره"}`}
               type="number"
               dir="rtl"
               name="reserve_duration"

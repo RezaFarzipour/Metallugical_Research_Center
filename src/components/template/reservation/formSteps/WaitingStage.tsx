@@ -15,9 +15,11 @@ type WaitingStageProps = {
   reservationData?: reservationDataType;
   typographyContent: { main?: string; span?: string };
   isAdmin?: boolean;
+  source?: "service" | "course" | null;
 };
 
 const WaitingStage = ({
+  source,
   reserveId,
   serviceData,
   reservationData,
@@ -30,18 +32,17 @@ const WaitingStage = ({
 
   //cancle reserve
   const cancelHandler = () => {
-    if(reserveId){
+    if (reserveId) {
       cancelReserve(reserveId, () => {
-        router.push("/services");
+        router.push(`${source === "service" ? "/services" : "courses"}`);
       });
     }
- 
   };
 
   return (
     <div className="">
       <div className="my-4 flex  flex-col items-center justify-center gap-3">
-        <Hourglass   colors={["#0d6efd", "#0dcaf0"]} height={40} width={40} />
+        <Hourglass colors={["#0d6efd", "#0dcaf0"]} height={40} width={40} />
         <p className="flex flex-col text-sm text-default-400">
           {typographyContent.main}
           <span className="pr-4"> {typographyContent.span}</span>
@@ -49,6 +50,7 @@ const WaitingStage = ({
       </div>
 
       <ReserveInfo
+      source={source}
         serviceData={serviceData}
         reservationData={reservationData}
         isAdmin={isAdmin}

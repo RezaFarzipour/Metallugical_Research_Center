@@ -13,9 +13,11 @@ import ServiceDetailRightSection from "@/components/module/serviceModule/Service
 import ServiceDetailLeftSection from "@/components/module/serviceModule/ServiceDetailLeftSection";
 import { ServiceData } from "@/types/serviceType";
 import { usePathname } from "next/navigation";
+import { useReservationSource } from "@/store/useReservationSource";
 const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { setSource } = useReservationSource();
   const { reserved_from, reserved_to } =
     serviceData?.["service-reserve_date"]?.[0] || {};
 
@@ -65,7 +67,7 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
       showToast("لطفا به عنوان کاربر عادی وارد شوید", "error");
       return;
     }
-
+    setSource("course");
     try {
       const { id } = await createServiceReserve();
       await patchReserve({
