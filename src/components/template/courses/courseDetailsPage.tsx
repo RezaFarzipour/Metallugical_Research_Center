@@ -110,7 +110,7 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
             </div>
           ) : null}
 
-          <div className="w-full lg:w-[70%] pt-5">
+          <div className="w-full lg:w-[50%] pt-5">
             <ServiceDetailLeftSection
               course={true}
               price={price}

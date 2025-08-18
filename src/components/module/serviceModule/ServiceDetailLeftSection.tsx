@@ -32,8 +32,7 @@ const ServiceDetailLeftSection = ({
   reserved_from,
   reserved_to,
 }: ServiceDetailLeftSectionProps) => {
-
-  const pathname =usePathname()
+  const pathname = usePathname();
   return (
     <div className="bg-white shadow-md rounded-xl p-4 flex flex-col lg:flex-row gap-16">
       {/* بخش قیمت رزرو */}
@@ -99,7 +98,9 @@ const ServiceDetailLeftSection = ({
           <Button
             disabled={pathname.includes("/courses") ? false : isConfirmDisabled}
             className={cn(
-              "text-white px-4 py-2 w-full",
+              `text-white px-4 py-2 ${
+                pathname.includes("/courses") ? "w-1/3" : "w-full"
+              }`,
               isConfirmDisabled
                 ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                 : "bg-secondary-500 hover:bg-secondary-600"
