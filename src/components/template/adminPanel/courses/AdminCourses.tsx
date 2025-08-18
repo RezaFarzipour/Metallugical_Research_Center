@@ -84,7 +84,7 @@ export const AdminCourses: React.FC = ({}) => {
           ) : isEmpty ? (
             <Empty
               btnValue="افزودن دوره آموزشی"
-              btnHref="/admin/services/create"
+              btnHref="/admin/courses/create"
               spanValue="دوره آموزشیی"
             />
           ) : !view ? (
