@@ -28,7 +28,7 @@ const ReservationTemplate = () => {
   const [stage, setStage] = useState<number | null>(null);
   const { source } = useReservationSource();
 
-  console.log("sourse", source);
+
 
   useEffect(() => {
     if (!reserveId) return;

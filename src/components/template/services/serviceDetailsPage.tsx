@@ -115,6 +115,7 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceData }) => {
 
           <div className="w-full lg:w-1/2 pt-5">
             <ServiceDetailLeftSection
+              reserve_date={serviceData["service-reserve_date"] || []}
               price={price}
               handleConfirm={handleConfirm}
               rangeHandler={rangeHandler}

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { useCoursesTableStore, useTableStore } from "@/store/useTableSlice";
+import { useCoursesTableStore } from "@/store/useTableSlice";
 import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import { getAllServiceCustomer } from "@/services/api/service";
 import { staggerContainer } from "@/utils/motion";

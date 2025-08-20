@@ -33,12 +33,7 @@ const AdminStage4 = ({
   const [receiptFile, setReceiptFile] = useState<string | null>(null);
   const router = useRouter();
 
-  const {
-    isError,
-    error,
-    isPending,
-    mutateAsync: finalApprove,
-  } = useMutation({
+  const { isError, error, isPending } = useMutation({
     mutationKey: ["admin_fanial_approve"],
     mutationFn: adminFinalApprove,
   });
@@ -74,11 +69,9 @@ const AdminStage4 = ({
   const onSubmit = async (data: PaymentFormData) => {
     if (!data.payment_image) return;
 
-
-
     const formData = new FormData();
     formData.append("report_file", data.payment_image);
-    formData.append("is_finished", true);
+    formData.append("is_finished", "true");
 
     await sendImage(
       { reserveId, data: formData },

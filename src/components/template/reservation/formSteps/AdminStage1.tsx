@@ -23,7 +23,7 @@ type AdminStage1Type = {
   servicedata: ServiceDetailsType | undefined;
   isServiceLoading: boolean;
   reservationData: reservationDataType;
-  source:"service"| "course"
+  source:"service"| "course" | null
 };
 
 const AdminStage1 = ({

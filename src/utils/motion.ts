@@ -4,7 +4,7 @@ import { Variants } from "framer-motion";
 type Direction = "left" | "right" | "up" | "down";
 
 // تایپ برای نوع انیمیشن
-type AnimationType = "spring" | "tween" | "linear";
+type AnimationType = "spring" | "tween" ;
 
 // 1. imageReveal
 export const imageReveal = (): Variants => {

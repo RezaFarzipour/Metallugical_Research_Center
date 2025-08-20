@@ -1,7 +1,6 @@
 import { getServicesByIdCustomer } from "@/services/api/service";
 import setCookiesOnReq from "@/utils/auth/setCookieOnReq";
 import { cookies } from "next/headers";
-import type { Metadata } from "next";
 import React from "react";
 import CourseDetailsPage from "@/components/template/courses/courseDetailsPage";
 
