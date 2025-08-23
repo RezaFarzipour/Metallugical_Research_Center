@@ -57,7 +57,7 @@ export default function CreateCategory() {
   });
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -147,7 +147,7 @@ export default function CreateCategory() {
           className=" p-6 rounded-xl  space-y-5 bg-white shadow-md mt-10"
         >
           <RHFInput
-            register={register}
+            control={control}
             errors={errors}
             label="نام دسته‌بندی"
             type="text"
@@ -155,7 +155,7 @@ export default function CreateCategory() {
             name="category_name"
           />
           <RHFInput
-            register={register}
+            control={control}
             errors={errors}
             label="اسلاگ"
             type="text"

@@ -60,7 +60,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
       : undefined;
 
   const {
-    register,
+ 
     handleSubmit,
     formState: { errors },
     reset,
@@ -146,7 +146,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"
       >
-        <ServiceDetailsForm servicename="نام دوره" register={register} errors={errors} />
+        <ServiceDetailsForm servicename="نام دوره" control={control} errors={errors} />
 
         <Controller
           name="cover_image"

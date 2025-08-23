@@ -34,7 +34,7 @@ const AdminStage1 = ({
   source
 }: AdminStage1Type) => {
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<AdminReserveInputsFormData>({
@@ -111,7 +111,7 @@ const AdminStage1 = ({
         <div className="space-y-3 ">
           <div>
             <RHFInput<AdminReserveInputsFormData>
-              register={register}
+              control={control}
               errors={errors}
               // label="مدت زمان اجاره(ساعت)"
                label={`${source ==="service" ?"مدت زمان اجاره(ساعت)" :"مدت زمان دوره"}`}
@@ -123,7 +123,7 @@ const AdminStage1 = ({
 
           <div>
             <RHFInput<AdminReserveInputsFormData>
-              register={register}
+              control={control}
               errors={errors}
               label="  قیمت کل(تومان)"
               type="number"
@@ -134,7 +134,7 @@ const AdminStage1 = ({
 
           <div>
             <RHFInput<AdminReserveInputsFormData>
-              register={register}
+              control={control}
               errors={errors}
               label=" توضیحات ادمین"
               type="text"

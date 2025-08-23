@@ -26,7 +26,7 @@ export default function UserEditPage({
   const router = useRouter();
 
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     formState: { errors },
@@ -81,7 +81,7 @@ export default function UserEditPage({
         onSubmit={handleSubmit(onSubmit)}
         className="p-6 rounded-xl w-[50%] space-y-5 bg-white shadow-md mt-10"
       >
-        <PersonalDetailsForm register={register} errors={errors} />
+        <PersonalDetailsForm control={control} errors={errors} />
 
         <RadioGroup
           label="انتخاب نقش کاربر"
