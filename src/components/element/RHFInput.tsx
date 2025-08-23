@@ -1,42 +1,8 @@
-"use client";
-
+import { Controller, FieldValues, Path, Control, FieldErrors } from "react-hook-form";
 import { Input } from "@heroui/react";
-import React from "react";
-import {
-  UseFormRegister,
-  FieldErrors,
-  Path,
-  FieldValues,
-} from "react-hook-form";
-
-const inputStyles = {
-  inputWrapper: [
-    "bg-transparent",
-    "transition-colors",
-    "data-[hover=true]:border-secondary-300",
-    "border-secondary-100",
-    "after:content-['']",
-    "after:rounded-full",
-    "after:bg-secondary-500",
-    "after:transition",
-    "after:!duration-500",
-    // dark theme
-    "dark:border-secondary-100",
-  ],
-  input: [
-    "text-secondary-800",
-    "placeholder:text-secondary-600",
-    // dark theme
-    "text-default-600",
-    "placeholder:text-default-600",
-  ],
-  error: ["border-red-500", "focus:border-red-500", "focus:ring-red-500/20"],
-  wrapper: "relative",
-  errorMessage: ["mt-1", "text-sm", "text-red-500"],
-};
 
 interface InputProps<T extends FieldValues> {
-  register: UseFormRegister<T>;
+  control: Control<T>;
   errors: FieldErrors<T>;
   label: string;
   type: string;
@@ -45,7 +11,7 @@ interface InputProps<T extends FieldValues> {
 }
 
 const RHFInput = <T extends FieldValues>({
-  register,
+  control,
   errors,
   label,
   type,
@@ -56,26 +22,44 @@ const RHFInput = <T extends FieldValues>({
   const errorMessage = error?.message as string | undefined;
 
   return (
-    <div className={inputStyles.wrapper}>
-      <Input
-        {...register(name)}
-        type={type}
-        label={label}
-        dir={dir}
-        variant="underlined"
-        isRequired
-        isInvalid={!!error}
-        errorMessage={errorMessage}
-        classNames={{
-          inputWrapper: [
-            ...inputStyles.inputWrapper,
-            ...(error ? inputStyles.error : []),
-          ],
-        }}
+    <div className="relative">
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <Input
+            {...field} // اینجا value و onChange رو ست می‌کنه
+            type={type}
+            label={label}
+            dir={dir}
+            variant="underlined"
+            isRequired
+            isInvalid={!!error}
+            errorMessage={errorMessage}
+            classNames={{
+              inputWrapper: [
+                "bg-transparent",
+                "transition-colors",
+                "data-[hover=true]:border-secondary-300",
+                "border-secondary-100",
+                "after:content-['']",
+                "after:rounded-full",
+                "after:bg-secondary-500",
+                "after:transition",
+                "after:!duration-500",
+                "dark:border-secondary-100",
+                ...(error ? ["border-red-500", "focus:border-red-500", "focus:ring-red-500/20"] : []),
+              ],
+              input: [
+                "text-secondary-800",
+                "placeholder:text-secondary-600",
+                "text-default-600",
+                "placeholder:text-default-600",
+              ],
+            }}
+          />
+        )}
       />
-      {/* {errorMessage && (
-        <p className={inputStyles.errorMessage.join(" ")}>{errorMessage}</p>
-      )} */}
     </div>
   );
 };
