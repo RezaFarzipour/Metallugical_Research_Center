@@ -23,8 +23,10 @@ export default function MyProfilePage(): JSX.Element {
     mutationFn: editUserByPhoneNumber,
   });
 
+
   const {
-    register,
+    control,
+    // register,
     reset,
     handleSubmit,
     formState: { errors, isDirty },
@@ -85,10 +87,11 @@ export default function MyProfilePage(): JSX.Element {
         />
       </div>
       <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="p-6 rounded-xl w-[50%] space-y-5 bg-white shadow-md mt-10"
-      >
-        <PersonalDetailsForm register={register} errors={errors} />
+  onSubmit={handleSubmit(onSubmit)}
+  className="p-6 rounded-xl w-full md:w-1/2 space-y-5 bg-white shadow-md mt-10"
+>
+
+        <PersonalDetailsForm control={control} errors={errors} />
 
         <Button
           variant="primary"

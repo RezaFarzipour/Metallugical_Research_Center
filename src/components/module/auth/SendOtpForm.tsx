@@ -14,7 +14,8 @@ interface SendOtpFormProps {
 
 const SendOtpForm: React.FC<SendOtpFormProps> = ({ onSubmit, loading }) => {
   const {
-    register,
+    control,
+    // register,
     handleSubmit,
     formState: { errors },
   } = useForm<PhoneFormData>({
@@ -28,7 +29,7 @@ const SendOtpForm: React.FC<SendOtpFormProps> = ({ onSubmit, loading }) => {
       <p className="text-gray-700 leading-none">سلام!</p>
 
       <RHFInput<PhoneFormData>
-        register={register}
+        control={control}
         errors={errors}
         label="شماره موبایل"
         type="tel"

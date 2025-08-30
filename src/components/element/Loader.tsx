@@ -1,47 +1,29 @@
 "use client";
-import { Hourglass, ThreeDots } from "react-loader-spinner";
+import { ClipLoader, PulseLoader } from "react-spinners";
 
 interface LoaderProps {
-  width?: string;
-  height?: string;
+  size?: number;
   color?: string;
 }
 
 export function PageLoader({
-  width = "60",
-  height = "40",
-  color = "#fff",
+  size = 60,
+  color = "#4F46E5",
 }: LoaderProps) {
   return (
-    <Hourglass
-      height={height}
-      width={width}
-      ariaLabel="hourglass-loading"
-      wrapperStyle={{}}
-      wrapperClass=""
-      colors={[color, color]}
-      visible={true}
-    />
+    <div className="flex justify-center items-center w-full h-full">
+      <ClipLoader size={size} color={color} />
+    </div>
   );
 }
 
 export function BtnLoader({
-  width = "60",
-  height = "40",
+  size = 10,
   color = "#fff",
 }: LoaderProps) {
   return (
-    <ThreeDots
-      height={height}
-      width={width}
-      radius="9"
-      color={color}
-      ariaLabel="three-dots-loading"
-      wrapperStyle={{
-        display: "flex",
-        justifyContent: "center",
-      }}
-      visible={true}
-    />
+    <div className="flex justify-center items-center">
+      <PulseLoader size={size} color={color} />
+    </div>
   );
 }

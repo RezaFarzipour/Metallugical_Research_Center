@@ -2,13 +2,13 @@ import { useEffect, useMemo, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getAllServiceAdmin } from "@/services/api/service";
-import { useTableStore } from "@/store/useTableSlice";
 import { toEnglishNumbers, toPersianNumbers, toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 import { Servicecolumns } from "@/constants/tableData";
 import { showToast } from "@/store/useToastSlice";
 import { useDeleteService } from "./useDeleteService";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
 import { ServerServiceType } from "@/types/serviceType";
+import { useAdminServicesTableStore, } from "@/store/useTableSlice";
 
 type RawService = {
     id: string;
@@ -26,16 +26,17 @@ type GroupedServices = {
 
 
 export const useAdminServicesDataAction = () => {
-    const { view, visibleColumns } = useTableStore();
     const [formData, setFormData] = useState<GroupedServices>({ serviceUp: [] });
-    const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
-    const [selectedServiceId, setSelectedServiceId] = useState<string | null| number>(null);
+    const [selectedServiceId, setSelectedServiceId] = useState<string | null | number>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { deletService } = useDeleteService();
 
     const router = useRouter();
 
+    // گرفتن مقدارها از Zustand به صورت مستقیم
+    const visibleColumns = useAdminServicesTableStore((state) => state.visibleColumns);
+    const setVisibleColumns = useAdminServicesTableStore((state) => state.setVisibleColumns);
     // تابع گروه‌بندی داده‌ها بیرون از هوک تعریف شده و با useCallback استفاده می‌شود
     const groupServicesByKeys = (data: RawService[]): GroupedServices => {
         return data.reduce<GroupedServices>(
@@ -66,14 +67,17 @@ export const useAdminServicesDataAction = () => {
         staleTime: 5 * 60 * 1000, // 5 دقیقه کش
     });
 
+
+
     // گروه‌بندی داده‌ها هنگام تغییر data
     useEffect(() => {
         if (Array.isArray(data)) {
             const grouped = groupServicesByKeys(data);
             setFormData(grouped);
-
             if (grouped.serviceUp.length > 0) {
-                setVisibleKeys(Object.keys(grouped.serviceUp[0]));
+                // ستون‌ها را به zustand منتقل کن
+                const keys = Object.keys(grouped.serviceUp[0]);
+                setVisibleColumns(new Set(keys));
             }
         }
     }, [data]);
@@ -130,11 +134,8 @@ export const useAdminServicesDataAction = () => {
         isModalOpen,
         setIsModalOpen,
         selectedServiceId,
-        view,
-        visibleColumns,
         formData,
         formDataServices,
-        visibleKeys,
         headerColumns,
         isPending,
         isError,

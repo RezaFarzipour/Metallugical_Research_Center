@@ -106,6 +106,8 @@ export const CardContent: React.FC<CardContentProps> = ({
         return `/blogs/${slug || "no-slug"}/${id}`;
       case "anyServices":
         return `/services/${id}/details`;
+        case "anyCourses":
+        return `/courses/${id}/details`;
       default:
         return "/";
     }

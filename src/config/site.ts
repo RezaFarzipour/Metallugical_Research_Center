@@ -17,16 +17,21 @@ export const siteConfig = {
     },
     {
       id: 3,
+      label: "دوره ها",
+      path: "/courses",
+    },
+    {
+      id: 4,
       label: "بلاگ ها ",
       path: "/blogs",
     },
     {
-      id: 4,
+      id: 5,
       label: "درباره ما",
       path: "/aboutus",
     },
     {
-      id: 5,
+      id: 6,
       label: "ارتباط با ما ",
       path: "/contactus",
     },

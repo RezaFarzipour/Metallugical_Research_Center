@@ -10,11 +10,11 @@ import {
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { RawReserveData, ReportData, ServiceData } from "@/types";
+import { useReservesTableStore } from "@/store/useTableSlice";
 
-const useDashboardData = (visibleColumns: Set<string>) => {
+const useDashboardData = () => {
   const router = useRouter();
   const [formData, setFormData] = useState<{ reserveUp: ReportData[] }>({ reserveUp: [] });
-  const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
   const {
     dataAllReserveCustomer,
@@ -22,6 +22,10 @@ const useDashboardData = (visibleColumns: Set<string>) => {
     dataAllServiceCustomer,
     isLoadingServiceCustomer,
   } = useDataQueries();
+
+  // خواندن و تنظیم ستون‌ها از Zustand
+  const visibleColumns = useReservesTableStore((state) => state.visibleColumns);
+  const setVisibleColumns = useReservesTableStore((state) => state.setVisibleColumns);
 
   // تایپ‌کستینگ برای داده‌های useDataQueries
   const typedDataAllReserveCustomer = dataAllReserveCustomer as { data: RawReserveData[] } | undefined;
@@ -75,14 +79,16 @@ const useDashboardData = (visibleColumns: Set<string>) => {
       setFormData(grouped);
 
       if (grouped.reserveUp.length > 0) {
-        setVisibleKeys(Object.keys(grouped.reserveUp[0]));
+        // به جای setVisibleKeys محلی، مقدار ستون‌ها را در Zustand ست می‌کنیم
+        const keys = Object.keys(grouped.reserveUp[0]);
+        setVisibleColumns(new Set(keys));
       }
     }
   }, [
     typedDataAllReserveCustomer,
     typedDataAllServiceCustomer,
     isLoadingServiceCustomer,
-    isLoadingReserve,
+    isLoadingReserve, setVisibleColumns
   ]);
   // محاسبه ستون‌های هدر
   const headerColumns = useMemo(() => {
@@ -126,7 +132,7 @@ const useDashboardData = (visibleColumns: Set<string>) => {
 
   return {
     formDataReseves,
-    visibleKeys,
+
     headerColumns,
     firstActionClickHandler,
     isEmpty,

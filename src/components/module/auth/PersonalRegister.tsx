@@ -18,7 +18,8 @@ const PersonalRegister: React.FC<SendPersonalFormProps> = ({
   loading,
 }) => {
   const {
-    register,
+    control,
+    // register,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -31,7 +32,7 @@ const PersonalRegister: React.FC<SendPersonalFormProps> = ({
       onSubmit={handleSubmit(onSubmitPersonalRegister)}
       className="relative"
     >
-      <PersonalDetailsForm register={register} errors={errors} />
+      <PersonalDetailsForm  control={control} errors={errors} />
 
       <div className="pt-14">
         <Button type="submit" variant="primary" fullWidth>

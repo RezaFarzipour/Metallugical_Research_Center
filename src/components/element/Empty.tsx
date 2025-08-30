@@ -11,6 +11,7 @@ interface EmptyProps {
   hidden?: boolean; // اگر false باشه، دکمه مخفی میشه
   btn?: boolean;
   pVisiable?: boolean;
+  btnOnClick?: () => void;
 }
 
 const Empty = ({
@@ -20,6 +21,7 @@ const Empty = ({
   hidden = true,
   btn = true,
   pVisiable = true,
+  btnOnClick,
 }: EmptyProps) => {
   return (
     <div className="container xl:max-w-screen-xl px-4 flex justify-center items-center">
@@ -44,15 +46,25 @@ const Empty = ({
           به نظر می‌رسد که هنوز {spanValue} ثبت نکرده‌اید یا {spanValue} برای
           نمایش در دسترس نیست.
         </p>
+
         <div className={cn("flex justify-center", !hidden && "hidden")}>
-          {btn && (
-            <Link href={btnHref || "/default-url"}>
-              <button className="flex items-center gap-x-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-primary-900 text-white hover:bg-primary-800 transition text-sm sm:text-base">
+          {btn &&
+            (btnOnClick ? (
+              <button
+                onClick={btnOnClick}
+                className="flex items-center gap-x-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-primary-900 text-white hover:bg-primary-800 transition text-sm sm:text-base"
+              >
                 {btnValue}
                 <HiArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
-            </Link>
-          )}
+            ) : (
+              <Link href={btnHref || "/default-url"}>
+                <button className="flex items-center gap-x-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-primary-900 text-white hover:bg-primary-800 transition text-sm sm:text-base">
+                  {btnValue}
+                  <HiArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+              </Link>
+            ))}
         </div>
       </div>
     </div>

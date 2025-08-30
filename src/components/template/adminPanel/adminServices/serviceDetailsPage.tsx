@@ -20,9 +20,7 @@ interface ServiceDetailsPageProps {
   dataByID: ServiceData;
 }
 
-const ServiceDetailsPage: React.FC<ServiceDetailsPageProps> = ({
-  dataByID,
-}) => {
+const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
   const router = useRouter();
   const { deletService } = useDeleteService();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -181,4 +179,4 @@ const ServiceInfo = ({
   </div>
 );
 
-export default ServiceDetailsPage;
+export default CourseDetailsPage;

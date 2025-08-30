@@ -3,12 +3,14 @@ import useDataQueries from '@/hooks/useDataQueries';
 import { findServiceName } from '@/utils/findeName';
 import { formatDateRangesToPersian2 } from '@/utils/formatter/formatDateRangesToPersian';
 import { toPersianNumbers, toPersianNumbersWithComma } from '@/utils/formatter/toPersianNumbers';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { RawReserveData, ReportData, ServiceData } from '@/types';
+import { useRouter } from 'next/navigation';
+import { useReportsTableStore } from '@/store/useTableSlice';
 
-const useReportsData = (visibleColumns: Set<string>) => {
+const useReportsData = () => {
     const [formData, setFormData] = useState<{ reserveUp: ReportData[] }>({ reserveUp: [] });
-    const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
+    const router = useRouter();
 
     const {
         dataAllReserveCustomer,
@@ -17,13 +19,17 @@ const useReportsData = (visibleColumns: Set<string>) => {
         isLoadingServiceCustomer,
     } = useDataQueries();
 
+    const visibleColumns = useReportsTableStore((state) => state.visibleColumns);
+    const setVisibleColumns = useReportsTableStore((state) => state.setVisibleColumns);
     // تایپ‌کستینگ برای داده‌های useDataQueries
     const typedDataAllReserveCustomer = dataAllReserveCustomer as { data: RawReserveData[] } | undefined;
     const typedDataAllServiceCustomer = dataAllServiceCustomer as ServiceData[] | undefined;
 
     const groupReservesByKeys = (reserves: RawReserveData[]): { reserveUp: ReportData[] } => {
         return reserves.reduce(
-            (acc: { reserveUp: ReportData[] }, reserve: RawReserveData, index: number) => {
+            (acc: { reserveUp: ReportData[] }, reserve: RawReserveData,) => {
+                if (!reserve.is_canceled && !reserve.is_finished) return acc;
+
                 const dateRanges = `${formatDateRangesToPersian2(reserve.reserve_from) || "?"} تا ${formatDateRangesToPersian2(reserve.reserve_to) || "?"}`;
 
                 const service_name = findServiceName(typedDataAllServiceCustomer ?? [], reserve.service) || "نامشخص";
@@ -31,15 +37,14 @@ const useReportsData = (visibleColumns: Set<string>) => {
 
                 const status = reserve.is_canceled
                     ? "لغو شده"
-                    : reserve.is_finished
-                        ? "تمام شده"
-                        : "در حال انتظار";
+                    : "تمام شده";
+
                 const payment_status = reserve.is_payment_verified ? "پرداخت شده" : "در انتظار پرداخت";
 
                 acc.reserveUp.push({
-                    _id: toPersianNumbers(index + 1),
+                    _id: toPersianNumbers(acc.reserveUp.length + 1),
                     id: reserve.id,
-                    name: toPersianNumbers(reserve.user), // فرض می‌کنیم user یک شماره تلفن است
+                    name: toPersianNumbers(reserve.user),
                     service_name,
                     price: toPersianNumbersWithComma(reserve.total_price),
                     reserve_duration,
@@ -48,6 +53,7 @@ const useReportsData = (visibleColumns: Set<string>) => {
                     stage: toPersianNumbers(reserve.stage),
                     status,
                     payment_status,
+                    actions: reserve.id.toString(),
                 });
 
                 return acc;
@@ -55,6 +61,7 @@ const useReportsData = (visibleColumns: Set<string>) => {
             { reserveUp: [] }
         );
     };
+
 
     const formDataReseves: ReportData[] = Array.isArray(formData.reserveUp) ? formData.reserveUp : [];
 
@@ -68,16 +75,22 @@ const useReportsData = (visibleColumns: Set<string>) => {
             setFormData(grouped);
 
             if (grouped.reserveUp.length > 0) {
-                setVisibleKeys(Object.keys(grouped.reserveUp[0]));
+                const keys = Object.keys(grouped.reserveUp[0]);
+                setVisibleColumns(new Set(keys));
             }
         }
     }, [
         typedDataAllReserveCustomer,
         typedDataAllServiceCustomer,
         isLoadingServiceCustomer,
-        isLoadingReserve,
+        isLoadingReserve, setVisibleColumns
     ]);
-
+    const firstActionClickHandler = useCallback(
+        (id: string | number) => {
+            router.push(`/reservation?reserve-id=${id}`);
+        },
+        [router]
+    );
     // محاسبه ستون‌های هدر
     const headerColumns = useMemo(() => {
         return visibleColumns.size === ReportsCustomercolumns.length
@@ -90,9 +103,9 @@ const useReportsData = (visibleColumns: Set<string>) => {
     return {
         formDataReseves,
         isLoadingReserve,
-        visibleKeys,
         headerColumns,
         isEmpty,
+        firstActionClickHandler
     };
 };
 

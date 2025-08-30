@@ -23,6 +23,7 @@ type AdminStage1Type = {
   servicedata: ServiceDetailsType | undefined;
   isServiceLoading: boolean;
   reservationData: reservationDataType;
+  source:"service"| "course" | null
 };
 
 const AdminStage1 = ({
@@ -30,9 +31,10 @@ const AdminStage1 = ({
   reserveId,
   servicedata,
   isServiceLoading,
+  source
 }: AdminStage1Type) => {
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<AdminReserveInputsFormData>({
@@ -88,7 +90,7 @@ const AdminStage1 = ({
   //cancle reserve
   const cancelHandler = async () => {
     cancelReserve(reserveId, () => {
-      router.push("/services");
+      router.push(`${source ==="service" ? "/services":"/courses"}`);
     });
   };
 
@@ -109,9 +111,10 @@ const AdminStage1 = ({
         <div className="space-y-3 ">
           <div>
             <RHFInput<AdminReserveInputsFormData>
-              register={register}
+              control={control}
               errors={errors}
-              label="مدت زمان اجاره(ساعت)"
+              // label="مدت زمان اجاره(ساعت)"
+               label={`${source ==="service" ?"مدت زمان اجاره(ساعت)" :"مدت زمان دوره"}`}
               type="number"
               dir="rtl"
               name="reserve_duration"
@@ -120,7 +123,7 @@ const AdminStage1 = ({
 
           <div>
             <RHFInput<AdminReserveInputsFormData>
-              register={register}
+              control={control}
               errors={errors}
               label="  قیمت کل(تومان)"
               type="number"
@@ -131,7 +134,7 @@ const AdminStage1 = ({
 
           <div>
             <RHFInput<AdminReserveInputsFormData>
-              register={register}
+              control={control}
               errors={errors}
               label=" توضیحات ادمین"
               type="text"

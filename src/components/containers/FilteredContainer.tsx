@@ -11,11 +11,12 @@ export interface TableData {
 }
 interface PanelContainerProps<T extends TableData> {
   datas: T[];
-  INITIAL_VISIBLE_COLUMNS?: string[];
+  tableStore: typeof useTableStore;
   quantity: string;
   topContents?: boolean;
   bottomContents?: boolean;
   addBtn?: boolean;
+  addBtnContent?: string;
   columnsDropDownBtn?: boolean;
   rolesDropDown: boolean;
   stausDropDown: boolean;
@@ -34,12 +35,13 @@ interface PanelContainerProps<T extends TableData> {
 
 export default function FilteredContainer<T extends TableData>({
   datas,
-  INITIAL_VISIBLE_COLUMNS,
+  tableStore,
   columns,
   quantity,
   topContents,
   bottomContents,
   addBtn,
+  addBtnContent,
   columnsDropDownBtn,
   rolesDropDown,
   stausDropDown,
@@ -51,13 +53,6 @@ export default function FilteredContainer<T extends TableData>({
   page,
   setPage,
 }: PanelContainerProps<T>) {
-  // const { page, setPage } = useTableStore();
-
-  React.useEffect(() => {
-    useTableStore.setState({
-      visibleColumns: new Set(INITIAL_VISIBLE_COLUMNS),
-    });
-  }, [INITIAL_VISIBLE_COLUMNS]);
   const userData = datas || [];
 
   const { pages } = useFilteredContainer(userData, page);
@@ -66,9 +61,11 @@ export default function FilteredContainer<T extends TableData>({
       {topContents && (
         <TopContent
           columns={columns}
+          tableStore={tableStore}
           usersLength={userData.length}
           quantity={quantity}
           addBtn={addBtn}
+          addBtnContent={addBtnContent}
           btnClickHandler={btnClickHandler}
           columnsDropDownBtn={columnsDropDownBtn}
           rolesDropDown={rolesDropDown}

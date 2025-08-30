@@ -31,15 +31,20 @@ interface CustomeDateRangePickerProps {
   reserved_to: string | undefined;
   rangeHandler: (minDate: Date, maxDate: Date) => void;
   serviceData: ServiceDataType;
+  isPackage?: boolean;
 }
 
 const Stage1ModalBody = ({
   serviceData,
   rangeHandler,
+  isPackage,
   reserved_to,
   reserved_from,
 }: CustomeDateRangePickerProps) => {
   const BASE_URL = "http://localhost:8000";
+
+  console.log("reserve from", reserved_from);
+  console.log("reserve to", reserved_to);
 
   const {
     service_name,
@@ -59,7 +64,9 @@ const Stage1ModalBody = ({
       <div className="w-full   p-4 bg-white shadow rounded-lg space-y-2">
         {/* ردیف اول: نام دستگاه */}
         <div className="flex items-center justify-between">
-          <p className="font-bold text-sm">نام دستگاه</p>
+          <p className="font-bold text-sm">
+            {isPackage ? "نام دوره" : "نام دستگاه"}
+          </p>
           <p className="font-bold text-sm text-[#0485c7]">{service_name}</p>
         </div>
 
@@ -79,23 +86,39 @@ const Stage1ModalBody = ({
       </div>
 
       {/* content section: image gallery + calendar */}
-      <div className="w-full flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-24">
-        {/* left section: image gallery */}
-        <div className="w-full lg:w-1/2 flex   justify-center lg:justify-start items-center">
-          <CarGallery images={galleryImages} />
-        </div>
+      {!isPackage ? (
+        <div className="w-full flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-24">
+          {/* left section: image gallery */}
+          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start items-center">
+            <CarGallery images={galleryImages} />
+          </div>
 
-        {/* right section: date picker */}
-        <div className="w-full lg:w-1/2 flex flex-col items-center gap-4 p-2">
-          <CustomeDateRangePicker
-            onRangeSelect={rangeHandler}
-            reserveData={{
-              reserved_from: reserved_from || "",
-              reserved_to: reserved_to || "",
-            }}
-          />
+          {/* right section: date picker */}
+          <div className="w-full lg:w-1/2 flex flex-col items-center gap-4 p-2">
+            <CustomeDateRangePicker
+              onRangeSelect={rangeHandler}
+              reserveData={{
+                reserved_from: reserved_from || "",
+                reserved_to: reserved_to || "",
+              }}
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="w-full flex flex-col items-center gap-4 p-4 bg-white shadow rounded-lg">
+          <p className="font-bold text-sm">تاریخ برگزاری</p>
+          <p className="text-sm text-[#0485c7]">
+            از{" "}
+            {reserved_from
+              ? new Date(reserved_from).toLocaleDateString("fa-IR")
+              : "-"}
+            {"  "} تا{"  "}
+            {reserved_to
+              ? new Date(reserved_to).toLocaleDateString("fa-IR")
+              : "-"}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

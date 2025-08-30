@@ -7,7 +7,7 @@ import { ServiceDetailsType } from "@/types/serviceType";
 import { Button } from "@heroui/button";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { Hourglass } from "react-loader-spinner";
+import { ClipLoader } from "react-spinners"; // ✅ جایگزین Hourglass
 
 type WaitingStageProps = {
   reserveId?: string | null;
@@ -15,9 +15,11 @@ type WaitingStageProps = {
   reservationData?: reservationDataType;
   typographyContent: { main?: string; span?: string };
   isAdmin?: boolean;
+  source?: "service" | "course" | null;
 };
 
 const WaitingStage = ({
+  source,
   reserveId,
   serviceData,
   reservationData,
@@ -25,23 +27,23 @@ const WaitingStage = ({
   isAdmin,
 }: WaitingStageProps) => {
   const { cancelReserve, isCanceling } = useCancelReserve();
-
   const router = useRouter();
 
-  //cancle reserve
+  // cancel reserve
   const cancelHandler = () => {
-    if(reserveId){
+    if (reserveId) {
       cancelReserve(reserveId, () => {
-        router.push("/services");
+        router.push(`${source === "service" ? "/services" : "courses"}`);
       });
     }
- 
   };
 
   return (
     <div className="">
-      <div className="my-4 flex  flex-col items-center justify-center gap-3">
-        <Hourglass   colors={["#0d6efd", "#0dcaf0"]} height={40} width={40} />
+      <div className="my-4 flex flex-col items-center justify-center gap-3">
+        {/* Loader به جای Hourglass */}
+        <ClipLoader size={40} color="#0d6efd" />
+
         <p className="flex flex-col text-sm text-default-400">
           {typographyContent.main}
           <span className="pr-4"> {typographyContent.span}</span>
@@ -49,6 +51,7 @@ const WaitingStage = ({
       </div>
 
       <ReserveInfo
+        source={source}
         serviceData={serviceData}
         reservationData={reservationData}
         isAdmin={isAdmin}
@@ -57,7 +60,7 @@ const WaitingStage = ({
       <div className="mt-8 flex justify-center">
         <Button
           onPress={cancelHandler}
-          className="bg-red-500 text-white px-4 py-2 rounded "
+          className="bg-red-500 text-white px-4 py-2 rounded"
         >
           {isCanceling ? <BtnLoader /> : "کنسل کردن رزرو"}
         </Button>

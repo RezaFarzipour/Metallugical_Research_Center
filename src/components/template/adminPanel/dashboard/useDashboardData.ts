@@ -1,7 +1,9 @@
+
 "use client";
 import { adminCards } from '@/constants/data';
 import { ReservesAdmincolumns } from '@/constants/tableData';
 import useDataQueries from '@/hooks/useDataQueries';
+import { useReportsTableStore } from '@/store/useTableSlice';
 import { CardsData, RawReserveData, ReportData, ServiceData } from '@/types';
 import { findName, findServiceName } from '@/utils/findeName';
 import { formatDateRangesToPersian2 } from '@/utils/formatter/formatDateRangesToPersian';
@@ -9,10 +11,9 @@ import { toPersianNumbers, toPersianNumbersWithComma } from '@/utils/formatter/t
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-const useDashboardData = (visibleColumns: Set<string>, cardsData: CardsData) => {
+const useDashboardData = (cardsData: CardsData) => {
     const router = useRouter();
     const [formData, setFormData] = useState<{ reserveUp: ReportData[] }>({ reserveUp: [] });
-    const [visibleKeys, setVisibleKeys] = useState<string[]>([]);
 
     const {
         dataUser,
@@ -23,7 +24,10 @@ const useDashboardData = (visibleColumns: Set<string>, cardsData: CardsData) => 
         isLoadingReserve,
     } = useDataQueries();
 
-    // فرض می‌کنیم نوع داده‌های بازگشتی از useDataQueries
+    // گرفتن و ست کردن ستون‌های قابل مشاهده از zustand
+    const visibleColumns = useReportsTableStore((state) => state.visibleColumns);
+    const setVisibleColumns = useReportsTableStore((state) => state.setVisibleColumns);
+
     const typedDataAllServiceAdmin = dataAllServiceAdmin as ServiceData[] | undefined;
     const typedDataAllReserveCustomer = dataAllReserveCustomer as { data: RawReserveData[] } | undefined;
 
@@ -76,22 +80,26 @@ const useDashboardData = (visibleColumns: Set<string>, cardsData: CardsData) => 
             setFormData(grouped);
 
             if (grouped.reserveUp.length > 0) {
-                setVisibleKeys(Object.keys(grouped.reserveUp[0]));
+                // ستون‌ها را به zustand منتقل کن
+                const keys = Object.keys(grouped.reserveUp[0]);
+                setVisibleColumns(new Set(keys));
             }
         }
     }, [
         typedDataAllReserveCustomer,
+        dataUser,
         typedDataAllServiceAdmin,
         isLoadingUser,
         isLoadingService,
         isLoadingReserve,
+        setVisibleColumns,
     ]);
 
     const formDataReseves: ReportData[] = Array.isArray(formData.reserveUp) ? formData.reserveUp : [];
 
     const slicedItems = formDataReseves.slice(-4);
 
-    // محاسبه ستون‌های هدر
+    // ستون‌های هدر فقط ستون‌های visibleColumns را نشان می‌دهد
     const headerColumns = useMemo(() => {
         return visibleColumns.size === ReservesAdmincolumns.length
             ? ReservesAdmincolumns
@@ -114,7 +122,6 @@ const useDashboardData = (visibleColumns: Set<string>, cardsData: CardsData) => 
 
     return {
         formDataReseves,
-        visibleKeys,
         headerColumns,
         firstActionClickHandler,
         isLoadingReserve,

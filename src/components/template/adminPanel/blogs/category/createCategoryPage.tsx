@@ -9,11 +9,12 @@ import { useEditCategory } from "../hooks/useEditCategory";
 import { showToast } from "@/store/useToastSlice";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { getBlogCategoryById } from "@/services/api/blogs";
+import { getAllCategoryAdmin, getBlogCategoryById } from "@/services/api/blogs";
 import { useEffect } from "react";
 import BreadcrumbsElement from "@/components/element/Breadcrumbs";
 import { BtnLoader } from "@/components/element/Loader";
 import Button from "@/components/element/Button";
+import { blogDatafromServer } from "@/types";
 
 const categorySchema = z.object({
   category_name: z.string().min(1, "نام دسته‌بندی باید پر شود"),
@@ -39,6 +40,13 @@ export default function CreateCategory() {
     enabled: isEditMode,
   });
 
+    const { data = [] } = useQuery({
+      queryKey: ["getAll-blogsCategory"],
+      queryFn: getAllCategoryAdmin,
+    });
+
+    console.log("all",data)
+
   const form = useForm<CategoryFormData>({
     mode: "onTouched",
     resolver: zodResolver(categorySchema),
@@ -49,7 +57,7 @@ export default function CreateCategory() {
   });
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -69,6 +77,27 @@ export default function CreateCategory() {
   const { editBlogCategory } = useEditCategory();
 
   const onSubmit = (formData: CategoryFormData) => {
+
+  const name = formData.category_name.trim().toLowerCase();
+  const slugValue = formData.slug.trim().toLowerCase();
+
+  const isDuplicate = data.some((cat:blogDatafromServer) => {
+    const existingName = cat.category_name.trim().toLowerCase();
+    const existingSlug = cat.slug.trim().toLowerCase();
+
+    // اگر در حالت ویرایش هستیم، هم‌نام یا هم‌اسلاگ بودن با خود آیتم جاری نباید مانع شود
+    if (isEditMode && cat.id === editId) return false;
+
+    return existingName === name || existingSlug === slugValue;
+  });
+
+  if (isDuplicate) {
+    showToast("این نام دسته‌بندی یا اسلاگ قبلاً ثبت شده است.", "error");
+    return;
+  }
+
+
+
     if (isEditMode && editId) {
       editBlogCategory(
         {
@@ -118,7 +147,7 @@ export default function CreateCategory() {
           className=" p-6 rounded-xl  space-y-5 bg-white shadow-md mt-10"
         >
           <RHFInput
-            register={register}
+            control={control}
             errors={errors}
             label="نام دسته‌بندی"
             type="text"
@@ -126,7 +155,7 @@ export default function CreateCategory() {
             name="category_name"
           />
           <RHFInput
-            register={register}
+            control={control}
             errors={errors}
             label="اسلاگ"
             type="text"

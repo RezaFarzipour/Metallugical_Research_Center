@@ -20,11 +20,15 @@ import FinalStage from "@/components/template/reservation/formSteps/FinalStage";
 import AdminStage2 from "./formSteps/AdminStage2";
 import Stage1 from "./formSteps/CustomerStage1";
 import { ServiceDetailsType } from "@/types/serviceType";
+import { useReservationSource } from "@/store/useReservationSource";
 const ReservationTemplate = () => {
   const searchParams = useSearchParams();
   const reserveId = searchParams.get("reserve-id");
   const { setCurrentStep } = useStepperStore();
   const [stage, setStage] = useState<number | null>(null);
+  const { source } = useReservationSource();
+
+
 
   useEffect(() => {
     if (!reserveId) return;
@@ -44,12 +48,14 @@ const ReservationTemplate = () => {
   });
 
   // Fetch service details
-  const { data: serviceData, isLoading: isServiceLoading } = useQuery<ServiceDetailsType>({
-    queryKey: ["get-device-details", reservationData?.service],
-    queryFn: () => http.get(`/service/s/customer/${reservationData?.service}/`),
-    staleTime: 1000 * 60 * 5,
-    refetchOnWindowFocus: true,
-  });
+  const { data: serviceData, isLoading: isServiceLoading } =
+    useQuery<ServiceDetailsType>({
+      queryKey: ["get-device-details", reservationData?.service],
+      queryFn: () =>
+        http.get(`/service/s/customer/${reservationData?.service}/`),
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: true,
+    });
 
   //get all services
 
@@ -63,7 +69,7 @@ const ReservationTemplate = () => {
       setStage(reservationData.stage);
       setCurrentStep(reservationData.stage);
     }
-  }, [reservationData,setCurrentStep]);
+  }, [reservationData, setCurrentStep]);
 
   if (error) {
     showToast("خطا در دریافت اطلاعات", "error");
@@ -78,6 +84,7 @@ const ReservationTemplate = () => {
       step: 1,
       component: (
         <AdminStage1
+          source={source}
           reservationData={reservationData}
           reserveId={reserveId}
           servicedata={serviceData}
@@ -143,6 +150,7 @@ const ReservationTemplate = () => {
       step: 2,
       component: (
         <WaitingStage
+          source={source}
           reservationData={reservationData}
           serviceData={serviceData}
           reserveId={reserveId}

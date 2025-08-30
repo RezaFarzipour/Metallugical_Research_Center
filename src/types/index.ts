@@ -99,6 +99,7 @@ export type reservationDataType = {
   service?: string;
   payment_image: string;
   user: string;
+  report_file:string
 };
 
 

@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { useTableStore } from "@/store/useTableSlice";
 
 interface BaseTableData {
     id: string | number;
@@ -11,24 +10,36 @@ interface BaseTableData {
     role?: string;
     [key: string]: any;
 }
+interface TableStoreData {
+    filterValue: string | undefined;
+    statusFilter: string | Set<string>;
+    peymentStatusFilter: string | Set<string>;
+    rolesFilter: string | Set<string>;
+    rowsPerPage: number;
+    sortDescriptor: { column: string; direction: "ascending" | "descending" };
+}
 
 export function useFilteredContainer<TData extends BaseTableData>(
     datas: TData[],
-    page: number
+    page: number,
+    tableStoreData?: TableStoreData
+
 ): {
     filteredItems: TData[];
     paginatedItems: TData[];
     sortedItems: TData[];
     pages: number;
 } {
+
     const {
-        filterValue,
-        statusFilter,
-        peymentStatusFilter,
-        rolesFilter,
-        rowsPerPage,
-        sortDescriptor,
-    } = useTableStore();
+        filterValue = "",
+        statusFilter = "all",
+        peymentStatusFilter = "all",
+        rolesFilter = "all",
+        rowsPerPage = 10,
+        sortDescriptor = { column: "id", direction: "ascending" },
+    } = tableStoreData || {};
+
 
     const filteredItems = useMemo(() => {
         let filtered = [...datas];

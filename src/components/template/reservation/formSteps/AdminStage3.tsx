@@ -76,6 +76,23 @@ const AdminStage3 = ({
     });
   };
 
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.setAttribute("download", "receipt.jpg");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      console.error("Download failed:", err);
+    }
+  };
   return (
     <div className="">
       {/* info section */}
@@ -86,6 +103,15 @@ const AdminStage3 = ({
           imageUrl={imageUrl}
           isAdminImage={true}
         />
+      </div>
+
+      <div className="flex justify-center items-center">
+        <Button
+          className="bg-secondary-500 text-white px-4 py-2 mt-2 "
+          onPress={handleDownload}
+        >
+          دانلود فیش واریز
+        </Button>
       </div>
 
       <BlurModal

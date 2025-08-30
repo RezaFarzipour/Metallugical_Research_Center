@@ -44,6 +44,8 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
     prevCoverImageUrl || null
   );
 
+
+
   const { editBlog } = useEditBlog();
 
   const { data = [] } = useQuery({
@@ -58,7 +60,7 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
   }));
 
   const {
-    register,
+  
     handleSubmit,
     control,
     reset,
@@ -70,7 +72,10 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
     defaultValues: {
       title: title || "",
       cover_image: null,
-      category_list: category_list || [],
+      category_list:
+        typeof category_list?.[0] === "string" && category_list[0].includes(",")
+          ? category_list[0].split(",")
+          : category_list || [],
       tags:
         typeof tags === "string"
           ? tags.split(",").map((tag: any) => tag.trim())
@@ -82,6 +87,7 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
       slug: slug || "",
     },
   });
+  console.log("category", category_list);
 
   const { id: editId } = blogData;
   const isEditSession = Boolean(editId);
@@ -167,7 +173,7 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
           className="flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"
         >
           <RHFInput<BlogStageOneFormData>
-            register={register}
+            control={control}
             errors={errors}
             label="عنوان پست"
             type="text"
@@ -199,7 +205,7 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
           />
 
           <RHFInput<BlogStageOneFormData>
-            register={register}
+            control={control}
             errors={errors}
             label="اسلاگ"
             type="text"
@@ -260,3 +266,5 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
 };
 
 export default Stage1;
+
+// ['68332b9691f173ce1584e0f9,68332bb591f173ce1584e0fa']

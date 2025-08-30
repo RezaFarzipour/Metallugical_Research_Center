@@ -1,21 +1,21 @@
 import RHFInput from "@/components/element/RHFInput";
 import { BlogStageOneFormData } from "@/schemas/blogStageOneSchema";
 import React from "react";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import {  FieldErrors, Control } from "react-hook-form";
 
 interface ServiceDetailsFormProps {
-  register: UseFormRegister<BlogStageOneFormData>;
+  control: Control<BlogStageOneFormData>;
   errors: FieldErrors<BlogStageOneFormData>;
 }
 
 const BlogDetailsForm: React.FC<ServiceDetailsFormProps> = ({
-  register,
+  control,
   errors,
 }) => {
   return (
     <div>
       <RHFInput<BlogStageOneFormData>
-        register={register}
+        control={control}
         errors={errors}
         label="نام بلاگ"
         type="text"
@@ -24,7 +24,7 @@ const BlogDetailsForm: React.FC<ServiceDetailsFormProps> = ({
       />
 
       <RHFInput<BlogStageOneFormData>
-        register={register}
+        control={control}
         errors={errors}
         label="تگ ها"
         type="text"
@@ -33,7 +33,7 @@ const BlogDetailsForm: React.FC<ServiceDetailsFormProps> = ({
       />
 
       <RHFInput<BlogStageOneFormData>
-        register={register}
+        control={control}
         errors={errors}
         label="اسلاک"
         type="text"
@@ -41,7 +41,7 @@ const BlogDetailsForm: React.FC<ServiceDetailsFormProps> = ({
         name="slug"
       />
       <RHFInput<BlogStageOneFormData>
-        register={register}
+        control={control}
         errors={errors}
         label="اسلاک"
         type="text"

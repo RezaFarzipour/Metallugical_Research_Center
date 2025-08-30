@@ -1,21 +1,21 @@
 import RHFInput from "@/components/element/RHFInput";
 import { PersonalRegisterFormData } from "@/schemas/personalRegisterSchema";
 import React from "react";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { FieldErrors, Control } from "react-hook-form";
 
 interface PersonalDetailsFormProps {
-  register: UseFormRegister<PersonalRegisterFormData>;
+  control: Control<PersonalRegisterFormData>;
   errors: FieldErrors<PersonalRegisterFormData>;
 }
 
 const PersonalDetailsForm: React.FC<PersonalDetailsFormProps> = ({
-  register,
+  control,
   errors,
 }) => {
   return (
     <div>
       <RHFInput<PersonalRegisterFormData>
-        register={register}
+        control={control}
         errors={errors}
         label="نام"
         type="text"
@@ -23,7 +23,7 @@ const PersonalDetailsForm: React.FC<PersonalDetailsFormProps> = ({
         name="first_name"
       />
       <RHFInput<PersonalRegisterFormData>
-        register={register}
+        control={control}
         errors={errors}
         label="نام خانوادگی"
         type="text"
@@ -31,7 +31,7 @@ const PersonalDetailsForm: React.FC<PersonalDetailsFormProps> = ({
         name="last_name"
       />
       <RHFInput<PersonalRegisterFormData>
-        register={register}
+        control={control}
         errors={errors}
         label="ایمیل"
         type="email"

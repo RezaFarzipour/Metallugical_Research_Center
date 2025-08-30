@@ -6,6 +6,8 @@ import { Suspense } from "react";
 async function ServicesPage() {
   const data = await getAllServiceCustomer();
 
+  const services =data.filter((service:any) => !service.is_package);
+
   return (
     <Suspense
       fallback={
@@ -14,7 +16,7 @@ async function ServicesPage() {
         </div>
       }
     >
-      <Services initialData={data} />;{" "}
+      <Services initialData={services} />;{" "}
     </Suspense>
   );
 }

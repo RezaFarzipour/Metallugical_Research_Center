@@ -11,7 +11,7 @@ import { ServiceDetailsType } from "@/types/serviceType";
 type ReserveInfoProps = {
   serviceData?: ServiceDetailsType | undefined;
   reservationData?: reservationDataType;
-
+  source?: "service" | "course" | null;
   isAdmin?: boolean;
   isAdminName?: boolean;
   isAdminImage?: boolean;
@@ -19,6 +19,7 @@ type ReserveInfoProps = {
 };
 
 const ReserveInfo: React.FC<ReserveInfoProps> = ({
+  source,
   serviceData,
   reservationData,
   isAdminImage = false,
@@ -32,10 +33,15 @@ const ReserveInfo: React.FC<ReserveInfoProps> = ({
         <div className="font-medium">کاربر</div>
         <div>{reservationData?.user || "نامشخص"}</div>
 
-        <div className="font-medium">نام سرویس</div>
+        <div className="font-medium">
+          {source === "service" ? "نام سرویس" : "نام دوره"}
+        </div>
         <div>{serviceData?.data?.service_name || "نامشخص"}</div>
 
-        <div className="font-medium">توضیحات سرویس</div>
+        <div className="font-medium">
+          {" "}
+          {source === "service" ? "توضیحات سرویس" : "توضیخات دوره"}
+        </div>
         <div>{serviceData?.data?.description || "نامشخص"}</div>
 
         <div className="font-medium">قیمت</div>
@@ -57,16 +63,20 @@ const ReserveInfo: React.FC<ReserveInfoProps> = ({
         >
           {reservationData?.admin_description || "نامشخص"}
         </div>
+        {source === "service" ? (
+          <>
+            <div className="font-medium">تاریخ رزرو</div>
 
-        <div className="font-medium">تاریخ رزرو</div>
-        <div>
-          {formatDateRangesToPersian([
-            {
-              reserved_from: reservationData?.reserve_from || "",
-              reserved_to: reservationData?.reserve_to || "",
-            },
-          ]) || "?"}
-        </div>
+            <div>
+              {formatDateRangesToPersian([
+                {
+                  reserved_from: reservationData?.reserve_from || "",
+                  reserved_to: reservationData?.reserve_to || "",
+                },
+              ]) || "?"}
+            </div>
+          </>
+        ) : null}
 
         {isAdminImage && (
           <>
