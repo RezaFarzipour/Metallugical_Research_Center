@@ -20,7 +20,6 @@ export default function UserEditPage({
   userData,
 }: UserEditPageProps): JSX.Element {
   //first_name:user?.response.data[0].first_name
-
   const { first_name, last_name, email, role } = userData;
   const { userEdit } = useUserService();
   const router = useRouter();
@@ -79,7 +78,7 @@ export default function UserEditPage({
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="p-6 rounded-xl w-[50%] space-y-5 bg-white shadow-md mt-10"
+        className="p-6 rounded-xl w-[100%] md:w-[50%] space-y-5 bg-white shadow-md mt-10"
       >
         <PersonalDetailsForm control={control} errors={errors} />
 

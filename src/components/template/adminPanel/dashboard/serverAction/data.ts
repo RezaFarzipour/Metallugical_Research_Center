@@ -26,9 +26,9 @@ export async function fetchCardData() {
       numberOfUsers, numberOfServices, numberOfReservations, numberOfBlogs
 
     };
-  } catch (error) {
-    console.error("خطا", error);
-    throw new Error("خطا در بارگذاری اطلاعات");
+  } catch (error: any) {
+    const errorMessage = error?.message || "خطا در بارگذاری اطلاعات";
+    throw new Error(errorMessage);
   }
 }
 

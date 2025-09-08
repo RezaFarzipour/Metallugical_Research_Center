@@ -1,42 +1,36 @@
 "use client";
 
 import { Button } from "@heroui/button";
-import React, { useState } from "react";
+import React from "react";
 import HoverIcon from "@/components/element/animations/ArrowIconEndContent";
-import Link from "next/link";
+import { MdOutlineDescription, MdOutlineSubtitles } from "react-icons/md";
 import { RiPriceTag3Line } from "react-icons/ri";
 import { IoCalendarOutline } from "react-icons/io5";
-import { cn } from "@/utils/cn";
-import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
-import {
-  toEnglishNumbers,
-  toPersianNumbersWithComma,
-} from "@/utils/formatter/toPersianNumbers";
-import { MdOutlineDescription, MdOutlineSubtitles } from "react-icons/md";
-import truncateText from "@/utils/formatter/truncateText";
-import { BlogType } from "@/types";
 import { TiTags } from "react-icons/ti";
+import { cn } from "@/utils/cn";
+import truncateText from "@/utils/formatter/truncateText";
+import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
+import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
+import { BlogType } from "@/types";
 import { ServiceReserveDateType } from "@/types/serviceType";
+import Link from "next/link";
 
-interface ServiceCardData {
-  id: string | number | undefined;
-  name: string;
+interface CardContentProps extends Partial<BlogType> {
   service_name?: string;
-  description: string;
+  name?: string;
+  description?: string;
   price?: string | number;
-  reserve_date?: ServiceReserveDateType[] ;
-  dateRange?: string;
-  bottomOffset?: string;
-}
-
-interface CardContentProps extends Partial<ServiceCardData>, Partial<BlogType> {
+  reserve_date?: ServiceReserveDateType[];
+  parsedTags?: string[];
   widthConter: string;
   heightConter: string;
   view: boolean;
   styleForAdmin: boolean;
-  isMoreDetails?: string;
-  parsedTags?: string[];
-  service_id?: string | number | undefined;
+  dateRange?: string;
+  bottomOffset?: string;
+  MoreDetailsHref: string;
+  isHovered: boolean;
+  setIsHovered: (hover: boolean) => void;
 }
 
 const InfoRow = ({
@@ -72,54 +66,22 @@ const CardContentBox: React.FC<{
 );
 
 export const CardContent: React.FC<CardContentProps> = ({
-  id,
-  service_id,
-  reserve_date,
-  price,
-  isMoreDetails,
-  name,
   service_name,
-  title,
+  name,
   description,
+  price,
+  parsedTags,
+  reserve_date,
   widthConter,
   heightConter,
   view,
-  parsedTags,
   styleForAdmin,
   dateRange,
-  slug,
   bottomOffset,
+  MoreDetailsHref,
+  isHovered,
+  setIsHovered,
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const getDetailsHref = (
-    type?: string,
-    id: string | number = "",
-    slug?: string
-  ) => {
-    switch (type) {
-      case "adminBlogs":
-        return `/admin/blogs/${toEnglishNumbers(String(id))}/details`;
-      case "adminServices":
-        return `/admin/services/${id}/details`;
-      case "anyBlogs":
-        return `/blogs/${slug || "no-slug"}/${id}`;
-      case "anyServices":
-        return `/services/${id}/details`;
-        case "anyCourses":
-        return `/courses/${id}/details`;
-      default:
-        return "/";
-    }
-  };
-
-  // مدیریت id یا service_id
-  const resolvedId = service_id
-    ? Number(service_id) || id || "" // تبدیل service_id به عدد، اگر نامعتبر بود از id استفاده کن
-    : id || "";
-
-  const MoreDetailsHref = getDetailsHref(isMoreDetails, resolvedId, slug);
-
   const cardStyles = {
     box: cn(
       "bg-gray-50 p-4 rounded-lg shadow-lg flex gap-2",
@@ -139,13 +101,13 @@ export const CardContent: React.FC<CardContentProps> = ({
     >
       <InfoRow icon={<MdOutlineSubtitles className="text-xl" />}>
         <h3 className="text-lg font-bold text-gray-600">
-          {service_name || name || title || "بدون عنوان"}
+          {service_name || name || "بدون عنوان"}
         </h3>
       </InfoRow>
 
       {parsedTags && parsedTags.length > 0 && (
         <InfoRow icon={<TiTags className="text-xl" />}>
-          {parsedTags.slice(0, 3).map((tag: string, index: number) => (
+          {parsedTags.slice(0, 3).map((tag, index) => (
             <span
               key={index}
               className="bg-blue-100 text-secondary-800 text-xs font-medium px-2.5 py-0.5 rounded"
@@ -154,7 +116,7 @@ export const CardContent: React.FC<CardContentProps> = ({
             </span>
           ))}
           {parsedTags.length > 3 && (
-            <span className="text-xs font-medium  py-0.5">...</span>
+            <span className="text-xs font-medium py-0.5">...</span>
           )}
         </InfoRow>
       )}
@@ -194,7 +156,7 @@ export const CardContent: React.FC<CardContentProps> = ({
         </InfoRow>
       )}
 
-      <div className="mt-auto absolute left-0 bottom-0">
+      <div className="mt-auto absolute left-0 -bottom-2 md:bottom-0 hidden md:block">
         <Link href={MoreDetailsHref}>
           <Button
             className={`data-[hover]:bg-transparent data-[hover]:text-secondary-500 ${

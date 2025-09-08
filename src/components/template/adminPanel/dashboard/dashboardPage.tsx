@@ -32,7 +32,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ cardsData }) => {
 
   if (isLoadingReserve)
     return (
-      <div>
+      <div className="flex justify-center items-center min-h-[70vh]">
         <BtnLoader color="#377cfb" />
       </div>
     );

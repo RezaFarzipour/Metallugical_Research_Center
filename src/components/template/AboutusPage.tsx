@@ -49,7 +49,7 @@ export default function AboutUs() {
             {/*  تصویر در کنار متن */}
             <div className="flex-shrink-0 w-full lg:w-1/2">
               <Image
-                src="/images/about1-image1.png"
+                src="/images/aboutpagee.jpg"
                 alt="چرا ما را انتخاب کنید"
                 width={400}
                 height={500}

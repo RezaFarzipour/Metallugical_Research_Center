@@ -21,16 +21,16 @@ const LandingPage = ({ initialData, AllBlogs }: LandingPageProps) => {
         <LandingHeader />
       </section>
       {/* About Section */}
-      <section className="w-full mt-60 mx-auto xl:max-w-screen-xl">
+      <section className="w-full mt-32 md:mt-60 mx-auto xl:max-w-screen-xl">
         <AboutOverview />
       </section>
 
       {/* Services Section */}
-      <section className="w-full">
+      <section className="w-full mt-36 md:mt-2">
         <Services initialData={initialData} />
       </section>
       {/* FAQ Section */}
-      <section className="w-full  my-40  mx-auto xl:max-w-screen-xl">
+      <section className="w-full mt-8 md:mt-44 mb-40  mx-auto xl:max-w-screen-xl">
         <FaqAccordian />
       </section>
       {/* Blog Section */}

@@ -12,20 +12,20 @@ export const useRejectReserve = () => {
   });
 
 
-  
+
   const {
-    isPending:rejecting_payment,
+    isPending: rejecting_payment,
     mutateAsync: paymentReject,
   } = useMutation({
     mutationKey: ["reject_payment_image"],
     mutationFn: rejectPayment,
   });
 
-  const rejectReserve =  async ({
+  const rejectReserve = async ({
     reserveId,
     admin_description,
     service,
-  
+
   }: {
     reserveId: string | null;
     admin_description: string;
@@ -48,27 +48,30 @@ export const useRejectReserve = () => {
 
 
 
-  const rejectReservePaymentImage =  async ({
+  const rejectReservePaymentImage = async ({
     reserveId,
     is_payment_verified,
     admin_description
   }: {
     reserveId: string | null;
-    is_payment_verified?:boolean | undefined,
-    admin_description?:string | undefined;
+    is_payment_verified?: boolean | undefined,
+    admin_description?: string | undefined;
   }) => {
     try {
-      await paymentReject({ reserveId, is_payment_verified ,admin_description});
+      await paymentReject({ reserveId, is_payment_verified, admin_description });
       showToast("پرداخت تایید نشد", "success");
 
       await queryClient.invalidateQueries({
         queryKey: ["get-stage", reserveId],
       });
-    } catch (error) {
-      console.log("errr",error)
-      showToast("خطا در عدم تایید پرداخت", "error");
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "خطا در عدم تایید پرداخت";
+      showToast(errorMessage, "error");
     }
   };
 
-  return { rejectReserve, isRejecting,rejectReservePaymentImage ,rejecting_payment};
+  return { rejectReserve, isRejecting, rejectReservePaymentImage, rejecting_payment };
 };

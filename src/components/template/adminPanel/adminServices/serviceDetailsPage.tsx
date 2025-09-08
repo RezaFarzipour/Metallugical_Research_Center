@@ -15,6 +15,8 @@ import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToP
 import { Button } from "@heroui/button";
 import { useDeleteService } from "./hooks/useDeleteService";
 import { ServiceData } from "@/types/serviceType";
+import { getHttpsUrl } from "@/utils/formatter/domainFormatter";
+import { CURRENCY } from "@/config/site";
 
 interface ServiceDetailsPageProps {
   dataByID: ServiceData;
@@ -35,13 +37,7 @@ const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
     "service-reserve_date": reserveDates = [],
   } = dataByID;
 
-  const coverImageSrc = useMemo(
-    () =>
-      cover_image.startsWith("http")
-        ? cover_image
-        : `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${cover_image}`,
-    [cover_image]
-  );
+  const coverImageSrc = useMemo(() => getHttpsUrl(cover_image), [cover_image]);
 
   const galleryImages = useMemo(
     () =>
@@ -119,7 +115,7 @@ const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
           <ServiceInfo title="توضیحات" content={description} />
           <ServiceInfo
             title="قیمت محصول"
-            content={`${toPersianNumbersWithComma(price)} تومان`}
+            content={`${toPersianNumbersWithComma(price)} ${CURRENCY === "rial" ? "ریال" : "تومان"}`}
           />
           <ServiceInfo title="تاریخ‌های رزرو" content={dateRanges || "-"} />
 

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
-import { fontIRANYekan } from "@/constants/fonts";
 import { siteConfig } from "@/config/site";
 import { twMerge } from "tailwind-merge";
 import "leaflet/dist/leaflet.css";
 import { Toast } from "@/components/element/Toast";
 import ApolloProviderWrapper from "@/providers/ApolloProviderWrapper";
+import { fontIranYekan } from "@/constants/fonts";
 
 export const metadata: Metadata = {
   title: {
@@ -28,10 +28,7 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">
       <body
         suppressHydrationWarning={true}
-        className={twMerge(
-          "min-h-screen bg-background font-sans antialiased",
-          fontIRANYekan.variable
-        )}
+        className={twMerge("min-h-screen bg-background font-sans antialiased",fontIranYekan.variable)}
       >
         <ApolloProviderWrapper>
           <ReactQueryProvider>{children}</ReactQueryProvider>

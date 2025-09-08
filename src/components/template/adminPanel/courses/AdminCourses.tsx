@@ -41,7 +41,7 @@ export const AdminCourses: React.FC = ({}) => {
     sortDescriptor,
   } = useCoursesTableStore();
 
-  const { sortedItems } = useFilteredContainer<ServerServiceType>(
+  const { sortedItems, pages } = useFilteredContainer<ServerServiceType>(
     formDataCourses,
     page,
     {
@@ -76,9 +76,10 @@ export const AdminCourses: React.FC = ({}) => {
           bottomContents={!!formDataCourses?.length}
           page={page}
           setPage={setPage}
+          pages={pages}
         >
           {isPending ? (
-            <div>
+            <div className="flex justify-center items-center min-h-[70vh]">
               <BtnLoader color="#377cfb" />
             </div>
           ) : isEmpty ? (
@@ -104,7 +105,7 @@ export const AdminCourses: React.FC = ({}) => {
               <CardModule
                 data={sortedItems}
                 isDate={false}
-                isMoreDetails="adminServices"
+                isMoreDetails="adminCourses"
                 widthConter="100%"
                 heightImg="250px"
                 heightConter="200px"

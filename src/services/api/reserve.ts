@@ -5,8 +5,10 @@ export const getAllReserve = async (options: AxiosRequestConfig) => {
   try {
     const response = await http.get(`/reserve`, options);
     return response.data;
-  } catch (error) {
-    console.log(error, "error");
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در دریافت رزروها";
+    throw new Error(errorMessage);
   }
 };
 

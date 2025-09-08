@@ -9,6 +9,7 @@ import { useDeleteService } from "./useDeleteService";
 import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToPersian";
 import { ServerServiceType } from "@/types/serviceType";
 import { useAdminServicesTableStore, } from "@/store/useTableSlice";
+import { getHttpsUrl } from "@/utils/formatter/domainFormatter";
 
 type RawService = {
     id: string;
@@ -17,6 +18,7 @@ type RawService = {
     price: number;
     cover_image?: string;
     "service-reserve_date"?: { id: number; reserved_from: string; reserved_to: string; service: number }[];
+    is_package: boolean
 };
 
 type GroupedServices = {
@@ -50,7 +52,7 @@ export const useAdminServicesDataAction = () => {
                     id: toPersianNumbers(service.id),
                     price: toPersianNumbersWithComma(service.price),
                     name: service.service_name,
-                    image: service.cover_image,
+                    image: getHttpsUrl(service.cover_image),
                     actions: service.id.toString(),
                     description: service.description,
                     dateRange: dateRanges
@@ -72,8 +74,12 @@ export const useAdminServicesDataAction = () => {
     // گروه‌بندی داده‌ها هنگام تغییر data
     useEffect(() => {
         if (Array.isArray(data)) {
-            const grouped = groupServicesByKeys(data);
+            // فقط سرویس‌هایی که پکیج نیستند
+            const filteredData = data.filter(service => service.is_package === false);
+
+            const grouped = groupServicesByKeys(filteredData);
             setFormData(grouped);
+
             if (grouped.serviceUp.length > 0) {
                 // ستون‌ها را به zustand منتقل کن
                 const keys = Object.keys(grouped.serviceUp[0]);
@@ -81,6 +87,7 @@ export const useAdminServicesDataAction = () => {
             }
         }
     }, [data]);
+
     // آرایه‌ی سرویس‌ها برای دسترسی راحت‌تر
     const formDataServices = Array.isArray(formData.serviceUp) ? formData.serviceUp : [];
 

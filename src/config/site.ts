@@ -45,3 +45,5 @@ export const siteConfig = {
     instagram: FaInstagram,
   },
 };
+
+export const CURRENCY: "toman" | "rial" = "toman"; 

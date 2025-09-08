@@ -9,6 +9,7 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { useDeleteBlog } from "./hooks/useDeleteBlog";
 import { useApolloClient } from "@apollo/client";
 import { useRouter } from "next/navigation";
+import { getHttpsUrl } from "@/utils/formatter/domainFormatter";
 
 const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
   const contentRender = dataByID[`blog-content`][0].content;
@@ -23,8 +24,9 @@ const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
     if (Array.isArray(dataByID.tags) && typeof dataByID.tags[0] === "string") {
       tagsArray = JSON.parse(dataByID.tags[0]); // چون به صورت استرینگ داخل آرایه هست
     }
-  } catch (err) {
-    console.error("Error parsing tags:", err);
+  } catch (error: any) {
+    const errorMessage = error?.message || "خطا در پردازش تگ‌ها";
+    showToast(errorMessage, "error");
   }
 
   //delete blog
@@ -59,15 +61,6 @@ const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
     router.push(`/admin/blogs/${dataByID.id}/edit`);
   }, [dataByID.id, router]);
 
-  const BASE_URL =
-    process.env.NEXT_PUBLIC_IMAGE_BASE_URL ?? "http://localhost:8000";
-
-  const getValidImageSrc = (src: string | undefined): string => {
-    if (!src) return "/fallback.jpg";
-    if (src.startsWith("http") || src.startsWith("/")) return src;
-    return `${BASE_URL}/${src}`;
-  };
-
   return (
     <>
       <div className="w-full flex flex-col md:flex-row md:justify-between gap-6 p-4 shadow-lg">
@@ -76,10 +69,10 @@ const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
           <div className="flex items-center gap-4">
             <div className="relative w-16 h-16 shrink-0">
               <Image
-                className="rounded-full object-cover"
+                className="rounded-md object-cover"
                 alt={dataByID.cover_image}
                 fill
-                src={getValidImageSrc(dataByID.cover_image)}
+                src={getHttpsUrl(dataByID.cover_image)}
               />
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-default-400 break-words">

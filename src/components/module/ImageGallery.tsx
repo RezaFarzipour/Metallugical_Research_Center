@@ -24,7 +24,7 @@ export default function CarGallery({ images }: CarGalleryProps) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4 w-full overflow-hidden">
       {/* تصویر اصلی با دکمه‌های اسلایدر */}
       <div className="relative w-full max-w-[500px] h-[300px]">
         <Image
@@ -49,7 +49,7 @@ export default function CarGallery({ images }: CarGalleryProps) {
       </div>
 
       {/* تصاویر کوچک (Thumbnail) */}
-      <div className="flex gap-2 justify-center overflow-x-auto overflow-y-hidden w-full  ">
+      <div className="flex flex-wrap gap-2 justify-center w-full max-w-[500px]">
         {imgs.map((img, index) => (
           <Image
             key={index}
@@ -57,7 +57,7 @@ export default function CarGallery({ images }: CarGalleryProps) {
             alt={`Thumbnail ${index}`}
             width={60}
             height={30}
-            className={`rounded-md cursor-pointer transition-all duration-200 hover:scale-110 snap-start ${
+            className={`rounded-md cursor-pointer transition-all duration-200 hover:scale-110 ${
               img === currentImage ? "ring-2 ring-blue-500" : ""
             }`}
             onClick={() => setCurrentImage(img)}

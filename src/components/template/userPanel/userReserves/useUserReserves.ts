@@ -12,6 +12,7 @@ import { ReservesCustomercolumns } from "@/constants/tableData";
 import useDataQueries from "@/hooks/useDataQueries";
 import { RawReserveData, ReportData, ServiceData } from "@/types";
 import { useReservesTableStore } from "@/store/useTableSlice";
+import { showToast } from "@/store/useToastSlice";
 
 // تعریف نوع برای پاسخ postReservedService
 interface ReserveResponse {
@@ -126,8 +127,10 @@ const useReserveData = () => {
     try {
       const response = await createServiceReserve();
       router.push(`/reservation?reserve-id=${response.id}`);
-    } catch (e) {
-      console.log("err", e);
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message || error?.message || "رزرو با خطا مواجه شد";
+      showToast(errorMessage, "error");
     }
   };
 

@@ -49,14 +49,14 @@ export const userSidebarlinks = [
   },
 
   {
-    id: 3,
+    id: 1,
     title: "رزرو های من ",
     icon: TbWallet,
     hover: "text-primary-500",
     to: "/user/myreservs",
   },
   {
-    id: 4,
+    id: 2,
     title: "گزارش ها ",
     icon: TbReportSearch,
     hover: "text-primary-500",
@@ -90,13 +90,13 @@ export const adminSidebarlinks: NavLinkItem[] = [
     to: "/admin/services",
   },
   {
-    id: 3,
+    id: 4,
     title: "دوره ها",
     icon: AiOutlineFolder,
     to: "/admin/courses",
   },
   {
-    id: 4,
+    id: 5,
     title: "بلاگ ",
     icon: RiBloggerLine,
     to: "/admin",
@@ -106,7 +106,7 @@ export const adminSidebarlinks: NavLinkItem[] = [
     ],
   },
   {
-    id: 5,
+    id: 6,
     title: "گزارشات",
     icon: TbReportSearch,
     to: "/admin/reports",
@@ -114,7 +114,7 @@ export const adminSidebarlinks: NavLinkItem[] = [
 ];
 
 // ... existing code ...
-export const LatestArticles= [
+export const LatestArticles = [
   {
     id: 1,
     image: "/images/blog1-img1.png",
@@ -214,7 +214,7 @@ export const contactusinformation: contactInfoType[] = [
   },
 ];
 
-export const TableInfo= [
+export const TableInfo = [
   {
     description: "خرید لپ‌تاپ",
     amount: "45,000,000 تومان",

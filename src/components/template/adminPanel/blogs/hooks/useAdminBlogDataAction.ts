@@ -7,6 +7,7 @@ import { showToast } from "@/store/useToastSlice";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_BLOGS } from "@/graphql/queries";
 import { useDeleteBlog } from "../hooks/useDeleteBlog";
+import { getHttpsUrl } from "@/utils/formatter/domainFormatter";
 
 export interface Blog {
   coverImage: string;
@@ -59,7 +60,7 @@ export const useAdminBlogDataAction = () => {
           _id: toPersianNumbers(index + 1),
           id: blog.id,
           name: blog.title,
-          image: blog.coverImage,
+          image: getHttpsUrl(blog.coverImage),
           actions: blog.id.toString(),
           slug: blog.slug,
           tags: blog.tags,

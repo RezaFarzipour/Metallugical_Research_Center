@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { useTableStore } from "@/store/useTableSlice";
-import { useFilteredContainer } from "@/hooks/useFilteredContainer";
 import TopContent from "../module/filterdContent/topContent/TopContent";
 import BottomContent from "../module/filterdContent/BottomContent";
 
@@ -31,6 +30,7 @@ interface PanelContainerProps<T extends TableData> {
   btnClickHandler?: () => void;
   page: number;
   setPage: (page: number) => void;
+  pages?: number;
 }
 
 export default function FilteredContainer<T extends TableData>({
@@ -52,10 +52,10 @@ export default function FilteredContainer<T extends TableData>({
   viewContentSmSize,
   page,
   setPage,
+  pages,
 }: PanelContainerProps<T>) {
   const userData = datas || [];
 
-  const { pages } = useFilteredContainer(userData, page);
   return (
     <div>
       {topContents && (

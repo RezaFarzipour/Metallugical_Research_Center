@@ -42,14 +42,18 @@ export const BlogsPage: React.FC = () => {
     sortDescriptor,
   } = useBlogsTableStore();
 
-  const { sortedItems } = useFilteredContainer<BlogType>(formDataBlogs, page, {
-    filterValue,
-    statusFilter,
-    peymentStatusFilter,
-    rolesFilter,
-    rowsPerPage,
-    sortDescriptor,
-  });
+  const { sortedItems, pages } = useFilteredContainer<BlogType>(
+    formDataBlogs,
+    page,
+    {
+      filterValue,
+      statusFilter,
+      peymentStatusFilter,
+      rolesFilter,
+      rowsPerPage,
+      sortDescriptor,
+    }
+  );
   const isEmpty = !formDataBlogs || formDataBlogs.length === 0;
 
   return (
@@ -76,9 +80,10 @@ export const BlogsPage: React.FC = () => {
           bottomContents={!!formDataBlogs?.length}
           page={page}
           setPage={setPage}
+          pages={pages}
         >
           {isPending ? (
-            <div>
+            <div className="flex justify-center items-center min-h-[70vh]">
               <BtnLoader color="#377cfb" />
             </div>
           ) : isEmpty ? (

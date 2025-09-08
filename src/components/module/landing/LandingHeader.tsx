@@ -18,7 +18,7 @@ const LandingHeader = () => {
             خوش آمدید.
           </h1>
 
-          <h2 className=" text-lg md:text-xl font-bold text-secondary-500">
+          <h2 className="hidden md:block text-lg md:text-xl whitespace-nowrap font-bold text-secondary-500">
             دانشگاه آزاد اسلامی زنجان
           </h2>
           <Button variant="primary" type="submit" path="/services">

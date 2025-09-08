@@ -29,7 +29,8 @@ interface CustomeTableProps<T extends TableData> {
   firstActionClickHandler?: (id: number | string, phone_number: string) => void;
   secondActionClickHandler?: (
     id: number | string,
-    phone_number: string
+    phone_number: string,
+    name:string
   ) => void;
   image?: boolean;
 }

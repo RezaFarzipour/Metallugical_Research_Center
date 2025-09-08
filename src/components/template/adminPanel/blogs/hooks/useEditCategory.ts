@@ -3,6 +3,7 @@ import {
   editBlogCategoryById,
   editBlogContentById,
 } from "@/services/api/blogs";
+import { showToast } from "@/store/useToastSlice";
 import { useApolloClient } from "@apollo/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -45,8 +46,10 @@ export function useEditBlog() {
         queryKey: ["getAll-blogsCategory"],
       });
     },
-    onError: (err) => {
-      console.log("edit blog error", err);
+    onError: (error: any) => {
+      const errorMessage =
+        error?.response?.data?.message || error?.message || "خطا در ویرایش بلاگ رخ داد";
+      showToast(errorMessage, "error");
     },
   });
 
@@ -78,8 +81,10 @@ export function useEditBlogContent() {
           include: ["getAllBlogs"],
         });
       },
-      onError: (err) => {
-        console.log("edit blog error", err);
+      onError: (error: any) => {
+        const errorMessage =
+          error?.response?.data?.message || error?.message || "خطا در ویرایش محتوای بلاگ رخ داد";
+        showToast(errorMessage, "error");
       },
     });
 

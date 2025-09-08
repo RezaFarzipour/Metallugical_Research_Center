@@ -3,7 +3,6 @@ import http from "../httpService";
 
 export const getAllServiceAdmin = async (options?: AxiosRequestConfig) => {
   const response = await http.get(`service/s/admin/`, options);
-  console.log("data2222",response.data)
   return response.data;
 };
 
@@ -53,8 +52,10 @@ export const getServicesImageById = async (
   try {
     const response = await http.get(`service/images/admin/${id}/`, options);
     return response.data;
-  } catch (error) {
-    console.log("error", error);
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در دریافت تصاویر سرویس";
+    throw new Error(errorMessage);
   }
 };
 
@@ -91,8 +92,10 @@ export const getServicesDateRangeById = async (
   try {
     const response = await http.get(`service/reserve-date/admin/89/`, options);
     return response.data;
-  } catch (error) {
-    console.log("error", error);
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در دریافت بازه زمانی سرویس";
+    throw new Error(errorMessage);
   }
 };
 
@@ -107,17 +110,20 @@ export const editervicesDateRangeById = async ({
   return response.data;
 };
 
+
 export const getAllReserveDate = async () => {
   try {
     const response = await http.get(`service/reserve-date/admin/`);
     return response.data;
-  } catch (error) {
-    console.log("error", error);
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در دریافت همه بازه‌های زمانی";
+    throw new Error(errorMessage);
   }
 };
 export const getAllServiceCustomer = async (options?: AxiosRequestConfig) => {
   const response = await http.get(`service/s/customer/`, options);
-  
+
   return response.data;
 };
 

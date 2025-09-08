@@ -6,7 +6,7 @@ import { Suspense } from "react";
 async function ServicesPage() {
   const data = await getAllServiceCustomer();
 
-  const services =data.filter((service:any) => !service.is_package);
+  const services = data.filter((service: any) => !service.is_package);
 
   return (
     <Suspense

@@ -1,5 +1,4 @@
 "use client";
-
 import { JSX, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "@/components/element/Button";
@@ -12,17 +11,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { showToast } from "@/store/useToastSlice";
 import { editUserByPhoneNumber } from "@/services/api/user";
 import { BtnLoader } from "../element/Loader";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function MyProfilePage(): JSX.Element {
   const { data: user }: { data: User | undefined } = useGetUser();
   const router = useRouter();
+  const path = usePathname();
   const queryClient = useQueryClient();
   const { isPending, mutateAsync } = useMutation({
     mutationKey: ["update-user"],
     mutationFn: editUserByPhoneNumber,
   });
-
 
   const {
     control,
@@ -65,8 +64,11 @@ export default function MyProfilePage(): JSX.Element {
             queryKey: ["get-user"],
           });
           showToast("اطلاعات کاربر با موفقیت ویرایش شد", "success");
-
-          router.push("/admin/dashboard");
+          if (path === "/user/myProfile") {
+            router.push("/user/dashboard");
+          } else {
+            router.push("/admin/dashboard");
+          }
         },
         onError: () => {
           showToast("ویرایش کاربر با خطا مواجه شد", "error");
@@ -87,10 +89,9 @@ export default function MyProfilePage(): JSX.Element {
         />
       </div>
       <form
-  onSubmit={handleSubmit(onSubmit)}
-  className="p-6 rounded-xl w-full md:w-1/2 space-y-5 bg-white shadow-md mt-10"
->
-
+        onSubmit={handleSubmit(onSubmit)}
+        className="p-6 rounded-xl w-full md:w-1/2 space-y-5 bg-white shadow-md mt-10"
+      >
         <PersonalDetailsForm control={control} errors={errors} />
 
         <Button

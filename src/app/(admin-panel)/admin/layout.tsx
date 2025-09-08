@@ -47,8 +47,8 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
   const { data: userData, isPending } = useGetUser();
 
   return (
-    <div className="bg-secondary-0">
-      <div className="grid grid-cols-12 h-screen">
+    <div className="bg-secondary-0 min-h-screen">
+      <div className="grid grid-cols-12">
         <aside className="col-span-12 lg:col-span-3 xl:col-span-2 hidden lg:block">
           <SideBar
             user={userData}
@@ -56,9 +56,11 @@ const Dashboardlayout = ({ children }: { children: React.ReactNode }) => {
             path={"/admin/myProfile"}
           />
         </aside>
-        <div className="col-span-12 lg:col-span-9 xl:col-span-10 h-screen flex flex-col">
+        <div className="col-span-12 lg:col-span-9 xl:col-span-10 flex flex-col min-h-screen">
           <Header
             data={userData}
+            sidebarData={adminSidebarlinks}
+            path={"/admin/myProfile"}
             isPending={isPending || isLoading}
             warningBadge={true}
           />

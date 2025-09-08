@@ -40,12 +40,10 @@ export default function CreateCategory() {
     enabled: isEditMode,
   });
 
-    const { data = [] } = useQuery({
-      queryKey: ["getAll-blogsCategory"],
-      queryFn: getAllCategoryAdmin,
-    });
-
-    console.log("all",data)
+  const { data = [] } = useQuery({
+    queryKey: ["getAll-blogsCategory"],
+    queryFn: getAllCategoryAdmin,
+  });
 
   const form = useForm<CategoryFormData>({
     mode: "onTouched",
@@ -77,26 +75,23 @@ export default function CreateCategory() {
   const { editBlogCategory } = useEditCategory();
 
   const onSubmit = (formData: CategoryFormData) => {
+    const name = formData.category_name.trim().toLowerCase();
+    const slugValue = formData.slug.trim().toLowerCase();
 
-  const name = formData.category_name.trim().toLowerCase();
-  const slugValue = formData.slug.trim().toLowerCase();
+    const isDuplicate = data.some((cat: blogDatafromServer) => {
+      const existingName = cat.category_name.trim().toLowerCase();
+      const existingSlug = cat.slug.trim().toLowerCase();
 
-  const isDuplicate = data.some((cat:blogDatafromServer) => {
-    const existingName = cat.category_name.trim().toLowerCase();
-    const existingSlug = cat.slug.trim().toLowerCase();
+      // اگر در حالت ویرایش هستیم، هم‌نام یا هم‌اسلاگ بودن با خود آیتم جاری نباید مانع شود
+      if (isEditMode && cat.id === editId) return false;
 
-    // اگر در حالت ویرایش هستیم، هم‌نام یا هم‌اسلاگ بودن با خود آیتم جاری نباید مانع شود
-    if (isEditMode && cat.id === editId) return false;
+      return existingName === name || existingSlug === slugValue;
+    });
 
-    return existingName === name || existingSlug === slugValue;
-  });
-
-  if (isDuplicate) {
-    showToast("این نام دسته‌بندی یا اسلاگ قبلاً ثبت شده است.", "error");
-    return;
-  }
-
-
+    if (isDuplicate) {
+      showToast("این نام دسته‌بندی یا اسلاگ قبلاً ثبت شده است.", "error");
+      return;
+    }
 
     if (isEditMode && editId) {
       editBlogCategory(

@@ -3,6 +3,7 @@ import http from "../httpService";
 
 export interface SendOtpResponse {
   message: string;
+  code:string
 }
 
 export const sendOtp = async (
@@ -38,7 +39,7 @@ export const checkOtp = async (
     );
     return { response };
   } catch (error) {
-   return {error: error as AxiosError}
+    return { error: error as AxiosError }
   }
 };
 
@@ -50,7 +51,10 @@ export const getUserProfile = async () => {
 };
 
 export const logOut = async () => {
-  const response = await http.post(`authentication/logout/`);
+  const response = await http.post(`authentication/logout/`, {}, {
+    withCredentials: true,
+  });
   return response.data;
 };
+
 

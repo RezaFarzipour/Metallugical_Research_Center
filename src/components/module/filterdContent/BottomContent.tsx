@@ -5,7 +5,7 @@ import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 interface BottomContentProps {
   page: number;
-  pages: number;
+  pages?: number;
   setPage: (page: number) => void;
 }
 
@@ -46,8 +46,8 @@ export default function BottomContent({
           showShadow
           color="secondary"
           page={page}
-          total={pages}
-          onChange={handlePageChange} // Handle page change with URL update
+          total={pages ?? 1}
+          onChange={handlePageChange}
           variant="flat"
           classNames={{
             cursor: " text-white ",

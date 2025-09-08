@@ -32,7 +32,7 @@ export default function BlogPage({
     sortDescriptor,
   } = useBlogsTableStore();
 
-  const { sortedItems } = useFilteredContainer(blogs, page, {
+  const { sortedItems, pages } = useFilteredContainer(blogs, page, {
     filterValue,
     statusFilter,
     peymentStatusFilter,
@@ -69,6 +69,7 @@ export default function BlogPage({
             bottomContents={!!blogs.length}
             page={page}
             setPage={setPage}
+            pages={pages}
           >
             {isPending ? (
               <BtnLoader />

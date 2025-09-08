@@ -2,6 +2,7 @@ import CarGallery from "@/components/module/ImageGallery";
 import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 import CustomeDateRangePicker from "@/components/module/customeDataPicker/CustomeCallender";
 import React from "react";
+import { CURRENCY } from "@/config/site";
 
 interface ServiceImage {
   id: number;
@@ -41,10 +42,7 @@ const Stage1ModalBody = ({
   reserved_to,
   reserved_from,
 }: CustomeDateRangePickerProps) => {
-  const BASE_URL = "http://localhost:8000";
-
-  console.log("reserve from", reserved_from);
-  console.log("reserve to", reserved_to);
+  const BASE_URL = "https://metallugy.runflare.run/";
 
   const {
     service_name,
@@ -74,14 +72,14 @@ const Stage1ModalBody = ({
         <div className="flex items-center justify-between">
           <p className="font-bold text-sm">قیمت</p>
           <p className="font-bold text-sm text-[#0485c7]">
-            {toPersianNumbersWithComma(price)} تومان
+            {toPersianNumbersWithComma(price)} {CURRENCY === "rial" ? "ریال" : "تومان"}
           </p>
         </div>
 
         {/* ردیف سوم: توضیحات */}
         <div className="flex items-center justify-between">
           <p className="font-bold text-sm">توضیح</p>
-          <p className="text-sm text-default-300">{description}</p>
+          <p className="text-sm text-default-300 break-words whitespace-pre-line">{description}</p>
         </div>
       </div>
 

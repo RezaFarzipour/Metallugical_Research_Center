@@ -29,7 +29,7 @@ export default async function Page({
   if (!serviceData) {
     notFound();
   }
-  console.log("filteredServiceImages",filteredServiceImages)
+
   return (
     <div>
       <EditcoursePage

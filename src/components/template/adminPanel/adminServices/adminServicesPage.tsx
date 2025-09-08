@@ -42,7 +42,7 @@ export const AdminServicesPage: React.FC = ({}) => {
     sortDescriptor,
   } = useAdminServicesTableStore();
 
-  const { sortedItems } = useFilteredContainer<ServerServiceType>(
+  const { sortedItems, pages } = useFilteredContainer<ServerServiceType>(
     formDataServices,
     page,
     {
@@ -77,9 +77,10 @@ export const AdminServicesPage: React.FC = ({}) => {
           bottomContents={!!formDataServices?.length}
           page={page}
           setPage={setPage}
+          pages={pages}
         >
           {isPending ? (
-            <div>
+            <div className="flex justify-center items-center min-h-[70vh]">
               <BtnLoader color="#377cfb" />
             </div>
           ) : isEmpty ? (

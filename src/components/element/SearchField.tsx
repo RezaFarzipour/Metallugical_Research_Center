@@ -2,8 +2,9 @@
 import { Input } from "@heroui/react";
 import { IoIosSearch } from "react-icons/io";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useTableStore } from "@/store/useTableSlice";
+
 interface TopContentProps {
   tableStore: typeof useTableStore;
 }
@@ -15,6 +16,7 @@ export default function SearchField({ tableStore }: TopContentProps) {
   const searchQuery = searchParams.get("search") || "";
 
   const { setFilterValue, setPage } = tableStore();
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (searchQuery) setFilterValue(searchQuery);
@@ -47,13 +49,21 @@ export default function SearchField({ tableStore }: TopContentProps) {
     setPage(1);
   };
 
+  const handleIconClick = () => {
+    formRef.current?.requestSubmit(); // اینجا فرم رو دستی submit می‌کنیم
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="relative  w-full sm:max-w-[44%]">
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      className="relative w-full sm:max-w-[44%]"
+    >
       <Input
         name="search"
         placeholder="جستجو کنید"
         defaultValue={searchQuery}
-        startContent={<IoIosSearch />}
+        startContent={<IoIosSearch onClick={handleIconClick} />}
         isClearable
         onClear={handleClear}
       />

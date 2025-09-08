@@ -7,7 +7,7 @@ export const useCancelReserve = () => {
   const queryClient = useQueryClient();
 
   const {
-    isPending:isCanceling,
+    isPending: isCanceling,
     mutateAsync: customerCancle,
   } = useMutation({
     mutationKey: ["cancle-reserve"],
@@ -28,12 +28,12 @@ export const useCancelReserve = () => {
       });
 
       if (onAfterCancel) onAfterCancel();
-    } catch (error) {
-        console.log('error',error);
-        
-      showToast("خطا در لغو رزرو", "error");
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message || error?.message || "خطا در لغو رزرو";
+      showToast(errorMessage, "error");
     }
   };
 
-  return { cancelReserve ,isCanceling};
+  return { cancelReserve, isCanceling };
 };

@@ -6,6 +6,7 @@ import { BtnLoader } from "@/components/element/Loader";
 import { cn } from "@/utils/cn";
 import { formatDateRangesToPersian2 } from "@/utils/formatter/formatDateRangesToPersian";
 import { usePathname } from "next/navigation";
+import { CURRENCY } from "@/config/site";
 
 type ServiceDetailLeftSectionProps = {
   price: number;
@@ -34,97 +35,93 @@ const ServiceDetailLeftSection = ({
 }: ServiceDetailLeftSectionProps) => {
   const pathname = usePathname();
   return (
-    <div className="bg-white shadow-md rounded-xl p-4 flex flex-col lg:flex-row gap-16">
-      {/* بخش قیمت رزرو */}
-      <div
-        className={cn(
-          "p-4 rounded-lg w-full flex flex-col justify-between order-2 lg:order-1",
-          !course && "lg:w-1/2"
-        )}
-      >
-        <div>
-          <div className="space-y-4">
-            {/* تاریخ رزرو */}
-            {course && (
-              <>
-                <div className="flex justify-between">
-                  <h2 className="text-md text-gray-500 font-bold">
-                    تاریخ رزرو دوره
-                  </h2>
-                  {reserve_date && reserve_date.length > 0 && (
-                    <ul className="text-sm text-gray-600 mt-2 space-y-2">
-                      {reserve_date.map((dateItem: any, index: number) => (
-                        <li key={index}>
-                          {formatDateRangesToPersian2(dateItem.reserved_from)}{" "}
-                          تا {formatDateRangesToPersian2(dateItem.reserved_to)}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-                <div className="w-full h-[1px] bg-gray-300" />
-              </>
-            )}
-
-            {/* قیمت رزرو */}
+    <div className="bg-white shadow-md rounded-xl p-4 w-full overflow-hidden flex flex-col lg:flex-row lg:gap-16 gap-6">
+    {/* بخش قیمت رزرو */}
+    <div
+      className={cn(
+        "p-4 rounded-lg w-full flex flex-col justify-between order-2 lg:order-1",
+        !course && "lg:w-1/2"
+      )}
+    >
+      <div className="space-y-4">
+        {/* تاریخ رزرو */}
+        {course && reserve_date && reserve_date.length > 0 && (
+          <>
             <div className="flex justify-between">
               <h2 className="text-md text-gray-500 font-bold">
-                قیمت رزرو دوره
+                تاریخ رزرو دوره
               </h2>
-              <p className="text-blue-600 text-lg font-bold">
-                {toPersianNumbersWithComma(price)}&nbsp;تومان
-              </p>
+              <ul className="text-sm text-gray-600 mt-2 space-y-2">
+                {reserve_date.map((dateItem: any, index: number) => (
+                  <li key={index}>
+                    {formatDateRangesToPersian2(dateItem.reserved_from)} تا{" "}
+                    {formatDateRangesToPersian2(dateItem.reserved_to)}
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
+            <div className="w-full h-[1px] bg-gray-300" />
+          </>
+        )}
 
-          <p className="text-green-600 text-xs pt-6">
-            ( این قیمت پیش‌فرض است و در حین رزرو ممکن است توسط ادمین تغییر کند)
+        {/* قیمت رزرو */}
+        <div className="flex justify-between">
+          <h2 className="text-md text-gray-500 font-bold">
+            قیمت رزرو دوره
+          </h2>
+          <p className="text-blue-600 text-lg font-bold">
+            {toPersianNumbersWithComma(price)}&nbsp;{CURRENCY === "rial" ? "ریال" : "تومان"}
           </p>
-          {!course && (
-            <p className="text-green-600 text-xs pt-6">
-              (اگر فقط یک تاریخ را انتخاب می‌کنید، باید دوبار کلیک کنید)
-            </p>
-          )}
-
-          <div className="w-full h-[2px] mt-6 bg-gray-300" />
-          <p className="mt-5 text-sm">
-            قیمت نهایی پس از مرحله‌ی دوم رزرو در توضیحات ادمین مشخص می‌شود
-          </p>
-          <div className="w-full h-[2px] mt-6 bg-gray-300" />
-        </div>
-
-        {/* دکمه */}
-        <div className="flex w-full justify-center mt-5">
-          <Button
-            disabled={pathname.includes("/courses") ? false : isConfirmDisabled}
-            className={cn(
-              `text-white px-4 py-2 ${
-                pathname.includes("/courses") ? "w-1/3" : "w-full"
-              }`,
-              isConfirmDisabled
-                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : "bg-secondary-500 hover:bg-secondary-600"
-            )}
-            onPress={handleConfirm}
-          >
-            {isCreating || isPatching ? <BtnLoader /> : "انتخاب رزرو"}
-          </Button>
         </div>
       </div>
 
-      {/* تقویم */}
+      <p className="text-green-600 text-xs pt-6">
+        ( این قیمت پیش‌فرض است و در حین رزرو ممکن است توسط ادمین تغییر کند)
+      </p>
       {!course && (
-        <div className="w-full lg:w-1/3 flex justify-center items-center order-1 lg:order-2">
-          <CustomeDateRangePicker
-            onRangeSelect={rangeHandler}
-            reserveData={{
-              reserved_from: reserved_from || "",
-              reserved_to: reserved_to || "",
-            }}
-          />
-        </div>
+        <p className="text-green-600 text-xs pt-6">
+          (اگر فقط یک تاریخ را انتخاب می‌کنید، باید دوبار کلیک کنید)
+        </p>
       )}
+
+      <div className="w-full h-[2px] mt-6 bg-gray-300" />
+      <p className="mt-5 text-sm">
+        قیمت نهایی پس از مرحله‌ی دوم رزرو در توضیحات ادمین مشخص می‌شود
+      </p>
+      <div className="w-full h-[2px] mt-6 bg-gray-300" />
+
+      {/* دکمه */}
+      <div className="flex w-full justify-center mt-5">
+        <Button
+          disabled={pathname.includes("/courses") ? false : isConfirmDisabled}
+          className={cn(
+            `text-white px-4 py-2 ${
+              pathname.includes("/courses") ? "w-1/3" : "w-full"
+            }`,
+            isConfirmDisabled
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-secondary-500 hover:bg-secondary-600"
+          )}
+          onPress={handleConfirm}
+        >
+          {isCreating || isPatching ? <BtnLoader /> : "انتخاب رزرو"}
+        </Button>
+      </div>
     </div>
+
+    {/* تقویم */}
+    {!course && (
+      <div className="w-full lg:w-1/3 flex justify-center items-center order-1 lg:order-2 overflow-hidden">
+        <CustomeDateRangePicker
+          onRangeSelect={rangeHandler}
+          reserveData={{
+            reserved_from: reserved_from || "",
+            reserved_to: reserved_to || "",
+          }}
+        />
+      </div>
+    )}
+  </div>
   );
 };
 

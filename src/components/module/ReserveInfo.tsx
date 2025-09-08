@@ -7,6 +7,7 @@ import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToP
 import { reservationDataType } from "@/types";
 import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 import { ServiceDetailsType } from "@/types/serviceType";
+import { CURRENCY } from "@/config/site";
 
 type ReserveInfoProps = {
   serviceData?: ServiceDetailsType | undefined;
@@ -40,9 +41,16 @@ const ReserveInfo: React.FC<ReserveInfoProps> = ({
 
         <div className="font-medium">
           {" "}
-          {source === "service" ? "توضیحات سرویس" : "توضیخات دوره"}
+          {source === "service" ? "توضیحات سرویس" : "توضیحات دوره"}
         </div>
-        <div>{serviceData?.data?.description || "نامشخص"}</div>
+        <div
+          className="    max-h-32 w-full overflow-y-auto 
+    whitespace-pre-line
+    bg-default-100 rounded p-4 border
+    break-words"
+        >
+          {serviceData?.data?.description || "نامشخص"}
+        </div>
 
         <div className="font-medium">قیمت</div>
         <div>
@@ -50,9 +58,10 @@ const ReserveInfo: React.FC<ReserveInfoProps> = ({
           {serviceData?.data?.price != null
             ? toPersianNumbersWithComma(serviceData.data.price)
             : "نامشخص"}
+          {CURRENCY === "rial" ? "ریال" : "تومان"}
         </div>
 
-        <div className="font-medium">توضیحات ادمین:</div>
+        <div className="font-medium">توضیحات ادمین</div>
         <div
           className="
     max-h-32 w-full overflow-y-auto 

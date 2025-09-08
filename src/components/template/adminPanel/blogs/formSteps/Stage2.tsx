@@ -115,9 +115,10 @@ const Stage2 = ({
       useBlogFormStore.persist.clearStorage();
       router.push("/admin/blogs");
       showToast("بلاگ با موفقیت ایجاد شد", "success");
-    } catch (error) {
-      showToast("خطایی رخ داده است", "error");
-      console.log(error);
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message || error?.message || "خطایی رخ داده است";
+      showToast(errorMessage, "error");
     }
   };
 

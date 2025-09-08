@@ -41,7 +41,7 @@ const UsersPage: React.FC = () => {
     sortDescriptor,
   } = useUsersTableStore();
 
-  const { sortedItems } = useFilteredContainer<UserType>(
+  const { sortedItems, pages } = useFilteredContainer<UserType>(
     formDataSignedUp,
     page,
     {
@@ -60,7 +60,7 @@ const UsersPage: React.FC = () => {
         <TitleStructureDashboards mainTitle="کاربران" />
 
         {isPending ? (
-          <div className="flex justify-center items-center mt-32">
+          <div className="flex justify-center items-center min-h-[70vh]">
             <BtnLoader color="#377cfb" />
           </div>
         ) : isEmpty ? (
@@ -81,6 +81,7 @@ const UsersPage: React.FC = () => {
             bottomContents={true}
             page={page}
             setPage={setPage}
+            pages={pages}
           >
             <CustomeTable
               headerColumns={headerColumns}

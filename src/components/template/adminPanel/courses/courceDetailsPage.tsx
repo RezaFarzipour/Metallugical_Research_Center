@@ -14,6 +14,8 @@ import { formatDateRangesToPersian } from "@/utils/formatter/formatDateRangesToP
 import { Button } from "@heroui/button";
 import { ServiceData } from "@/types/serviceType";
 import { useDeleteCourse } from "./hooks/useDeleteCource";
+import { getHttpsUrl } from "@/utils/formatter/domainFormatter";
+import { CURRENCY } from "@/config/site";
 // import CarGallery from "@/components/module/ImageGallery";
 
 interface ServiceDetailsPageProps {
@@ -35,23 +37,7 @@ const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
     "service-reserve_date": reserveDates = [],
   } = dataByID;
 
-  const coverImageSrc = useMemo(
-    () =>
-      cover_image.startsWith("http")
-        ? cover_image
-        : `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${cover_image}`,
-    [cover_image]
-  );
-
-  // const galleryImages = useMemo(
-  //   () =>
-  //     serviceImages.map((img) =>
-  //       img.image.startsWith("http")
-  //         ? img.image
-  //         : `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${img.image}`
-  //     ),
-  //   [serviceImages]
-  // );
+  const coverImageSrc = useMemo(() => getHttpsUrl(cover_image), [cover_image]);
 
   const dateRanges = useMemo(
     () => formatDateRangesToPersian(reserveDates),
@@ -107,7 +93,7 @@ const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
           <div className="flex items-center space-x-4 rtl:space-x-reverse">
             <div className="relative w-16 h-16">
               <Image
-                className="rounded-full object-cover"
+                className="rounded-md object-cover"
                 alt={service_name}
                 fill
                 src={coverImageSrc}
@@ -119,7 +105,7 @@ const CourseDetailsPage: React.FC<ServiceDetailsPageProps> = ({ dataByID }) => {
           <ServiceInfo title="توضیحات" content={description} />
           <ServiceInfo
             title="قیمت محصول"
-            content={`${toPersianNumbersWithComma(price)} تومان`}
+            content={`${toPersianNumbersWithComma(price)} ${CURRENCY === "rial" ? "ریال" : "تومان"}`}
           />
           <ServiceInfo title="تاریخ‌های رزرو" content={dateRanges || "-"} />
 

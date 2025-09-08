@@ -20,7 +20,7 @@ export const sendUserProfile = async ({
   return response.data;
 };
 
-export const getAllUserAdmin = async (options:AxiosRequestConfig) => {
+export const getAllUserAdmin = async (options: AxiosRequestConfig) => {
   const response = await http.get(`user/admin/`, options);
   return response.data;
 };
@@ -32,9 +32,10 @@ export const getUserByPhoneNumberAdmin = async (
   try {
     const response = await http.get(`user/admin/${phone_number}/`, options);
     return response.data;
-  } catch (error) {
-    console.log("errrr", error);
-    throw error;
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در دریافت کاربر";
+    throw new Error(errorMessage);
   }
 };
 
@@ -56,10 +57,10 @@ export const editUserByPhoneNumberAdmin = async ({
   try {
     const response = await http.patch(`user/admin/${phone_number}/`, data);
     return response.data;
-  } catch (err) {
-    console.log("eddit err", err);
-
-    throw err;
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در ویرایش کاربر";
+    throw new Error(errorMessage);
   }
 };
 
@@ -82,10 +83,10 @@ export const editUserByPhoneNumberUser = async ({
   try {
     const response = await http.patch(`user/customer/${phone_number}/`, data);
     return response.data;
-  } catch (err) {
-    console.log("eddit err", err);
-
-    throw err;
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در ویرایش کاربر";
+    throw new Error(errorMessage);
   }
 };
 

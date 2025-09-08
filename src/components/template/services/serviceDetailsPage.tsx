@@ -1,6 +1,6 @@
 "use client";
 import CarGallery from "@/components/module/ImageGallery";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useGetUser } from "@/hooks/useAuth";
@@ -13,6 +13,7 @@ import ServiceDetailRightSection from "@/components/module/serviceModule/Service
 import ServiceDetailLeftSection from "@/components/module/serviceModule/ServiceDetailLeftSection";
 import { ServiceData } from "@/types/serviceType";
 import { useReservationSource } from "@/store/useReservationSource";
+import { getHttpsUrl } from "@/utils/formatter/domainFormatter";
 
 const ServiceDetails = ({ serviceData }: { serviceData: ServiceData }) => {
   const [startDate, setStartDate] = useState<string | null>(null);
@@ -33,9 +34,7 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceData }) => {
     description,
   } = serviceData;
 
-  const coverImageSrc = cover_image.startsWith("http")
-    ? cover_image
-    : process.env.NEXT_PUBLIC_IMAGE_BASE_URL + cover_image;
+  const coverImageSrc = useMemo(() => getHttpsUrl(cover_image), [cover_image]);
 
   const galleryImages =
     serviceImages?.map((img) =>
@@ -78,8 +77,12 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceData }) => {
       });
 
       router.push(`/reservation?reserve-id=${id}&next-stage=1`);
-    } catch (e) {
-      console.log("err", e);
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "رزرو با خطا مواجه شد";
+      showToast(errorMessage, "error");
     }
   };
 
@@ -91,7 +94,7 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceData }) => {
   const isConfirmDisabled = !startDate || !endDate;
 
   return (
-    <div className="flex flex-col items-center w-full p-4 md:p-16">
+    <div className="flex flex-col items-center w-full p-4 md:p-16 mt-28 mb-16 md:my-16">
       <div className="w-full flex flex-col  gap-6">
         {/* Right Section */}
         <div className="flex flex-col gap-6 w-full lg:w-1/2">
@@ -101,10 +104,10 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceData }) => {
           />
         </div>
 
-        <div className="pr-12 ">
+        <div className="px-4 sm:pr-12 w-full">
           <h2 className="text-md text-gray-500 font-bold">توضیحات</h2>
-          <p className="text-justify text-sm text-gray-800 pr-4 pt-2">
-            {description}{" "}
+          <p className="text-justify text-sm text-gray-800 pt-2 break-words whitespace-normal leading-relaxed">
+            {description}
           </p>
         </div>
 

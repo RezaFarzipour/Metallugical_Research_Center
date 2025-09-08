@@ -26,8 +26,12 @@ const FaqAccordian = () => {
             {faqData.map((item) => (
               <AccordionItem
                 key={item.id}
-                aria-label="Accordion 1"
+                aria-label={`Accordion ${item.id}`}
                 title={item.question}
+                classNames={{
+                  title: "font-bold text-sm md:text-md ",
+                  content: "font-normal text-base md:text-sm",
+                }}
               >
                 {item.answer}
               </AccordionItem>

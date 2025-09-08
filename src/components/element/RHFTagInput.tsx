@@ -68,10 +68,6 @@ export default function RHFTagInput<T extends Record<string, any>>({
     );
   };
 
-  const tagsArray: string[] = Array.isArray(field.value) ? field.value : [];
-
-  console.log(tagsArray);
-
   return (
     <div className={inputStyles.wrapper}>
       <Input

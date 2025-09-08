@@ -21,6 +21,9 @@ import AdminStage2 from "./formSteps/AdminStage2";
 import Stage1 from "./formSteps/CustomerStage1";
 import { ServiceDetailsType } from "@/types/serviceType";
 import { useReservationSource } from "@/store/useReservationSource";
+import { Button } from "@heroui/button";
+import { useRouter } from "next/router";
+import { CgArrowLeft } from "react-icons/cg";
 const ReservationTemplate = () => {
   const searchParams = useSearchParams();
   const reserveId = searchParams.get("reserve-id");
@@ -28,7 +31,7 @@ const ReservationTemplate = () => {
   const [stage, setStage] = useState<number | null>(null);
   const { source } = useReservationSource();
 
-
+  const router = useRouter();
 
   useEffect(() => {
     if (!reserveId) return;
@@ -238,6 +241,21 @@ const ReservationTemplate = () => {
     <div className="p-6">
       <div className="mb-4 w-full md:max-w-2xl  mx-auto">
         <Stepper currentStep={activeStep} steperDetails={steperDetails} />
+        {/* دکمه برگشت به پنل */}
+        <div className="flex justify-end mt-2">
+          <Button
+            variant="bordered"
+            size="sm"
+            onPress={() =>
+              router.push(
+                role === "admin" ? "/admin/reservse" : "/user/myreservs"
+              )
+            }
+          >
+            بازگشت به پنل
+            <CgArrowLeft className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
 
       {stepsToShow.map((step) =>

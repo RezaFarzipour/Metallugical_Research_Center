@@ -15,6 +15,7 @@ import { BtnLoader } from "@/components/element/Loader";
 import { useSeCondStepAction } from "../hooks/useSecondStepAction";
 import { serviceDataEditType } from "@/types/serviceType";
 import { usePathname } from "next/navigation";
+import { getHttpsUrl } from "@/utils/formatter/domainFormatter";
 
 interface ServiceImage {
   id: string | number;
@@ -46,8 +47,6 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
       images: [],
     },
   });
-
-
 
   //customeHook:
   const {
@@ -114,7 +113,7 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
                   <Image
                     fill
                     alt={`uploaded-image-${index}`}
-                    src={url}
+                    src={getHttpsUrl(url)}
                     className="object-cover object-center"
                   />
                   <label className="absolute left-1 top-1 bg-blue-500 text-white text-xs px-2 py-1 rounded cursor-pointer">
@@ -147,7 +146,7 @@ const SecondStepAction: React.FC<ServicesActionProps> = ({
                   <Image
                     fill
                     alt={`new-uploaded-image-${index}`}
-                    src={url}
+                    src={getHttpsUrl(url)}
                     className="object-cover object-center"
                   />
                   <Button

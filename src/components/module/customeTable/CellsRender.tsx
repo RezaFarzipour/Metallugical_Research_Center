@@ -8,6 +8,8 @@ import DeleteBtn from "./DeleteBtn";
 import truncateText from "@/utils/formatter/truncateText";
 import { BlogType, ReportData, TableBase, UserType } from "@/types";
 import { ServerServiceType } from "@/types/serviceType";
+import { Popover, PopoverTrigger, PopoverContent } from "@heroui/react";
+import { showToast } from "@/store/useToastSlice";
 
 type TableData = ServerServiceType | BlogType | UserType | ReportData;
 
@@ -21,7 +23,8 @@ interface CellRendererProps<T extends TableData> {
   firstActionClickHandler?: (id: number | string, phone_number: string) => void;
   secondActionClickHandler?: (
     id: number | string,
-    phone_number: string
+    phone_number: string,
+    name: string
   ) => void;
   image?: boolean;
 }
@@ -42,18 +45,20 @@ export const CellRenderer = <T extends TableData>({
   switch (columnKey) {
     case "name":
       return (
-        <div className="flex flex-col">
-          <div className="flex items-center gap-2">
-            {image && (
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+          {image && (
+            <div className="w-10 h-10 relative">
               <Image
                 src={(data as any).image || `/images/user.png`}
                 alt={(data as any).name}
-                width={50}
-                height={50}
+                fill
+                className="rounded-md object-cover"
               />
-            )}
-            <span className="text-nowrap">{(data as any).name}</span>
-          </div>
+            </div>
+          )}
+          <span className="whitespace-normal sm:whitespace-nowrap font-medium">
+            {(data as any).name}
+          </span>
         </div>
       );
 
@@ -102,10 +107,35 @@ export const CellRenderer = <T extends TableData>({
       );
 
     case "description":
-      return <p>{truncateText(String(cellValue ?? ""), 40)}</p>;
+      return (
+        <p className="max-w-[150px] sm:max-w-none truncate whitespace-normal">
+          {truncateText(String(cellValue ?? ""), 40)}
+        </p>
+      );
 
     case "admin_description":
-      return (
+      const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+      return isMobile ? (
+        <Popover placement="bottom">
+          <PopoverTrigger>
+            <Chip
+              size="md"
+              className="cursor-pointer max-w-[150px] sm:max-w-none truncate whitespace-normal"
+              variant="shadow"
+            >
+              {cellValue
+                ? truncateText(String(cellValue), 40)
+                : "توضیحاتی ثبت نشده"}
+            </Chip>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className="max-w-xs whitespace-pre-wrap break-words">
+              {cellValue || "توضیحاتی ثبت نشده"}
+            </div>
+          </PopoverContent>
+        </Popover>
+      ) : (
         <Tooltip
           content={
             <div className="max-w-2xl whitespace-pre-wrap break-words">
@@ -113,7 +143,11 @@ export const CellRenderer = <T extends TableData>({
             </div>
           }
         >
-          <Chip size="md" className="cursor-pointer" variant="shadow">
+          <Chip
+            size="md"
+            className="cursor-pointer max-w-[150px] sm:max-w-none truncate whitespace-normal"
+            variant="shadow"
+          >
             {cellValue
               ? truncateText(String(cellValue), 40)
               : "توضیحاتی ثبت نشده"}
@@ -130,12 +164,13 @@ export const CellRenderer = <T extends TableData>({
         ) {
           tagsArray = JSON.parse((data as any).tags[0]);
         }
-      } catch (err) {
-        console.error("Error parsing tags:", err);
+      } catch (error: any) {
+        const errorMessage = error?.message || "خطا در پردازش تگ‌ها";
+        showToast(errorMessage, "error");
       }
 
       return (
-        <div className="flex gap-1 flex-wrap">
+        <div className="flex gap-1 flex-wrap max-w-[200px] sm:max-w-none">
           {tagsArray.map((tag, index) => (
             <Chip key={index} size="sm" variant="flat" color="primary">
               {tag}
@@ -171,6 +206,10 @@ export const CellRenderer = <T extends TableData>({
       );
 
     default:
-      return <span className="text-nowrap">{cellValue}</span>;
+      return (
+        <span className="whitespace-normal sm:whitespace-nowrap truncate max-w-[150px] sm:max-w-none">
+          {cellValue}
+        </span>
+      );
   }
 };

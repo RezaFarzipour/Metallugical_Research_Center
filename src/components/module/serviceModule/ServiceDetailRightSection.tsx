@@ -14,7 +14,7 @@ const ServiceDetailRightSection = ({
     <div className="flex items-center space-x-4 rtl:space-x-reverse">
       <div className="relative w-16 h-16 sm:w-20 sm:h-20">
         <Image
-          className="rounded-full object-cover"
+          className="rounded-md object-cover"
           alt="serviceImage"
           fill
           src={coverImageSrc}

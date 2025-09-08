@@ -38,9 +38,10 @@ const SideBar: FC<SideBarProps> = ({ onClose, navLinkData, user, path }) => {
   const logoutHandler = async () => {
     await asyncLogOut();
   };
+
   return (
-    <div className="overflow-y-auto flex flex-col p-5 h-screen pt-10 lg:pt-6">
-      {/* Drawer Header */}
+    <div className="flex flex-col p-5 pt-10 lg:pt-6 h-full">
+      {/* Header */}
       <div className="flex items-center justify-between w-full mb-5 pb-2 border-b border-b-secondary-200">
         <Link
           href="/"
@@ -52,27 +53,26 @@ const SideBar: FC<SideBarProps> = ({ onClose, navLinkData, user, path }) => {
         </Link>
       </div>
 
-      {/* Drawer Content */}
-      <div className="overflow-y-auto flex-auto">
+      {/* Content */}
+      <div className="flex flex-col gap-2 flex-auto">
         <SideBarNavs onClose={onClose} navLinkData={navLinkData} />
 
         <div
           onClick={logoutHandler}
-          className="flex items-center gap-x-2 rounded-2xl transition-all duration-200  py-3 px-4 text-red-400 hover:text-red-500 cursor-pointer"
+          className="flex items-center gap-x-2 rounded-2xl transition-all duration-200 py-3 px-4 text-red-400 hover:text-red-500 cursor-pointer"
         >
           <HiOutlineArrowLeftStartOnRectangle className="ml-4 h-5 w-5" />
           <span className="text-md 2xl:text-xl">خروج</span>
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="flex items-center gap-4 justify-around mt-5">
+      {/* Footer (mt-auto) */}
+      <div className="flex items-center gap-4 justify-around mt-auto border-t border-gray-200 pt-3">
         <p className="text-secondary-800 text-sm font-bold">
           {user ? user.first_name + " " + user.last_name : "نام و نام خانوادگی"}
         </p>
         <Link href={path}>
           <div className="p-2 rounded-full border border-[#ddd] cursor-pointer">
-            {" "}
             <CiEdit size={17} />
           </div>
         </Link>

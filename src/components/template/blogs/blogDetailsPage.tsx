@@ -1,3 +1,4 @@
+import { showToast } from "@/store/useToastSlice";
 import { BlogData } from "@/types";
 import Image from "next/image";
 import React from "react";
@@ -5,23 +6,45 @@ import React from "react";
 const BlogDetailsPage = ({ dataByID }: { dataByID: BlogData }) => {
   const contentRender = dataByID[`blog-content`][0].content;
 
-  const BASE_URL =
-    process.env.NEXT_PUBLIC_IMAGE_BASE_URL ?? "http://localhost:8000";
-
   let tagsArray: string[] = [];
 
   try {
     if (Array.isArray(dataByID.tags) && typeof dataByID.tags[0] === "string") {
       tagsArray = JSON.parse(dataByID.tags[0]); // چون به صورت استرینگ داخل آرایه هست
     }
-  } catch (err) {
-    console.error("Error parsing tags:", err);
+  } catch (error: any) {
+    const errorMessage = error?.message || "خطا در پردازش تگ‌ها";
+    showToast(errorMessage, "error");
   }
 
-  const getValidImageSrc = (src: string | undefined): string => {
+  const getValidImageSrc = (src?: string): string => {
     if (!src) return "/fallback.jpg";
-    if (src.startsWith("http") || src.startsWith("/")) return src;
-    return `${BASE_URL}/${src}`;
+
+    const BASE_URL =
+      process.env.NEXT_PUBLIC_IMAGE_BASE_URL ??
+      "https://metallugy.runflare.run/media";
+
+    // اگر URL کامل بود
+    if (src.startsWith("http")) {
+      const isLocal = src.includes("localhost") || src.includes("127.0.0.1");
+      if (isLocal) {
+        const cleanPath = src.split("/cover_image/")[1] ?? "";
+        return `${BASE_URL.replace(/\/$/, "")}/cover_image/${cleanPath}`;
+      }
+      return src.replace("http://", "https://");
+    }
+
+    // اطمینان از وجود /media فقط در صورتی که BASE_URL آن را ندارد
+    const needsMediaPrefix =
+      !BASE_URL.endsWith("/media") && !src.startsWith("/media");
+
+    const finalPath: string = needsMediaPrefix
+      ? `/media${src.startsWith("/") ? src : `/${src}`}`
+      : src.startsWith("/")
+      ? src
+      : `/${src}`;
+
+    return `${BASE_URL.replace(/\/$/, "")}${finalPath}`;
   };
 
   return (

@@ -53,11 +53,11 @@ const CategoryBlog = () => {
             queryClient.invalidateQueries({
               queryKey: ["getAll-blogsCategory"],
             });
-            closeModal(); // بستن مودال پس از موفقیت
+            closeModal();
           },
           onError: () => {
             showToast("حذف دسته‌بندی با خطا مواجه شد", "error");
-            closeModal(); // بستن مودال در صورت خطا
+            closeModal();
           },
         }
       );
@@ -67,17 +67,19 @@ const CategoryBlog = () => {
 
   return (
     <div>
-      <TitleStructureDashboards mainTitle="دست بندی" />
-      <div className="flex justify-end w-[95%]  mb-4">
-        <Link href={"/admin/blogs/category/create"}>
-          <Button
-            className="bg-secondary-500 text-white"
-            endContent={<FaPlus />}
-          >
-            افزودن
-          </Button>
-        </Link>
-      </div>
+      <TitleStructureDashboards mainTitle="دسته‌بندی" />
+      {data.length !== 0 && (
+        <div className="flex justify-end w-[95%] mb-4">
+          <Link href={"/admin/blogs/category/create"}>
+            <Button
+              className="bg-secondary-500 text-white shadow-md rounded-xl px-4 py-2 hover:bg-secondary-600 transition"
+              endContent={<FaPlus />}
+            >
+              افزودن
+            </Button>
+          </Link>
+        </div>
+      )}
 
       <div className="mt-8 overflow-x-auto">
         {isPending ? (
@@ -85,39 +87,67 @@ const CategoryBlog = () => {
             <BtnLoader color="#377cfb" />
           </div>
         ) : data.length === 0 ? (
-          <Empty hidden={false} spanValue="دسته‌بندی" />
+          <Empty
+            hidden={true}
+            spanValue="دسته‌بندی"
+            btn={true}
+            btnValue="افزودن دسته بندی"
+            btnHref="/admin/blogs/category/create"
+            // btnOnClick={handleReserve}
+          />
         ) : (
-          <Table>
-            <Table.Header>
-              <th>#</th>
-              <th>نام دسته</th>
-              <th>اسلاگ</th>
-              <th>عملیات</th>
-            </Table.Header>
-            <Table.Body>
-              {data.map((item: blogDatafromServer, index: number) => (
-                <Table.Row key={item.id}>
-                  <td>{index + 1}</td>
-                  <td>{item.category_name}</td>
-                  <td>{item.slug}</td>
-                  <td className=" flex justify-center items-center ">
-                    <Link href={`/admin/blogs/category/create?id=${item.id}`}>
-                      <Button isIconOnly className="bg-transparent">
-                        <TbEyeDiscount size={16} />
+          <div className="bg-white shadow-lg rounded-xl overflow-hidden">
+            <Table className="min-w-full divide-y divide-gray-200">
+              <Table.Header className="bg-gray-100 text-gray-700">
+                <th className="px-4 py-3 text-sm font-semibold">#</th>
+                <th className="px-4 py-3 text-sm font-semibold">نام دسته</th>
+                <th className="px-4 py-3 text-sm font-semibold">اسلاگ</th>
+                <th className="px-4 py-3 text-sm font-semibold text-center">
+                  عملیات
+                </th>
+              </Table.Header>
+              <Table.Body>
+                {data.map((item: blogDatafromServer, index: number) => (
+                  <Table.Row
+                    key={item.id}
+                    className="hover:bg-gray-50 transition"
+                  >
+                    <td className="px-4 py-3 text-sm text-gray-700 font-medium">
+                      {index + 1}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-700">
+                      {item.category_name}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-500">
+                      {item.slug}
+                    </td>
+                    <td className="px-4 py-3 flex justify-center items-center ">
+                      <Link
+                        href={`/admin/blogs/category/create?id=${item.id}`}
+                        className="inline-flex"
+                      >
+                        <Button
+                          variant="light"
+                          isIconOnly
+                          className=" text-default-300  p-2 transition"
+                        >
+                          <TbEyeDiscount size={18} />
+                        </Button>
+                      </Link>
+                      <Button
+                        variant="light"
+                        isIconOnly
+                        className=" text-red-600  p-2 transition"
+                        onPress={() => openModal(item.id)}
+                      >
+                        <MdDeleteOutline size={18} />
                       </Button>
-                    </Link>
-                    <Button
-                      isIconOnly
-                      className="bg-transparent p-0"
-                      onPress={() => openModal(item.id)}
-                    >
-                      <MdDeleteOutline color="red" size={16} />
-                    </Button>
-                  </td>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+                    </td>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </div>
         )}
       </div>
 

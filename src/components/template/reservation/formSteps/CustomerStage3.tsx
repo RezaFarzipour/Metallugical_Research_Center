@@ -74,12 +74,10 @@ const CustomerStage3 = ({
     );
   };
 
-  //reject by admin
-
   //cancle reserve
   const cancelHandler = () => {
     cancelReserve(reserveId, () => {
-      router.push("/services");
+      router.push("/user/myreservs");
     });
   };
 
@@ -142,7 +140,7 @@ const CustomerStage3 = ({
             />
           </div>
 
-          <div className="flex justify-end gap-3 mt-4">
+          <div className="flex justify-center gap-3 mt-4">
             <Button
               variant="bordered"
               type="submit"

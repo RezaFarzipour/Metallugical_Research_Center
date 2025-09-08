@@ -2,7 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["localhost"],
+    // domains: ["localhost"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "metallugy.runflare.run",
+        port: '',
+        pathname: "/**",
+      },]
   },
   logging: {
     fetches: {

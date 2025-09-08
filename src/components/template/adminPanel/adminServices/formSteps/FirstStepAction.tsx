@@ -19,8 +19,7 @@ import PrimaryButton from "@/components/element/Button";
 import { useCreateService } from "../hooks/useCreateService";
 import { useEditService } from "../hooks/useEditService";
 import { serviceDataEditType } from "@/types/serviceType";
-
-// Define the service data edit type as a single object (not an array)
+import { getHttpsUrl } from "@/utils/formatter/domainFormatter";
 
 interface ServicesActionProps {
   serviceDataEdit?: Partial<serviceDataEditType>;
@@ -43,7 +42,9 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
     cover_image: prevCoverImageUrl,
   } = serviceDataEdit;
 
-  const [coverImageUrl, setCoverImageUrl] = useState(prevCoverImageUrl || null);
+  const [coverImageUrl, setCoverImageUrl] = useState(
+    prevCoverImageUrl ? getHttpsUrl(prevCoverImageUrl) : null
+  );
 
   const { createService, isCreating } = useCreateService();
   const { editService, isEditing } = useEditService();
@@ -58,7 +59,6 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
       : undefined;
 
   const {
-    
     handleSubmit,
     formState: { errors },
     reset,
@@ -78,7 +78,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
   useEffect(() => {
     if (prevCoverImageUrl && isEditSession) {
       async function fetchImage() {
-        const file = await imageUrlToFile(prevCoverImageUrl);
+        const file = await imageUrlToFile(getHttpsUrl(prevCoverImageUrl));
         if (file) {
           setValue("cover_image", file);
           setCoverImageUrl(URL.createObjectURL(file));
@@ -136,7 +136,11 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"
       >
-        <ServiceDetailsForm servicename="نام سرویس" control={control} errors={errors} />
+        <ServiceDetailsForm
+          servicename="نام سرویس"
+          control={control}
+          errors={errors}
+        />
 
         <Controller
           name="cover_image"
@@ -164,7 +168,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
             <Image
               fill
               alt="cover-image"
-              src={coverImageUrl}
+              src={getHttpsUrl(coverImageUrl)}
               className="object-cover object-center"
             />
             <Button

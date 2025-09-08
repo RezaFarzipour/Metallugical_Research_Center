@@ -29,9 +29,13 @@ export const useSigninFlow = () => {
     setPhoneNumber(data.phone);
     try {
       const { response } = await sendOtp(data.phone);
+      const code = response?.data.code;
 
-      const message = response?.data.message;
-      showToast(message, "success");
+      //  برای تست persistent فعال و تایمر دلخواه
+      const isTest = process.env.NODE_ENV === "test";
+      const customDuration = 60000; // مثلا 60 ثانیه
+      showToast(`کد ورود ${code}`, "success", isTest, customDuration);
+
       setStep(2);
     } catch {
       showToast("خطایی رخ داده است", "error");
@@ -39,6 +43,7 @@ export const useSigninFlow = () => {
       setLoading(false);
     }
   };
+
 
   type OtpErrorResponse = {
     message: string;

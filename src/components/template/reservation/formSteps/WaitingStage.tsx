@@ -2,12 +2,13 @@
 import { BtnLoader } from "@/components/element/Loader";
 import ReserveInfo from "@/components/module/ReserveInfo";
 import { useCancelReserve } from "@/components/template/reservation/hooks/useCancelReserve";
-import { reservationDataType } from "@/types";
+import { useGetUser } from "@/hooks/useAuth";
+import { reservationDataType, User } from "@/types";
 import { ServiceDetailsType } from "@/types/serviceType";
 import { Button } from "@heroui/button";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { ClipLoader } from "react-spinners"; // ✅ جایگزین Hourglass
+import { ClockLoader } from "react-spinners";
 
 type WaitingStageProps = {
   reserveId?: string | null;
@@ -29,11 +30,18 @@ const WaitingStage = ({
   const { cancelReserve, isCanceling } = useCancelReserve();
   const router = useRouter();
 
-  // cancel reserve
+  const { data } = useGetUser();
+  const user: User | null = data ?? null;
+  const userRoles = user?.role;
+
   const cancelHandler = () => {
     if (reserveId) {
       cancelReserve(reserveId, () => {
-        router.push(`${source === "service" ? "/services" : "courses"}`);
+        if (userRoles === "admin" || userRoles?.includes("admin")) {
+          router.push("/admin/reservse");
+        } else {
+          router.push("/user/myreservs");
+        }
       });
     }
   };
@@ -42,7 +50,7 @@ const WaitingStage = ({
     <div className="">
       <div className="my-4 flex flex-col items-center justify-center gap-3">
         {/* Loader به جای Hourglass */}
-        <ClipLoader size={40} color="#0d6efd" />
+        <ClockLoader size={40} color="#0d6efd" />
 
         <p className="flex flex-col text-sm text-default-400">
           {typographyContent.main}

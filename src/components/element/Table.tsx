@@ -2,26 +2,26 @@ import React, { ReactNode } from "react";
 
 interface TableProps {
   children: ReactNode;
+  className?: string;
 }
 
-function Table({ children }: TableProps) {
+function Table({ children, className }: TableProps) {
   return (
-    <div className="table-category-wrapper overflow-x-auto rounded-xl border border-gray-200">
-      <table className="table-category w-full text-sm text-gray-700 ">
-        {children}
-      </table>
+    <div className={`table-category-wrapper overflow-x-auto rounded-xl border border-gray-200 shadow ${className ?? ""}`}>
+      <table className="table-category w-full text-sm text-gray-700">{children}</table>
     </div>
   );
 }
 
 interface TableHeaderProps {
   children: ReactNode;
+  className?: string;
 }
 
-function TableHeader({ children }: TableHeaderProps) {
+function TableHeader({ children, className }: TableHeaderProps) {
   return (
     <thead>
-      <tr className="table-category-header text-center text-gray-400">
+      <tr className={`table-category-header text-center text-gray-500 bg-gray-100 ${className ?? ""}`}>
         {children}
       </tr>
     </thead>
@@ -30,18 +30,26 @@ function TableHeader({ children }: TableHeaderProps) {
 
 interface TableBodyProps {
   children: ReactNode;
+  className?: string;
 }
 
-function TableBody({ children }: TableBodyProps) {
-  return <tbody>{children}</tbody>;
+function TableBody({ children, className }: TableBodyProps) {
+  return <tbody className={className}>{children}</tbody>;
 }
 
 interface TableRowProps {
   children: ReactNode;
+  className?: string;
 }
 
-function TableRow({ children }: TableRowProps) {
-  return <tr className="border-b text-center ">{children}</tr>;
+function TableRow({ children, className }: TableRowProps) {
+  return (
+    <tr
+      className={`border-b text-center hover:bg-gray-50 transition-colors ${className ?? ""}`}
+    >
+      {children}
+    </tr>
+  );
 }
 
 Table.Header = TableHeader;

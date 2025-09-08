@@ -20,7 +20,7 @@ export const Toast = () => {
     if (open) {
       const timer = setTimeout(() => {
         hideToast();
-      }, 3000);
+      }, 8000);
       return () => clearTimeout(timer);
     }
   }, [open, hideToast]);

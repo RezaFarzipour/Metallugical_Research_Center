@@ -1,26 +1,45 @@
 import middlewareAuth from "@/utils/auth/middlewareAuth";
 import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
-export async function middleware(req:NextRequest) {
-  const url = req.url;
+export async function middleware(req: NextRequest) {
+  const url = req.nextUrl.clone();
   const pathname = req.nextUrl.pathname;
 
-  if (pathname.startsWith("/user")) {
-    const user = await middlewareAuth(req);
-    if (!user) return NextResponse.redirect(new URL("/auth", url));
-    if (user && user.role !== "customer")
-      return NextResponse.redirect(new URL("/", req.url));
+  // چک لاگین کاربر
+  const user = await middlewareAuth(req);
+
+  // اگر مسیر auth است و کاربر لاگین است، ریدایرکت به خانه
+  if (pathname.startsWith("/auth") && user) {
+    url.pathname = "/";
+    return NextResponse.redirect(url);
   }
 
+  // مسیرهای user
+  if (pathname.startsWith("/user")) {
+    if (!user) {
+      url.pathname = "/auth";
+      return NextResponse.redirect(url);
+    }
+    if (user.role !== "customer") {
+      url.pathname = "/";
+      return NextResponse.redirect(url);
+    }
+  }
+
+  // مسیرهای admin
   if (pathname.startsWith("/admin")) {
-    const user = await middlewareAuth(req);
-    if (!user) return NextResponse.redirect(new URL("/auth", url));
-    if (user && user.role !== "admin")
-      return NextResponse.redirect(new URL("/", req.url));
+    if (!user) {
+      url.pathname = "/auth";
+      return NextResponse.redirect(url);
+    }
+    if (user.role !== "admin") {
+      url.pathname = "/";
+      return NextResponse.redirect(url);
+    }
   }
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/user/:path*"],
+  matcher: ["/auth/:path*", "/admin/:path*", "/user/:path*"],
 };

@@ -8,11 +8,11 @@ import { toEnglishNumbers } from "@/utils/formatter/toPersianNumbers";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 
-// type PageProps = {
-//   params: { serviceId: string };
-// };
-
-export default async function Page({ params }: {params:Promise<{serviceId:string}>}) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ serviceId: string }>;
+}) {
   const { serviceId } = await params;
   const serviceIds = decodeURIComponent(serviceId);
   const cookieStore = cookies();
@@ -22,7 +22,8 @@ export default async function Page({ params }: {params:Promise<{serviceId:string
   const serviceAllImageData = await getAllServiceImages(options);
 
   const filteredServiceImages = serviceAllImageData.filter(
-    (image:any) => String(image.service) === String(toEnglishNumbers(serviceIds))
+    (image: any) =>
+      String(image.service) === String(toEnglishNumbers(serviceIds))
   );
 
   if (!serviceData) {

@@ -31,7 +31,7 @@ const ReportsPage: React.FC = () => {
     sortDescriptor,
   } = useReportsTableStore();
 
-  const { sortedItems } = useFilteredContainer<ReportData>(
+  const { sortedItems, pages } = useFilteredContainer<ReportData>(
     formDataReseves,
     page,
     {
@@ -65,9 +65,10 @@ const ReportsPage: React.FC = () => {
           bottomContents={!!formDataReseves?.length}
           page={page}
           setPage={setPage}
+          pages={pages}
         >
           {isLoadingReserve ? (
-            <div className="flex justify-center items-center mt-32">
+            <div className="flex justify-center items-center min-h-[70vh]">
               <BtnLoader color="#377cfb" />
             </div>
           ) : isEmpty ? (

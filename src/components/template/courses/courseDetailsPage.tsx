@@ -14,14 +14,13 @@ import ServiceDetailLeftSection from "@/components/module/serviceModule/ServiceD
 import { ServiceData } from "@/types/serviceType";
 import { usePathname } from "next/navigation";
 import { useReservationSource } from "@/store/useReservationSource";
+import { getHttpsUrl } from "@/utils/formatter/domainFormatter";
 const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
   const router = useRouter();
   const pathname = usePathname();
   const { setSource } = useReservationSource();
   const { reserved_from, reserved_to } =
     serviceData?.["service-reserve_date"]?.[0] || {};
-
-  
 
   const {
     id: serviceId,
@@ -33,9 +32,7 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
     description,
   } = serviceData;
 
-  const coverImageSrc = cover_image.startsWith("http")
-    ? cover_image
-    : process.env.NEXT_PUBLIC_IMAGE_BASE_URL + cover_image;
+  const coverImageSrc = getHttpsUrl(cover_image);
 
   const galleryImages =
     serviceImages?.map((img) =>
@@ -78,17 +75,19 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
       });
 
       router.push(`/reservation?reserve-id=${id}&next-stage=1`);
-    } catch (e) {
-      console.log("err", e);
+    } catch (error: any) {
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "رزرو با خطا مواجه شد";
+      showToast(errorMessage, "error");
     }
   };
-
-
 
   const coursePath = pathname.includes("courses");
 
   return (
-    <div className="flex flex-col items-center w-full p-4 md:p-16">
+    <div className="flex flex-col items-center w-full p-4 md:p-16 my-16">
       <div className="w-full flex flex-col gap-6">
         {/* Right Section */}
         <div className="flex flex-col gap-6 w-full lg:w-1/2">
@@ -98,9 +97,9 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
           />
         </div>
 
-        <div className="pr-12">
+        <div className="px-4 sm:pr-12 w-full">
           <h2 className="text-md text-gray-500 font-bold">توضیحات</h2>
-          <p className="text-justify text-sm text-gray-800 pr-4 pt-2">
+          <p className="text-justify text-sm text-gray-800 pt-2 break-words whitespace-normal leading-relaxed">
             {description}
           </p>
         </div>
@@ -120,7 +119,6 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
               handleConfirm={handleConfirm}
               reserved_from={reserved_from}
               reserved_to={reserved_to}
-        
               isCreating={isCreating}
               isPatching={isPatching}
             />

@@ -21,6 +21,7 @@ import { serviceDataEditType } from "@/types/serviceType";
 import { useEditCourse } from "../hooks/useEditCource";
 import { useCreateCourse } from "../hooks/useCreateCource";
 import { usePathname } from "next/navigation";
+import { getHttpsUrl } from "@/utils/formatter/domainFormatter";
 
 // Define the service data edit type as a single object (not an array)
 
@@ -45,7 +46,9 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
     cover_image: prevCoverImageUrl,
   } = serviceDataEdit;
 
-  const [coverImageUrl, setCoverImageUrl] = useState(prevCoverImageUrl || null);
+  const [coverImageUrl, setCoverImageUrl] = useState(
+    prevCoverImageUrl ? getHttpsUrl(prevCoverImageUrl) : null
+  );
 
   const { createService, isCreating } = useCreateCourse();
   const { editService, isEditing } = useEditCourse();
@@ -60,7 +63,6 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
       : undefined;
 
   const {
- 
     handleSubmit,
     formState: { errors },
     reset,
@@ -80,7 +82,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
   useEffect(() => {
     if (prevCoverImageUrl && isEditSession) {
       async function fetchImage() {
-        const file = await imageUrlToFile(prevCoverImageUrl);
+        const file = await imageUrlToFile(getHttpsUrl(prevCoverImageUrl));
         if (file) {
           setValue("cover_image", file);
           setCoverImageUrl(URL.createObjectURL(file));
@@ -111,7 +113,6 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
         { id: String(editId), data: formData },
         {
           onSuccess: () => {
-     
             showToast("سرویس با موفقیت ویرایش شد", "success");
             setStep(2);
             reset();
@@ -146,7 +147,11 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-y-8 bg-white p-4 rounded-xl w-full max-w-lg"
       >
-        <ServiceDetailsForm servicename="نام دوره" control={control} errors={errors} />
+        <ServiceDetailsForm
+          servicename="نام دوره"
+          control={control}
+          errors={errors}
+        />
 
         <Controller
           name="cover_image"
@@ -174,7 +179,7 @@ const FirstStepAction: React.FC<ServicesActionProps> = ({
             <Image
               fill
               alt="cover-image"
-              src={coverImageUrl}
+              src={getHttpsUrl(coverImageUrl)}
               className="object-cover object-center"
             />
             <Button

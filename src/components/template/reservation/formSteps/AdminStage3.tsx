@@ -13,6 +13,7 @@ import ReserveInfo from "@/components/module/ReserveInfo";
 import BlurModal from "@/components/element/BlurModal";
 import { Input } from "@heroui/react";
 import { ServiceDetailsType } from "@/types/serviceType";
+import { IoMdDownload } from "react-icons/io";
 
 type AdminStage3 = {
   serviceData: ServiceDetailsType | undefined;
@@ -25,7 +26,7 @@ const AdminStage3 = ({
   reserveId,
   reservationData,
 }: AdminStage3) => {
-  const imageUrl = `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${reservationData?.payment_image}`;
+  const imageUrl = reservationData?.payment_image;
 
   const {
     isPending,
@@ -42,6 +43,8 @@ const AdminStage3 = ({
   const queryClient = useQueryClient();
   const { cancelReserve, isCanceling } = useCancelReserve();
   const router = useRouter();
+
+  
   const { rejectReservePaymentImage, rejecting_payment } = useRejectReserve();
 
   //admin accept payment_image
@@ -64,21 +67,24 @@ const AdminStage3 = ({
   };
 
   if (isError) {
-    showToast("خطا در دریافت اطلاعات", "error");
-    console.log("error", error);
-    return null; // یا یک پیام خطا بصری
+    const errorMessage =
+      (error as any)?.response?.data?.message ||
+      (error as any)?.message ||
+      "خطا در دریافت اطلاعات";
+    showToast(errorMessage, "error");
+    return null; // یا می‌تونی یه UI مخصوص خطا برگردونی
   }
 
   //cancle reserve
   const cancelHandler = () => {
     cancelReserve(reserveId, () => {
-      router.push("/services");
+      router.push("/admin/reservse");
     });
   };
 
-  const handleDownload = async () => {
+  const handleDownload = async (fileUrl: string) => {
     try {
-      const response = await fetch(imageUrl);
+      const response = await fetch(fileUrl);
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
 
@@ -89,12 +95,13 @@ const AdminStage3 = ({
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(blobUrl);
-    } catch (err) {
-      console.error("Download failed:", err);
+    } catch (error: any) {
+      const errorMessage = error?.message || "دانلود فایل ناموفق بود";
+      showToast(errorMessage, "error");
     }
   };
   return (
-    <div className="">
+    <div>
       {/* info section */}
       <div className=" p-6 rounded-md max-w-xl mx-auto">
         <ReserveInfo
@@ -107,9 +114,15 @@ const AdminStage3 = ({
 
       <div className="flex justify-center items-center">
         <Button
-          className="bg-secondary-500 text-white px-4 py-2 mt-2 "
-          onPress={handleDownload}
+          variant="bordered"
+          onPress={() =>
+            handleDownload(
+              `/api/downloadImage?url=${encodeURIComponent(imageUrl)}`
+            )
+          }
+          className="flex items-center gap-2 text-default-500 px-5 py-2 rounded-lg shadow-md transition-transform transform hover:scale-105"
         >
+          <IoMdDownload size={20} />
           دانلود فیش واریز
         </Button>
       </div>
@@ -130,10 +143,10 @@ const AdminStage3 = ({
         // disabled={isConfirmDisabled}
       />
 
-      <div className="flex gap-3 mt-4 justify-end w-full">
+      <div className="flex gap-3 mt-4 justify-center w-full">
         <div className="flex gap-4 item-center">
           <Button
-            variant="bordered"
+            variant="faded"
             onPress={accepthandler}
             className="bg-secondary-500 text-white px-4 py-2 "
           >
@@ -149,7 +162,7 @@ const AdminStage3 = ({
         </div>
 
         <Button
-          variant="bordered"
+          variant="faded"
           onPress={cancelHandler}
           className="bg-default-300 text-white px-4 py-2 "
         >

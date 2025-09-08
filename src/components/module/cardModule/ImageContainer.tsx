@@ -4,20 +4,11 @@ import { motion } from "framer-motion";
 import { shimmerEffect } from "@/utils/motion";
 
 interface ImageContainerProps {
-  image: string | undefined;
+  image: any;
   isHovered: boolean;
   setIsHovered: (hovered: boolean) => void;
   view: boolean;
 }
-
-const BASE_URL =
-  process.env.NEXT_PUBLIC_IMAGE_BASE_URL ?? "http://localhost:8000";
-
-const getValidImageSrc = (src: string | undefined): string => {
-  if (!src) return "/fallback.jpg";
-  if (src.startsWith("http") || src.startsWith("/")) return src;
-  return `${BASE_URL}/${src}`;
-};
 
 export const ImageContainer: React.FC<ImageContainerProps> = ({
   image,
@@ -39,7 +30,7 @@ export const ImageContainer: React.FC<ImageContainerProps> = ({
         width={500}
         height={500}
         alt="Card example background"
-        src={getValidImageSrc(image)}
+        src={image}
         className="h-full w-full"
       />
       {/* Shimmer effect on hover */}

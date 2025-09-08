@@ -11,6 +11,7 @@ import TitleStructure from "@/components/element/TitleStructure";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import { BtnLoader } from "@/components/element/Loader";
 import CardModule from "@/components/module/cardModule/CardModule";
+import Empty from "@/components/element/Empty"; 
 import { ServiceDetailsType } from "@/types/serviceType";
 
 type ServicesPageProps = {
@@ -18,12 +19,14 @@ type ServicesPageProps = {
 };
 const Courses = ({ initialData }: ServicesPageProps) => {
   const view = useCoursesTableStore((state) => state.view);
+
   const { data, isPending } = useQuery({
     queryKey: ["getAll-servicesCustomer"],
     queryFn: getAllServiceCustomer,
-    initialData, //  داده اولیه از SSR
-    refetchOnWindowFocus: true, //  فعال‌سازی رفرش تب
+    initialData, // داده اولیه از SSR
+    refetchOnWindowFocus: true,
   });
+
   const courses = data.filter((course: any) => course.is_package);
   const formDataServices = Array.isArray(courses) ? courses : [];
   const [page, setPage] = useState<number>(1);
@@ -37,7 +40,7 @@ const Courses = ({ initialData }: ServicesPageProps) => {
     sortDescriptor,
   } = useCoursesTableStore();
 
-  const { sortedItems } = useFilteredContainer(courses, page, {
+  const { sortedItems, pages } = useFilteredContainer(formDataServices, page, {
     filterValue,
     statusFilter,
     peymentStatusFilter,
@@ -45,13 +48,14 @@ const Courses = ({ initialData }: ServicesPageProps) => {
     rowsPerPage,
     sortDescriptor,
   });
+
   return (
     <motion.section
       variants={staggerContainer(0.5, 0.25)}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.25 }}
-      className="max-w-7xl mx-auto relative z-0 px-4 sm:px-6 lg:px-12"
+      className="max-w-7xl mx-auto relative z-0 gap-5 py-8 md:py-14 lg:py-4 px-4 sm:px-6 lg:px-12"
     >
       <span className="hash-span" id="Services-Card">
         &nbsp;
@@ -65,7 +69,7 @@ const Courses = ({ initialData }: ServicesPageProps) => {
         <div className="flex flex-col gap-12 lg:gap-5 lg:flex-row justify-center w-full items-center">
           <FilteredContainer
             datas={formDataServices}
-            quantity="دور ها"
+            quantity="دوره ها"
             tableStore={useCoursesTableStore}
             topContents={!!formDataServices?.length}
             viewContent={true}
@@ -77,9 +81,19 @@ const Courses = ({ initialData }: ServicesPageProps) => {
             bottomContents={!!formDataServices?.length}
             page={page}
             setPage={setPage}
+            pages={pages}
           >
             {isPending ? (
               <BtnLoader />
+            ) : sortedItems.length === 0 ? (
+              <div className="flex justify-center items-center pt-8">
+                <Empty
+                  btnHref="/admin/courses/create"
+                  spanValue="دوره‌ای"
+                  endValue="نشده است"
+                  btn={false}
+                />
+              </div>
             ) : (
               <div
                 className={cn(
@@ -95,7 +109,7 @@ const Courses = ({ initialData }: ServicesPageProps) => {
                   data={sortedItems}
                   widthConter="100%"
                   heightImg="250px"
-                  heightConter="200px"
+                  heightConter="210px"
                   bottomOffset="160"
                   styleForAdmin={false}
                   view={view}

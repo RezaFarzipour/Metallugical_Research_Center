@@ -9,11 +9,12 @@ import { Button } from "@heroui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BlurModal from "@/components/element/BlurModal";
 import Stage1ModalBody from "./Stage1ModalBody";
 import { serviceDataEditType } from "@/types/serviceType";
 import { Select, SelectItem } from "@heroui/react";
+import { CURRENCY } from "@/config/site";
 
 type stage1Props = {
   allServices: serviceDataEditType[];
@@ -59,7 +60,17 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
   const [filterType, setFilterType] = useState<"package" | "service">(
     "service"
   );
+  const [btnSize, setBtnSize] = useState<"sm" | "md">("md");
 
+  useEffect(() => {
+    const handleResize = () => {
+      setBtnSize(window.innerWidth < 640 ? "sm" : "md");
+    };
+
+    handleResize(); // مقدار اولیه
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const queryClient = useQueryClient();
 
   const { mutateAsync: patchReserve, isPending: isPatching } = useMutation({
@@ -120,8 +131,6 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
       })
     : [];
 
-
-
   if (isAllServicesPending) return <BtnLoader />;
   const isConfirmDisabled = !startDate || !endDate;
 
@@ -138,7 +147,6 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
           onSelectionChange={(key) => {
             const value = typeof key === "string" ? key : Array.from(key)[0];
             setFilterType(value as "package" | "service");
-            console.log("انتخاب شد:", value);
           }}
           className="max-w-xs"
         >
@@ -169,16 +177,19 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
               </div>
 
               <h3 className="text-lg font-bold mb-1">{service.service_name}</h3>
-              <p className="text-sm text-gray-600 mb-2">
+              <p className="text-sm text-gray-600 mb-2 break-words whitespace-pre-line">
                 {service.description}
               </p>
 
-              <div className="flex w-full justify-between p-2 items-center">
-                <p className="text-blue-600 font-semibold">
-                  قیمت: {service.price?.toLocaleString()} تومان
+              <div className="flex w-full p-2 items-center">
+                <p className="text-blue-600 font-semibold whitespace-nowrap">
+                  قیمت: {service.price?.toLocaleString()} {CURRENCY === "rial" ? "ریال" : "تومان"}
                 </p>
+              </div>
+              <div className="flex justify-end items-center">
                 <Button
-                  className="text-white bg-gradient-to-r from-secondary-500 to-secondary-700 hover:from-secondary-600 hover:to-secondary-800"
+                  size={btnSize}
+                  className=" text-white bg-gradient-to-r from-secondary-500 to-secondary-700 hover:from-secondary-600 hover:to-secondary-800"
                   onPress={() => handleReserveClick(service.id)}
                 >
                   رزرو
@@ -194,13 +205,12 @@ const Stage1 = ({ allServices, isAllServicesPending }: stage1Props) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         isPatching={isPatching}
-      
         title="رزرو"
         heightProp="lg"
         bodyContent={
           modalService ? (
             <Stage1ModalBody
-            isPackage ={isPackage}
+              isPackage={isPackage}
               reserved_from={reserved_from}
               reserved_to={reserved_to}
               rangeHandler={rangeHandler}

@@ -8,6 +8,7 @@ interface EmptyProps {
   btnValue?: string;
   btnHref?: string;
   spanValue: string;
+  endValue?: string;
   hidden?: boolean; // اگر false باشه، دکمه مخفی میشه
   btn?: boolean;
   pVisiable?: boolean;
@@ -18,6 +19,7 @@ const Empty = ({
   btnValue,
   btnHref,
   spanValue,
+  endValue = "نکرده اید",
   hidden = true,
   btn = true,
   pVisiable = true,
@@ -43,7 +45,7 @@ const Empty = ({
             !pVisiable ? "hidden" : "flex"
           } text-xs sm:text-sm text-secondary-500`}
         >
-          به نظر می‌رسد که هنوز {spanValue} ثبت نکرده‌اید یا {spanValue} برای
+          به نظر می‌رسد که هنوز {spanValue} ثبت {endValue} یا {spanValue} برای
           نمایش در دسترس نیست.
         </p>
 

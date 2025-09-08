@@ -60,7 +60,7 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
   }));
 
   const {
-  
+   
     handleSubmit,
     control,
     reset,
@@ -87,7 +87,7 @@ const Stage1: React.FC<BlogesActionProps> = ({ blogData = {}, setStep }) => {
       slug: slug || "",
     },
   });
-  console.log("category", category_list);
+
 
   const { id: editId } = blogData;
   const isEditSession = Boolean(editId);

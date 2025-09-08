@@ -11,6 +11,7 @@ import TitleStructure from "@/components/element/TitleStructure";
 import FilteredContainer from "@/components/containers/FilteredContainer";
 import { BtnLoader } from "@/components/element/Loader";
 import CardModule from "@/components/module/cardModule/CardModule";
+import Empty from "@/components/element/Empty";
 import { ServiceDetailsType } from "@/types/serviceType";
 
 type ServicesPageProps = {
@@ -22,8 +23,8 @@ const Services = ({ initialData }: ServicesPageProps) => {
   const { data, isPending } = useQuery({
     queryKey: ["getAll-servicesCustomer"],
     queryFn: getAllServiceCustomer,
-    initialData, //  داده اولیه از SSR
-    refetchOnWindowFocus: true, //  فعال‌سازی رفرش تب
+    initialData,
+    refetchOnWindowFocus: true,
   });
   const services = data.filter((service: any) => !service.is_package);
   const formDataServices = Array.isArray(services) ? services : [];
@@ -38,7 +39,7 @@ const Services = ({ initialData }: ServicesPageProps) => {
     sortDescriptor,
   } = useServicesTableStore();
 
-  const { sortedItems } = useFilteredContainer(formDataServices, page, {
+  const { sortedItems, pages } = useFilteredContainer(formDataServices, page, {
     filterValue,
     statusFilter,
     peymentStatusFilter,
@@ -53,7 +54,7 @@ const Services = ({ initialData }: ServicesPageProps) => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.25 }}
-      className="max-w-7xl mx-auto relative z-0 px-4 sm:px-6 lg:px-12"
+      className="max-w-7xl mx-auto relative z-0 gap-5 py-8 md:py-14 lg:py-4 px-4 sm:px-6 lg:px-12"
     >
       <span className="hash-span" id="Services-Card">
         &nbsp;
@@ -79,9 +80,19 @@ const Services = ({ initialData }: ServicesPageProps) => {
             bottomContents={!!formDataServices?.length}
             page={page}
             setPage={setPage}
+            pages={pages}
           >
             {isPending ? (
               <BtnLoader />
+            ) : sortedItems.length === 0 ? (
+              <div className="flex justify-center items-center pt-8">
+                <Empty
+                  btnHref="/admin/services/create"
+                  spanValue="خدماتی"
+                  endValue="نشده است"
+                  btn={false}
+                />
+              </div>
             ) : (
               <div
                 className={cn(
@@ -97,7 +108,7 @@ const Services = ({ initialData }: ServicesPageProps) => {
                   data={sortedItems}
                   widthConter="100%"
                   heightImg="250px"
-                  heightConter="200px"
+                  heightConter="210px"
                   bottomOffset="160"
                   styleForAdmin={false}
                   view={view}

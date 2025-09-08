@@ -40,8 +40,10 @@ export const getBlogCategoryById = async (
   try {
     const response = await http.get(`blog/category/admin/${id}/`, options);
     return response.data;
-  } catch (error) {
-    console.log("error", error);
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در دریافت دسته‌بندی بلاگ";
+    throw new Error(errorMessage);
   }
 };
 
@@ -57,8 +59,10 @@ export const getBlogContentById = async (
   try {
     const response = await http.get(`blog/content/admin/${id}/`, options);
     return response.data;
-  } catch (error) {
-    console.log("error", error);
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در دریافت محتوای بلاگ";
+    throw new Error(errorMessage);
   }
 };
 
@@ -66,8 +70,10 @@ export const getBlogById = async (id: string, options?: AxiosRequestConfig) => {
   try {
     const response = await http.get(`blog/b/admin/${id}/`, options);
     return response.data;
-  } catch (error) {
-    console.log("error", error);
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در دریافت بلاگ";
+    throw new Error(errorMessage);
   }
 };
 
@@ -78,8 +84,10 @@ export const getBlogByIdAny = async (
   try {
     const response = await http.get(`blog/b/any/${id}/`, options);
     return response.data;
-  } catch (error) {
-    console.log("error", error);
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در دریافت بلاگ";
+    throw new Error(errorMessage);
   }
 };
 
@@ -164,8 +172,10 @@ export const getBlogCategoryByIdCustomer = async (id: string | undefined) => {
   try {
     const response = await http.get(`blog/c/any/${id}/`);
     return response.data;
-  } catch (err) {
-    console.log("err", err);
+  } catch (error: any) {
+    const errorMessage =
+      error?.response?.data?.message || error?.message || "خطا در دریافت دسته‌بندی بلاگ";
+    throw new Error(errorMessage);
   }
 };
 export const deleteBlogById = async ({ id }: { id: string | number }) => {

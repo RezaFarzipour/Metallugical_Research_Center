@@ -61,7 +61,7 @@ const DashboardPage: React.FC = () => {
           setPage={setPage}
         >
           {isLoadingReserve ? (
-            <div>
+            <div className="flex justify-center items-center min-h-[70vh]">
               <BtnLoader color="#377cfb" />
             </div>
           ) : isEmpty ? (
