@@ -11,6 +11,7 @@ import {
   ServiceReserveDateType,
 } from "@/types/serviceType";
 import { BlogType, ExpiredReserveItem } from "@/types";
+import { useRouter } from "next/navigation";
 
 type CardData =
   | ServerServiceType
@@ -41,10 +42,10 @@ const CardModule = <T extends CardData>({
   bottomOffset,
 }: Props<T>) => {
   const [hoveredId, setHoveredId] = useState<number | string | null>(null);
-
+  const router = useRouter();
   const cardStyles = {
     cardsBox: cn(
-      "w-full max-w-[350px] mb-32 mt-8 col-span-12 sm:col-span-5 relative overflow-visible group"
+      "w-full min-w-[350px] mb-32 mt-8 col-span-12 sm:col-span-5 relative overflow-visible group"
     ),
     cardsList:
       "w-full max-w-[800px] min-h-[220px] md:max-h-[220px] flex flex-col md:flex-row ",
@@ -119,15 +120,17 @@ const CardModule = <T extends CardData>({
               "flex justify-center items-center ",
               view ? "min-h-[16rem]" : "min-h-[14rem]"
             )}
+            onClick={() => {
+              console.log("MoreDetailsHref:", MoreDetailsHref);
+
+              if (typeof window !== "undefined" && window.innerWidth < 768) {
+                router.push(MoreDetailsHref);
+              }
+            }}
           >
             <Card
               className={cn(view ? cardStyles.cardsBox : cardStyles.cardsList)}
               style={view ? { height: heightImg } : { height: "auto" }}
-              onClick={() => {
-                if (window.innerWidth < 768) {
-                  window.location.href = MoreDetailsHref;
-                }
-              }}
             >
               <ImageContainer
                 image={image}

@@ -26,15 +26,15 @@ const LandingPage = ({ initialData, AllBlogs }: LandingPageProps) => {
       </section>
 
       {/* Services Section */}
-      <section className="w-full mt-36 md:mt-2">
+      <section className="w-full mt-44 md:mt-2">
         <Services initialData={initialData} />
       </section>
       {/* FAQ Section */}
-      <section className="w-full mt-8 md:mt-44 mb-40  mx-auto xl:max-w-screen-xl">
+      <section className="w-full mt-36 md:mt-44 mx-auto xl:max-w-screen-xl">
         <FaqAccordian />
       </section>
       {/* Blog Section */}
-      <section className="w-full my-40">
+      <section className="w-full mt-36 md:mt-44 mb-40">
         <Blogs AllBlogs={AllBlogs} />
       </section>
       <section>

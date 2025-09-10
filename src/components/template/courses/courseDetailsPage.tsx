@@ -87,7 +87,7 @@ const CourseDetailsPage = ({ serviceData }: { serviceData: ServiceData }) => {
   const coursePath = pathname.includes("courses");
 
   return (
-    <div className="flex flex-col items-center w-full p-4 md:p-16 my-16">
+    <div className="flex flex-col items-center w-full p-4 md:p-16 mt-96 mb-16 md:my-16">
       <div className="w-full flex flex-col gap-6">
         {/* Right Section */}
         <div className="flex flex-col gap-6 w-full lg:w-1/2">

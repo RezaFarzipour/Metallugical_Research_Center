@@ -94,7 +94,7 @@ const ServiceDetails = ({ serviceData }: { serviceData: ServiceData }) => {
   const isConfirmDisabled = !startDate || !endDate;
 
   return (
-    <div className="flex flex-col items-center w-full p-4 md:p-16 mt-28 mb-16 md:my-16">
+    <div className="flex flex-col items-center w-full p-4 md:p-16 mt-96 mb-16 md:my-16">
       <div className="w-full flex flex-col  gap-6">
         {/* Right Section */}
         <div className="flex flex-col gap-6 w-full lg:w-1/2">
