@@ -112,6 +112,7 @@ export const AdminCourses: React.FC = ({}) => {
                 bottomOffset="160"
                 styleForAdmin={true}
                 view={view}
+                useMaxWidth={true}
               />
             </div>
           )}

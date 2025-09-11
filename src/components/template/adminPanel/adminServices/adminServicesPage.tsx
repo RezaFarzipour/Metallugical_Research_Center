@@ -113,6 +113,7 @@ export const AdminServicesPage: React.FC = ({}) => {
                 bottomOffset="160"
                 styleForAdmin={true}
                 view={view}
+                useMaxWidth={true}
               />
             </div>
           )}

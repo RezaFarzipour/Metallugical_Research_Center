@@ -116,6 +116,7 @@ export const BlogsPage: React.FC = () => {
                 bottomOffset="130"
                 view={view}
                 styleForAdmin={true}
+                useMaxWidth={true}
               />
             </div>
           )}
