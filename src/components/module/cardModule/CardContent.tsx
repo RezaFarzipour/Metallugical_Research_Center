@@ -108,15 +108,15 @@ export const CardContent: React.FC<CardContentProps> = ({
 
       {parsedTags && parsedTags.length > 0 && (
         <InfoRow icon={<TiTags className="text-xl" />}>
-          {parsedTags.slice(0, 3).map((tag, index) => (
+          {parsedTags.slice(0, 2).map((tag, index) => (
             <span
               key={index}
-              className="bg-blue-100 text-secondary-800 text-xs font-medium px-2.5 py-0.5 rounded"
+              className="bg-blue-50 text-secondary-800 text-xs font-medium px-2.5 py-0.5 rounded-md"
             >
               {tag}
             </span>
           ))}
-          {parsedTags.length > 3 && (
+          {parsedTags.length > 2 && (
             <span className="text-xs font-medium py-0.5">...</span>
           )}
         </InfoRow>

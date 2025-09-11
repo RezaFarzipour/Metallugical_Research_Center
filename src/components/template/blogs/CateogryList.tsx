@@ -35,7 +35,7 @@ function CategoryList() {
                 href={`/blogs/category/${category.slug}`}
                 scroll={false}
                 className={cn(
-                  "block px-3 py-2 rounded-lg bg-default-50 hover:bg-secondary-400 hover:text-white transition cursor-pointer font-semibold text-default-400",
+                  "block px-3 py-2 rounded-lg bg-default-50 hover:bg-secondary-400 hover:text-white transition cursor-pointer font-semibold text-default-400 text-[12px] md:text-md whitespace-nowrap",
                   pathname === `/blogs/category/${category.slug}` &&
                     "bg-secondary-300 !font-bold text-white hover:text-white"
                 )}

@@ -29,6 +29,7 @@ type Props<T extends CardData> = {
   view?: boolean;
   styleForAdmin: boolean;
   bottomOffset: string;
+  useMaxWidth?: boolean;
 };
 
 const CardModule = <T extends CardData>({
@@ -40,12 +41,14 @@ const CardModule = <T extends CardData>({
   view = true,
   styleForAdmin,
   bottomOffset,
+  useMaxWidth,
 }: Props<T>) => {
   const [hoveredId, setHoveredId] = useState<number | string | null>(null);
   const router = useRouter();
   const cardStyles = {
     cardsBox: cn(
-      "w-full min-w-[350px] mb-32 mt-8 col-span-12 sm:col-span-5 relative overflow-visible group"
+      "w-full mb-32 mt-8 col-span-12 sm:col-span-5 relative overflow-visible group",
+      useMaxWidth ? "max-w-[350px]" : "min-w-[350px]"
     ),
     cardsList:
       "w-full max-w-[800px] min-h-[220px] md:max-h-[220px] flex flex-col md:flex-row ",
@@ -121,8 +124,6 @@ const CardModule = <T extends CardData>({
               view ? "min-h-[16rem]" : "min-h-[14rem]"
             )}
             onClick={() => {
-              console.log("MoreDetailsHref:", MoreDetailsHref);
-
               if (typeof window !== "undefined" && window.innerWidth < 768) {
                 router.push(MoreDetailsHref);
               }

@@ -30,32 +30,63 @@
 5. 🕸️ [Code to Copy](#snippets)
 6. 🔗 [Assets](#links)
 
-## <a >🖼️ Images</a>
+## <a>🖼️ Images</a>
 
 <div align="center">
   <table>
+    <!-- Row for first two images -->
     <tr>
-   <td><img src="./public/images/readme/landingabout.png" alt="Image 1" width="300"></td>
-   <td><img src="./public/images/readme/auth1.png"  alt="Image 2" width="300"></td>
+      <td><img src="./public/images/readme/landingabout.png" alt="Image 1" width="300"></td>
+      <td><img src="./public/images/readme/1.png" alt="Image 2" width="300"></td>
     </tr>
+    <!-- Row for third image centered -->
     <tr>
-      <td><img src="./public/images/readme/labcustomer2.png" alt="Image 3" width="300"></td>
-     <td><img src="./public/images/readme/admindashboardnew.png" alt="Image 4" width="300"></td>
+      <td colspan="2" align="center"><img src="./public/images/readme/2.png" alt="Image 3" width="300"></td>
     </tr>
   </table>
 </div>
 
-## <a >🖼️ Service & Blogs & Courses</a>
+## <a>🖼️ Auth</a>
 
 <div align="center">
   <table>
+    <!-- Row for first two images -->
     <tr>
-   <td><img src="./public/images/readme/blogs.png" alt="Image 1" width="300"></td>
-   <td><img src="./public/images/readme/coursesection.png"  alt="Image 2" width="300"></td>
+      <td><img src="./public/images/readme/auth1.png" alt="Image 1" width="300"></td>
+      <td><img src="./public/images/readme/auth2.png" alt="Image 2" width="300"></td>
     </tr>
+    <!-- Row for third image centered -->
+    <tr>
+      <td colspan="2" align="center"><img src="./public/images/readme/auth3.png" alt="Image 3" width="300"></td>
+    </tr>
+  </table>
+</div>
+
+## <a>🖼️ Service & Blogs & Courses</a>
+
+<div align="center">
+  <table>
+    <!-- Row for first two images -->
+    <tr>
+      <td><img src="./public/images/readme/blogs.png" alt="Image 1" width="300"></td>
+      <td><img src="./public/images/readme/coursesection.png" alt="Image 2" width="300"></td>
+    </tr>
+    <!-- Row for next two images -->
     <tr>
       <td><img src="./public/images/readme/servicessection.png" alt="Image 3" width="300"></td>
-     <td><img src="./public/images/readme/servicedetails.png" alt="Image 4" width="300"></td>
+      <td><img src="./public/images/readme/servicedetails.png" alt="Image 4" width="300"></td>
+    </tr>
+  </table>
+</div>
+
+## <a>🖼️ Panel</a>
+
+<div align="center">
+  <table>
+    <!-- Row for two images -->
+    <tr>
+      <td><img src="./public/images/readme/admindashboardnew.png" alt="Image 1" width="300"></td>
+      <td><img src="./public/images/readme/labcustomer2.png" alt="Image 2" width="300"></td>
     </tr>
   </table>
 </div>

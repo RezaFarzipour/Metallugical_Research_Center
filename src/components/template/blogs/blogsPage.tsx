@@ -109,6 +109,7 @@ export default function BlogPage({
                   isMoreDetails="anyBlogs"
                   styleForAdmin={false}
                   view={true}
+                  useMaxWidth={true}
                 />
               </div>
             )}
