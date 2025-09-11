@@ -78,7 +78,7 @@ const Courses: React.FC = () => {
           {/* دکمه اقدام */}
           <div className="mt-8">
             <Button variant="primary" type="submit" path="/courses">
-              مشاهده همه خدمات ...
+              مشاهده همه دوره ها ...
             </Button>
           </div>
         </motion.div>

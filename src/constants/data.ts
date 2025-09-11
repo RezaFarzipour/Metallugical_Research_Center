@@ -207,7 +207,7 @@ export const contactusinformation: contactInfoType[] = [
     icon: MdOutlinePhone,
   },
   {
-    id: 1,
+    id: 3,
     title: "آدرس ایمیل",
     desc: "dr.salimi@gmail.com ",
     icon: CiMail,
