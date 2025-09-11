@@ -39,8 +39,15 @@ const RHFInput = <T extends FieldValues>({
             if (name === "price") {
               // حذف همه کاراکترهای غیرعددی
               value = value.replace(/\D/g, "");
-              field.onChange(value); // توی فرم مقدار خام ذخیره بشه
+              field.onChange(value); // مقدار خام ذخیره می‌شه
               return;
+            }
+
+            if (name === "phone") {
+              // تبدیل اعداد فارسی به انگلیسی
+              value = value.replace(/[۰-۹]/g, (d) =>
+                String(d.charCodeAt(0) - 1776)
+              );
             }
 
             field.onChange(value);
