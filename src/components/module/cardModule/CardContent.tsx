@@ -14,6 +14,7 @@ import { toPersianNumbersWithComma } from "@/utils/formatter/toPersianNumbers";
 import { BlogType } from "@/types";
 import { ServiceReserveDateType } from "@/types/serviceType";
 import Link from "next/link";
+import { CURRENCY } from "@/config/site";
 
 interface CardContentProps extends Partial<BlogType> {
   service_name?: string;
@@ -124,7 +125,8 @@ export const CardContent: React.FC<CardContentProps> = ({
       {price && (
         <InfoRow icon={<RiPriceTag3Line className="text-xl" />}>
           <p className="text-base text-gray-600">
-            {toPersianNumbersWithComma(price)}
+            {toPersianNumbersWithComma(price)}{" "}
+            {CURRENCY === "rial" ? "ریال" : "تومان"}
           </p>
         </InfoRow>
       )}

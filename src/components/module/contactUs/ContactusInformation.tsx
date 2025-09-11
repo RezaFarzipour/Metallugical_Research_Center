@@ -27,8 +27,8 @@ const ContactusInformation = () => {
         </div>
         <div className="w-full h-[2px] bg-gray-300 mt-5"></div>
         <div className="flex flex-col gap-5 itema-end ">
-          {contactusinformation.map((item) => (
-            <div key={item.id} className="flex items-center gap-4">
+          {contactusinformation.map((item, index) => (
+            <div key={item.id || index} className="flex items-center gap-4">
               <div className="p-5 rounded-full bg-[#E0E3FA] text-center">
                 <span className=" md:text-2xl">{<item.icon />}</span>
               </div>
